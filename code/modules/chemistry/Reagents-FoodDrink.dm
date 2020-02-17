@@ -758,7 +758,7 @@ datum
 			id = "mutini"
 			description = "A volatile drink."
 			reagent_state = LIQUID
-			fluid_r = 255
+			fluid_r = 70
 			fluid_g = 250
 			fluid_b = 160
 			transparency = 155
