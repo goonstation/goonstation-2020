@@ -737,8 +737,17 @@
 	showMessage("[src.holder] clicks.") // Relay kicking on
 	var/holder = reservoirs[rid]
 	var/datum/reagents/R = holder:reagents
-	while(R.total_volume && abs(R.total_temperature - temp) > 3)
-		R.temperature_reagents(temp, 10)
+	var/heating_in_progress = true
+	while(R.total_volume && heating_in_progress)
+		var/element_temp = R.total_temperature < temp ? 9000 : 0							//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
+		var/max_temp_change = abs(R.total_temperature - temp)
+		var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / 35), 1), 15)	// Formula used by temperature_reagents() to determine how much to change the temp
+		if(next_temp_change > max_temp_change)													// Check if this tick will cause the temperature to overshoot if heated/cooled at full power
+			var/element_temp_offset = max_temp_change * 35										// Compute the exact exposure temperature to reach the target
+			element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+			heating_in_progress = 0
+
+		R.temperature_reagents(element_temp, 10)
 		sleep(10)
 
 	showMessage("[src.holder] clicks.") // Relay kicking off
