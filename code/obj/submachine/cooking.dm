@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	mats = 12
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -74,6 +75,7 @@
 	anchored = 1
 	density = 1
 	mats = 18
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
@@ -224,6 +226,7 @@ var/list/oven_recipes = list()
 	anchored = 1
 	density = 1
 	mats = 18
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/emagged = 0
 	var/working = 0
@@ -755,6 +758,7 @@ table#cooktime a#start {
 	anchored = 1
 	density = 1
 	mats = 18
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
 
@@ -985,6 +989,7 @@ var/list/mixer_recipes = list()
 	density = 1
 	anchored = 1
 	mats = 15
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)

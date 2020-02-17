@@ -7,6 +7,7 @@
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
 	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
 	var/make_amount = 0 //from 0 to 30, amount of copies the photocopier will copy, copy?
@@ -156,7 +157,7 @@
 				if ("Print Copies")
 					src.visible_message("\The [src] starts printing copies!")
 					make_amount = max(make_amount, 30)
-					if (paper_amount <= 0) 
+					if (paper_amount <= 0)
 						src.visible_message("No more paper in tray!")
 						return
 					for (var/i = 1, i <= src.make_amount, i++)
@@ -215,7 +216,7 @@
 			P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
 			P.icon = 'icons/obj/surgery.dmi'
 			P.icon_state = "butt"
-		
+
 		return
 
 	proc/reset_all()
@@ -236,4 +237,4 @@
 			src.use_state = 0
 		else
 			src.icon_state = "open_sesame"
-			src.use_state = 1 
+			src.use_state = 1

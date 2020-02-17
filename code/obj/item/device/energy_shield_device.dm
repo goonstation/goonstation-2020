@@ -80,8 +80,4 @@
 			SPAWN_DBG(10) work()
 
 		can_use()
-			if(!user || !ismob(loc)) return 0
-			if(src in user.get_equipped_items())
-				return 1
-			else
-				return 0
+			if(!user || !ismob(loc) || user != loc) return 0

@@ -140,6 +140,8 @@
 		var/in_use = 0
 
 		attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+			if (user.a_intent == INTENT_GRAB)
+				return ..()
 			if (src.in_use)
 				return ..()
 			if (ishuman(M))

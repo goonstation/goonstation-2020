@@ -384,6 +384,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	var/obj/item/dye_bottle/bottle = null
 

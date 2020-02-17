@@ -1671,7 +1671,7 @@ var/list/zalgo_mid = list(
 			else if (R.prev_char == " " && R.next_char != " ")
 				new_string = "ho"
 				used = 1
-			else if(R.next_char == " " && R.prev_char == " ") 
+			else if(R.next_char == " " && R.prev_char == " ")
 				new_string = "crisse"
 				used = 1
 		if("O")
@@ -1681,7 +1681,7 @@ var/list/zalgo_mid = list(
 			else if (R.prev_char == " " && R.next_char != " ")
 				new_string = "HO"
 				used = 1
-			else if(R.next_char == " " && R.prev_char == " ") 
+			else if(R.next_char == " " && R.prev_char == " ")
 				new_string = "ZUT!"
 				used = 1
 
@@ -1698,14 +1698,14 @@ var/list/zalgo_mid = list(
 			if (R.next_char != " "  && R.prev_char == " ")
 				new_string = "he"
 				used = 2
-			else if(R.next_char == " " && R.prev_char == " ") 
+			else if(R.next_char == " " && R.prev_char == " ")
 				new_string = "oeuf"
 				used = 1
 		if("E")
 			if (R.next_char != " "  && R.prev_char == " ")
 				new_string = "HE"
 				used = 2
-			else if(R.next_char == " " && R.prev_char == " ") 
+			else if(R.next_char == " " && R.prev_char == " ")
 				new_string = "OEUF"
 				used = 1
 
@@ -1747,6 +1747,62 @@ var/list/zalgo_mid = list(
 				new_string = "'"
 				used = 1
 
+
+	if(new_string == "")
+		new_string = R.curr_char
+		used = 1
+
+	var/datum/parse_result/P = new/datum/parse_result
+	P.string = new_string
+	P.chars_used = used
+	return P
+
+/proc/mufflespeech(var/string)
+	var/modded = ""
+	var/datum/text_roamer/T = new/datum/text_roamer(string)
+
+	for(var/i = 0, i < length(string), i=i)
+		var/datum/parse_result/P = mufflespeech_parse(T)
+		modded += P.string
+		i += P.chars_used
+		T.curr_char_pos = T.curr_char_pos + P.chars_used
+		T.update()
+
+	return modded
+
+
+/proc/mufflespeech_parse(var/datum/text_roamer/R)
+	var/new_string = ""
+	var/used = 0
+
+	switch(R.curr_char)
+		if("q", "t", "k")
+			new_string = "p"
+			used = 1
+		if("w","s","z","c")
+			new_string = "h"
+			used = 1
+
+		if("e", "y", "i")
+			new_string = "f"
+			used = 1
+		if("u", "o","a","d","g","j","l","x","v","b")
+			new_string = "m"
+			used = 1
+
+		if("Q", "T", "K")
+			new_string = "P"
+			used = 1
+		if("W","S","Z","C")
+			new_string = "H"
+			used = 1
+
+		if("E", "Y", "I")
+			new_string = "F"
+			used = 1
+		if("U", "O","A","D","G","J","L","X","V","B")
+			new_string = "M"
+			used = 1
 
 	if(new_string == "")
 		new_string = R.curr_char

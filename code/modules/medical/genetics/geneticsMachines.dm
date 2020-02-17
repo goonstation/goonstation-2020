@@ -5,6 +5,7 @@ var/list/genetics_computers = list()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
 	var/list/equipment = list(0,0,0,0)
 	// Injector, Analyser, Emitter, Reclaimer

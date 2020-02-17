@@ -141,9 +141,10 @@
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
-			for(var/i = 0, i < times, i++)
-				if (ishuman(owner))
-					owner:bodytemperature -= 0.8
+			var/mob/M = owner
+			if (M.bodytemperature > M.base_body_temp + 3)
+				for(var/i = 0, i < times, i++)
+					M.bodytemperature -= 2
 		return
 
 /datum/statusEffect/foodwarm
@@ -163,9 +164,10 @@
 		var/times = (tickCount / tickSpacing)
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
-			for(var/i = 0, i < times, i++)
-				if (ishuman(owner))
-					owner:bodytemperature += 6
+			var/mob/M = owner
+			if (M.bodytemperature < M.base_body_temp + 8)
+				for(var/i = 0, i < times, i++)
+					M.bodytemperature += 6
 		return
 
 /datum/statusEffect/foodstaminaregen

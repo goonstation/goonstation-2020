@@ -315,6 +315,7 @@
 		..()
 		setProperty("meleeprot", 12)
 		setProperty("rangedprot", 3)
+		setProperty("disorient_resist", 25)
 
 /obj/item/clothing/suit/armor/death_commando
 	name = "death commando armor"
@@ -389,6 +390,7 @@
 		..()
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
+		setProperty("disorient_resist", 10)
 
 /obj/item/clothing/suit/armor/hoscape
 	name = "head of securitys cape"

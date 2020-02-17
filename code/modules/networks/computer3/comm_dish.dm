@@ -15,6 +15,7 @@
 	var/list/cargo_logs = list()
 
 	mats = 25
+	deconstruct_flags = DECON_NONE
 
 	New()
 		..()

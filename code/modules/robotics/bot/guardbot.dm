@@ -137,7 +137,6 @@
 	var/flashlight_red = 0.1
 	var/flashlight_green = 0.4
 	var/flashlight_blue = 0.1
-	var/datum/light/light
 
 	var/datum/radio_frequency/radio_connection
 	var/datum/radio_frequency/beacon_connection
@@ -320,14 +319,11 @@
 		if(!setup_unique_name)
 			src.name += "-[rand(100,999)]"
 
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_color(src.flashlight_red, src.flashlight_green, src.flashlight_blue)
-		light.set_brightness(src.flashlight_lum / 7)
+
 
 		SPAWN_DBG(5)
 			if (src.on)
-				light.enable()
+				add_simple_light("guardbot", list(src.flashlight_red*255, src.flashlight_green*255, src.flashlight_blue*255, (src.flashlight_lum / 7) * 255))
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.botcard_access)
 
@@ -780,7 +776,7 @@
 			src.moving = 0
 			src.emotion = null
 			icon_needs_update = 1
-			light.enable()
+			add_simple_light("guardbot", list(src.flashlight_red*255, src.flashlight_green*255, src.flashlight_blue*255, (src.flashlight_lum / 7) * 255))
 			if(src.bedsheet == 1)
 				src.add_task(new /datum/computer/file/guardbot_task/bedsheet_handler, 1, 0)
 				return
@@ -792,7 +788,7 @@
 			if(src.idle) return //Already snoozing.
 			src.idle = 1
 			set_emotion()
-			light.disable()
+			remove_simple_light("guardbot")
 			src.wakeup_timer = timer
 			//src.target = null
 			src.moving = 0

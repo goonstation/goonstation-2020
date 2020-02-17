@@ -428,20 +428,23 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_synaptizine", 25)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_synaptizine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-5, 0)
-				M.changeStatus("paralysis", -10 * mult)
-				M.changeStatus("stunned", -10 * mult)
-				M.changeStatus("weakened", -10 * mult)
 				if(M.sleeping) M.sleeping = 0
 				if(M.get_brain_damage() && prob(50)) M.take_brain_damage(-1 * mult)
 				..()
@@ -750,12 +753,18 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("epinephrine", 3)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_epinephrine", 3)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("epinephrine")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_epinephrine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -764,9 +773,6 @@ datum
 				if(prob(10))
 					M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				if(prob(20)) M.changeStatus("paralysis", -10 * mult)
-				if(prob(20)) M.changeStatus("stunned", -10 * mult)
-				if(prob(20)) M.changeStatus("weakened", -10 * mult)
 				if(M.sleeping && prob(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1)
 				if(holder.has_reagent("histamine"))
@@ -1054,12 +1060,18 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_ephedrine", 10)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_ephedrine")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1067,9 +1079,6 @@ datum
 				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				M.changeStatus("paralysis", -10 * mult)
-				M.changeStatus("stunned", -10 * mult)
-				M.changeStatus("weakened", -10 * mult)
 				if(M.losebreath > 3)
 					M.losebreath = max(5, M.losebreath-(1 * mult))
 				if(M.get_oxygen_deprivation() > 75)

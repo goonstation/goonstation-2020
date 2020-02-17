@@ -27,6 +27,8 @@
 				block_vision = 1
 			alpha = 255
 
+		setProperty("disorient_resist_eye", src.getProperty("density") * 0.6)
+
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
 	icon_state = "blindfold"
@@ -41,10 +43,15 @@
 	item_state = "glasses"
 	mats = 6
 	desc = "Goggles that allow you to see the structure of the station through walls."
-	color_r = 0.9
+	color_r = 0.92
 	color_g = 1
-	color_b = 0.9
+	color_b = 0.92
 	var/on = 1
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
+
 
 	attack_self(mob/user)
 		src.toggle(user)
@@ -86,9 +93,13 @@
 	name = "peculiar spectacles"
 	desc = "Admittedly, they are rather strange."
 	icon_state = "ectoglasses"
-	color_r = 0.85
+	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -106,6 +117,10 @@
 	color_g = 0.9
 	color_b = 0.95 // kinda blue
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
+
 /obj/item/clothing/glasses/sunglasses/equipped(var/mob/user, var/slot)
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && slot == "eyes")
@@ -120,7 +135,11 @@
 /obj/item/clothing/glasses/sunglasses/tanning
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. This pair has a label that says: \"For tanning use only.\""
 	mats = 4
-	color_b = 1
+	color_b = 95
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 30)
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "\improper Security HUD"
@@ -215,6 +234,13 @@
 	mats = 4
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
+	color_r = 0.92
+	color_g = 0.92
+	color_b = 1
+	
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
 
 	equipped(var/mob/user, var/slot)
 		if (slot == "eyes")
@@ -234,6 +260,11 @@
 	block_eye = "R"
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 7)
+
 	equipped(var/mob/user, var/slot)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == "eyes")
@@ -289,6 +320,10 @@
 	item_state = "sunglasses"
 	var/network = "det_net"
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 28)
+
 	New()
 		SPAWN_DBG(20)
 			if (src)
@@ -338,7 +373,11 @@
 	mats = 8
 	color_r = 0.85
 	color_g = 1
-	color_b = 0.85
+	color_b = 0.87
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
 
 	//proc/updateIcons() //I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
 	process()
@@ -423,6 +462,10 @@
 	color_r = 1 // pink tint?
 	color_g = 0.8
 	color_b = 0.9
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 5)
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles

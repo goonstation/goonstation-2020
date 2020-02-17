@@ -535,9 +535,6 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		else
 			add_counter(barBits.len, health_value, "#000000")
 
-	proc/lerp(var/a, var/b, var/t)
-		return a * (1 - t) + b * t
-
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
 		var/remaining = round(percentage * 100)

@@ -48,7 +48,7 @@
 	var/ghoulTouchActive = 0
 	var/list/abilities
 	icon_state  = "evilaura"
-	
+
 	OnAdd()
 		if (ishuman(owner) && isdead(owner))
 			switch (owner:decomp_stage)
@@ -82,6 +82,14 @@
 		owner.set_face_icon_dirty()
 		owner.set_body_icon_dirty()
 		animate_levitate(owner)
+
+		owner.add_stun_resist_mod("revenant", 1000)
+
+		..()
+
+	OnRemove()
+		if (owner)
+			owner.remove_stun_resist_mod("revenant")
 		..()
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
@@ -178,9 +186,7 @@
 		owner.take_eye_damage(-INFINITY)
 		owner.take_eye_damage(-INFINITY, 1)
 		owner.losebreath = 0
-		owner.delStatus("paralysis")
-		owner.delStatus("stunned")
-		owner.delStatus("weakened")
+		owner.delStatus("disorient")
 		owner.delStatus("slowed")
 		owner.delStatus("radiation")
 		owner.take_ear_damage(-INFINITY)

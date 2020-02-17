@@ -179,12 +179,19 @@ var/list/globalPropList = null
 	movement
 		name = "Speed"
 		id = "movespeed"
-		desc = "Increases movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+		desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
 		tooltipImg = "movement.png"
 		defaultValue = 1
 		goodDirection = -1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal] movement delay"
+
+		space
+			name = "Speed"
+			id = "space_movespeed"
+
+			getTooltipDesc(var/obj/propOwner, var/propVal)
+				return "[propVal] movement delay - 0 when worn in space."
 
 	radiationprot
 		name = "Resistance (Radiation)"
@@ -293,7 +300,7 @@ var/list/globalPropList = null
 		defaultValue = 1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
-	
+
 	momentum // force increases as you attack players.
 		name = "Momentum"
 		id = "momentum"
@@ -302,3 +309,30 @@ var/list/globalPropList = null
 		defaultValue = 0
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "+[propVal] damage increased."
+
+	disorient_resist
+		name = "Body Insulation (Disorient Resist)"
+		id = "disorient_resist"
+		desc = "Reduces disorient effects on the wearer." //Value is % protection.
+		tooltipImg = "protdisorient.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "[propVal]%"
+			
+	disorient_resist_eye
+		name = "Eye Insulation (Disorient Resist)"
+		id = "disorient_resist_eye"
+		desc = "Reduces disorient effects that apply through vision on the wearer." //Value is % protection.
+		tooltipImg = "protdisorient_eye.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "[propVal]%"
+
+	disorient_resist_ear
+		name = "Ear Insulation (Disorient Resist)"
+		id = "disorient_resist_ear"
+		desc = "Reduces disorient effects that apply through sound on the wearer." //Value is % protection.
+		tooltipImg = "protdisorient_ear.png"
+		defaultValue = 0
+		getTooltipDesc(var/obj/propOwner, var/propVal)
+			return "[propVal]%"

@@ -78,12 +78,6 @@
 		else if (isscrewingtool(W) && src.securable)
 			src.toggle_secure(user)
 			return
-		//grabsmash
-		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (!grab_smash(G, user))
-				return ..(W, user)
-			else return
 		else
 			return ..()
 
@@ -92,7 +86,8 @@
 		return
 
 	proc/unbuckle() //Ditto but for unbuckling
-		return
+		if (src.buckled_guy)
+			src.buckled_guy.end_chair_flip_targeting()
 
 	proc/toggle_secure(mob/user as mob)
 		if (user)
@@ -342,9 +337,11 @@
 		to_buckle.setStatus("buckled", duration = null)
 
 	unbuckle()
+		..()
 		if(src.buckled_guy)
 			buckled_guy.anchored = 0
 			buckled_guy.buckled = null
+			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
 			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
@@ -634,7 +631,9 @@
 				H.on_chair = src
 				to_buckle.buckled = src
 				src.buckled_guy = to_buckle
+				src.buckledIn = 1
 				to_buckle.setStatus("buckled", duration = null)
+				H.start_chair_flip_targeting()
 		else
 			if (src.anchored)
 				to_buckle.anchored = 1
@@ -647,15 +646,19 @@
 
 
 	unbuckle()
+		..()
 		if(!src.buckled_guy) return
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
 
+		M.end_chair_flip_targeting()
+
 		if (istype(H) && H.on_chair)// == 1)
 			M.pixel_y = 0
 			M.anchored = 0
 			M.buckled = null
+			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
 			SPAWN_DBG (5)
 				H.on_chair = 0
@@ -663,6 +666,7 @@
 		else if ((M.buckled))
 			M.anchored = 0
 			M.buckled = null
+			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
 			SPAWN_DBG (5)
 				src.buckledIn = 0

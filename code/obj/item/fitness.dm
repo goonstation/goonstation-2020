@@ -4,6 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "punchingbag"
 	anchored = 1
+	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 	var/list/hit_sounds = list('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg',\
 	'sound/impact_sounds/Generic_Punch_2.ogg', 'sound/impact_sounds/Generic_Punch_3.ogg', 'sound/impact_sounds/Generic_Punch_4.ogg', 'sound/impact_sounds/Generic_Punch_5.ogg')
@@ -53,6 +54,7 @@
 	icon_state = "fitnesslifter"
 	density = 1
 	anchored = 1
+	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
 	attack_hand(mob/user as mob)
@@ -98,6 +100,7 @@
 	icon_state = "fitnessweight"
 	density = 1
 	anchored = 1
+	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
 	attack_hand(mob/user as mob)

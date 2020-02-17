@@ -443,13 +443,17 @@ var/datum/action_controller/actions
 	var/obj/item/item				    //The item if any. If theres no item, we tried to remove something from that slot instead of putting an item there.
 	var/slot						    //The slot number
 
-	New(var/Source, var/Target, var/Item, var/Slot)
+
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0)
 		source = Source
 		target = Target
 		item = Item
 		slot = Slot
 
 		if(item)
+
+
+
 			if(item.duration_put > 0)
 				duration = item.duration_put
 			else
@@ -461,6 +465,10 @@ var/datum/action_controller/actions
 					duration = I.duration_remove
 				else
 					duration = 25
+
+		duration += ExtraDuration
+
+
 		..()
 
 	onStart()
@@ -468,8 +476,9 @@ var/datum/action_controller/actions
 
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
-		if (source.at_gunpoint && source.at_gunpoint.holding_at_gunpoint != source)
-			source.at_gunpoint.shoot_at_gunpoint(source)
+		if (source.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
+				G.shoot()
 
 		if(item)
 			if(!target.can_equip(item, slot))
@@ -983,7 +992,7 @@ var/datum/action_controller/actions
 				O.show_message("<span style=\"color:red\"><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
-	duration = 18 SECONDS
+	duration = 13 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
@@ -1180,3 +1189,48 @@ var/datum/action_controller/actions
 		..()
 		if (M)
 			M.pixel_y = 0
+
+
+/datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
+	duration = 10
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	id = "pickup"
+	var/obj/item/target
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "pickup"
+
+	New(Target)
+		target = Target
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, target) > 1 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, target) > 1 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		target.pick_up_by(owner)
+
+		
+	then_hud_click
+
+		var/atom/over_object
+		var/params
+
+		New(Target, Over, Parameters)
+			target = Target
+			over_object = Over
+			params = Parameters
+			..()
+
+		onEnd()
+			..()
+			target.try_equip_to_inventory_object(owner, over_object, params)

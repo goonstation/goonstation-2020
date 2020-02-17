@@ -3,6 +3,8 @@
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
 	var/network = "SS13"
 	layer = EFFECTS_LAYER_UNDER_1
 	var/c_tag = null

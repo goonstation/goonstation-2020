@@ -933,17 +933,25 @@ datum
 			taste = "FAST"
 			bladder_value = -5
 
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_sonic", 15)
+				return
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_sonic")
+				return
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
 				M.drowsyness = max(M.drowsyness-5, 0)
-				if(prob(25))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 				if(prob(8))
 					M.reagents.add_reagent("methamphetamine", 1.2 * mult)
-					var/speed_message = pick("Gotta go fast!", "Time to speed, keed!", "I feel a need for speed!", "Let's juice.", "Juice time.", "Way Past Cool!")
+					var/speed_message = pick("Gotta go fast!", "Time to speed, keed!", "I feel a need for speed!", "Let's juice.", "Juice time.", "Way Past Cool!", "I'll make you eat those words!")
 					if (prob(50))
 						M.say( speed_message )
 					else
@@ -1215,13 +1223,18 @@ datum
 			description = "Mmm, tastes like heart attacks."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(prob(33)) M.changeStatus("paralysis", -10 * mult)
-				if(prob(33)) M.changeStatus("stunned", -10 * mult)
-				if(prob(33)) M.changeStatus("weakened", -10 * mult)
-				..()
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_bull", 8)
 				return
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_bull")
+				return
+
 
 		fooddrink/alcoholic/longisland
 			name = "Long Island Iced Tea"
@@ -2046,12 +2059,18 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_coffee", 3)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_coffee")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2066,10 +2085,6 @@ datum
 				M.sleeping = 0
 				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(3)
-				if(prob(50))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 
 		fooddrink/coffee/espresso //the good stuff
 			name = "espresso"
@@ -2085,25 +2100,28 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
 					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_espresso", caffeine_jitters / 2)
 				return
 
 			on_remove()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("caffeine rush")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_espresso")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.make_jittery(1)
-				if(prob(src.caffeine_jitters))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 
 		fooddrink/coffee/espresso/expresso // the stupid stuff
 			name = "expresso"
 			id = "expresso"
 			description = "An expresso is a strong black coffee with more stupid."
+			caffeine_jitters = 15
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.take_brain_damage(2 * mult)
@@ -2137,6 +2155,18 @@ datum
 				..()
 				tickcounter = 0
 
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_energydrink", 10)
+				return
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_energydrink")
+				return
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if (ishuman(M))
@@ -2147,10 +2177,6 @@ datum
 
 				..()
 				// basically, make it twice as effective
-				if (prob(50))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 
 			on_mob_life_complete(var/mob/M)
 				if(M)
@@ -3199,7 +3225,10 @@ datum
 			overdose = 33
 			depletion_rate = 0.6
 
-			on_add(var/mob/M)
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_cocktail_triple", 1000)
 				return
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
@@ -3217,7 +3246,12 @@ datum
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 					holder.my_atom:remove_stam_mod_regen("tripletriple")
 
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_cocktail_triple")
+
 				return
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -3267,9 +3301,6 @@ datum
 				M.make_dizzy(5 * mult)
 				M.change_misstep_chance(50 * mult)
 				M.take_brain_damage(1 * mult)
-				if(M.getStatusDuration("paralysis")) M.delStatus("paralysis")
-				M.delStatus("stunned")
-				M.delStatus("weakened")
 				M.delStatus("disorient")
 				if(M.sleeping) M.sleeping = 0
 				..(M)

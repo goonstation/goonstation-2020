@@ -114,7 +114,7 @@
 		if(W.up)
 			W.up = !W.up
 			W.icon_state = "welding"
-			boutput(the_mob, "You flip the mask down.")
+			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
 			if (!W.nodarken) //Used for The Welder
 				W.see_face = !W.see_face
 				W.color_r = 0.3 // darken
@@ -122,16 +122,20 @@
 				W.color_b = 0.3
 			the_mob.set_clothing_icon_dirty()
 			icon_state = "weldup"
+
+			W.flip_down()
 		else
 			W.up = !W.up
 			W.see_face = !W.see_face
 			W.icon_state = "welding-up"
-			boutput(the_mob, "You flip the mask up.")
+			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
 			W.color_r = 1 // default
 			W.color_g = 1
 			W.color_b = 1
 			the_mob.set_clothing_icon_dirty()
 			icon_state = "welddown"
+
+			W.flip_up()
 
 ////////////////////////////////////////////////////////////
 
@@ -673,20 +677,6 @@
 
 		SPAWN_DBG(10) check_abilities()
 */
-	proc/dropped(mob/user as mob)
-		if(src.material) src.material.triggerDrop(user, src)
-		if (islist(src.ability_buttons))
-			for(var/obj/ability_button/B in ability_buttons)
-				B.OnDrop()
-		hide_buttons()
-		clear_mob()
-		return
-
-	proc/pickup(mob/user)
-		if(src.material) src.material.triggerPickup(user, src)
-		set_mob(user)
-		show_buttons()
-		return
 
 	proc/clear_buttons()
 		if(!the_mob) return

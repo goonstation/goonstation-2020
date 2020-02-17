@@ -1,4 +1,90 @@
 ﻿
+(t)sun feb 09 20
+(u)mbc
+(*)Added a new way to handle tiny light sources that move around a lot (using a static image attached to an object instead of updating nearby tiles each step). They'll look a bit different, but also take some load off of our lighting system. Affects PDA lights, station bots, and human burning status right now. 
+(t)sat feb 08 20
+(u)mbc
+(*)Balanced scream sounds to be a bit quieter and more equivalent to each other. Also quieted burps and farts a little.
+(*)Add new step sounds for galoshes, sandals, and robots.
+(t)wed feb 05 20
+(u)mbc
+(*)New device - the access-pro. Use it to change access requirements of many different kinds of machines. It will copy the access requirements from any ID that you insert into the access-pro. The user must be wearing an ID with id-change priveliges to do this. Find it in the HoP locker.
+(*)Added an AND/OR toggle to the access-pro if you use it in-hand when its empty. This lets you specify if you want a door to require a list of accesses for entry, or allow anyone who meets any one value in the list.
+(*)If a door has 0 access requirements, it can be deconstructed with the deconstruction device now.
+(*)There will probably be some items I forgot to flag as access-changable or some bugs. Please report as usual
+(t)tue feb 04 20
+(u)mbc
+(*)Welding helmet now provides a bit less head armor when it's flipped down. Full protection is only given when flipped up.
+(*)Weakened the intensity of scanlines and other vision-impairing wearables
+(t)sun feb 02 20
+(u)mbc
+(*)Deconstruction Device will appear in engineer lockers as well as mechanic lockers.
+(*)The Deconstruction Device can now be used to deconstruct more kinds of objects, and not just things mechanics have created (either click in-hand or use mousedrag). When you deconstruct an object, it turns into a mechanics frame that can later be soldered up at a different location. Most things will require some tool use to deconstruct as well, depending on complexity of the object. 
+(*)There will probably be some bugs or objects I've forgotten to whitelist as 'deconstructable'. Please report if you encounter those!
+(t)sat feb 01 20
+(u)mbc
+(*)Stamina bar updates more frequently.
+(*)The time it takes to pin someone with an aggressive grab will be reduced proportionally depending on their remaining stamina (as opposed to the previous implementation where they had to be at 0 for a fast pin)
+(*)Replaced the existing (byond built-in) sound falloff rate with our own custom one. Also reduced the max ranges of sounds a bit.
+(t)wed jan 29 20
+(u)mbc
+(*)Fixed bot pathfinding to not get stuck on unopenable doors.
+(t)tue jan 28 20
+(u)mbc
+(*)Moved hold-at-gunpoint functions to the new item grabs framework. Hold any gun and click someone on Grab intent to hold them hostage. This behaves similar to the old gunpoint mode, but now it's more flexible and you can get a tight hold + pull the target around.
+(*)Fixed bullets that throw the impacted player, like shotgun rounds - they were throwing in basically random directions instead of the direction the bullet was moving and weren't throwing at all on pointblank shots. Also, players who are thrown through the air by bullets will no longer be able to counteract the throw by running (this behavior is unchanged for normal throws)
+(t)mon jan 27 20
+(u)mbc
+(*)Fixed reinforced cables not being immune to explosions.
+(*)Fluid movement gear (flippers etc) will prevent sea plants from slowing you down. It also won't slow you on mined rock tiles anymore.
+(*)Increased time it takes to remove a jumpsuit from someone else.
+(t)sun jan 26 20
+(u)mbc
+(*)Revolution leaders can now buy daggers and standard flashes through their uplink.
+(*)Pins can be executed a little faster on targets who have 0 stamina.
+(*)You can chair flip off of boxing rope corners now (same input - mousedrag)
+(*)Knives can be used to strangle and inflict minor bleed damage.
+(*)Cable coil can be used to strangle and inflict a bit extra oxygen deprivation.
+(*)Added overlay for inhand item grabs.
+(*)You can now pin someone by grabbing them and clicking the floor. The action will happen faster if you have a tight grip before starting. Neither party will be able to move during the pin (but the target can resist), and the pin will break when the attacker's stamina runs out.
+(*)Fixed bot and mulebot pathfinding, for real this time. Probably.
+(t)sat jan 25 20
+(u)mbc
+(*)Split the disorient resist armor property into 3 types - Body, Eye, and Ear. Body protects from mostly anything, Eye for flashes, and Ear for sonic stuns. Also added some different amounts of Eye/Ear protection to existing headwear where it would fit.
+(*)You can now dose a material cloth with a small amount of reagents to force targets you strangle to inhale from it.
+(*)You can now strangle someone with a breath mask. If you're holding an internals tank in your off-hand, they will be forced to inhale from the tank.
+(t)thu jan 23 20
+(u)mbc
+(*)Revolutionary flashbangs will shatter loyalty implants in affected targets.
+(t)tue jan 21 20
+(u)mbc
+(*)Adjusted triplemeth stun reduction from 100% to 98%.
+(u)mbc
+(*)Use Grab intent with a cloth (material piece) to hold someone aggressively with an additional effect of muffled speech. Not a 'quiet' effect, it's normal volume and more unintelligible.
+(*)Adjusted hot/cold food buffs to only apply their effect appropriately when you are too hot / too cold.
+(*)You can now suplex two people at once.
+(*)Slightly changed suplex stun times.
+(t)mon jan 20
+(u)mbc
+(*)You can now dive off the pool springboard with a technique identical to the chair flip. Also, people can now be thrown into/out of the pool instead of always needing to enter through the ladder.
+(t)sun jan 19
+(u)mbc
+(*)Reworked the way stun reductions work. (They used to reduce all stuns by some amount per life tick. Now, stuns are reduced on the instant of application by some percentage value). This affects lots of drugs, but also fixes some stuff like the changeling abomination form.
+(*)Disorient reductions have been introduced as properties of armor. Currently the only things that grant a disorient reduction are the security barrier, heavy riot suit, and EOD armor. Probably make some craftable civilian version at some point.
+(*)You can view these protection values by using the STAT tooltip on the ingame HUD.
+(*)Fixed a longstanding bug where you could get the benefits of armor simply by holding it in your hand (no more spacewalking by holding a space suit, sorry)
+(t)sun jan 12 20
+(u)mbc
+(*)In the 'Display' menu on the top left you now have the option to toggle framerate up to 60. This won't look good for everyone and may look worse, depending on your PC.
+(*)Chair flip is now a targeted ability where you can click on a tile to throw yourself in that direction. Flipping will launch you in whatever direction your character is facing.
+(*)Chair flip range extended to 3 tiles instead of 2. You will deal more damage to targets who are farther away. Missing your target (slamming into walls etc) can hurt a little.
+(*)Added little pull/unpull icon effects.
+(t)sun jan 05 20
+(u)mbc
+(*)Pods can now aim and shoot diagonally.
+(*)Pods can brake (hold your SPRINT button)
+(*)Pods bump into things and take/deal damage just like subs do.
+(*)When impacted by a taser, there is a chance that the pod's wormhole recharge will be put on cooldown.
 (t)wed jan 01 20
 (u)Firebarrage
 (*) You can now transfer spacebux between online players and check your balance mid round. Check an ATM for details

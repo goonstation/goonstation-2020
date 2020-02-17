@@ -133,6 +133,13 @@
 	//var/list/parts = new/list()
 	var/list/needed_parts = new/list()
 	module_research = list("electronics" = 3, "engineering" = 1)
+	var/obj/deconstructed_thing = null
+
+
+	disposing()
+		deconstructed_thing = null
+		store_type = null
+		..()
 
 /obj/item/electronics/frame/verb/rotate()
 	set src in view(1)
@@ -159,7 +166,6 @@
 				viewstat = 0
 				boutput(user, "<span style=\"color:blue\">You unsecure the [src].</span>")
 			else if(secured == 2)
-				secured = 0
 				boutput(user, "<span style=\"color:red\">You deploy the [src]!</span>")
 				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([showCoords(src.x, src.y, src.z)])")
 				if (!istype(user.loc,/turf) && store_type in typesof(/obj/critter))
@@ -168,6 +174,9 @@
 				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 				//deploy()
 			return
+	if (iswrenchingtool(W))
+		boutput(user, "<span style=\"color:red\">You deconstruct [src] into its base materials!</span>")
+		src.drop_resources(W,user)
 	..()
 
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -268,17 +277,60 @@
 
 /obj/item/electronics/frame/proc/deploy()
 	var/turf/T = get_turf(src)
-	var/obj/O = new store_type(T)
+	var/obj/O = null
+	if (deconstructed_thing)
+		O = deconstructed_thing
+		O.set_loc(T)
+		O.was_built_from_frame(usr)
+		deconstructed_thing = null
+	else
+		O = new store_type(T)
+
 	O.dir = src.dir
-	O.mats = "Built"
+	//O.mats = "Built"
+	O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
 	return
 
+/obj/item/electronics/frame/proc/drop_resources(obj/item/W as obj, mob/user as mob)
+	var/datum/manufacture/mechanics/R = null
+
+	if (src.deconstructed_thing)
+		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
+			if (M.frame_path == deconstructed_thing.type)
+				R = M
+				break
+	else
+		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
+			if (M.frame_path == src.store_type)
+				R = M
+				break
+
+	if (istype(R))
+		var/looper = round(R.item_amounts[1] / 10, 1)
+		while (looper > 0)
+			var/obj/item/material_piece/mauxite/M = unpool(/obj/item/material_piece/mauxite)
+			M.set_loc(get_turf(src))
+			looper--
+		looper = round(R.item_amounts[2] / 10, 1)
+		while (looper > 0)
+			var/obj/item/material_piece/pharosium/P = unpool(/obj/item/material_piece/pharosium)
+			P.set_loc(get_turf(src))
+			looper--
+		looper = round(R.item_amounts[3] / 10, 1)
+		while (looper > 0)
+			var/obj/item/material_piece/molitz/M = unpool(/obj/item/material_piece/molitz)
+			M.set_loc(get_turf(src))
+			looper--
+	else
+		boutput(user, "<span style=\"color:red\">Could not reclaim resources.</span>")
+	qdel(src)
+
 /datum/action/bar/icon/build_electronics_frame
 	duration = 10
-	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "build_electronics_frame"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
@@ -364,6 +416,17 @@
 	pressure_resistance = 40
 	module_research = list("electronics" = 3, "engineering" = 1)
 
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (!isobj(target))
+			return
+		var/obj/O = target
+		var/decon_len = O.decon_contexts ? O.decon_contexts.len : 0
+		O.decon_contexts = null
+		if (O.build_deconstruction_buttons() != decon_len)
+			boutput(user, "<span style=\"color:red\">You repair [target]'s deconstructed state.</span>")
+			return
+		..()
+
 ////////////////////////////////////////////////////////////////no
 /obj/item/electronics/disk
 	name = "data module"
@@ -396,10 +459,6 @@
 			// if this item doesn't have mats defined or was constructed or
 			// attempting to scan a syndicate item and this is a normal scanner
 			boutput(user, "<span style=\"color:red\">The structure of this object is not compatible with the scanner.</span>")
-			return
-
-		if (O.mats == "Built" && (ticker && ticker.mode && !istype(ticker.mode, /datum/game_mode/construction)))
-			boutput(user, "<span style=\"color:red\">You cannot scan an object that was already deployed by a mechanic.</span>")
 			return
 
 		user.visible_message("<B>[user.name]</B> scans [O].")
@@ -437,7 +496,7 @@
 /obj/machinery/rkit/New()
 	..()
 	//link = mechanic_controls
-	SPAWN_DBG(8)
+	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 		if(!src.net_id)
@@ -465,7 +524,7 @@
 
 	var/target = signal.data["sender"]
 	if((signal.data["address_1"] == "ping") && target)
-		SPAWN_DBG(5) //Send a reply for those curious jerks
+		SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
@@ -487,7 +546,7 @@
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
-			SPAWN_DBG(5)
+			SPAWN_DBG(0.5 SECONDS)
 
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
@@ -503,7 +562,7 @@
 			return
 
 	mechanic_controls.scan_in(scanFile.scannedName, scanFile.scannedPath, scanFile.scannedMats)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -535,7 +594,7 @@
 			if (!match_check)
 				var/obj/tempobj = new X (src)
 				mechanic_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
-				SPAWN_DBG(40)
+				SPAWN_DBG(4 SECONDS)
 					qdel(tempobj)
 				S.scanned -= X
 				add_count++
@@ -598,7 +657,7 @@
 							src.no_print_spam = world.time
 							SPAWN_DBG (50)
 								if (src)
-									new /obj/item/paper/manufacturer_blueprint(src.loc, M.name)
+									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
 		updateDialog()
 	else
@@ -622,48 +681,154 @@
 		spark_system.attach(src)
 		return
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!istype(target,/obj/))
+	proc/finish_decon(atom/target,mob/user)
+		if (!isobj(target))
 			return
 		var/obj/O = target
-		if (O.mats != "Built")
-			boutput(user, "<span style=\"color:red\">This fixture cannot be deconstructed.</span>")
+		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("<B>[user.name]</B> deconstructs [target].")
+
+
+		var/obj/item/electronics/frame/F = new(get_turf(target))
+		F.name = "[target.name] frame"
+		F.deconstructed_thing = target
+		O.set_loc(F)
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox_big"
+		F.w_class = 4
+
+		spark_system.set_up(5, 0, src)
+		spark_system.start()
+
+		O.was_deconstructed_to_frame(user)
+
+	MouseDrop_T(atom/target, mob/user)
+		if (!isobj(target))
 			return
-		boutput(user, "Deconstructing [O], please remain still...")
-		playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
-		if(do_after(user, 20))
-			logTheThing("station", user, null, "deconstructs [O] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
-			playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			user.visible_message("<B>[user.name]</B> deconstructs [O].")
+		src.afterattack(target,user)
+		..()
 
-			var/datum/manufacture/mechanics/R = null
-			for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
-				if (M.frame_path == O.type)
-					R = M
-					break
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (!isobj(target))
+			return
+		var/obj/O = target
 
-			if (istype(R))
-				var/looper = round(R.item_amounts[1] / 10, 1)
-				while (looper > 0)
-					var/obj/item/material_piece/mauxite/M = unpool(/obj/item/material_piece/mauxite)
-					M.set_loc(O.loc)
-					looper--
-				looper = round(R.item_amounts[2] / 10, 1)
-				while (looper > 0)
-					var/obj/item/material_piece/pharosium/P = unpool(/obj/item/material_piece/pharosium)
-					P.set_loc(O.loc)
-					looper--
-				looper = round(R.item_amounts[3] / 10, 1)
-				while (looper > 0)
-					var/obj/item/material_piece/molitz/M = unpool(/obj/item/material_piece/molitz)
-					M.set_loc(O.loc)
-					looper--
-			else
-				boutput(user, "<span style=\"color:red\">Could not reclaim resources.</span>")
-			spark_system.set_up(5, 0, src)
-			spark_system.start()
-			qdel(O)
+		var/decon_complexity = O.build_deconstruction_buttons()
+		if (!decon_complexity)
+			boutput(user, "<span style=\"color:red\">[target] cannot be deconstructed.</span>")
+			if (O.deconstruct_flags & DECON_ACCESS)
+				boutput(user, "<span style=\"color:red\">[target] is under an access lock and must have its access requirements removed first.</span>")
+			return
 
+		if (!O.allowed(user) || O.is_syndicate)
+			boutput(user, "<span style=\"color:red\">You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			return
+
+		if (isrestrictedz(O.z) && !isitem(target))
+			boutput(user, "<span style=\"color:red\">You cannot bring yourself to deconstruct [target] in this area.</span>")
+			return
+
+		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
+			boutput(user, "Deconstructing [O], please remain still...")
+			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
+			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
 		else
-			boutput(user, "<span style=\"color:red\">Deconstruction of [O] interrupted!</span>")
-		return
+			user.showContextActions(O.decon_contexts, O)
+			boutput(user, "<span style=\"color:red\">You need to use some tools on [target] before it can be deconstructed.</span>")
+			return
+
+/obj/var/list/decon_contexts = null
+
+/obj/disposing()
+	if (src.decon_contexts)
+		for(var/datum/contextAction/C in src.decon_contexts)
+			C.disposing()
+	..()
+
+/obj/proc/was_deconstructed_to_frame(mob/user)
+	.= 0
+
+/obj/proc/was_built_from_frame(mob/user)
+	.= 0
+
+/obj/proc/build_deconstruction_buttons()
+	.= 0
+
+	if (deconstruct_flags & DECON_ACCESS)
+		if (src.has_access_requirements())
+			return
+
+	if (deconstruct_flags)
+		.= 1
+
+		if (src.decon_contexts != null)	//dont need rebuild
+			return
+
+		src.decon_contexts = list() //empty list would mean we are ready for deconstruction. otherwise you need to clear contexts by tool usage
+
+		if (deconstruct_flags & DECON_SCREWDRIVER)
+			var/datum/contextAction/deconstruction/screw/newcon = new
+			decon_contexts += newcon
+		if (deconstruct_flags & DECON_WRENCH)
+			var/datum/contextAction/deconstruction/wrench/newcon = new
+			decon_contexts += newcon
+		if (deconstruct_flags & DECON_CROWBAR)
+			var/datum/contextAction/deconstruction/pry/newcon = new
+			decon_contexts += newcon
+		if (deconstruct_flags & DECON_WELDER)
+			var/datum/contextAction/deconstruction/weld/newcon = new
+			decon_contexts += newcon
+		if (deconstruct_flags & DECON_WIRECUTTERS)
+			var/datum/contextAction/deconstruction/cut/newcon = new
+			decon_contexts += newcon
+		if (deconstruct_flags & DECON_MULTITOOL)
+			var/datum/contextAction/deconstruction/pulse/newcon = new
+			decon_contexts += newcon
+
+		.+= decon_contexts.len
+
+
+/datum/action/bar/icon/deconstruct_obj
+	duration = 20
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "deconstruct_obj"
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "decon"
+	var/obj/O
+	var/obj/item/deconstructor/D
+	New(Obj, Decon, ExtraTime)
+		O = Obj
+		D = Decon
+		duration += ExtraTime
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (ismob(owner))
+			var/mob/M = owner
+			if (!D in M.equipped_list())
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		D.finish_decon(O,owner)
+
+	onInterrupt()
+		if (O && owner)
+			boutput(owner, "<span style=\"color:red\">Deconstruction of [O] interrupted!</span>")
+		..()

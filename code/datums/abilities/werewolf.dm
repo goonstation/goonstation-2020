@@ -65,6 +65,7 @@
 			M.delStatus("weakened")
 			M.delStatus("paralysis")
 			M.delStatus("slowed")
+			M.delStatus("disorient")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
 			M.drowsyness = 0

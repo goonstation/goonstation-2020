@@ -116,7 +116,7 @@
 
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
 		if (proj_data) //Apparently proj_data can still be missing. HUH.
-			proj_data.on_hit(A, src.angle, src)
+			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
 		if(proj_data && proj_data.material) //ZeWaka: Fix for null.material

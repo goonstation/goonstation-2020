@@ -5,6 +5,7 @@
 	icon_state = "psiphon:0"
 	density = 1
 	mats = 12
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100

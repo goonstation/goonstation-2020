@@ -4,7 +4,6 @@ datum/controller/process/mobs
 	var/tmp/tick_counter
 	var/list/mobs
 
-	var/list/living = list()
 	var/list/wraiths = list()
 	var/list/adminghosts = list()
 
@@ -33,7 +32,7 @@ datum/controller/process/mobs
 
 		// For periodic antag overlay updates (Convair880).
 		for (var/mob/dead/G in src.mobs)
-#ifdef HALLOWEEN 
+#ifdef HALLOWEEN
 			if (TRUE)
 #else
 			if (isadminghost(G) || IS_TWITCH_CONTROLLED(G))

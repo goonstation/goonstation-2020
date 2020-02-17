@@ -10,6 +10,7 @@
 	icon_state = "laundry"
 	anchored = 1
 	density = 1
+	deconstruct_flags = DECON_WELDER | DECON_WRENCH
 	var/on = 0
 	var/open = 0
 	var/cycle = PRE

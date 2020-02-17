@@ -28,10 +28,14 @@
 					src.throw_impact(A)
 					src.throwing = 0
 
+
 /atom/proc/throw_begin(atom/target)
 	return
 
-/atom/proc/throw_impact(atom/hit_atom, list/params)
+/atom/proc/throw_end() //throw ends (callback regardless of whether we impacted something)
+	return
+
+/atom/movable/proc/throw_impact(atom/hit_atom, list/params)
 	var/turf/t = get_turf(hit_atom)
 	if( t && t.loc && t.loc:sanctuary ) return
 	var/impact_sfx = 0
@@ -91,7 +95,7 @@
 
 		if(((C.in_throw_mode && C.a_intent == "help") || (C.client && C.client.check_key(KEY_THROW))) && !C.equipped())
 			if((C.hand && (!C.limbs.l_arm)) || (!C.hand && (!C.limbs.r_arm)) || C.handcuffed || (prob(60) && C.bioHolder.HasEffect("clumsy")) || ismob(src) || (throw_traveled <= 1 && last_throw_x == src.x && last_throw_y == src.y))
-				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>")
+				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>") //you're all thumbs!!!
 				// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
 				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 				if(src.vars.Find("throwforce"))
@@ -105,7 +109,7 @@
 					C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
 					C.changeStatus("stunned", 3 SECONDS)
 
-				if(ismob(src)) src:throw_impacted()
+				if(ismob(src)) src:throw_impacted(hit_atom)
 
 			else
 				src.attack_hand(C)	// nice catch, hayes. don't ever fuckin do it again
@@ -116,11 +120,15 @@
 				game_stats.Increment("catches")
 			#endif
 
-		else //you're all thumbs!!!
-			C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>")
-			logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
-			if(src.vars.Find("throwforce"))
-				random_brute_damage(C, src:throwforce)
+		else  //normmal thingy hit me
+			if (src.throwing & THROW_CHAIRFLIP)
+				C.visible_message("<span style=\"color:red\">[src] slams into [C] midair!</span>")
+			else
+				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>")
+				if(src.vars.Find("throwforce"))
+					random_brute_damage(C, src:throwforce)
+
+				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 
 			//bleed check here
 			if (isitem(src))
@@ -137,7 +145,7 @@
 				C.throw_at(get_edge_target_turf(C,get_dir(src, C)), 10, 1)
 				C.changeStatus("stunned", 3 SECONDS)
 
-			if(ismob(src)) src:throw_impacted()
+			if(ismob(src)) src:throw_impacted(hit_atom)
 
 
 	else if(issilicon(hit_atom))
@@ -154,7 +162,7 @@
 		if(src.vars.Find("throwforce") && src:throwforce >= 40)
 			S.throw_at(get_edge_target_turf(S,get_dir(src, S)), 10, 1)
 
-		if(ismob(src)) src:throw_impacted()
+		if(ismob(src)) src:throw_impacted(hit_atom)
 
 		impact_sfx = impact_sfx = 'sound/impact_sounds/Metal_Clang_3.ogg'
 
@@ -163,7 +171,7 @@
 		var/obj/O = hit_atom
 		if(!O.anchored) step(O, src.dir)
 		O.hitby(src)
-		if(ismob(src)) src:throw_impacted()
+		if(ismob(src)) src:throw_impacted(hit_atom)
 		if(O && src.vars.Find("throwforce") && src:throwforce >= 40)
 			if(!O.anchored && !O.throwing)
 				O.throw_at(get_edge_target_turf(O,get_dir(src, O)), 10, 1)
@@ -174,7 +182,7 @@
 		var/turf/T = hit_atom
 		if(T.density)
 			//SPAWN_DBG(2) step(src, turn(src.dir, 180))
-			if(ismob(src)) src:throw_impacted()
+			if(ismob(src)) src:throw_impacted(hit_atom)
 			/*if(istype(hit_atom, /turf/simulated/wall) && isitem(src))
 				var/turf/simulated/wall/W = hit_atom
 				W.take_hit(src)*/
@@ -192,12 +200,18 @@
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from)
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if (!target) return
 	if (reagents)
 		reagents.physical_shock(14)
-	src.throwing = 1
+	src.throwing = throw_type
+
+	if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+		if (ismob(src))
+			var/mob/M = src
+			M.force_laydown_standup()
+
 	src.throw_traveled = 0
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y
@@ -250,9 +264,11 @@
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				if (!Move(step))  // Grayshift: Race condition fix. Bump proc calls are delayed past the end of the loop and won't trigger end condition
 					hitAThing = 1 // of !throwing on their own, so manually checking if Move failed as end condition
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				hit_check()
 				error += dist_x
 				dist_travelled++
@@ -265,9 +281,11 @@
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				if (!Move(step))
 					hitAThing = 1
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				hit_check()
 				error -= dist_y
 				dist_travelled++
@@ -286,9 +304,11 @@
 				var/atom/step = get_step(src, dx)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				if (!Move(step))
 					hitAThing = 1
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				hit_check()
 				error += dist_y
 				dist_travelled++
@@ -301,9 +321,11 @@
 				var/atom/step = get_step(src, dy)
 				if(!step || step == src.loc) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				if (!Move(step))
 					hitAThing = 1
 					break
+				src.glide_size = (32 / (1/speed)) * world.tick_lag
 				hit_check()
 				error -= dist_x
 				dist_travelled++
@@ -315,6 +337,7 @@
 			T = src.loc
 
 	//done throwing, either because it hit something or it finished moving
+	src.throw_end()
 	if (!hitAThing) // Bump proc requires throwing flag to be set, so if we hit a thing, leave it on and let Bump turn it off
 		src.throwing = 0
 	else // if we hit something don't use the pixel x/y from the click params

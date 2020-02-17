@@ -5,6 +5,7 @@
 	icon_state = "scanner"
 	anchored = 1
 	mats = 6
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	var/datum/data/record/mainaccount = null
 
 

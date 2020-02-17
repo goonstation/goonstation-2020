@@ -335,7 +335,7 @@ toxic - poisons
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
-		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1)
+		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
 
 		//When it hits a mob or such should anything special happen
 	on_hit(atom/hit, angle, var/obj/projectile/O)
@@ -344,7 +344,7 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 80, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),7,1)
+			H.throw_at(get_edge_target_turf(hit, dir),7,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 		return

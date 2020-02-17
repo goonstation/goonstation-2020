@@ -84,6 +84,11 @@
 	var/block_hearing_when_worn = HEARING_NORMAL
 	 //fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
 
+
+	var/obj/item/grab/chokehold = null
+	var/obj/item/grab/special_grab = null
+
+
 	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
 		if(ismob(src.loc))
 			var/mob/L = src.loc
@@ -502,8 +507,8 @@
 
 		after_stack(O, user, added)
 
+#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
 
-#define src_exists_inside_usr_or_usr_storage (src.loc == usr || (istype(src.loc, /obj/item/storage) && src.loc.loc == usr))
 
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, params)
 	..()
@@ -513,21 +518,45 @@
 
 	var/on_turf = isturf(src.loc)
 
+	var/mob/user = usr
 
-	if (isturf(over_object) && in_range(over_object,src))
-		if (on_turf) //drag from floor to floor == slide
-			if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
+	params = params2list(params)
+
+	if (isliving(over_object) && isliving(usr) && !istype(src,/obj/item/storage)) //pickup action
+		if (user == over_object)
+			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
+		//else // use laterr, after we improve the 'give' dialog to work with multicontext
+		//	if (get_dist(user,over_object) <= 1 && src_exists_inside_usr_or_usr_storage)
+		//		user.give_to(over_object)
+	else
+
+		if (isturf(over_object))
+			if (on_turf && in_range(over_object,src)) //drag from floor to floor == slide
+				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
+					step_to(src,over_object)
+					//this would be cool ha ha h
+					//if (islist(params) && params["icon-y"] && params["icon-x"])
+						//src.pixel_x = text2num(params["icon-x"]) - 16
+						//src.pixel_y = text2num(params["icon-y"]) - 16
+						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
+					return
+			else if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
-				//this would be cool ha ha h
-				//if (islist(params) && params["icon-y"] && params["icon-x"])
-					//src.pixel_x = text2num(params["icon-x"]) - 16
-					//src.pixel_y = text2num(params["icon-y"]) - 16
-					//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
-				return
-		else if (src_exists_inside_usr_or_usr_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
-			usr.drop_from_slot(src) //drag from inventory to floor == drop
-			step_to(src,over_object)
 
+
+		var/is_storage = istype(over_object,/obj/item/storage)
+		if (is_storage || istype(over_object, /obj/screen/hud))
+			if (on_turf && isturf(over_object.loc) && is_storage)
+				try_equip_to_inventory_object(usr, over_object, params)
+			else if (on_turf)
+				actions.start(new /datum/action/bar/private/icon/pickup/then_hud_click(src, over_object, params), usr)
+			else
+				try_equip_to_inventory_object(usr, over_object, params)
+
+
+//equip an item, given an inventory hud object or storage item UI thing
+/obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
 	var/obj/screen/hud/S = over_object
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
@@ -537,32 +566,27 @@
 	if (istype(over_object,/obj/item/storage) && over_object != src)
 		var/obj/item/storage/storage = over_object
 		if (istype(storage.loc, /turf))
-			if (!(in_range(src,usr) && in_range(storage,usr)))
+			if (!(in_range(src,user) && in_range(storage,user)))
 				return
-		else if (!(get_turf(src) == get_turf(storage)))
-			return
 
-		var/succ = src.try_put_hand_mousedrop(usr, storage)
+		var/succ = src.try_put_hand_mousedrop(user, storage)
 		if (succ)
 			SPAWN_DBG(1)
-				if (usr.is_in_hands(src))
-					storage.attackby(src, usr)
-
+				if (user.is_in_hands(src))
+					storage.attackby(src, user)
+			return
 
 	if (istype(S))
-		if (on_turf)
-			usr.show_text("You need to pick up this item first.", "blue")
 		if (src.cant_self_remove)
 			return
-		if ( !usr.restrained() && !usr.stat && src_exists_inside_usr_or_usr_storage )
-			var/succ = src.try_put_hand_mousedrop(usr)
+		if ( !user.restrained() && !user.stat )
+			var/succ = src.try_put_hand_mousedrop(user)
 			if (succ)
 				SPAWN_DBG(1)
-					if (usr.is_in_hands(src))
-						S.clicked(params)
+					if (user.is_in_hands(src))
+						S.sendclick(params, user)
 
-#undef src_exists_inside_usr_or_usr_storage
-
+#undef src_exists_inside_user_or_user_storage
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
@@ -687,7 +711,7 @@
 	burning_last_process = src.burning
 	return null
 
-/obj/item/proc/attack_self()
+/obj/item/proc/attack_self(mob/user)
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
 			var/obj/item/parts/human_parts/arm/left/item/I = src.loc
@@ -697,6 +721,11 @@
 			var/obj/item/parts/human_parts/arm/right/item/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
+
+	if (special_grab)
+		if(chokehold)
+			chokehold.attack_self(user)
+
 	return
 
 /obj/item/proc/talk_into(mob/M as mob, text, secure, real_name, lang_id)
@@ -791,40 +820,43 @@
 	set src in oview(1)
 	set category = "Local"
 
-	if (world.time < usr.next_click)
+	src.pick_up_by(usr)
+
+/obj/item/proc/pick_up_by(var/mob/M)
+	if (world.time < M.next_click)
 		return //fuck youuuuu
 
-	if (isdead(usr) || (!iscarbon(usr) && !iscritter(usr)))
+	if (isdead(M) || (!iscarbon(M) && !iscritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(usr) || usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.restrained())
+	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
 		return
 
-	if (!can_reach(usr, src))
+	if (!can_reach(M, src))
 		return
 
-	if (issmallanimal(usr))
-		var/mob/living/critter/small_animal = usr
+	if (issmallanimal(M))
+		var/mob/living/critter/small_animal = M
 
 		for (var/datum/handHolder/HH  in small_animal.hands)
 			if (istype(HH.limb,/datum/limb/small_critter))
-				if (usr.equipped())
-					usr.drop_item()
+				if (M.equipped())
+					M.drop_item()
 					SPAWN_DBG(1)
-						HH.limb.attack_hand(src,usr,1)
+						HH.limb.attack_hand(src,M,1)
 				else
-					HH.limb.attack_hand(src,usr,1)
-				usr.next_click = world.time + src.click_delay
+					HH.limb.attack_hand(src,M,1)
+				M.next_click = world.time + src.click_delay
 				return
 
 	//the verb is PICK-UP, not 'smack this object with that object'
-	if (usr.equipped())
-		usr.drop_item()
+	if (M.equipped())
+		M.drop_item()
 		SPAWN_DBG(1)
-			src.attack_hand(usr)
+			src.attack_hand(M)
 	else
-		src.attack_hand(usr)
-	usr.next_click = world.time + src.click_delay
+		src.attack_hand(M)
+	M.next_click = world.time + src.click_delay
 
 /obj/item/get_desc()
 	var/t
@@ -921,6 +953,15 @@
 		if (!user.process_stamina(src.stamina_cost))
 			logTheThing("combat", user, M, "tries to attack %target% with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
+
+	if (special_grab)
+		if (chokehold)
+			chokehold.attack(M, user, def_zone, is_special)
+			return
+		else
+			if (user.a_intent == INTENT_GRAB)
+				src.try_grab(M, user)
+				return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
 	var/hit_area
@@ -1191,6 +1232,9 @@
 			if (M.trinket == src)
 				M.trinket = null
 
+	if (special_grab)
+		drop_grab()
+
 	..()
 
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
@@ -1225,3 +1269,21 @@
 				possible_mob_holder.hand = !possible_mob_holder.hand
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
+
+/obj/item/proc/dropped(mob/user as mob)
+	if(src.material) src.material.triggerDrop(user, src)
+	if (islist(src.ability_buttons))
+		for(var/obj/ability_button/B in ability_buttons)
+			B.OnDrop()
+	hide_buttons()
+	clear_mob()
+
+	if (special_grab)
+		drop_grab()
+	return
+
+/obj/item/proc/pickup(mob/user)
+	if(src.material) src.material.triggerPickup(user, src)
+	set_mob(user)
+	show_buttons()
+	return

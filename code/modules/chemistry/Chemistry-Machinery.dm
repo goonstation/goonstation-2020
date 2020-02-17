@@ -17,6 +17,7 @@
 	icon_state = "heater"
 	flags = NOSPLASH
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
 	var/obj/beaker = null
 	var/active = 0
@@ -297,6 +298,7 @@
 	icon_state = "mixer0"
 	flags = NOSPLASH
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/whitelist = list()
 	var/emagged = 0
@@ -666,6 +668,7 @@ datum/chemicompiler_core/stationaryCore
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/datum/chemicompiler_executor/executor
 	var/datum/light/light
 

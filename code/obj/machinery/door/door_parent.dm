@@ -318,18 +318,6 @@
 		if (src.sound_deny)
 			playsound(src.loc, src.sound_deny, 25, 0)
 
-	//grabsmash
-	if (istype(I, /obj/item/grab/))
-		var/obj/item/grab/G = I
-
-		if (ismob(G.affecting) && src.allowed(G.affecting) && src.density)
-			src.last_used = world.time
-			src.open()
-
-		if  (!grab_smash(G, user))
-			return ..(I, user)
-		else return
-
 	if (src.density && !src.operating && I)
 		user.lastattacked = src
 		attack_particle(user,src)
@@ -350,7 +338,7 @@
 			src.take_damage(resolvedForce, user)
 
 
-	return
+	return ..(I,user)
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if (src.operating)

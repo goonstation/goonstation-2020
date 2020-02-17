@@ -18,6 +18,7 @@
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
 	req_access = list(access_heads)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	lr = 0.6
 	lg = 1

@@ -165,7 +165,7 @@
 		src.visible_message("<span style=\"color:red\"><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
 
 
-/mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0)
+/mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
 	if(!src || !target)
 		return 0
 
@@ -213,15 +213,30 @@
 			var/datum/pathogen/P = H.pathogens[uid]
 			P.ongrab(target)
 
-	var/obj/item/grab/G = new /obj/item/grab(src)
-	G.assailant = src
-	src.put_in_hand(G, src.hand)
-	G.affecting = target
-	target.grabbed_by += G
+	if (!grab_item)
+		var/obj/item/grab/G = new /obj/item/grab(src)
+		G.assailant = src
+		src.put_in_hand(G, src.hand)
+		G.affecting = target
+		target.grabbed_by += G
+	else// special. return it too
+		if (!grab_item.special_grab)
+			return
+		var/obj/item/grab/G = new grab_item.special_grab(grab_item)
+		G.assailant = src
+		G.affecting = target
+		target.grabbed_by += G
+		G.loc = grab_item
+		.= G
 
 	playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-	if (suppress_final_message != 1) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).
-		target.visible_message("<span style=\"color:red\">[src] grabs hold of [target]!</span>")
+	if (!suppress_final_message) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).
+		if (grab_item)
+			target.visible_message("<span style=\"color:red\">[src] grabs hold of [target] with [grab_item]!</span>")
+		else
+			target.visible_message("<span style=\"color:red\">[src] grabs hold of [target]!</span>")
+
+
 
 ///////////////////////////////////////////////////// Disarm intent ////////////////////////////////////////////////
 
@@ -408,12 +423,9 @@
 	var/ret = 0
 	if(getStatusDuration("stonerit"))
 		ret += 20
-	for(var/obj/item/C in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
 		ret += C.getProperty("block")
-	if(istype(l_hand, /obj/item))
-		ret += l_hand.getProperty("block")
-	if(istype(r_hand, /obj/item))
-		ret += r_hand.getProperty("block")
 	return ret
 
 /////////////////////////////////////////////////// Harm intent ////////////////////////////////////////////////////////

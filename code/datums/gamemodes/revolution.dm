@@ -119,7 +119,7 @@
 			rev_mob.put_in_hand_or_drop(F2)
 			the_slot = "hand"
 	*/
-	rev_mob.show_text("You've been supplied with a <b>flash</b> in your [the_slot] with which to convert others to the cause!", "blue")
+	rev_mob.show_text("You can use any <b>flash</b> or order items on your Uplink to convert others to the cause!", "blue")
 	return
 
 /datum/game_mode/revolution/send_intercept()

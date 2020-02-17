@@ -96,6 +96,11 @@
 
 		src.visible_message("<span style=\"color:red\"><b>[possessed] comes to life!</b></span>") // was [src] but: "the living space thing comes alive!"
 		animate_levitate(src, -1, 20, 1)
+		src.add_stun_resist_mod("living_object", 1000)
+
+	disposing()
+		src.remove_stun_resist_mod("living_object")
+		..()
 
 	equipped()
 		if (canattack)
@@ -137,9 +142,6 @@
 		// 		if (owner.abilityHolder.usesPoints)
 		// 			owner.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 
-		delStatus("weakened")
-		delStatus("paralysis")
-		delStatus("stunned")
 		delStatus("slowed")
 		sleeping = 0
 		change_misstep_chance(-INFINITY)

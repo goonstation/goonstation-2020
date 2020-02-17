@@ -55,6 +55,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 16
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
