@@ -1,6 +1,7 @@
 #define TOO_QUIET 0.6 //experimentally found, I don't care if it's super quiet because there's already shitloads of other sounds playing
 #define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
 #define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
+#define MAX_SOUND_RANGE 31
 
 // returns 0 to 1
 /proc/attenuate_for_location(var/atom/loc)
@@ -25,6 +26,8 @@
 
 var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+var/global/list/falloff_cache = list()
+
 
 //volumous hair with l'orial paris
 /client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5)
@@ -95,6 +98,11 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 
 		var/mob/M = C.mob
 		//LAGCHECK(LAG_LOW)
+
+		var/dist = max(get_dist(C.mob, source), 1)
+		if (dist > MAX_SOUND_RANGE)
+			continue
+
 		Mloc = get_turf(M)
 		if (Mloc && M.client && Mloc.z && Mloc.z == source.z)
 
@@ -109,10 +117,25 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 				//volume-related handling
 				var/ourvolume = vol
 
+
+
+				if (dist > falloff_cache.len)
+					falloff_cache.len = dist
+				var/falloffmult = falloff_cache[dist]
+				if (falloffmult == null)
+					var/scaled_dist = clamp(dist/MAX_SOUND_RANGE,0,1)
+					falloffmult = (1 - ((1.2 * (0.5**-2.3)) / ((scaled_dist**-2.3) + (0.5**-2.3))))
+					falloff_cache[dist] = falloffmult
+
+				ourvolume *= falloffmult
+
+				EARLY_CONTINUE_IF_QUIET(ourvolume)
+
 				//mbc : i'm making a call and removing this check's affect on volume bc it gets quite expensive and i dont care about the sound being quieter
 				//if(M.ears_protected_from_sound()) //Bone conductivity, I guess?
 				//	ourvolume *= 0.2
 				ourvolume *= attenuate_for_location(Mloc) //SECRET GOON SOUND SAUCE
+
 				var/storedVolume = ourvolume
 				ourvolume *= C.getVolume(channel) / 100
 				//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
@@ -132,7 +155,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 				else
 					//boutput(M, "You hear a [source] at [source_location]!")
 					S.echo = ECHO_CLOSE
-			//if(get_dist(M, source) >= 30) return // hard attentuation i guess
+
 			S.x = source.x - Mloc.x
 			S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
@@ -218,6 +241,9 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 			if ("step_outdoors") soundin = pick(sounds_step_outdoors)
 			if ("step_plating") soundin = pick(sounds_step_plating)
 			if ("step_wood") soundin = pick(sounds_step_wood)
+			if ("step_rubberboot") soundin = pick(sounds_step_rubberboot)
+			if ("step_robo") soundin = pick(sounds_step_robo)
+			if ("step_flipflop") soundin = pick(sounds_step_flipflop)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -229,7 +255,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 		logTheThing("debug", null, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
 		return
 
-	S.falloff = (world.view + extrarange) / 3.5
+	S.falloff = 9999//(world.view + extrarange) / 3.5
 	//world.log << "Playing sound; wv = [world.view] + er = [extrarange] / 3.5 = falloff [S.falloff]"
 	S.wait = 0 //No queue
 	S.channel = rand(1,900) //Any channel
@@ -364,6 +390,12 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 /var/global/list/sounds_step_outdoors = list(sound('sound/misc/step/step_outdoors_1.ogg'),sound('sound/misc/step/step_outdoors_2.ogg'),sound('sound/misc/step/step_outdoors_3.ogg'))
 /var/global/list/sounds_step_plating = 	list(sound('sound/misc/step/step_plating_1.ogg'),sound('sound/misc/step/step_plating_2.ogg'),sound('sound/misc/step/step_plating_3.ogg'),sound('sound/misc/step/step_plating_4.ogg'),sound('sound/misc/step/step_plating_5.ogg'))
 /var/global/list/sounds_step_wood = 	list(sound('sound/misc/step/step_wood_1.ogg'),sound('sound/misc/step/step_wood_2.ogg'),sound('sound/misc/step/step_wood_3.ogg'),sound('sound/misc/step/step_wood_4.ogg'),sound('sound/misc/step/step_wood_5.ogg'))
+/var/global/list/sounds_step_rubberboot = 	list(sound('sound/misc/step/step_rubberboot_1.ogg'),sound('sound/misc/step/step_rubberboot_2.ogg'),sound('sound/misc/step/step_rubberboot_3.ogg'),sound('sound/misc/step/step_rubberboot_4.ogg'))
+/var/global/list/sounds_step_robo = 		list(sound('sound/misc/step/step_robo_1.ogg'),sound('sound/misc/step/step_robo_2.ogg'),sound('sound/misc/step/step_robo_3.ogg'))
+/var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
+
+
+
 
 //talksounds
 /var/global/list/sounds_speak = list(	\

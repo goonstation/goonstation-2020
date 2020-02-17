@@ -40,7 +40,7 @@
 			DEBUG_MESSAGE("Located [F] in [location]")
 			F.repeated_applications += 1
 			//var/min = max(27 - (F.repeated_applications * 3),0)
-			var/amt_change = min((amount - (F.repeated_applications*2) ),amount)
+			var/amt_change = min((amount - (F.repeated_applications*3) ),amount)
 			amt_change = max(amt_change,0)
 			F.amount += amt_change
 

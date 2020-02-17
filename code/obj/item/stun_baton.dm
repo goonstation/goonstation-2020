@@ -558,6 +558,7 @@
 	item_state = "barrier0"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | ONBELT | TABLEPASS
+	c_flags = EQUIPPED_WHILE_HELD
 	force = 2
 	throwforce = 6
 	w_class = 2
@@ -591,6 +592,9 @@
 				setProperty("meleeprot", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
+				setProperty("disorient_resist", 65)
+				setProperty("disorient_resist_eye", 65)
+				setProperty("disorient_resist_ear", 50) //idk how lol ok
 
 				flick("barrier_a",src)
 
@@ -601,6 +605,7 @@
 				setProperty("meleeprot", 0)
 				setProperty("rangedprot", 0)
 				setProperty("movespeed", 0)
+				setProperty("disorient_resist", 0)
 
 				src.setItemSpecial(/datum/item_special/simple)
 

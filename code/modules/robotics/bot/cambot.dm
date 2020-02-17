@@ -31,13 +31,8 @@
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
 
-	var/datum/light/light
-
 /obj/machinery/bot/cambot/New()
 	..()
-	light = new /datum/light/point
-	light.attach(src)
-	light.set_brightness(0.6)
 	src.clear_invalid_targets = world.time
 	SPAWN_DBG(5)
 		if (src)
@@ -73,7 +68,6 @@
 			playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
 			flick("cambot-spark", src)
 		src.emagged = 1
-		src.light.set_brightness(0.8)
 		return 1
 	return 0
 
@@ -83,7 +77,6 @@
 	if (user)
 		user.show_text("You repair [src]'s flash control circuit.", "blue")
 	src.emagged = 0
-	src.light.set_brightness(0.6)
 	return 1
 
 /obj/machinery/bot/cambot/emp_act()
@@ -156,9 +149,9 @@
 	src.clear_invalid_targets = world.time
 
 	if (src.on)
-		light.enable()
+		add_simple_light("cambot", list(255,255,255,255 * (src.emagged ? 0.8 : 0.6)))
 	else
-		light.disable()
+		remove_simple_light("cambot")
 
 	return
 
@@ -297,12 +290,10 @@
 
 /obj/machinery/bot/cambot/proc/flash_blink(var/loops, var/delay)
 	set waitfor = 0
-	if (!src.light) // ???
-		return
 	for (var/i=loops, i>0, i--)
-		src.light.enable()
+		add_simple_light("cambot", list(255,255,255,255 * (src.emagged ? 0.8 : 0.6)))
 		sleep(delay)
-		src.light.disable()
+		remove_simple_light("cambot")
 		sleep(delay)
 
 /obj/machinery/bot/cambot/proc/photograph(var/atom/target)

@@ -199,6 +199,8 @@
 	burn_possible = 0
 	module_research = list("efficiency" = 5, "engineering" = 5)
 	laces = LACES_NONE
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
 
 	setupProperties()
 		..()
@@ -233,6 +235,8 @@
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
 	c_flags = NOSLIP
+	step_sound = "step_rubberboot"
+	step_priority = STEP_PRIORITY_LOW
 	permeability_coefficient = 0.05
 
 /obj/item/clothing/shoes/clown_shoes
@@ -252,7 +256,8 @@
 	icon_state = "flippers"
 	permeability_coefficient = 0.05
 	laces = LACES_NONE
-	//step_sound = "clownstep" to-do : flip flopping sfx
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
 
 	New()
 		..()
@@ -304,6 +309,8 @@
 	c_flags = NOSLIP
 	magical = 1
 	laces = LACES_NONE
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
@@ -317,6 +324,8 @@
 	icon_state = "tourist"
 	protective_temperature = 0
 	permeability_coefficient = 1
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
 
 	setupProperties()
 		..()
@@ -359,6 +368,8 @@
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
 	icon_state = "fuzzy"
+	step_sound = "step_carpet"
+	step_priority = STEP_PRIORITY_LOW
 
 	setupProperties()
 		..()
@@ -368,6 +379,8 @@
 	name = "go-go boots"
 	desc = "These boots complete your Space Age look."
 	icon_state = "gogo"
+	step_sound = "step_rubberboot"
+	step_priority = STEP_PRIORITY_LOW
 
 	setupProperties()
 		..()

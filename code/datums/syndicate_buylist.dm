@@ -927,7 +927,23 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/generic/revsign
 	name = "Revolutionary Sign"
 	item = /obj/item/revolutionary_sign
-	cost = 5
+	cost = 4
 	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. A rev head needs to be holding this sign for it to have any effect."
+	exclusivemode = list(/datum/game_mode/revolution)
+	not_in_crates = 1
+
+/datum/syndicate_buylist/generic/rev_dagger
+	name = "Sacrificial Dagger"
+	item = /obj/item/dagger
+	cost = 2
+	desc = "An ornamental dagger for stabbing people with."
+	exclusivemode = list(/datum/game_mode/revolution)
+	not_in_crates = 1
+
+/datum/syndicate_buylist/generic/rev_normal_flash
+	name = "Flash"
+	item = /obj/item/device/flash
+	cost = 1
+	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
 	exclusivemode = list(/datum/game_mode/revolution)
 	not_in_crates = 1

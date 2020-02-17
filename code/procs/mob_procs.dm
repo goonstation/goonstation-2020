@@ -165,14 +165,10 @@
 /mob/living/carbon/human/eyes_protected_from_light()
 	if (!src.sight_check(1)) // Blindness etc (Convair880).
 		return 1
-	if (src.glasses && (istype(src.glasses, /obj/item/clothing/glasses/sunglasses) && !istype(src.glasses, /obj/item/clothing/glasses/sunglasses/tanning)))
+	if (src.get_disorient_protection_eye() >= 100)
 		return 1
 	if (src.eye_istype(/obj/item/organ/eye/cyber/thermal))
 		return 0
-	if (src.eye_istype(/obj/item/organ/eye/cyber/sunglass))
-		return 1
-	if (src.head && istype(src.head, /obj/item/clothing/head/helmet/welding) && !src.head:up)
-		return 1
 	return 0
 
 /mob/proc/apply_flash()
@@ -243,7 +239,7 @@
 	if (safety == 0)
 		src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
-		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0)
+		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
 		changeStatus("weakened", weak*20)
 		changeStatus("stunned", stun*20)
@@ -291,6 +287,7 @@
 		.= 0
 	else
 		.= 1
+		//dont do disorient_ear check here cause its slower. just use the flags HEARING_BLOCKED pls
 		if (src.ears)
 			if (src.ears.block_hearing_when_worn >= HEARING_BLOCKED)
 				return 0
@@ -366,7 +363,7 @@
 
 
 #ifdef USE_STAMINA_DISORIENT
-	src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0)
+	src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_EAR)
 #else
 
 	changeStatus("weakened", stun*10)

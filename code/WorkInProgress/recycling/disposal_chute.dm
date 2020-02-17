@@ -24,6 +24,7 @@
 	var/image/handle_image = null
 	var/destination_tag = null
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.

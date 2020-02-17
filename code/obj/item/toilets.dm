@@ -10,6 +10,7 @@ var/list/all_toilets = null
 	anchored = 1.0
 	density = 0.0
 	mats = 5
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	var/status = 0.0
 	var/clogged = 0.0
 	anchored = 1.0

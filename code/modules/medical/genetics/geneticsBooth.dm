@@ -59,6 +59,7 @@
 	var/spam_time = 0
 	var/started = 0
 	mats = 40
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/datum/light/light
 	var/lr = 0.88

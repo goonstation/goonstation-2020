@@ -5,6 +5,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	icon = 'icons/obj/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
+	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
+	special_grab = /obj/item/grab/gunpoint
+
 	item_state = "gun"
 	m_amt = 2000
 	force = 10.0
@@ -32,7 +35,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/list/projectiles = null
 	var/current_projectile_num = 1
 	var/silenced = 0
-	var/mob/holding_at_gunpoint = 0
 	var/can_dual_wield = 1
 
 	var/slowdown = 0 //Movement delay attack after attack
@@ -210,9 +212,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	M.lastattacker = user
 	M.lastattackertime = world.time
 
-	if(user.a_intent != "help" && isliving(M))
-		if (user.a_intent == "grab")
-			src.hold_at_gunpoint(M, user)
+	if(user.a_intent != INTENT_HELP && isliving(M))
+		if (user.a_intent == INTENT_GRAB)
+			attack_particle(user,M)
+			return ..()
 		else
 			src.shoot_point_blank(M, user)
 	else
@@ -223,49 +226,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		game_stats.Increment("violence")
 #endif
 		return
-
-/obj/item/gun/proc/hold_at_gunpoint(var/mob/M as mob, var/mob/user as mob)
-	if (!M || !user)
-		return
-	if (M == user)
-		return
-	if (src.holding_at_gunpoint == user && M.at_gunpoint == src)
-		return
-
-	for (var/mob/O in AIviewers(M, null))
-		if (O.client)
-			O.show_message("<span style=\"color:red\"><B>[user] presses the barrel of [src] right against [M]!</B></span>")
-	M.show_text("<span style='color:red;font-weight:bold;font-size:130%'>[user] is ready to fire if you try to move or make any sudden movements!</span>")
-	M.at_gunpoint = src
-	user.at_gunpoint = src
-	src.holding_at_gunpoint = user
-
-/obj/item/gun/proc/lower_gunpoint(var/mob/M as mob, var/silent = 0)
-	if (!src.holding_at_gunpoint || !M)
-		return
-
-	if (!silent)
-		for (var/mob/O in AIviewers(M, null))
-			if (O.client)
-				O.show_message("<span style=\"color:red\">[src.holding_at_gunpoint] lowers [src].</span>")
-	M.at_gunpoint = null
-	src.holding_at_gunpoint.at_gunpoint = null
-	src.holding_at_gunpoint = 0
-
-
-/obj/item/gun/proc/shoot_at_gunpoint(var/mob/M as mob)
-	if (!src.holding_at_gunpoint || !M)
-		src.lower_gunpoint(M,1)
-		return
-	if (M == src.holding_at_gunpoint)
-		src.lower_gunpoint(M)
-		return
-	if (get_dist(src.holding_at_gunpoint,M)>1)
-		src.lower_gunpoint(M,1)
-		return
-
-	src.shoot_point_blank(M,src.holding_at_gunpoint)
-	src.lower_gunpoint(M,1)
 
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
@@ -284,14 +244,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				var/target_turf = get_turf(M)
 				SPAWN_DBG(2)
 					if (get_dist(user,M)<=1)
-						user.r_hand:shoot_point_blank(M,user,1)
+						user.r_hand:shoot_point_blank(M,user,second_shot = 1)
 					else
 						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
 				SPAWN_DBG(2)
 					if (get_dist(user,M)<=1)
-						user.l_hand:shoot_point_blank(M,user,1)
+						user.l_hand:shoot_point_blank(M,user,second_shot = 11)
 					else
 						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
 
@@ -364,8 +324,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (ismob(user))
 		var/mob/M = user
-		if (M.at_gunpoint)
-			M.at_gunpoint.shoot_at_gunpoint(M)
+		if (M.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
+				G.shoot()
 		if(slowdown)
 			SPAWN_DBG(-1)
 				M.movement_delay_modifier += slowdown

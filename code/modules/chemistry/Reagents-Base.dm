@@ -532,22 +532,24 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_sugar", 4)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_sugar")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2 )
 				M.drowsyness = max(M.drowsyness-(5), 0)
-				if(prob(50))
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 				if(prob(4))
 					M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
 				//if(prob(2))

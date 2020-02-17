@@ -696,11 +696,10 @@
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/human.dmi', istate, MOB_EFFECT_LAYER)
 
 		//make them light up!
-		burning_light.set_brightness(round(0.5 + (getStatusDuration("burning")/ 10) / 150, 0.1))
-		burning_light.enable()
+		add_simple_light("burning", list(255,110,135,255/2 + (round(0.5 + (getStatusDuration("burning")/ 10) / 150, 0.1))*255/2 ))
 	else
 		src.fire_standing = null
-		burning_light.disable()
+		remove_simple_light("burning")
 
 	UpdateOverlays(src.fire_standing, "fire", 0, 1)
 

@@ -243,7 +243,7 @@
 			return 0
 		return 1
 
-	if(!DirWalkableWithAccess(A,adir, ID))
+	if(!DirWalkableWithAccess(A,adir, ID, exiting_this_tile = 1))
 		return 1
 
 	var/DirWalkableB = DirWalkableWithAccess(B,rdir, ID)
@@ -260,14 +260,19 @@
 				if (M.anchored)
 					return 1
 				return 0
-			return 1
+
+			if (O.flags & ON_BORDER)
+				if (rdir == O.dir)
+					return 1
+			else
+				return 1
 
 	return 0
 
 // Returns true if direction is accessible from loc
 // If we found a door we could open, return 2 instead of 1.
 // Checks doors against access with given ID
-/proc/DirWalkableWithAccess(turf/loc,var/dir,var/obj/item/card/id/ID)
+/proc/DirWalkableWithAccess(turf/loc,var/dir,var/obj/item/card/id/ID, var/exiting_this_tile = 0)
 	.= 1
 
 	for (var/atom in loc)
@@ -281,19 +286,23 @@
 						if (D.check_access(ID) == 0)
 							return 0
 						else
-							.= 2
+							return 2
 					else
-						return 0
-				else					//other solid objects
+						return 2
+				else if (!exiting_this_tile)		//other solid objects. dont bother checking if we are EXITING this tile
 					if (D.has_access_requirements())
 						if (D.check_access(ID) == 0)
 							return 0
 						else
-							.= 2
+							return 2
 					else
+						return 2
+			else
+				if (D.flags & ON_BORDER)
+					if (dir == D.dir)
 						return 0
-
-
+				else if (!exiting_this_tile) //dont bother checking if we are EXITING this tile
+					return 0
 
 
 

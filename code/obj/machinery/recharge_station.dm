@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
 	var/cabling = 250

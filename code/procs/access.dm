@@ -612,4 +612,7 @@ proc/fetchAirlock(access,variant)
 					else return "/obj/machinery/door/airlock"
 
 
+/obj/proc/set_access_list(var/list/L)
+	src.req_access = L.Copy()
+	src.req_access_txt = null
 

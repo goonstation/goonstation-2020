@@ -82,6 +82,7 @@
 	directwired = 0
 	use_datanet = 1
 	mats = 5
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/master = null //It can be any obj that can use receive_signal
 
 	ex_act()

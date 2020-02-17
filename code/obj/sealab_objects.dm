@@ -65,7 +65,25 @@
 //mbc : added dumb layer code to keep perspective intact *most of the time*
 /obj/sea_plant/CanPass(atom/A, turf/T)
 	if (ismob(A))
-		A.changeStatus("slowed", 5)
+
+		var/mob/M = A
+
+		var/has_fluid_move_gear = 0
+		for(var/atom in M.get_equipped_items())
+			var/obj/item/I = atom
+			if (I.getProperty("negate_fluid_speed_penalty"))
+				has_fluid_move_gear = 1
+				break
+
+		if (!has_fluid_move_gear)
+			if (ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if (H.mutantrace && H.mutantrace.aquatic)
+					has_fluid_move_gear = 1
+
+		if (!has_fluid_move_gear)
+			A.setStatus("slowed", 5, optional = 4)
+
 		if (get_dir(src,A) & SOUTH || pixel_y > 0) //If we approach from underneath, fudge the layer so the drawing order doesn't break perspective
 			src.layer = 3.9
 		else

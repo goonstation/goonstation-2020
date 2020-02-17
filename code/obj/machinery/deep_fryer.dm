@@ -7,6 +7,7 @@
 	density = 1
 	flags = NOSPLASH
 	mats = 20
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/item/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?

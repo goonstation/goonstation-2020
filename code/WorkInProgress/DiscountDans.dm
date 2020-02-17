@@ -116,6 +116,8 @@
 	opacity = 0
 	anchored = 1
 
+	deconstruct_flags = DECON_MULTITOOL
+
 	var/current_tickets = 0
 	var/temp = null
 	var/datum/light/light
@@ -336,7 +338,7 @@
 
 	We're getting harassed by some nosey activists. Save the sea unicorns or whatever bullshit. Like, seriously dude, we have a license and everything. Calm the fuck down. The sea's already fucked up and some more sewage won't make it worse. Can you figure out a way to stop them from picketing and clogging up our lines and all that shit? It's seriously affecting my ability to concentrate on my work!
 
-	Cathy Gladys 
+	Cathy Gladys
 	cgladys@delightfuldans
 	Delightful Dan's Central Division General Manager
 

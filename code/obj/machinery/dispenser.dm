@@ -11,6 +11,7 @@
 	var/pltanks = 10.0
 	anchored = 1.0
 	mats = 24
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 /obj/machinery/dispenser/ex_act(severity)
 	switch(severity)

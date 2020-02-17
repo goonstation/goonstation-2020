@@ -8,6 +8,7 @@
 	var/chargelevel = -1
 	anchored = 1
 	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	power_usage = 50
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user)

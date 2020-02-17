@@ -281,6 +281,8 @@
 				if (i > 20)
 					break
 
+		actions.interrupt(user, INTERRUPT_MOVE)
+
 		.= delay
 
 	ex_act(severity)

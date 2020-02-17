@@ -2480,3 +2480,10 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob)
 
 	return (seer.dir == dir)
 
+
+
+/proc/lerp(var/a, var/b, var/t)
+		return a * (1 - t) + b * t
+
+proc/get_manhattan_dist(atom/A,atom/B)
+	.= abs(A.x - B.x) + abs(A.y - B.y)

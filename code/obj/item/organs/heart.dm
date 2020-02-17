@@ -26,9 +26,11 @@
 			if (src.emagged)
 				src.donor.add_stam_mod_regen("heart", 15)
 				src.donor.add_stam_mod_max("heart", 90)
+				src.donor.add_stun_resist_mod("heart", 30)
 			else
 				src.donor.add_stam_mod_regen("heart", 5)
 				src.donor.add_stam_mod_max("heart", 40)
+				src.donor.add_stun_resist_mod("heart", 15)
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
@@ -44,6 +46,11 @@
 	on_removal()
 		..()
 		if (donor)
+			if (src.robotic)
+				src.donor.remove_stam_mod_regen("heart")
+				src.donor.remove_stam_mod_max("heart")
+				src.donor.remove_stun_resist_mod("heart")
+
 			var/datum/ailment_data/malady/HD = donor.find_ailment_by_type(/datum/ailment/malady/heartdisease)
 			if (HD)
 				if (!islist(src.diseases))
@@ -133,7 +140,7 @@
 		if (ishuman(M))
 			M:blood_color = "#4d736d"
 			// there is no undo for this. wear the stain of your weird alien blood, pal
-	//was do_process 
+	//was do_process
 	on_life()
 		var/mob/living/M = src.holder.donor
 		if(!M || !ishuman(M)) // flockdrones shouldn't have these problems

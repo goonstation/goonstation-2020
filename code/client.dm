@@ -441,9 +441,13 @@
 	use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
 	use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
-	//wow its the future we can choose between 2 fps values omg
-	src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
-	src.tick_lag = (winget( src, "menu.fps_chunky", "is-checked" ) == "true") ? CLIENTSIDE_TICK_LAG_CHUNKY : CLIENTSIDE_TICK_LAG_SMOOTH
+	//wow its the future we can choose between 3 fps values omg
+	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
+	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else
+		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
 	//sound
 	if (winget( src, "menu.speech_sounds", "is-checked" ) == "true")
@@ -1079,7 +1083,14 @@ var/global/curr_day = null
 /client/verb/set_fps()
 	set hidden = 1
 	set name = "set-fps"
-	src.tick_lag = (winget( src, "menu.fps_smooth", "is-checked" ) == "true") ? CLIENTSIDE_TICK_LAG_SMOOTH : CLIENTSIDE_TICK_LAG_CHUNKY
+
+	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
+	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else
+		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
+
 
 /client/verb/set_wasd_controls()
 	set hidden = 1

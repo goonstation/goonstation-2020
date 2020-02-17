@@ -6,6 +6,8 @@
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
+
 	var/alarm_frequency = "1437"
 	var/detecting = 1.0
 	var/working = 1.0
@@ -39,6 +41,13 @@
 /obj/machinery/firealarm/disposing()
 		radio_controller.remove_object(src, alarm_frequency)
 		..()
+
+/obj/machinery/firealarm/set_loc(var/newloc)
+	..()
+	var/area/A = get_area(loc)
+	if (A)
+		alarm_zone = A.name
+		net_id = generate_net_id(src)
 
 /obj/machinery/firealarm/proc/toggleinput(var/datum/mechanicsMessage/inp)
 	if(src.icon_state == "fire0")

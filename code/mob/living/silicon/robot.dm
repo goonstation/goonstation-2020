@@ -13,6 +13,7 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
 	health = 300
+	// max_health = 300
 	emaggable = 1
 	syndicate_possible = 1
 
@@ -217,6 +218,7 @@
 
 		process_killswitch()
 		process_locks()
+		process_oil()
 
 		if (src.client) //ov1
 			// overlays
@@ -670,7 +672,7 @@
 		if (src.shell && src.mainframe)
 			src.real_name = "SHELL/[src.mainframe]"
 			src.name = src.real_name
-			
+
 		update_clothing()
 		update_appearance()
 		return
@@ -1147,7 +1149,7 @@
 							SPAWN_DBG(10)
 								qdel(oldmob)
 						else if (isalive(oldmob)) // if they're not in the afterlife bar or a VR ghost and still alive, then maybe don't pull them into this borg
-							return 
+							return
 						if (B.owner.current.client)
 							src.lastKnownIP = B.owner.current.client.address
 					B.owner.transfer_to(src)
@@ -1635,6 +1637,10 @@
 			if (istype(R, /obj/item/roboupgrade/speed) && R.activated)
 				if (src.part_leg_r) tally *= 0.75
 				if (src.part_leg_l) tally *= 0.75
+
+		//This is how it's done in humans, but since borg max health is a bunch of nonsense, I'm not going to add it.
+		// var/health_deficiency = (src.max_health - src.health)
+		// if (health_deficiency >= 90) tally += (health_deficiency / 25)
 
 		tally *= pull_speed_modifier(move_target)
 
@@ -2246,12 +2252,6 @@
 			if (isalive(src))
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
 			setunconscious(src)
-			if (src.getStatusDuration("stunned") > 0)
-				if (src.oil) src.changeStatus("stunned", -10)
-			if (src.getStatusDuration("weakened") > 0)
-				if (src.oil) src.changeStatus("weakened", -10)
-			if (src.getStatusDuration("paralysis"))
-				if (src.oil) src.changeStatus("paralysis", -10)
 		else
 			setalive(src)
 		if (src.misstep_chance > 0)
@@ -2265,7 +2265,16 @@
 
 		if (src.dizziness) dizziness--
 
-		if (src.oil) src.oil--
+	proc/add_oil(var/amt)
+		if (oil <= 0)
+			src.add_stun_resist_mod("robot_oil", 25)
+		src.oil += amt
+
+	proc/process_oil()
+		src.oil -= 1
+		if (oil <= 0)
+			oil = 0
+			src.remove_stun_resist_mod("robot_oil", 25)
 
 	proc/handle_regular_status_updates()
 		if(src.stat) src.camera.camera_status = 0.0
@@ -3153,3 +3162,65 @@
 
 /client/proc/set_screen_color_to_red()
 	src.color = "#ff0000"
+
+
+#define can_step_sfx(H)  (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
+
+/mob/living/silicon/robot/Move(var/turf/NewLoc, direct)
+	//var/oldloc = loc
+	. = ..()
+
+	if (.)
+		//STEP SOUND HANDLING
+		if ((src.part_leg_r || src.part_leg_l) && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
+			/*if (NewLoc.active_liquid) //todo : hydraulic robot fluid splash step
+				if (NewLoc.active_liquid.step_sound)
+					if (src.m_intent == "run")
+						if (src.footstep >= 4)
+							src.footstep = 0
+						else
+							src.footstep++
+						if (src.footstep == 0)
+							playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
+					else
+						if (src.footstep >= 2)
+							src.footstep = 0
+						else
+							src.footstep++
+						if (src.footstep == 0)
+							playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
+			*/
+			src.footstep++
+			if (can_step_sfx(src))
+				var/obj/item/parts/robot_parts/leg/leg = null
+				if (prob(50) && part_leg_l)
+					leg = part_leg_l
+				else if (part_leg_r)
+					leg = part_leg_r
+
+				src.footstep = 0
+				if (NewLoc.step_material || !leg || (leg && leg.step_sound))
+					var/priority = 0
+
+					if (!NewLoc.step_material)
+						priority = -1
+					else if (leg && !leg.step_sound)
+						priority = 1
+
+					if (!priority) //now we must resolve bc the floor and the shoe both wanna make noise
+						if (!leg) //barefoot
+							priority = (STEP_PRIORITY_MAX > NewLoc.step_priority) ? -1 : 1
+						else //shoed
+							priority = (leg.step_priority > NewLoc.step_priority) ? -1 : 1
+
+					if (priority)
+						if (priority > 0)
+							priority = NewLoc.step_material
+						else if (priority < 0)
+							priority = leg ? leg.step_sound : "step_robo"
+
+						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+
+		//STEP SOUND HANDLING OVER
+
+#undef can_step_sfx

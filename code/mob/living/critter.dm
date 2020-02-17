@@ -500,8 +500,9 @@
 		else if (HH.can_attack)
 			if (ismob(target))
 				if (a_intent != INTENT_HELP)
-					if (src.at_gunpoint && src.at_gunpoint.holding_at_gunpoint != src)
-						src.at_gunpoint.shoot_at_gunpoint(src)
+					if (mob_flags & AT_GUNPOINT)
+						for(var/obj/item/grab/gunpoint/G in grabbed_by)
+							G.shoot()
 				switch (a_intent)
 					if (INTENT_HELP)
 						if (can_help)
@@ -729,7 +730,7 @@
 			var/datum/healthHolder/HH = healthlist[T]
 			HH.Life()
 
-		for (var/obj/item/grab/G in src)
+		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 			G.process()
 
 		if (stat)

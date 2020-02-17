@@ -20,8 +20,16 @@
 
 		min_delay = 14
 
+		matrix/M
+
+		braking = 0
+		brake_decel_mult = 0.8
+
+		last_dir = 0
+
 	New(owner)
 		src.owner = owner
+		M = matrix()
 
 	disposing()
 		owner = null
@@ -31,10 +39,12 @@
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
 			return
 
-		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
+		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT|KEY_RUN))
 			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
 				return
+
+			braking = keys & KEY_RUN
 
 			input_x = 0
 			input_y = 0
@@ -56,9 +66,20 @@
 			owner.dir = input_dir
 			owner.facing = input_dir
 
+			if (input_magnitude)
+				if (input_dir & (input_dir-1))
+					owner.dir = NORTH
+					owner.transform = turn(M,atan2(input_y,input_x))
+				else
+					owner.transform = null
+			last_dir = owner.dir
+
 			if (input_x || input_y)
 				user.attempt_move()
 
+
+	update_owner_dir(var/atom/movable/ship) //after move, update ddir
+		owner.dir = last_dir
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
@@ -73,6 +94,15 @@
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel
+
+				//braking
+				if (braking)
+					velocity_x = velocity_x * brake_decel_mult
+					velocity_y = velocity_y * brake_decel_mult
+
+					if (velocity_x + velocity_y < 0.2)
+						velocity_x = 0
+						velocity_y = 0
 
 				//normalize and force speed cap
 				velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
@@ -106,6 +136,10 @@
 
 		if (delay)
 			var/target_turf = get_step(owner, velocity_dir)
+
+			for(var/mob/M in owner) //hey maybe move this somewhere better later. idk man its all chill thou, its all cool, dont worry about it buddy
+				M.glide_size = owner.glide_size
+				M.animate_movement = SYNC_STEPS
 
 			owner.glide_size = (32 / delay) * world.tick_lag
 			step(owner, velocity_dir)

@@ -10,6 +10,8 @@
 
 	var/is_syndicate = 0
 	var/list/mats = 0
+	var/deconstruct_flags = DECON_NONE
+
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
 	var/artifact = null
 	var/move_triggered = 0

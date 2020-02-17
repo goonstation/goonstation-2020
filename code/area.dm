@@ -612,9 +612,10 @@
 				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
-			SPAWN_DBG(0)
-				if (target && Obj)
-					Obj.throw_at(target, 1, 1)
+			if (OldLoc && OldLoc.z == src.z)
+				SPAWN_DBG(0)
+					if (target && Obj)
+						Obj.throw_at(target, 1, 1)
 
 	Exited(atom/movable/Obj)
 		..()

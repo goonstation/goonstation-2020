@@ -281,6 +281,12 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
+	if (H.grabbed_by && H.grabbed_by.len)
+		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
+			if (RM.state > 0)
+				message = mufflespeech(message)
+				break
+
 	if (iscluwne(H))
 		message = honk(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
@@ -361,12 +367,13 @@ var/obj/item/dummy/click_dummy = new
 
 /mob/proc/get_equipped_items()
 	. = list()
-
 	if(src.back) . += src.back
 	if(src.ears) . += src.ears
 	if(src.wear_mask) . += src.wear_mask
-	if(src.l_hand) . += src.l_hand
-	if(src.r_hand) . += src.r_hand
+
+	if(src.l_hand && src.l_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.l_hand
+	if(src.r_hand && src.r_hand.c_flags & EQUIPPED_WHILE_HELD) . += src.r_hand
+
 
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))

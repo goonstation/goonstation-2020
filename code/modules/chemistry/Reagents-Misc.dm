@@ -290,6 +290,9 @@ datum
 					holder.my_atom:add_stam_mod_regen("stims", 500)
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_max"))
 					holder.my_atom:add_stam_mod_max("stims", 500)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_stimulants", 1000)
 				return
 
 			on_remove()
@@ -297,6 +300,9 @@ datum
 					holder.my_atom:remove_stam_mod_regen("stims")
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_max"))
 					holder.my_atom:remove_stam_mod_max("stims")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_stimulants")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -306,9 +312,6 @@ datum
 						M.take_oxygen_deprivation(-5 * mult)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(-5 * mult)
-					M.delStatus("stunned")
-					M.delStatus("weakened")
-					M.delStatus("paralysis")
 					M.delStatus("slowed")
 					M.delStatus("disorient")
 					if (M.misstep_chance)
@@ -1087,7 +1090,7 @@ datum
 					if (method == TOUCH)
 						if (isrobot(M))
 							var/mob/living/silicon/robot/R = M
-							R.oil += volume * 2
+							R.add_oil(volume * 2)
 							boutput(R, "<span style=\"color:blue\">Your joints and servos begin to run more smoothly.</span>")
 						else boutput(M, "<span style=\"color:red\">You feel greasy and gross.</span>")
 
@@ -2066,9 +2069,6 @@ datum
 
 				M.make_jittery(2)
 				M.drowsyness = max(M.drowsyness-6, 0)
-				M.changeStatus("paralysis", -10 * mult)
-				M.changeStatus("stunned", -10 * mult)
-				M.changeStatus("weakened", -10 * mult)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2088,12 +2088,18 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_fliptonium", 9)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_fliptonium")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
 
@@ -2195,9 +2201,6 @@ datum
 
 				M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-12, 0)
-				M.changeStatus("paralysis", -30 * mult)
-				M.changeStatus("stunned", -30 * mult)
-				M.changeStatus("weakened", -30 * mult)
 				if (M.sleeping) M.sleeping = 0
 				return
 
@@ -2221,12 +2224,18 @@ datum
 			on_add()
 				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 4)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_fliptonium", 60)
 				return
 
 			on_remove()
 				if (remove_buff)
 					if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_fliptonium")
 				if (istype(holder) && istype(holder.my_atom))
 					animate(holder.my_atom)
 

@@ -10,6 +10,7 @@
 	anchored = 1
 	flags = FPRINT | NOSPLASH
 	mats = 30
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupinside = 0 //true or false
 	var/top_on = 1 //screwed on or screwed off
 	var/water_level = 100 //water level, used to press the coffee
@@ -248,6 +249,7 @@
 	anchored = 1
 	flags = FPRINT | NOSPLASH
 	mats = 30
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/top_on = 1 //screwed on or screwed off
 	var/water_level = 100 //water level, used to press the coffee
 	var/water_level_max = 100

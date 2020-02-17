@@ -111,7 +111,7 @@
 			if (!usr)
 				src.throw_impact(hit_atom)
 
-			var/atom/randomContent
+			var/atom/movable/randomContent
 			if (contents.len >= 1)
 				randomContent = pick(contents)
 			else

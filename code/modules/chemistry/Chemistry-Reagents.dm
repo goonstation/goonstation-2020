@@ -108,8 +108,10 @@ datum
 					if (penetrates_skin)
 						var/modifier = touch_modifier
 						if(!src.pierces_outerwear)
-							for(var/obj/item/clothing/C in M.get_equipped_items())
-								modifier -= (1 - C.permeability_coefficient)/4
+							for(var/atom in M.get_equipped_items())
+								if (istype(atom, /obj/item/clothing))
+									var/obj/item/clothing/C = atom
+									modifier -= (1 - C.permeability_coefficient)/4
 
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*modifier,self.data)

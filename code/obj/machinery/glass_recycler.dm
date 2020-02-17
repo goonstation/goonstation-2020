@@ -7,6 +7,7 @@
 	density = 0
 	var/glass_amt = 0
 	mats = 10
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
 	New()
 		..()

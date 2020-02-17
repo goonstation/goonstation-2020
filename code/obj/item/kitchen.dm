@@ -126,6 +126,8 @@ TRAYS
 	icon_state = "knife"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_CUTTING
+	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
+	special_grab = /obj/item/grab
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 7.0

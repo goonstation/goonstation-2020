@@ -75,6 +75,8 @@
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
 		setProperty("meleeprot", 1)
+		setProperty("disorient_resist_eye", 5)
+		setProperty("disorient_resist_ear", 2)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -101,6 +103,11 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	desc = "Helps protect from vacuum for a short period of time."
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 9)
+		setProperty("disorient_resist_ear", 5)
+
 /obj/item/clothing/head/rad_hood
 	name = "Class II Radiation Hood"
 	icon_state = "radiation"
@@ -114,6 +121,8 @@
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+		setProperty("disorient_resist_eye", 12)
+		setProperty("disorient_resist_ear", 8)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -581,6 +590,11 @@
 	item_state = "wizard"
 	magical = 1
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
+		setProperty("disorient_resist_ear", 15)
+
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
 		if (prob(75))
@@ -956,6 +970,11 @@
 	desc = "Won't you run, live to fly, fly to live, Aces high."
 	icon_state = "aviator"
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 25)
+		setProperty("disorient_resist_ear", 5)
+
 	attack_self(mob/user as mob)
 		user.show_text("You change the hat's style.")
 		if (src.icon_state == "aviator")
@@ -1000,6 +1019,11 @@
 	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	seal_hair = 1
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 6)
+		setProperty("disorient_resist_ear", 5)
 
 /obj/item/clothing/head/jester
 	name = "jester's hat"

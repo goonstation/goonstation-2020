@@ -178,6 +178,7 @@
 	desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though."
 	icon_state = "water_fountain1"
 	anchored = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	var/cup_amount = 12
 
 	get_desc(dist, mob/user) // this shit refused to show the parent get_desc() info even if I added a ..() so I'M JUST COPYING THE CODE NOW LIKE SOME KIND OF GIGANTIC ASSHOLE

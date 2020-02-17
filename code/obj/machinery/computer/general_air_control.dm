@@ -130,6 +130,7 @@ obj/machinery/computer/general_air_control
 		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
 		req_access = list(access_engineering_atmos)
+		object_flags = CAN_REPROGRAM_ACCESS
 
 		var/input_tag
 		var/output_tag
@@ -558,6 +559,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	var/mixer_information
 	var/id
 	req_access = list(access_engineering_engine, access_tox_storage)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	var/last_change = 0
 	var/message_delay = 600
