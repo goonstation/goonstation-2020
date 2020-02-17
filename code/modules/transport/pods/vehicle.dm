@@ -49,6 +49,10 @@
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
 
+	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
+	var/hitmob = 0
+	var/ram_self_damage_multiplier = 0.09
+	
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
 	/////////////////////////////////////////////////////
@@ -442,7 +446,7 @@
 
 		var/damage = 0
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (damage <= 0 && P.proj_data.ks_ratio <= 0)
+		if (damage <= 0 && P.proj_data.ks_ratio <= 0) //make stun weapons do some damage
 			damage = round(P.power, 1.0)
 
 		var/hitsound = null
@@ -520,13 +524,21 @@
 			//if (P)
 			//	for (var/mob/M in src)
 			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 2.5
+			var/chance = disruption * 1
 			for(var/obj/item/shipcomponent/S in src.components)
 				var/my_chance = chance
 				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance -= 25
+					my_chance += 40
+
 				if(prob(my_chance))
-					S.deactivate()
+					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+						var/obj/item/shipcomponent/engine/E = S
+						if (E.ready)
+							E.ready = 0
+							E.ready()
+					else
+						S.deactivate()
+
 					chance -= 25
 					if (chance <= 0)
 						return
@@ -556,12 +568,84 @@
 				src.health -= 25
 				checkhealth()
 
-	Bump(var/atom/A)
-		//boutput(world, "[src] bumped into [A]")
+	proc/get_move_velocity_magnitude()
+		.= movement_controller:velocity_magnitude
+
+	Bump(var/atom/target)
+		if (get_move_velocity_magnitude() > 5)
+			var/power = get_move_velocity_magnitude()
+
+			src.health -= min(power * ram_self_damage_multiplier,5)
+			checkhealth()
+
+			if (istype(target, /obj/machinery/vehicle/))
+				var/obj/machinery/vehicle/V = target
+				V.health -= min(power*1.5,30)
+				V.checkhealth()
+
+			for (var/mob/C in src)
+				shake_camera(C, 6, 1)
+				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
+
+			if (ismob(target) && target != hitmob)
+				hitmob = target
+				SPAWN_DBG(5)
+					hitmob = 0
+				var/mob/M = target
+				//M.changeStatus("stunned", 1 SECONDS)
+				//M.changeStatus("weakened", 1 SECONDS)
+				M.TakeDamage("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
+				M.remove_stamina(power)
+				var/turf/throw_at = get_edge_target_turf(src, src.dir)
+				SPAWN_DBG(0)
+					M.throw_at(throw_at, movement_controller:velocity, 2)
+				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+			else if(isturf(target) && power > 20)
+				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
+					return
+				if(istype(target, /turf/simulated/wall) && prob(power))
+					var/turf/simulated/wall/T = target
+					T.dismantle_wall(1)
+
+				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+			else if (isobj(target) && power >= req_smash_velocity)
+				var/obj/O = target
+
+				if (power > 20)
+					if (istype(O, /obj/machinery/door) && O.density)
+						var/obj/machinery/door/D = O
+						D.try_force_open(src)
+					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+						qdel(O)
+
+				if (istype(target, /obj/window))
+					var/obj/window/W = target
+					W.health = 0
+					W.smash()
+
+				if (istype(O, /obj/grille))
+					var/obj/grille/G = target
+					G.damage_slashing(15)
+
+				if (istype(O, /obj/table))
+					var/obj/table/table = target
+					table.deconstruct()
+
+				if (istype(O,/obj/machinery/vending))
+					var/obj/machinery/vending/V = O
+					V.fall(src)
+				if (istype(O,/obj/machinery/portable_atmospherics/canister))
+					var/obj/machinery/portable_atmospherics/canister/C = O
+					C.health -= power
+					C.healthcheck()
+				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
+
+			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+
 		if (sec_system)
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
-					sec_system:crashtime2(A)
+					sec_system:crashtime2(target)
 		SPAWN_DBG (0)
 			..()
 			return
@@ -575,7 +659,9 @@
 		// set return value to default
 		.=..(NewLoc,Dir,step_x,step_y)
 
-		if (flying && facing != flying)
+		if (movement_controller)
+			movement_controller.update_owner_dir()
+		else if (flying && facing != flying)
 			dir = facing
 
 	disposing()
@@ -642,7 +728,7 @@
 							M.update_burning(35)
 							boutput(M, "<span style=\"color:red\"><b>The cabin bursts into flames!</b></span>")
 							playsound(M.loc, "sound/machines/engine_alert1.ogg", 35, 0)
-				if(26 to 50)
+				if(26 to health * 0.5)
 					if(damage_overlays < 1)
 						damage_overlays = 1
 						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
@@ -1466,14 +1552,14 @@
 					if(usr == ship.m_w_system.gunner)
 						ship.stall += 1
 						ship.fire_delay += 1
-						ship.m_w_system.Fire(usr)
+						ship.m_w_system.Fire(usr, src.facing)
 						SPAWN_DBG(15)
 							ship.fire_delay -= 1 // cogwerks: no more spamming lasers until the server dies
 							if (ship.fire_delay > 0) ship.fire_delay = 0
 					else
 						boutput(usr, "[ship.ship_message("You must be in the gunner seat!")]")
 				else
-					ship.m_w_system.Fire()
+					ship.m_w_system.Fire(usr, src.facing)
 			else
 				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
 		else
@@ -1645,11 +1731,9 @@
 	speed = 0 // speed literally does nothing? what??
 	stall = 0 // slow the ship down when firing
 	weapon_class = 1
-	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
 
 	var/prev_velocity = 0
-
-	var/hitmob = 0
+	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
 
 	New()
@@ -1667,6 +1751,9 @@
 			if (M.accel_sfx)
 				M.accel_sfx = 0
 				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
+
+	get_move_velocity_magnitude()
+		.= movement_controller:velocity
 
 	Install(obj/item/shipcomponent/S as obj)
 		if(S.system == "Locomotion")
@@ -1692,77 +1779,6 @@
 			src.overlays -= image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]")
 			locomotion.set_loc(src.loc)
 			locomotion = null
-
-	Bump(var/atom/target)
-		if (movement_controller:velocity > 5)
-			var/power = movement_controller:velocity
-
-			src.health -= min(power/6,5)
-			checkhealth()
-
-			if (istype(target, /obj/machinery/vehicle/))
-				var/obj/machinery/vehicle/V = target
-				V.health -= min(power*2,30)
-				V.checkhealth()
-
-			for (var/mob/C in src)
-				shake_camera(C, 6, 1)
-			if (ismob(target) && target != hitmob)
-				hitmob = target
-				SPAWN_DBG(5)
-					hitmob = 0
-				var/mob/M = target
-				//M.changeStatus("stunned", 1 SECONDS)
-				//M.changeStatus("weakened", 1 SECONDS)
-				M.TakeDamage("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
-				M.remove_stamina(power)
-				var/turf/throw_at = get_edge_target_turf(src, src.dir)
-				SPAWN_DBG(0)
-					M.throw_at(throw_at, movement_controller:velocity, 2)
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
-			else if(isturf(target) && power > 20)
-				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
-					return
-				if(istype(target, /turf/simulated/wall) && prob(power))
-					var/turf/simulated/wall/T = target
-					T.dismantle_wall(1)
-
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
-			else if (isobj(target) && power >= req_smash_velocity)
-				var/obj/O = target
-
-				if (power > 20)
-					if (istype(O, /obj/machinery/door) && O.density)
-						var/obj/machinery/door/D = O
-						D.try_force_open(src)
-					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
-						qdel(O)
-
-				if (istype(target, /obj/window))
-					var/obj/window/W = target
-					W.health = 0
-					W.smash()
-
-				if (istype(O, /obj/grille))
-					var/obj/grille/G = target
-					G.damage_slashing(15)
-
-				if (istype(O, /obj/table))
-					var/obj/table/table = target
-					table.deconstruct()
-
-				if (istype(O,/obj/machinery/vending))
-					var/obj/machinery/vending/V = O
-					V.fall(src)
-				if (istype(O,/obj/machinery/portable_atmospherics/canister))
-					var/obj/machinery/portable_atmospherics/canister/C = O
-					C.health -= power
-					C.healthcheck()
-				logTheThing("combat", src, target, "crashes into [target] [log_loc(src)].")
-
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-		..()
-
 
 /obj/machinery/vehicle/tank/minisub
 	body_type = "minisub"

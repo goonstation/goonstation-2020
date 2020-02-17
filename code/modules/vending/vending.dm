@@ -38,6 +38,8 @@
 	anchored = 1
 	density = 1
 	mats = 20
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 

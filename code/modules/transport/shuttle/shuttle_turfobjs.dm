@@ -38,6 +38,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
+	turf_flags = MOB_STEP
 
 	attackby()
 	attack_hand()
@@ -57,6 +58,7 @@
 	name = "shuttle floor"
 	icon_state = "floor"
 	icon = 'icons/turf/shuttle.dmi'
+	turf_flags = MOB_STEP
 
 	attackby()
 	attack_hand()

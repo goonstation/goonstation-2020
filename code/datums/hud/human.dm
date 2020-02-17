@@ -370,6 +370,8 @@
 				src.update_mintent()
 
 			if ("pull")
+				if (master.pulling)
+					unpull_particle(master,pulling)
 				master.pulling = null
 				src.update_pulling()
 
@@ -519,6 +521,25 @@
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+
+		var/prot = master.get_disorient_protection()
+		var/disorientprot = 0
+		if (prot >= 90)
+			disorientprot = "[prot]% (MAX)"
+		else
+			disorientprot = "[prot]%"
+
+		newDesc += "<div><img src='[resource("images/tooltips/protdisorient.png")]' alt='' class='icon' /><span>Total Resistance (Body Disorient): [disorientprot]</span></div>"
+
+		prot = master.get_disorient_protection_eye()
+		newDesc += "<div><img src='[resource("images/tooltips/protdisorient_eye.png")]' alt='' class='icon' /><span>Total Resistance (Eye Disorient): [prot]%</span></div>"
+
+		prot = master.get_disorient_protection_ear()
+		newDesc += "<div><img src='[resource("images/tooltips/protdisorient_ear.png")]' alt='' class='icon' /><span>Total Resistance (Ear Disorient): [prot]%</span></div>"
+
+		newDesc += "<div><img src='[resource("images/tooltips/stun.png")]' alt='' class='icon' /><span>Total Resistance (Stuns): [master.get_stun_resist_mod()]%</span></div>"
+
+
 		//newDesc += "<div><img src='[resource("images/tooltips/food.png")]' alt='' class='icon' /><span> Bonus: [master.get_food_bonus()]</span></div>"
 		stats.desc = newDesc
 

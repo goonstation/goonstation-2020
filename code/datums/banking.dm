@@ -399,6 +399,7 @@
 	name = "Bank Records"
 	icon_state = "databank"
 	req_access = list(access_heads)
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -607,6 +608,8 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+
+	deconstruct_flags = DECON_MULTITOOL
 
 	var/datum/data/record/accessed_record = null
 	var/obj/item/card/id/scan = null

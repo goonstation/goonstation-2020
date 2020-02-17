@@ -42,6 +42,7 @@
 	var/icon_base = "dispenser"
 	flags = NOSPLASH
 	mats = 30
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/beaker = null
 	var/list/dispensable_reagents = list("aluminium","barium","bromine","carbon","calcium","chlorine", \
 										"chromium","copper","ethanol","fluorine","hydrogen", \

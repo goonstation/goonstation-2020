@@ -11,6 +11,7 @@
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
+	deconstruct_flags = DECON_MULTITOOL
 	lr = 0.7
 	lg = 1
 	lb = 0.1

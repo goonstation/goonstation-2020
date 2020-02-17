@@ -8,6 +8,7 @@
 	var/on = 0
 	var/volume_rate = 800
 	mats = 12
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
 	desc = "A device which filters out harmful air from an area."
 	p_class = 1.5

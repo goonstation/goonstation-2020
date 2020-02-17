@@ -84,7 +84,7 @@
 			if(istype(O,/obj/machinery/rkit))
 				return
 
-			if(O.mats == 0 || O.mats == "Built" || O.is_syndicate != 0)
+			if(O.mats == 0 || O.is_syndicate != 0)
 				return "<span style=\"color:red\">Unable to scan.</span>"
 
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
@@ -93,7 +93,7 @@
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
-			theScan.scannedMats = O.mats
+			theScan.scannedMats = initial(O.mats)
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src.master

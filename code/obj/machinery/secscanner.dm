@@ -8,6 +8,7 @@
 	anchored = 1
 	layer = 2
 	mats = 18
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND
 	var/timeBetweenUses = 20//I can see this being fun
 	var/success_sound = "sound/machines/chime.ogg"

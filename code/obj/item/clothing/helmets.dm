@@ -50,6 +50,8 @@
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 5)
 		setProperty("viralprot", 50)
+		setProperty("disorient_resist_eye", 8)
+		setProperty("disorient_resist_ear", 8)
 
 	oldish
 		icon_state = "space-OLD"
@@ -435,10 +437,22 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
-	color_r = 0.3 // darken
-	color_g = 0.3
-	color_b = 0.3
+	color_r = 0.5 // darken
+	color_g = 0.5
+	color_b = 0.5
 	var/nodarken = 0
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+
+	proc/flip_down()
+		setProperty("meleeprot", 2)
+		setProperty("disorient_resist_eye", 100)
+
+	proc/flip_up()
+		setProperty("meleeprot", 4)
+		setProperty("disorient_resist_eye", 0)
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
@@ -451,6 +465,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
+		setProperty("disorient_resist_eye", 25)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -547,12 +562,14 @@
 	desc = "Good Lord, this thing is heavy. How the hell is anyone supposed to see out of this?"
 	icon_state = "riot"//Awww yeah, sprites
 	item_state = "riot"//go buttes, go
-	color_r = 0.5 // darken a medium amount, that thick visor glass really dims things!
-	color_g = 0.5
-	color_b = 0.6
+	color_r = 0.7
+	color_g = 0.7
+	color_b = 0.8
 	setupProperties()
 		..()
 		setProperty("meleeprot", 10)
+		setProperty("disorient_resist_eye", 50)
+		setProperty("disorient_resist_ear", 30)
 
 /obj/item/clothing/head/helmet/NT
 	name = "\improper Nanotrasen helmet"
@@ -564,6 +581,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)
+		setProperty("disorient_resist_eye", 15)
 
 /obj/item/clothing/head/helmet/space/industrial
 	mats = 7
@@ -604,6 +622,8 @@
 		..()
 		setProperty("radprot", 25)
 		setProperty("meleeprot", 2)
+		setProperty("disorient_resist_eye", 25)
+		setProperty("disorient_resist_ear", 10)
 
 /obj/item/clothing/head/helmet/bucket
 	name = "bucket helmet"

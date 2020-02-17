@@ -14,6 +14,7 @@ var/list/status_display_text_images = list()
 	anchored = 1
 	density = 0
 	mats = 14
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 //
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
@@ -374,6 +375,7 @@ var/list/status_display_text_images = list()
 	anchored = 1
 	density = 0
 	mats = 14
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon

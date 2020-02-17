@@ -211,7 +211,7 @@
 							H.limbs.l_arm = limb
 							limb.holder = H
 							limb.remove_stage = 0
-			
+
 			//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
 					if (H.limbs.r_leg || src.ignore_missing_limbs == 1)
@@ -688,7 +688,7 @@
 		if(ruff_tuff_and_ultrabuff && M)
 			M.add_stam_mod_max("abomination", 1000)
 			M.add_stam_mod_regen("abomination", 1000)
-
+			M.add_stun_resist_mod("abomination", 1000)
 		last_drain = world.time
 		return ..(M)
 
@@ -696,6 +696,7 @@
 		if(mob)
 			mob.remove_stam_mod_max("abomination")
 			mob.remove_stam_mod_regen("abomination")
+			mob.remove_stun_resist_mod("abomination")
 		return ..()
 
 	movement_delay()
@@ -704,9 +705,6 @@
 	onLife(var/mult = 1)
 		//Bringing it more in line with how it was before it got broken (in a hilarious fashion)
 		if (ruff_tuff_and_ultrabuff && !(mob.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
-			mob.delStatus("paralysis")
-			mob.delStatus("weakened")
-			mob.delStatus("stunned")
 			mob.delStatus("disorient")
 			mob.drowsyness = 0
 			mob.change_misstep_chance(-INFINITY)
@@ -774,6 +772,7 @@
 		if (mob)
 			mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
+			mob.add_stun_resist_mod("werewolf", 40)
 			mob.max_health += 50
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
@@ -792,6 +791,7 @@
 		if (mob)
 			mob.remove_stam_mod_max("werewolf")
 			mob.remove_stam_mod_regen("werewolf")
+			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
 
 			if (!isnull(src.original_name))
@@ -809,9 +809,6 @@
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
 		if (mob && ismob(mob))
-			mob.changeStatus("paralysis", -20 * mult)
-			mob.changeStatus("stunned", -20 * mult)
-			mob.changeStatus("weakened", -20 * mult)
 			if (mob.drowsyness)
 				mob.drowsyness = max(0, mob.drowsyness - 2)
 			if (mob.misstep_chance)

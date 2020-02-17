@@ -243,6 +243,8 @@
 			if ("store")
 				master.uneq_slot()
 			if ("pulling")
+				if (master.pulling)
+					unpull_particle(master,pulling)
 				master.pulling = null
 				update_pulling()
 			if ("face")

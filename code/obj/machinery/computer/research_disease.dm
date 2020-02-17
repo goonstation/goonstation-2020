@@ -4,6 +4,7 @@
 	name = "Disease Database"
 	icon_state = "resdis"
 	req_access = list(access_tox)
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null

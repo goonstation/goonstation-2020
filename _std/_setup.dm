@@ -294,6 +294,7 @@ var/list/RARITY_COLOR = list(
 #define SLEEVELESS 64			// ain't got no sleeeeeves
 #define BLOCKSMOKE 128			//block smoke inhalations (gas mask)
 #define IS_JETPACK 256
+#define EQUIPPED_WHILE_HELD 512	//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 
 //clothing dirty flags (not used for anything other than submerged overlay update currently. eventually merge into update_clothing)
 #define C_BACK 1
@@ -359,10 +360,29 @@ var/list/RARITY_COLOR = list(
 #define SPEECH_BLOB 8		//yes
 #define SEE_THRU_CAMERAS 16	//for ai eye
 #define IS_BONER 32			//for skeletals
+#define AT_GUNPOINT 64 	//quick check for guns holding me at gunpoint
 
 //object_flags
 #define BOTS_DIRBLOCK 1	//bot considers this solid in pathfinding DirBlockedWithAccess
 #define NO_ARM_ATTACH 2	//illegal for arm attaching
+#define CAN_REPROGRAM_ACCESS 4	//access gun can reprog
+
+//deconstruction_flags
+#define DECON_NONE 0
+#define DECON_SIMPLE 1 //no reqs, just deconstruct!
+#define DECON_SCREWDRIVER 2
+#define DECON_WRENCH 4
+#define DECON_CROWBAR 8
+#define DECON_WELDER 16
+#define DECON_WIRECUTTERS 32
+#define DECON_MULTITOOL 64
+#define DECON_BUILT 128 //flag added to something that is player-built
+#define DECON_ACCESS 256 //can only be deconstructed if access required is null
+
+//THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)
+#define THROW_NORMAL 1
+#define THROW_CHAIRFLIP 2
+#define THROW_GUNIMPACT 4
 
 //various sprint flags go here
 #define SPRINT_NORMAL 0
@@ -383,6 +403,8 @@ var/list/RARITY_COLOR = list(
 #define IS_TYPE_SIMULATED 4	//lol idk this kind of sucks, but i guess i can avoid some type checks in atmos processing
 #define CAN_BE_SPACE_SAMPLE 8 //can atmos use this tile as a space sample?
 #define MANTA_PUSH 16 	//turf is pushy. for manta
+#define FLUID_MOVE 32 	//fluid move gear suffers no penalty on these turfs
+#define SPACE_MOVE 64 	//space move gear suffers no penalty on these turfs
 // channel numbers for power
 
 #define EQUIP 1
@@ -735,6 +757,7 @@ var/list/RARITY_COLOR = list(
 #define GRAB_AGGRESSIVE 1
 #define GRAB_NECK 2
 #define GRAB_KILL 3
+#define GRAB_PIN 4
 
 #define DISORIENT_MISSTEP_CHANCE 40
 
@@ -885,6 +908,9 @@ var/list/RARITY_COLOR = list(
 //fuck me, I have no idea why there's only 2 framerates that handle smooth glides for us. It's probably because byond is bugged.
 //anyway just putting this define here for the client framerate toggle button between SMOOTH AND CHUNKY OH YEAH
 #define CLIENTSIDE_TICK_LAG_CHUNKY 0.4
+
+//its the future now
+#define CLIENTSIDE_TICK_LAG_CREAMY 0.15
 
 
 //MBC : I should have added defines like these earlier - most widescreen bits aren't using them as of now!

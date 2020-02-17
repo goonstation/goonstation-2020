@@ -53,8 +53,8 @@
 			boutput(target, __blue("[M]'s foul gaze falters as it stares upon your righteousness!"))
 			target.visible_message("<span style=\"color:red\"><B>[target] glares right back at [M]!</B></span>")
 		else
-			target.apply_flash(30, 15, stamina_damage = 250)
-
+			target.apply_flash(30, 15, stamina_damage = 350)
+			
 		if (ishuman(target))
 			target:was_harmed(M, special = "vamp")
 

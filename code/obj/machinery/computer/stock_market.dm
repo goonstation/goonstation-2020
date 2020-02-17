@@ -4,7 +4,7 @@
 	icon_state = "QMreq"
 	var/logged_in = null
 	var/vmode = 0
-
+	deconstruct_flags = DECON_MULTITOOL
 	lr = 1
 	lg = 0.7
 	lb = 0.03

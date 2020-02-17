@@ -101,7 +101,6 @@
 	var/obj/item/clothing/ears/ears = null
 	var/network_device = null
 	var/Vnetwork = null
-	var/obj/item/gun/at_gunpoint = null
 	var/lastDamageIconUpdate
 	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
@@ -235,8 +234,11 @@
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
 	else
-		if (src.at_gunpoint)
-			src.at_gunpoint.shoot_at_gunpoint(src)
+		if (mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in grabbed_by)
+				//if (usr == G.assailant)
+				continue
+				G.shoot()
 		. = ..()
 
 	src.closeContextActions()
@@ -611,7 +613,7 @@
 							//hud.update_pulling() // FIXME
 						else
 							pulling += src.pulling
-					for (var/obj/item/grab/G in src)
+					for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 						pulling += G.affecting
 					for (var/atom/movable/A in pulling)
 						if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
@@ -950,7 +952,6 @@
 /mob/proc/set_pulling(atom/movable/A)
 	pulling = A
 
-
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
 	if (ishuman(pulling))
@@ -959,6 +960,8 @@
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_NECK) continue
 				pulling = G.assailant
+
+	pull_particle(src,pulling)
 
 // less icon caching maybe?!
 
@@ -1100,6 +1103,8 @@
 		if (!islist(params))
 			params = params2list(params)
 		if(params["ctrl"])
+			if (src.pulling)
+				unpull_particle(src,pulling)
 			src.pulling = null
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
@@ -1120,6 +1125,8 @@
 			src.dir = WEST
 
 		if ("stop_pull")
+			if (src.pulling)
+				unpull_particle(src,pulling)
 			src.pulling = null
 
 /mob/proc/build_keymap(client/C)
@@ -1225,23 +1232,33 @@
 		return
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
-	. = list(src.r_hand, src.l_hand)
+	. = list()
 
-	if (src.r_hand && src.r_hand.event_handler_flags & USE_GRAB_CHOKE)
-		for(var/obj/item/grab/G in src.r_hand)
-			. += G
+	if (src.r_hand)
+		. += src.r_hand
+		if (src.r_hand.chokehold)
+			. += src.r_hand.chokehold
 
-	if (src.l_hand && src.l_hand.event_handler_flags & USE_GRAB_CHOKE)
-		for(var/obj/item/grab/G in src.l_hand)
-			. += G
+	if (src.l_hand)
+		. += src.l_hand
+		if (src.l_hand.chokehold)
+			. += src.l_hand.chokehold
 
 	//handle mag tracktor
 	if (check_for_magtractor)
 		for (var/I in .)
 			if (istype(I,/obj/item/magtractor))
 				var/obj/item/magtractor/M = I
-				.+= M.holding
+				if (M.holding)
+					.+= M.holding
 				.-= I
+
+/mob/living/critter/equipped_list(check_for_magtractor = 1)
+	.= ..()
+	if (hands)
+		for(var/datum/handHolder/H in hands)
+			if (H.item)
+				.+= H.item
 
 /mob/living/silicon/equipped_list(check_for_magtractor = 1) //lool copy paste fix later
 	.= 0
@@ -2166,13 +2183,14 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
-/mob/proc/throw_impacted() //Called when mob hits something after being thrown.
+/mob/proc/throw_impacted(var/atom/hit) //Called when mob hits something after being thrown.
 
 	if (throw_count <= 410)
-		random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-		if (!src.hasStatus("weakened"))
-			src.changeStatus("weakened", 2 SECONDS)
-			src.force_laydown_standup()
+		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
+			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+			if (!src.hasStatus("weakened"))
+				src.changeStatus("weakened", 2 SECONDS)
+				src.force_laydown_standup()
 	else
 		if (src.gib_flag) return
 		src.gib_flag = 1
@@ -2738,4 +2756,7 @@
 	return
 
 /mob/proc/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY
+	.= 0
+
+/mob/proc/handle_stamina_updates()
 	.= 0

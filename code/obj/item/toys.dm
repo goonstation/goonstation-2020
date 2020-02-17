@@ -5,6 +5,7 @@
 	icon_state = "claw"
 	anchored = 1
 	density = 1
+	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
 	var/list/prizes = list(/obj/item/toy/plush/small/bee,\
 	/obj/item/toy/plush/small/buddy,\
@@ -300,6 +301,29 @@
 			user.lastattacked = src
 		return 0
 
+	attack_self(mob/user as mob)
+		var/message = input("What should [src] say?")
+		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		if (!message)
+			return
+		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+		user.audible_message("<span style='color:#888888'>[src] says, \"[message]\"</span>")
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if (src.icon_state == "fig-beebo")
+			if (istype(target,/obj/stool/bed))
+				user.visible_message("<span style=\"color:red\">[user] tucks the [src.name] into [target].</span>")
+				src.icon_state = "fig-sleebee"
+				SPAWN_DBG(1 MINUTES)
+					src.icon_state = "fig-beebo"
+
+
+
 	UpdateName()
 		if (istype(src.info))
 			src.name = "[name_prefix(null, 1)][src.info.name] figure[name_suffix(null, 1)]"
@@ -387,7 +411,9 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/shelterfrog,
 /datum/figure_info/floorpills,
 /datum/figure_info/stephaniemir,
-/datum/figure_info/fletcherhenderson)
+/datum/figure_info/fletcherhenderson,
+/datum/figure_info/adaohara,
+/datum/figure_info/oranges)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -710,7 +736,7 @@ var/list/figure_patreon_rarity = list(\
 
 	floorpills
 		name = "\improper Dr. Floorpills"
-		icon_state = "floorpillls"
+		icon_state = "floorpills"
 
 	stephaniemir
 		name = "\improper Stephanie Mir"
@@ -720,7 +746,14 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Fletcher Henderson"
 		icon_state = "fletcherhenderson"
 
+	adaohara
+		name = "\improper Ada O'Hara"
+		icon_state = "adaohara"
 
+	oranges
+		name = "\improper The Tangerine"
+		icon_state = "oranges"
+		
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"

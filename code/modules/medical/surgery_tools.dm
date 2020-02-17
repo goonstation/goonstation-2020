@@ -364,6 +364,21 @@ CONTAINS:
 				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1)
 
+	proc/do_the_shocky_thing(mob/user as mob)
+		if (src.charged == 0)
+			user.show_text("[src] is still charging!", "red")
+			return 0
+		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1)
+		src.charged = 0
+		set_icon_state("[src.icon_base]-shock")
+		SPAWN_DBG(10)
+			set_icon_state("[src.icon_base]-off")
+		SPAWN_DBG(src.charge_time)
+			src.charged = 1
+			set_icon_state("[src.icon_base]-on")
+			playsound(src.loc, "sound/weapons/flash.ogg", 75, 1)
+		return 1
+
 	disposing()
 		..()
 		if (src.cell)
@@ -383,14 +398,6 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.defibrillate(user, user, src.emagged, src.makeshift, src.cell, 1))
-			src.charged = 0
-			set_icon_state("[src.icon_base]-shock")
-			SPAWN_DBG(10)
-				set_icon_state("[src.icon_base]-off")
-			SPAWN_DBG(src.charge_time)
-				src.charged = 1
-				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1)
 			SPAWN_DBG(500)
 				if (user && !isdead(user))
 					user.suiciding = 0

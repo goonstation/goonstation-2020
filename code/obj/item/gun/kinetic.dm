@@ -318,7 +318,7 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span style=\"color:blue\">You hide the derringer inside \the [O]. (Use the wink emote to retrieve it.)</span>")
+			boutput(user, "<span style=\"color:blue\">You hide the derringer inside \the [O]. (Use the wink emote while wearing the clothing item to retrieve it.)</span>")
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)

@@ -4,6 +4,7 @@
 	density = 1
 	anchored = 1
 	mats = 10
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
 	flags = NOSPLASH
@@ -721,6 +722,7 @@
 	density = 1
 	anchored = 1
 	mats = 6
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
 	flags = NOSPLASH
@@ -1083,6 +1085,7 @@
 	density = 1
 	anchored = 1
 	mats = 6
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/vendamt = 1
 	var/hacked = 0
 	var/panelopen = 0

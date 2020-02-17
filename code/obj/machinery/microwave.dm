@@ -21,6 +21,7 @@
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null // The item being cooked
 	var/obj/item/extra_item // One non food item that can be added
 	mats = 12
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

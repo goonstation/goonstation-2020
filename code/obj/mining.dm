@@ -795,6 +795,7 @@
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	New()
 		..()
@@ -1349,6 +1350,7 @@
 	var/stone_color = null
 	var/image/coloration_overlay = null
 	var/list/space_overlays = list()
+	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -2188,6 +2190,7 @@ var/global/list/cargopads = list()
 	anchored = 1
 	plane = PLANE_FLOOR
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = 1
 
 	podbay
@@ -2225,6 +2228,18 @@ var/global/list/cargopads = list()
 		if (cargopads.Find(src))
 			cargopads.Remove(src)
 		..()
+
+
+	was_deconstructed_to_frame(mob/user)
+		if (cargopads.Find(src))
+			cargopads.Remove(src)
+		..()
+
+	was_built_from_frame(mob/user)
+		if (!cargopads.Find(src))
+			cargopads.Add(src)
+		..()
+
 
 	attack_hand(var/mob/user as mob)
 		if (src.active == 1)

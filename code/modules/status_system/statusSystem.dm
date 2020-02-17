@@ -185,6 +185,8 @@ var/list/statusGroupLimits = list("Food"=4)
 					//Update it
 					if(duration > 0 || isnull(duration))
 						var/datum/statusEffect/localInstance = hasStatus(statusId)
+						if (duration)
+							duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
 						localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 						localInstance.onChange(optional)
 						src.updateStatusUi()
@@ -195,8 +197,10 @@ var/list/statusGroupLimits = list("Food"=4)
 					if((duration > 0 || isnull(duration)) && !groupFull)
 						//Add it
 						var/datum/statusEffect/localInstance = new globalInstance.type()
-						localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 						localInstance.owner = src
+						if (duration)
+							duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
+						localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 						localInstance.archivedOwnerInfo = "OwnerName:[src.name] - OwnerType:[src.type] - ContLen:[src.contents.len] - StatusLen:[src.statusEffects.len]"
 						localInstance.onAdd(optional)
 						if(!statusEffects.Find(localInstance)) statusEffects.Add(localInstance)
@@ -209,8 +213,10 @@ var/list/statusGroupLimits = list("Food"=4)
 				//Add it
 				if((duration > 0 || isnull(duration)) && !groupFull)
 					var/datum/statusEffect/localInstance = new globalInstance.type()
-					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 					localInstance.owner = src
+					if (duration)
+						duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
+					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
 					localInstance.archivedOwnerInfo = "OwnerName:[src.name] - OwnerType:[src.type] - ContLen:[src.contents.len] - StatusLen:[src.statusEffects.len]"
 					localInstance.onAdd(optional)
 					if(!statusEffects.Find(localInstance)) statusEffects.Add(localInstance)
@@ -280,6 +286,9 @@ var/list/statusGroupLimits = list("Food"=4)
 
 	proc/preCheck(var/atom/A) //Used to run a custom check before adding status to an object. For when you want something to be flat out immune or something. ret = 1 allow, 0 = do not allow
 		return 1
+
+	proc/modify_change(var/change)
+		.= change
 
 	proc/onAdd(var/optional=null) //Called when the status is added to an object. owner is already set at this point. Has the optional arg from setStatus passed in.
 		return
@@ -721,11 +730,18 @@ var/list/statusGroupLimits = list("Food"=4)
 			return ..(timedPassed)
 
 	stuns
+		modify_change(var/change)
+			. = change
+			if (owner && ismob(owner))
+				var/mob/M = owner
+				var/percent_protection = M.get_stun_resist_mod()
+				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
+				. *= percent_protection
 
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus("stunned") && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis"))
+			if (!owner.hasStatus("stunned") && !owner.hasStatus("weakened") && !owner.hasStatus("paralysis") && !owner.hasStatus("pinned")) //consider later : a way to group effects to check a bunch in one proc call and save sonme cpu
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -745,6 +761,35 @@ var/list/statusGroupLimits = list("Food"=4)
 			icon_state = "weakened"
 			unique = 1
 			maxDuration = 30 SECONDS
+
+			pinned
+				id = "pinned"
+				name = "Pinned"
+				desc = "You are pinned. Click this status effect to resist.<br>Unable to take any actions, prone."
+				icon_state = "pin"
+				unique = 1
+				maxDuration = null
+
+
+				clicked(list/params)
+					if (ishuman(owner))
+						var/mob/living/carbon/human/H = owner
+						H.resist()
+
+				onUpdate()
+					if (ismob(owner))
+						var/mob/M = owner
+						var/found = 0
+						if (M.grabbed_by)
+							for (var/obj/item/grab/G in M.grabbed_by)
+								if (G.state == GRAB_PIN)
+									found = 1
+						if (!found)
+							owner.delStatus("pinned")
+
+						.=..()
+
+
 
 		paralysis
 			id = "paralysis"
@@ -794,6 +839,7 @@ var/list/statusGroupLimits = list("Food"=4)
 		desc = "You are disoriented.<br>Movement speed is reduced. You may stumble or drop items."
 		icon_state = "disorient"
 		unique = 1
+		maxDuration = 15 SECONDS
 		var/counter = 0
 		var/sound = "sound/effects/electric_shock_short.ogg"
 		var/count = 7
@@ -1016,6 +1062,8 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(ismob(owner))
 				//var/mob/M = owner
 				owner.delStatus("janktank_withdrawl")
+				var/mob/M = owner
+				M.add_stun_resist_mod("janktank", 40)
 			else
 				owner.delStatus("janktank")
 			return
@@ -1024,6 +1072,8 @@ var/list/statusGroupLimits = list("Food"=4)
 			if(ismob(owner))
 				//var/mob/M = owner
 				owner.setStatus("janktank_withdrawl", 25 MINUTES)
+				var/mob/M = owner
+				M.remove_stun_resist_mod("janktank")
 			return
 
 		onUpdate(var/timedPassed)
@@ -1039,9 +1089,6 @@ var/list/statusGroupLimits = list("Food"=4)
 			if (H.bleeding)
 				repair_bleeding_damage(H, 10, 1)
 
-			H.changeStatus("stunned", -1 SECONDS)
-			H.changeStatus("weakened", -1 SECONDS)
-			H.changeStatus("disorient", -1 SECONDS)
 			if (H.misstep_chance)
 				H.change_misstep_chance(-5)
 

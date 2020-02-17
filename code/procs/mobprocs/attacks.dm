@@ -13,8 +13,9 @@
 
 	user.lastattacked = src
 
-	if (ismob(user) && user.at_gunpoint && user.at_gunpoint.holding_at_gunpoint != user) // Haine fix for Cannot read 0.at_gunpoint
-		user.at_gunpoint.shoot_at_gunpoint(user)
+	if (user.mob_flags & AT_GUNPOINT)
+		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
+			G.shoot()
 
 	var/shielded = 0
 	if (src.spellshield)

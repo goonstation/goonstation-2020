@@ -668,7 +668,7 @@
 			if (src.reinforced)
 				smashprob = round(smashprob / 2, 1)
 
-			if (src.place_on(W, user))
+			if (src.place_on(W, user, params))
 				playsound(get_turf(src), "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 			else if (W && user.a_intent != "help")
 				DEBUG_MESSAGE("[src] smashprob = ([smashprob] * 1.5) (result [(smashprob * 1.5)])")

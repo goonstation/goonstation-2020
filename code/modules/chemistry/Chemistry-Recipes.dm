@@ -585,6 +585,7 @@ datum
 			inhibitors = list("stabiliser")
 			instant = 1
 			mix_phrase = "The mixture implodes suddenly."
+			priority = 20
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				ldmatter_reaction(holder, created_volume)
 				return

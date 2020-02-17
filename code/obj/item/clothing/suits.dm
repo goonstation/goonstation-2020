@@ -269,6 +269,7 @@
 		setProperty("radprot", 50)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 2)
+		setProperty("movespeed", 1)
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
@@ -482,6 +483,7 @@
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 20)
+		setProperty("movespeed", 15)
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
@@ -814,6 +816,7 @@
 		setProperty("heatprot", 50)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 1)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
@@ -850,6 +853,7 @@
 		setProperty("heatprot", 65)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
+		setProperty("movespeed", 2)
 
 /obj/item/clothing/suit/fire/old
 	name = "old firesuit"
@@ -971,6 +975,8 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
+		setProperty("space_movespeed", 0.8)
+
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
 	desc = "A suit that protects against low pressure environments for a short time."
@@ -979,6 +985,10 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 2)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1003,6 +1013,10 @@
 	desc = "A suit that protects against low pressure environments and is green."
 	icon_state = "spacecap"
 	item_state = "spacecap"
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.4)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1138,6 +1152,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	mats = 45 //should not be cheap to make at mechanics, increased from 15.
 
+
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
 	icon_state = "diving_suit-industrial"
@@ -1156,6 +1171,7 @@
 		setProperty("exploprot", 3)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
+		setProperty("space_movespeed", 0)
 
 	syndicate
 		name = "\improper Syndicate command armor"

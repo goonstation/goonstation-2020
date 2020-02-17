@@ -98,23 +98,35 @@
 	var/lumlevel = 0.5 //How bright are we?
 	var/datum/light/light
 	abilities = list(/obj/ability_button/pda_flashlight_toggle)
+	var/use_simple_light = 1
 
 	New()
 		..()
-		light = new /datum/light/point
-		light.set_brightness(lumlevel)
-		light.set_color(1, 1, 1)
+		if (!use_simple_light)
+			light = new /datum/light/point
+			light.set_brightness(lumlevel)
+			light.set_color(1, 1, 1)
 
 	relay_pickup(mob/user)
 		..()
-		light.attach(user)
+		if (!use_simple_light)
+			light.attach(user)
+		else if (on)
+			if (src.host)
+				src.host.remove_simple_light("pda\ref[src]")
+			user.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
 
 	relay_drop(mob/user)
 		..()
 		SPAWN_DBG(0)
 			if (src.host)
 				if (src.host.loc != user)
-					light.attach(src.host.loc)
+					if (!use_simple_light)
+						light.attach(src.host.loc)
+					else if (on)
+						user.remove_simple_light("pda\ref[src]")
+						src.host.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+
 
 	return_menu_badge()
 		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.on ? "Disable" : "Enable"] Flashlight</a>"
@@ -122,10 +134,16 @@
 
 	install(var/obj/item/device/pda2/pda)
 		..()
-		light.attach(pda)
+		if (!use_simple_light)
+			light.attach(pda)
+		else if (on)
+			pda.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
 
 	uninstall()
-		light.disable()
+		if (!use_simple_light)
+			light.disable()
+		else if (on)
+			src.host.remove_simple_light("pda\ref[src]")
 		src.on = 0
 		..()
 
@@ -138,12 +156,30 @@
 
 	proc/toggle_light()
 		src.on = !src.on
-		if (ismob(src.host.loc))
-			light.attach(src.host.loc)
+		if (!use_simple_light)
+			if (ismob(src.host.loc))
+				light.attach(src.host.loc)
+
 		if (src.on)
-			light.enable()
+			if (!use_simple_light)
+				light.enable()
+			else
+				if (!isturf(src.host.loc))
+					var/atom/A = src.host.loc
+					A.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+				else
+					src.host.add_simple_light("pda\ref[src]", list(255,255,255,lumlevel * 255))
+
 		else
-			light.disable()
+			if (!use_simple_light)
+				light.disable()
+			else
+				if (!isturf(src.host.loc))
+					var/atom/A = src.host.loc
+					A.remove_simple_light("pda\ref[src]")
+				else
+					src.host.remove_simple_light("pda\ref[src]")
+
 		if (islist(src.ability_buttons))
 			for (var/obj/ability_button/pda_flashlight_toggle/B in src.ability_buttons)
 				B.icon_state = "pda[src.on]"
@@ -163,6 +199,7 @@
 /obj/item/device/pda_module/flashlight/high_power
 	name = "high-power flashlight module"
 	lumlevel = 1
+	use_simple_light = 0
 
 /obj/ability_button/pda_flashlight_toggle
 	name = "Toggle PDA Flashlight"

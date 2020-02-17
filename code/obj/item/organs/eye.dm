@@ -135,6 +135,10 @@
 	color_b = 0.975 // kinda blue
 	change_iris = 0
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
+
 /obj/item/organ/eye/cyber/sechud
 	name = "\improper Security HUD cybereye"
 	organ_name = "\improper Security HUD cybereye"

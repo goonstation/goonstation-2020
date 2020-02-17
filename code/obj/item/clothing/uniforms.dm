@@ -20,6 +20,8 @@
 	burn_possible = 1
 	health = 50
 
+	duration_remove = 6.5 SECONDS
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)

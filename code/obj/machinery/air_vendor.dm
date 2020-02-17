@@ -7,6 +7,8 @@ obj/machinery/air_vendor
 	anchored = 1
 	density = 1
 
+	deconstruct_flags = DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
+
 	// Credits inserted
 	var/credits = 0
 

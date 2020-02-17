@@ -187,7 +187,7 @@ toxic - poisons
 			if(proj.power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
-					M.throw_at(target, 2, 2)
+					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
 			if (src.hit_type)
 				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 		impact_image_effect("K", hit)
@@ -218,7 +218,7 @@ toxic - poisons
 			if(power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
-					M.throw_at(target, 3, 3)
+					M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 			if (src.hit_type)
 				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
@@ -333,7 +333,7 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
-					M.throw_at(target, 6, 2)
+					M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
 			if (src.hit_type)
 				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
@@ -363,7 +363,7 @@ toxic - poisons
 			SPAWN_DBG(0)
 				if(!M.stat) M.emote("scream")
 				M.do_disorient(15, weakened = 10)
-				M.throw_at(target, 6, 3)
+				M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 
 /datum/projectile/bullet/airzooka/bad
 	name = "plasmaburst"
@@ -389,7 +389,7 @@ toxic - poisons
 				if(!M.stat) M.emote("scream")
 				fireflash(get_turf(M), 2)
 				M.do_disorient(15, weakened = 25)
-				M.throw_at(target, 12, 3)
+				M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
 
 /datum/projectile/bullet/aex
@@ -435,10 +435,13 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power >= 16)
+				var/throw_range = (proj.power > 20) ? 5 : 3
+
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
 					if(!M.stat) M.emote("scream")
-					M.throw_at(target, 3, 2)
+					M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+					M.update_canmove()
 			//if (src.hit_type)
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
@@ -1066,7 +1069,7 @@ toxic - poisons
 			if(power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				SPAWN_DBG(0)
-					M.throw_at(target, 2, 2)
+					M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
 			if (src.hit_type)
 				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
@@ -1130,7 +1133,7 @@ toxic - poisons
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)
 				spawn(0)
-					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+					H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
 
 		return
