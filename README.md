@@ -23,8 +23,7 @@ All contributions to this repository are licensed for use under the Creative Com
 
 ### Bee ###
 
-```
-:::text
+```text
                 .-..-.``        ```````            
   .........`   s-`../-...`  `...........`         
 o+`        `-` ``..-:yooos-..----------..`        
