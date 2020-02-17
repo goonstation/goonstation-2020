@@ -1,0 +1,4 @@
+var/global/list
+	cardinal = list( NORTH, SOUTH, EAST, WEST )
+	ordinal = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)

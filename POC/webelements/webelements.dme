@@ -1,0 +1,33 @@
+// DM Environment file for webelements.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+#define FILE_DIR "bootstrap"
+#define FILE_DIR "bootstrap/css"
+#define FILE_DIR "bootstrap/img"
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "kText.dm"
+#include "webelements\anchor.dm"
+#include "webelements\css.dm"
+#include "webelements\cssinclude.dm"
+#include "webelements\div.dm"
+#include "webelements\doctype.dm"
+#include "webelements\heading.dm"
+#include "webelements\page.dm"
+#include "webelements\paragraph.dm"
+#include "webelements\script.dm"
+#include "webelements\scriptinclude.dm"
+#include "webelements\tag.dm"
+#include "webelements\title.dm"
+// END_INCLUDE
+

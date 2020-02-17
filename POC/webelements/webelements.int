@@ -1,0 +1,19 @@
+// BEGIN_INTERNALS
+/*
+MAP_ICON_TYPE: 0
+WINDOW: webelements\tag.dm;webelements\page.dm;webelements\heading.dm;webelements\anchor.dm;webelements\css.dm;webelements\paragraph.dm;webelements\script.dm;webelements\cssinclude.dm;webelements\scriptinclude.dm;webelements\title.dm;webelements\doctype.dm;webelements.dme
+PACKAGE_RSC_NAME: C:\Users\William Schaller\Documents\BYOND\Projects\webelements\webelements_rsc.zip
+LAST_COMPILE_VERSION: 499.1202
+PACKAGE_DME_DEMO: 
+PACKAGE_TYPE: 2
+PACKAGE_DME_START: 
+DIR: bootstrap bootstrap\css bootstrap\img webelements 
+PACKAGE_DME_NAME: C:\Users\William Schaller\Documents\BYOND\Projects\webelements\webelements_src.zip
+FILE: webelements\tag.dm
+PACKAGE_DME_INFO: 
+PACKAGE_DMB_NAME: C:\Users\William Schaller\Documents\BYOND\Projects\webelements\webelements.zip
+LAST_COMPILE_TIME: 1382194760
+PACKAGE_DMB_INFO: 
+AUTO_FILE_DIR: ON
+*/
+// END_INTERNALS

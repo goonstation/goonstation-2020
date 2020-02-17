@@ -1,0 +1,76 @@
+HOW TO CONVERT A MAP TO THE NEW (june 2008) ACCESS LEVEL SYSTEM
+1. Open the .dmp file up in Notepad
+2. Find all the "access = blahblah" attributes of doors.
+3. Delete them.
+4. Open the map up in Dream Maker. If you didn't get them all, it'll tell you so.
+5. Assign the existing doors new access permissions using the method below.
+
+HOW TO MAKE A MAP USING THE NEW (june 2008) ACCESS LEVEL SYSTEM
+1. Make a map as normal
+2. Select a door that you want to not be accessible to everybody
+3. Right click on it and edit its attributes
+4. Make the "req_access_txt" attribute be a pipe-separated (|) list of the access groups required to open the doors, with each access group being a semicolon-separated list
+5. Repeat for all doors.
+
+For example, a brig door would have it be "2" while a door that requires you have toxins and teleporter access (for whatever reason) would have it be "9;20"
+A door that requires you to have either brig access or both toxins and teleporter access would have it be "2|9;20"
+
+Here is a list of the permissions and their numbers (this may be out of date, see code/game/access.dm for an updated version):
+
+	access_security = 1
+	access_brig = 2
+	access_armory = 3 // Unused and replaced by maxsec (HoS-exclusive).
+	access_forensics_lockers = 4
+	access_medical = 5
+	access_morgue = 6
+	access_tox = 7
+	access_tox_storage = 8
+	access_medlab = 9
+	access_medical_lockers = 10
+	access_research_director = 11
+	access_maint_tunnels = 12
+	access_external_airlocks = 13 // Unused. Most are all- or maintenance access these days.
+	access_emergency_storage = 14
+	access_change_ids = 15
+	access_ai_upload = 16
+	access_teleporter = 17
+	access_eva = 18
+	access_heads = 19 // Mostly just the bridge.
+	access_captain = 20
+	access_all_personal_lockers = 21 // Unused. Personal lockers are always linked to ID that was swiped first.
+	access_chapel_office = 22
+	access_tech_storage = 23
+	access_research = 24
+	access_bar = 25
+	access_janitor = 26
+	access_crematorium = 27
+	access_kitchen = 28
+	access_robotics = 29
+	access_hangar = 30 // Unused. Theoretically the pod hangars, but not implemented as such in practice.
+	access_cargo = 31 // QM.
+	access_construction = 32 // Unused.
+	access_chemistry = 33
+	access_dwaine_superuser = 34 // So it's not the same as the RD's office and locker.
+	access_hydro = 35
+	access_mail = 36 // Unused.
+	access_maxsec = 37 // The HoS' armory.
+	access_securitylockers = 38
+	access_carrypermit = 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned.
+	access_engineering = 40 // General engineering area and substations.
+	access_engineering_storage = 41 // Main metal/tool storage things.
+	access_engineering_eva = 42 // Engineering space suits. Currently unused.
+	access_engineering_power = 43 // APCs and related supplies.
+	access_engineering_engine = 44 // Engine room.
+	access_engineering_mechanic = 45 // Electronics lab.
+	access_engineering_atmos = 46 // Engineering's supply of gas canisters.
+	access_engineering_control = 48 // Engine control room.
+	access_engineering_chief = 49 // CE's office.
+	access_mining_shuttle = 47
+	access_mining = 50
+	access_mining_outpost = 51
+	access_syndicate_shuttle = 52 // Also to the listening post.
+	access_medical_director = 53
+	access_head_of_personnel = 55
+	access_special_club = 54 //Shouldnt be used for general gameplay. Used for adminevents.
+	access_ghostdrone = 56 // drooooones
+	access_centcom = 57 // self-explanatory?  :v
