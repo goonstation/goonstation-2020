@@ -710,9 +710,6 @@ datum/chemicompiler_core/stationaryCore
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
-		if (status & BROKEN || !powered())
-			boutput( user, "<span style='color:red'>You can't seem to power it on!</span>" )
-			return
 		if (isrobot(user)) return attack_ai(user)
 		return attack_hand(user)
 
