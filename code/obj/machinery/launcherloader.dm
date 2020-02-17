@@ -298,6 +298,8 @@
 
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode_comp"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+
 	var/printing = 0
 
 	// log account information for QM sales

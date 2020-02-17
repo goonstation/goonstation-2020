@@ -11,6 +11,7 @@
 	anchored = 1.0
 	density = 0
 	mats = 8
+	deconstruct_flags = DECON_SIMPLE
 	max_wclass = 4
 	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall

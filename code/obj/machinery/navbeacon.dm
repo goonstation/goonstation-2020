@@ -20,6 +20,7 @@
 	var/net_id = ""
 
 	req_access = list(access_engineering)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	New()
 		..()

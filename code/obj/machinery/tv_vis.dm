@@ -1,8 +1,12 @@
 /obj/landmark/boxing_ring
 	name = "boxing ring"
-/turf
-	appearance_flags = KEEP_TOGETHER
-	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_PLANE|VIS_INHERIT_ID
+
+
+	//disabling this for now bcause somepotato says its costly on client fps stuff
+///turf
+	//appearance_flags = KEEP_TOGETHER
+	//vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_PLANE|VIS_INHERIT_ID
+
 /obj/machinery/security_monitor
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
@@ -10,7 +14,7 @@
 	anchored = 1.0
 	pixel_y = 30
 	layer = OBJ_LAYER+1
-	appearance_flags = KEEP_TOGETHER 
+	appearance_flags = KEEP_TOGETHER
 	var/list/cameras = list()							//all camera's detected by this device which it can link to
 	var/obj/current_camera = null
 	var/obj/video_screen/video_screen
@@ -89,7 +93,7 @@
 	plane = PLANE_LIGHTING + 1
 	var/fov = 2
 	var/obj/machinery/security_monitor/owner
-	var/image/blank 
+	var/image/blank
 
 	New(var/obj/machinery/security_monitor/owner)
 		..()

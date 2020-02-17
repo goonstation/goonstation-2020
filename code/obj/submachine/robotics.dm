@@ -8,6 +8,7 @@
 	anchored = 1
 	density = 1
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/working = 0
 	var/modules = 0
 

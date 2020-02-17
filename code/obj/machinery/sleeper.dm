@@ -20,6 +20,7 @@
 	anchored = 1
 	density = 1
 	mats = 8
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
 	var/time_started = 0 // world.timeofday when the timer was started
@@ -281,6 +282,7 @@
 	density = 1
 	anchored = 1
 	mats = 25
+	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	var/mob/occupant = null
 	var/image/image_lid = null

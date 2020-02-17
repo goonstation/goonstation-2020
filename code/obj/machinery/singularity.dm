@@ -74,6 +74,7 @@ Contains:
 	anchored = 1
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
 
 	bound_width = 96
 	bound_height = 96
@@ -372,6 +373,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -837,6 +839,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/active = 0
 	var/power = 20
 	var/fire_delay = 100

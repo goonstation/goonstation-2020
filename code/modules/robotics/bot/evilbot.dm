@@ -19,6 +19,7 @@
 	setup_default_tool_path = /obj/item/device/guardbot_tool/taser
 	no_camera = 1
 	req_access_txt = "8088"
+	object_flags = 0
 
 	speak(var/message)
 		if((!src.on) || (src.idle) || (!message))

@@ -331,14 +331,20 @@
 							var/list/U = R.get_unconvertables()
 							if (!H.client || !H.mind)
 								can_convert = 0
-							else if (locate(/obj/item/implant/antirev) in H.implant)
-								can_convert = 0
 							else if (H.mind in U)
 								can_convert = 0
 							else if (H.mind in R.head_revolutionaries)
 								can_convert = 0
 							else
 								can_convert = 1
+
+							for (var/obj/item/implant/antirev/found_imp in H.implant)
+								found_imp.on_remove(H)
+								H.implant.Remove(found_imp)
+								qdel(found_imp)
+
+								playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
+								H.visible_message("<span style=\"color:blue\">The loyalty implant inside [H] shatters into one million pieces!</span>")
 
 							if (can_convert && !(H.mind in R.revolutionaries))
 								R.add_revolutionary(H.mind)

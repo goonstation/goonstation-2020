@@ -154,6 +154,8 @@
 					src.update_mintent()
 
 				if ("pull")
+					if (master.pulling)
+						unpull_particle(master,pulling)
 					master.pulling = null
 					src.update_pulling()
 

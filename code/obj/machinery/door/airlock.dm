@@ -61,6 +61,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/doorint.dmi'
 	icon_state = "door_closed"
 
+	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
+
 	var/image/panel_image = null
 	var/panel_icon_state = "panel_open"
 
@@ -146,6 +149,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
+	object_flags = BOTS_DIRBLOCK
 
 	meteorhit()
 		return
@@ -159,6 +163,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
+	object_flags = BOTS_DIRBLOCK
 
 	meteorhit()
 		return

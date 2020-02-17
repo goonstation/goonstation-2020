@@ -9,6 +9,7 @@
 	anchored = 1
 	density = 0
 	mats = 25
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 50
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null

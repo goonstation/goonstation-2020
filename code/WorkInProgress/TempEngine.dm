@@ -499,6 +499,7 @@
 	anchored = 1
 	density = 1
 	mats = 20
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/obj/machinery/atmospherics/unary/furnace_connector/f_connector = null
 

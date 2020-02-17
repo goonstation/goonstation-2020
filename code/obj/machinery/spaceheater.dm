@@ -14,6 +14,7 @@
 	var/heating_power = 40000
 	var/cooling_power = -30000
 	mats = 8
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT
 
 
@@ -270,6 +271,7 @@
 	var/heating_power = 40000
 	var/cooling_power = -30000
 	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = FPRINT
 
 

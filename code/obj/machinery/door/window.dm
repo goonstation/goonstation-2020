@@ -17,6 +17,7 @@
 	brainloss_stumble = 1
 	autoclose = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	New()
 		..()

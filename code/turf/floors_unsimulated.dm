@@ -11,6 +11,25 @@
 	thermal_conductivity = 0.040
 	heat_capacity = 225000
 
+
+/turf/unsimulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+
+	if (!C || !user)
+		return 0
+
+	if (istype(C, /obj/item/pen))
+		var/obj/item/pen/P = C
+		P.write_on_turf(src, user, params)
+		return
+
+	else if (istype(C, /obj/item/grab/))
+		var/obj/item/grab/G = C
+		if  (!grab_smash(G, user))
+			return ..(C, user)
+		else
+			return
+	..()
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/scorched

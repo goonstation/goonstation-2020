@@ -4,6 +4,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()

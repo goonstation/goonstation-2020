@@ -314,6 +314,7 @@
 	allowed_type = /obj/item/light/bulb
 	light_name = "light bulb"
 	wallmounted = 0
+	deconstruct_flags = DECON_SIMPLE
 
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
 

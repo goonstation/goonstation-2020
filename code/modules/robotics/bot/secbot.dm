@@ -69,8 +69,6 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
-	var/datum/light/light
-
 	disposing()
 		radio_controller.remove_object(src, "1149")
 		..()
@@ -147,10 +145,7 @@
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
 
-		light = new /datum/light/point
-		light.set_brightness(0.4)
-		light.attach(src)
-		light.enable()
+		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
 		SPAWN_DBG(5)
 			src.botcard = new /obj/item/card/id(src)
@@ -205,9 +200,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if ((href_list["power"]) && (!src.locked || src.allowed(usr)))
 			src.on = !src.on
 			if (src.on)
-				light.enable()
+				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 			else
-				light.disable()
+				remove_simple_light("secbot")
 			src.target = null
 			src.oldtarget_name = null
 			src.anchored = 0
@@ -825,6 +820,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					var/weeoo = 10
 					playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 
+					while (weeoo)
+						add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
+						sleep(3)
+						add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
+						sleep(3)
+						weeoo--
+
+					//old one in case we still want that
+					/*
 					light.set_brightness(0.8)
 					while (weeoo)
 						light.set_color(0.9, 0.1, 0.1)
@@ -832,10 +836,11 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						light.set_color(0.1, 0.1, 0.9)
 						sleep(3)
 						weeoo--
-
 					light.set_brightness(0.4)
 					light.set_color(1, 1, 1)
+					*/
 
+					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 				break
 			else
 				continue

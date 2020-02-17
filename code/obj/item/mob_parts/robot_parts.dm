@@ -291,7 +291,7 @@
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
 	max_health = 225
-	weight = 0.5
+	weight = 0.2
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head/sturdy))
@@ -344,7 +344,7 @@
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
 	max_health = 350
-	weight = 1
+	weight = 0.4
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/weldingtool) && W:welding)
@@ -549,7 +549,7 @@
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	max_health = 100
-	weight = 0.5
+	weight = 0.2
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/left/sturdy))
@@ -576,7 +576,7 @@
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
 	max_health = 175
-	weight = 1
+	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
@@ -614,7 +614,7 @@
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	max_health = 100
-	weight = 0.5
+	weight = 0.2
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/arm/right/sturdy))
@@ -641,7 +641,7 @@
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
 	max_health = 175
-	weight = 1
+	weight = 0.4
 
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
@@ -655,6 +655,8 @@
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
 	max_health = 60
 	effect_modifier = 0.2
+	var/step_sound = "step_robo"
+	var/step_priority = STEP_PRIORITY_LOW
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!ismob(M))

@@ -37,18 +37,27 @@
 	New()
 		..()
 		if (src.reagents)
-			src.reagents.temperature_cap = 440
+			src.reagents.temperature_cap = 440 //you can remove/adjust these afterr you fix burns from reagnets being super strong
+			src.reagents.temperature_min = 270	//you can remove/adjust these afterr you fix burns from reagnets being super strong
 
 	on_reagent_change()
 		src.update_icon()
 		if (src.reagents)
 			src.reagents.temperature_cap = 440
+			src.reagents.temperature_min = 270
 			if (src.reagents.total_temperature >= src.reagents.temperature_cap)
 				if (ismob(src.loc))
 					var/mob/M = src.loc
 					M.drop_item(src)
 				qdel(src)
+			if (src.reagents.total_temperature <= src.reagents.temperature_min)
+				src.reagents.total_temperature = src.reagents.temperature_min
 
+	proc/clamp_reagents()
+		if (src.reagents.total_temperature > src.reagents.temperature_cap)
+			src.reagents.total_temperature = src.reagents.temperature_cap
+		if (src.reagents.total_temperature < src.reagents.temperature_min)
+			src.reagents.total_temperature = src.reagents.temperature_min
 
 	proc/update_icon()
 		src.underlays = null
@@ -163,6 +172,9 @@
 						JOB_XP(user, "Medical Doctor", 1)
 
 			logTheThing("combat", user, M, "applies a patch to %target% [log_reagents(src)] at [log_loc(user)].")
+
+			src.clamp_reagents()
+
 			apply_to(M,user=user)
 			return 1
 

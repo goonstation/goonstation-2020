@@ -883,7 +883,8 @@
 				m_type = 1
 
 			if ("wink")
-				for (var/obj/item/clothing/C in src.get_equipped_items())
+				for(var/atom in src.get_equipped_items())
+					var/obj/item/C = atom
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
@@ -1074,7 +1075,7 @@
 								playsound(get_turf(src), "sound/effects/bubbles.ogg", 80, 1)
 
 			if ("flip")
-				if (src.emote_check(voluntary, 50) && !src.shrunk)
+				if (src.emote_check(voluntary, 50))
 
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
@@ -1100,11 +1101,13 @@
 							src.changeStatus("weakened", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
+							SPAWN_DBG(1 SECONDS)
+								src.emote_allowed = 1
 							goto showmessage
 
-					if (isvampire(src))
-						var/datum/abilityHolder/vampire/V = get_ability_holder(/datum/abilityHolder/vampire)
-						V.launch_bat_orbiters()
+
+					if (src.targeting_spell)
+						src.targeting_spell.flip_callback()
 
 					if ((!istype(src.loc, /turf/space)) && (!src.on_chair))
 						if (!src.lying)
@@ -1125,12 +1128,12 @@
 								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
-								SPAWN_DBG(2) //I'm sorry for my transgressions there's probably a way better way to do this
+								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
 									if(src && src.stance == "dodge")
 										src.stance = "normal"
 
 							//FLIP OVER TABLES
-							if (iswrestler(src) && !istype(usr.equipped(), /obj/item/grab))
+							if (iswrestler(src) && !istype(src.equipped(), /obj/item/grab))
 								for (var/obj/table/T in oview(1, null))
 									if ((src.dir == get_dir(src, T)))
 										T.set_density(0)
@@ -1142,168 +1145,103 @@
 										src.set_loc(newloc)
 										message = "<B>[src]</B> flips onto [T]!"
 
-
-							for (var/mob/living/M in view(1, null))
-								var/obj/item/grab/G = usr.equipped()
+							var/flipped_a_guy = 0
+							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+								var/mob/living/M = G.affecting
 								if (M == src)
 									continue
-								if (istype(usr.equipped(), /obj/item/grab))
-									if (!G.affecting) //Wire note: Fix for Cannot read null.loc
+								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
+									continue
+								flipped_a_guy = 1
+								if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
+									var/obj/table/tabl = locate() in src.loc.contents
+									var/turf/newloc = src.loc
+									G.affecting.set_loc(newloc)
+									if (!G.affecting.reagents.has_reagent("fliptonium"))
+										animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+
+									if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
+										src.remove_stamina(STAMINA_FLIP_COST)
+										src.stamina_stun()
+
+									src.emote("scream")
+									message = "<span style='color:red'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
+									logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+									M.lastattacker = src
+									M.lastattackertime = world.time
+									if (iswrestler(src))
+										if (prob(50))
+											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
+										else
+											G.affecting.changeStatus("stunned", 50)
+											G.affecting.changeStatus("weakened", 5 SECONDS)
+											G.affecting.force_laydown_standup()
+											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
+										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+									else
+										src.changeStatus("weakened", 3.5 SECONDS)
+
+										if (client && client.hellbanned)
+											src.changeStatus("weakened", 4 SECONDS)
+										if (!G.affecting.hasStatus("weakened"))
+											G.affecting.changeStatus("weakened", 4.5 SECONDS)
+
+
+										G.affecting.force_laydown_standup()
+										SPAWN_DBG(1 SECONDS) //let us do that combo shit people like with throwing
+											src.force_laydown_standup()
+
+										G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
+										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+									if (tabl)
+										if (istype(tabl, /obj/table/glass))
+											var/obj/table/glass/g_tabl = tabl
+											if (!g_tabl.glass_broken)
+												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
+													SPAWN_DBG(0)
+														g_tabl.smash()
+														src.changeStatus("stunned", 7 SECONDS)
+														src.changeStatus("weakened", 6 SECONDS)
+														random_brute_damage(src, rand(20,40))
+														take_bleeding_damage(src, src, rand(20,40))
+
+														G.affecting.changeStatus("stunned", 2 SECONDS)
+														G.affecting.changeStatus("weakened", 4 SECONDS)
+														random_brute_damage(G.affecting, rand(20,40))
+														take_bleeding_damage(G.affecting, src, rand(20,40))
+
+
+														G.affecting.force_laydown_standup()
+														SPAWN_DBG(1 SECONDS) //let us do that combo shit people like with throwing
+															src.force_laydown_standup()
+
+								if (G && G.state < 1) //ZeWaka: Fix for null.state
+									var/turf/oldloc = src.loc
+									var/turf/newloc = G.affecting.loc
+									src.set_loc(newloc)
+									G.affecting.set_loc(oldloc)
+									message = "<B>[src]</B> flips over [G.affecting]!"
+							if (!flipped_a_guy)
+								for (var/mob/living/M in view(1, null))
+									if (M == src)
 										continue
-
-									if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
-										var/obj/table/tabl = locate() in src.loc.contents
-										var/turf/newloc = src.loc
-										G.affecting.set_loc(newloc)
-										if (!G.affecting.reagents.has_reagent("fliptonium"))
-											animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-
+									if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
 
-										src.emote("scream")
-										message = "<span style='color:red'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-										logTheThing("combat", src, G.affecting, "suplexes %target%[tabl ? " into \an [tabl]" : null] [log_loc(src)]")
-										M.lastattacker = src
-										M.lastattackertime = world.time
-										if (iswrestler(src))
-											if (prob(50))
-												M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
-											else
-												G.affecting.changeStatus("stunned", 50)
-												G.affecting.changeStatus("weakened", 5 SECONDS)
-												G.affecting.force_laydown_standup()
-												G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-											playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-										else
-											src.changeStatus("weakened", 3 SECONDS)
-
-											if (client && client.hellbanned)
-												src.changeStatus("weakened", 4 SECONDS)
-											if (!G.affecting.hasStatus("weakened"))
-												G.affecting.changeStatus("weakened", 5 SECONDS)
-
-
-											G.affecting.force_laydown_standup()
-											SPAWN_DBG(10) //let us do that combo shit people like with throwing
-												src.force_laydown_standup()
-
-											G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-											playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-										if (tabl)
-											if (istype(tabl, /obj/table/glass))
-												var/obj/table/glass/g_tabl = tabl
-												if (!g_tabl.glass_broken)
-													if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
-														SPAWN_DBG(0)
-															g_tabl.smash()
-															src.changeStatus("stunned", 7 SECONDS)
-															src.changeStatus("weakened", 6 SECONDS)
-															random_brute_damage(src, rand(20,40))
-															take_bleeding_damage(src, src, rand(20,40))
-
-															G.affecting.changeStatus("stunned", 2 SECONDS)
-															G.affecting.changeStatus("weakened", 4 SECONDS)
-															random_brute_damage(G.affecting, rand(20,40))
-															take_bleeding_damage(G.affecting, src, rand(20,40))
-
-
-															G.affecting.force_laydown_standup()
-															SPAWN_DBG(10) //let us do that combo shit people like with throwing
-																src.force_laydown_standup()
-
-									if (G && G.state < 1) //ZeWaka: Fix for null.state
-										var/turf/oldloc = src.loc
-										var/turf/newloc = G.affecting.loc
+										message = "<span style=\"color:red\"><B>[src]</B> flips into [M]!</span>"
+										logTheThing("combat", src, M, "flips into %target%")
+										src.changeStatus("weakened", 6 SECONDS)
+										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
+										M.changeStatus("weakened", 2 SECONDS)
+										M.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
+										playsound(src.loc, pick(sounds_punch), 100, 1)
+										var/turf/newloc = M.loc
 										src.set_loc(newloc)
-										G.affecting.set_loc(oldloc)
-										message = "<B>[src]</B> flips over [G.affecting]!"
-								else if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
-									if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
-										src.remove_stamina(STAMINA_FLIP_COST)
-										src.stamina_stun()
-
-									message = "<span style=\"color:red\"><B>[src]</B> flips into [M]!</span>"
-									logTheThing("combat", src, M, "flips into %target%")
-									src.changeStatus("weakened", 6 SECONDS)
-									src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
-									M.changeStatus("weakened", 2 SECONDS)
-									M.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
-									playsound(src.loc, pick(sounds_punch), 100, 1)
-									var/turf/newloc = M.loc
-									src.set_loc(newloc)
-								else
-									message = "<B>[src]</B> flips in [M]'s general direction."
-								break
-
-					if (src.on_chair)// == 1)
-						if (src.on_chair.loc != src.loc)
-							src.pixel_y = 0
-							src.anchored = 0
-							src.on_chair = 0
-							src.buckled = null
-						else
-							//CHAIR FLIPPING LOOP
-							for (var/mob/living/M in oview(3))
-								if (M == src)
-									continue
-
-								if (!istype(usr.equipped(), /obj/item/grab))
-									src.pixel_y = 0
-									src.buckled = null
-									src.anchored = 0
-									. = 1
-									if (M && M.loc != src.loc) // just in case, so the user doesn't fall into nullspace if they fly at a person mid-gibbing or whatever
-										var/list/flipLine = getline(src, M)
-										for (var/turf/T in flipLine)
-											if (!istype(src.loc, /turf) || T.density || T.loc:sanctuary || LinkBlockedWithAccess(src.loc, T))
-												message = "<span style=\"color:red\"><B>[src]</b> does a flying flip...into the ground.  Like a big doofus.</span>"
-												src.changeStatus("weakened", 5 SECONDS)
-												. = 0
-												break
-											else
-												src.set_loc(T)
-
-									src.emote("scream")
-									src.on_chair = 0
-
-									if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
-										src.remove_stamina(STAMINA_FLIP_COST)
-										src.stamina_stun()
-
-									if (.)
-										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-										message = "<span style=\"color:red\"><B>[src]</B> does a flying flip into [M]!</span>"
-										logTheThing("combat", src, M, "[src] chairflips into %target%, [showCoords(M.x, M.y, M.z)].")
-										M.lastattacker = src
-										M.lastattackertime = world.time
-
-										if (iswrestler(src))
-											if (prob(33))
-												M.ex_act(3)
-											else
-												random_brute_damage(M, 25)
-												M.changeStatus("weakened", 7 SECONDS)
-												M.changeStatus("stunned", 7 SECONDS)
-										else if (M.traitHolder.hasTrait("training_security"))
-											message = "<span style=\"color:red\"><B>[src]</B></span> does a flying flip into <span style=\"color:red\">[M]</span>, but <span style=\"color:red\">[M]</span> skillfully slings them away!"
-											src.changeStatus("weakened", 6 SECONDS)
-											src.changeStatus("stunned", 6 SECONDS)
-											var/atom/target = get_edge_target_turf(M, M.dir)
-											src.throw_at(target, 3, 10)
-										else
-											random_brute_damage(M, 10)
-											if (!M.hasStatus("weakened"))
-												M.changeStatus("weakened", 4 SECONDS)
-												M.changeStatus("stunned", 4 SECONDS)
-											src.changeStatus("weakened", 3 SECONDS)
-											src.changeStatus("stunned", 3 SECONDS)
-
-								if (!src.reagents.has_reagent("fliptonium"))
-									animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-								break
-
+									else
+										message = "<B>[src]</B> flips in [M]'s general direction."
+									break
 
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
@@ -1360,9 +1298,9 @@
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
 							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/bloop.ogg', 100, 0, 0, src.get_age_pitch())
+								playsound(src.loc, 'sound/vox/bloop.ogg', 70, 0, 0, src.get_age_pitch())
 							else
-								playsound(get_turf(src), src.sound_burp, 100, 0, 0, src.get_age_pitch())
+								playsound(get_turf(src), src.sound_burp, 70, 0, 0, src.get_age_pitch())
 							return
 					else if ((src.charges >= 1) && (muzzled))
 						for (var/mob/O in viewers(src, null))
@@ -1374,12 +1312,12 @@
 						message = "<B>[src]</B> burps."
 						m_type = 2
 						if (narrator_mode)
-							playsound(src.loc, 'sound/vox/bloop.ogg', 100, 0, 0, src.get_age_pitch())
+							playsound(src.loc, 'sound/vox/bloop.ogg', 70, 0, 0, src.get_age_pitch())
 						else
 							if (src.getStatusDuration("food_deep_burp"))
-								playsound(get_turf(src), src.sound_burp, 100, 0, 0, src.get_age_pitch() * 0.5)
+								playsound(get_turf(src), src.sound_burp, 70, 0, 0, src.get_age_pitch() * 0.5)
 							else
-								playsound(get_turf(src), src.sound_burp, 100, 0, 0, src.get_age_pitch())
+								playsound(get_turf(src), src.sound_burp, 70, 0, 0, src.get_age_pitch())
 
 						var/datum/statusEffect/fire_burp/FB = src.hasStatus("food_fireburp")
 						if (!FB)
@@ -1520,17 +1458,17 @@
 						if (iscluwne(src))
 							playsound(get_turf(src), "sound/voice/farts/poo.ogg", 50, 1)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 100, 1, 0, src.get_age_pitch())
+							playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch())
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 						else
 							if (narrator_mode)
-								playsound(get_turf(src), 'sound/vox/fart.ogg', 100, 0, 0, src.get_age_pitch())
+								playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch())
 							else
 								if (src.getStatusDuration("food_deep_fart"))
-									playsound(get_turf(src), src.sound_fart, 100, 0, 0, src.get_age_pitch() - 0.3)
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3)
 								else
-									playsound(get_turf(src), src.sound_fart, 100, 0, 0, src.get_age_pitch())
+									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
 
 						if(src.loc && istype(src.loc, /turf/simulated/floor/specialroom/freezer) && prob(10)) //ZeWaka: Fix for null.loc
 							message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"

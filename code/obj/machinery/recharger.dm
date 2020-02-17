@@ -27,6 +27,7 @@ obj/machinery/recharger
 	icon_state = "recharger0"
 	name = "recharger"
 	mats = 16
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 	desc = "An anchored minature recharging device, used to recharge small, hand-held objects that don't require much electrical charge."
 	power_usage = 50
 

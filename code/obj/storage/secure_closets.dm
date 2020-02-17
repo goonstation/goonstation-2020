@@ -80,7 +80,8 @@
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/stamp/hop,
-	/obj/item/device/radio/headset/command/hop)
+	/obj/item/device/radio/headset/command/hop,
+	/obj/item/device/accessgun)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -149,7 +150,8 @@
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
-	/obj/item/device/radio/headset/command/ce)
+	/obj/item/device/radio/headset/command/ce,
+	/obj/item/deconstructor)
 
 /* ==================== */
 /* ----- Security ----- */
@@ -526,7 +528,8 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
-	/obj/item/storage/belt/utility)
+	/obj/item/storage/belt/utility,
+	/obj/item/deconstructor)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"

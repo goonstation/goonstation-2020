@@ -249,7 +249,7 @@
 	//Status updates, death etc.
 	clamp_values()
 	parent.setLastTask("handle_regular_status_updates", src)
-	handle_regular_status_updates(parent)
+	handle_regular_status_updates(parent,mult = (life_time_passed / tick_spacing))
 
 	parent.setLastTask("handle_stuns_lying", src)
 	handle_stuns_lying(parent)
@@ -414,7 +414,6 @@
 			if (x.client)
 				src.updateOverlaysClient(x.client)
 
-	// Grabbing
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 		parent.setLastTask("obj/item/grab.process() for [G]")
 		G.process((life_time_passed / tick_spacing))
@@ -423,10 +422,12 @@
 
 
 	//rev mutiny
-	if (prob(50))
-		if (src.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-			var/datum/game_mode/revolution/R = ticker.mode
-			var/role = src.mind.assigned_role
+
+	if (src.mind && ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
+		var/datum/game_mode/revolution/R = ticker.mode
+		var/role = src.mind.assigned_role
+
+		if (prob(50))
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
 				var/found = 0
 				for (var/datum/mind/M in R.revolutionaries)
@@ -436,23 +437,23 @@
 							break
 				for (var/datum/mind/M in R.head_revolutionaries)
 					if (M.current && ishuman(M.current))
-						if (get_dist(src,M.current) <= 2)
+						if (get_dist(src,M.current) <= 0) //only if we're being strangled ;)
 							found = 1
 							break
 				if (found)
 					src.changeStatus("mutiny", 30 SECONDS)
 
 
-			if (src.mind in R.revolutionaries)
-				var/found = 0
-				for (var/datum/mind/M in R.head_revolutionaries)
-					if (M.current && ishuman(M.current))
-						if (get_dist(src,M.current) <= 5)
-							for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
-								found = 1
-								break
-				if (found)
-					src.changeStatus("revspirit", 20 SECONDS)
+		if (src.mind in R.revolutionaries || src.mind in R.head_revolutionaries)
+			var/found = 0
+			for (var/datum/mind/M in R.head_revolutionaries)
+				if (M.current && ishuman(M.current))
+					if (get_dist(src,M.current) <= 5)
+						for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
+							found = 1
+							break
+			if (found)
+				src.changeStatus("revspirit", 20 SECONDS)
 
 
 
@@ -748,43 +749,47 @@
 				boutput(src, "<span style=\"color:red\">You are drowning!</span>")
 
 		var/datum/gas_mixture/environment = loc.return_air()
-		var/datum/air_group/breath
+		var/datum/air_group/breath = null
 		// HACK NEED CHANGING LATER
 		//if (src.oxymax == 0 || (breathtimer > 15))
 		if (breathtimer > 15)
 			src.losebreath += (0.7 * (breath_time_passed / tick_spacing))
 
-		if (losebreath>0) //Suffocating so do not take a breath
-			src.losebreath -= (1.3 * (breath_time_passed / tick_spacing))
-			src.losebreath = max(src.losebreath,0)
-			if (prob(75)) //High chance of gasping for air
-				if (underwater)
-					emote("gurgle")
-				else emote("gasp")
-			if (isobj(loc))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-			if (src.losebreath <= 0)
-				boutput(src, "<span style='color:blue'>You catch your breath.</span>")
-		else
-			//First, check for air from internal atmosphere (using an air tank and mask generally)
-			breath = get_breath_from_internal(BREATH_VOLUME)
+		if (src.grabbed_by && src.grabbed_by.len)
+			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
-			//No breath from internal atmosphere so get breath from location
-			if (!breath)
-				if (isobj(loc))
-					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if (isturf(loc))
-					var/breath_moles = (environment.total_moles()*BREATH_PERCENTAGE)
-
-					breath = loc.remove_air(breath_moles)
-
-			else //Still give containing object the chance to interact
-				underwater = 0 // internals override underwater state
+		if (!breath)
+			if (losebreath>0) //Suffocating so do not take a breath
+				src.losebreath -= (1.3 * (breath_time_passed / tick_spacing))
+				src.losebreath = max(src.losebreath,0)
+				if (prob(75)) //High chance of gasping for air
+					if (underwater)
+						emote("gurgle")
+					else emote("gasp")
 				if (isobj(loc))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
+				if (src.losebreath <= 0)
+					boutput(src, "<span style='color:blue'>You catch your breath.</span>")
+			else
+				//First, check for air from internal atmosphere (using an air tank and mask generally)
+				breath = get_breath_from_internal(BREATH_VOLUME)
+
+				//No breath from internal atmosphere so get breath from location
+				if (!breath)
+					if (isobj(loc))
+						var/obj/location_as_object = loc
+						breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
+					else if (isturf(loc))
+						var/breath_moles = (environment.total_moles()*BREATH_PERCENTAGE)
+
+						breath = loc.remove_air(breath_moles)
+
+				else //Still give containing object the chance to interact
+					underwater = 0 // internals override underwater state
+					if (isobj(loc))
+						var/obj/location_as_object = loc
+						location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_breath(breath, underwater, mult = (breath_time_passed / tick_spacing))
 
@@ -793,6 +798,12 @@
 
 		last_breath_process = world.timeofday
 
+	proc/get_breath_grabbed_by(volume_needed)
+		.= null
+		for(var/obj/item/grab/force_mask/G in src.grabbed_by)
+			.= G.get_breath(volume_needed)
+			if (.)
+				break
 
 	proc/get_breath_from_internal(volume_needed)
 		if (internal)
@@ -809,10 +820,11 @@
 			else
 				if (src.internals)
 					src.internals.icon_state = "internal0"
+
 		return null
 
 	proc/update_canmove()
-		if (hasStatus("paralysis") || hasStatus("stunned") || hasStatus("weakened"))
+		if (hasStatus("paralysis") || hasStatus("stunned") || hasStatus("weakened") || hasStatus("pinned"))
 			canmove = 0
 			return
 
@@ -824,6 +836,16 @@
 		if (buckled && buckled.anchored)
 			canmove = 0
 			return
+
+		if (throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT))
+			canmove = 0
+			return
+
+		//cant move while we pin someone down
+		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+			if (G.state == GRAB_PIN)
+				canmove = 0
+				return
 
 		canmove = 1
 
@@ -894,6 +916,9 @@
 				take_oxygen_deprivation(3 * mult)
 			hud.update_oxy_indicator(1)
 		else 									// We're in safe limits
+			//if (breath.oxygen/breath.total_moles() >= 0.95) //high oxygen concentration. lets slightly heal oxy damage because it feels right
+			//	take_oxygen_deprivation(-6 * mult)
+
 			take_oxygen_deprivation(-6 * mult)
 			oxygen_used = breath.oxygen/6
 			hud.update_oxy_indicator(0)
@@ -1045,7 +1070,8 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		for (var/obj/item/C in src.get_equipped_items())
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
 			thermal_protection += C.getProperty("coldprot")
 
 		/*
@@ -1093,7 +1119,8 @@
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for (var/obj/item/C in src.get_equipped_items())
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -1110,7 +1137,8 @@
 		var/rad_protection = 0
 
 		// Resistance from Clothing
-		for (var/obj/item/C in src.get_equipped_items())
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
 			rad_protection += C.getProperty("radprot")
 
 		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
@@ -1126,7 +1154,8 @@
 		var/protection = 1
 
 		// Resistance from Clothing
-		for (var/obj/item/C in src.get_equipped_items())
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
 			if(C.hasProperty("rangedprot"))
 				var/curr = C.getProperty("rangedprot")
 				protection += curr
@@ -1146,7 +1175,8 @@
 				thermal_protection += 10
 
 		// Resistance from Clothing
-		for (var/obj/item/C in src.get_equipped_items())
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
 			thermal_protection += C.getProperty("heatprot")
 
 		/*
@@ -1519,15 +1549,9 @@
 				oH.heart = null
 			else if (oH.heart.robotic && oH.heart.emagged && !oH.heart.broken)
 				src.drowsyness = max (src.drowsyness - 8, 0)
-				changeStatus("paralysis", -2 SECONDS)
-				changeStatus("stunned", -2 SECONDS)
-				changeStatus("weakened", -2 SECONDS)
 				if (src.sleeping) src.sleeping = 0
 			else if (oH.heart.robotic && !oH.heart.broken)
 				src.drowsyness = max (src.drowsyness - 4, 0)
-				changeStatus("paralysis", -1 SECONDS)
-				changeStatus("stunned", -1 SECONDS)
-				changeStatus("weakened", -1 SECONDS)
 				if (src.sleeping) src.sleeping = 0
 			else if (oH.heart.broken)
 				if (src.get_oxygen_deprivation())
@@ -1544,20 +1568,9 @@
 
 		// lungs are skipped until they can be removed/whatever
 
-	proc/handle_regular_status_updates(datum/controller/process/mobs/parent)
-
-		health = max_health - (get_oxygen_deprivation() + get_toxin_damage() + get_burn_damage() + get_brute_damage())
-
-		// I don't think the revenant needs any of this crap - Marq
-		if (src.bioHolder && src.bioHolder.HasEffect("revenant") || isdead(src)) //You also don't need to do a whole lot of this if the dude's dead.
-			return
-
+	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
 			setStatus("paralysis", max(getStatusDuration("paralysis"), STAMINA_NEG_CAP_STUN_TIME))
-
-		//maximum modifiers.
-		stamina_max = max((STAMINA_MAX + src.get_stam_mod_max()), 0)
-		stamina = min(stamina, stamina_max)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, world.timeofday - last_stam_change)
@@ -1570,9 +1583,25 @@
 
 		last_stam_change = world.timeofday
 
+		if (src.stamina_bar && src.client)
+			src.stamina_bar.update_value(src)
+
+
+	proc/handle_regular_status_updates(datum/controller/process/mobs/parent,var/mult = 1)
+
+		health = max_health - (get_oxygen_deprivation() + get_toxin_damage() + get_burn_damage() + get_brute_damage())
+
+		// I don't think the revenant needs any of this crap - Marq
+		if (src.bioHolder && src.bioHolder.HasEffect("revenant") || isdead(src)) //You also don't need to do a whole lot of this if the dude's dead.
+			return
+
+		//maximum stamina modifiers.
+		stamina_max = max((STAMINA_MAX + src.get_stam_mod_max()), 0)
+		stamina = min(stamina, stamina_max)
+
 		parent.setLastTask("status_updates implants organs and augmentations check", src)
 		for (var/obj/item/implant/I in src.implant)
-			I.on_life((stam_time_passed / tick_spacing))
+			I.on_life(mult)
 
 		//parent.setLastTask("status_updates max value calcs", src)
 
@@ -1796,13 +1825,13 @@
 			changeling_fakedeath = 1
 
 		if (!isdead(src)) //Alive.
-			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || changeling_fakedeath || src.resting) //Stunned etc.
+			if (src.hasStatus("paralysis") || src.hasStatus("stunned") || src.hasStatus("weakened") || hasStatus("pinned") || changeling_fakedeath || src.resting) //Stunned etc.
 				parent.setLastTask("status_updates lying/standing checks stun calcs")
 				var/setStat = src.stat
 				var/oldStat = src.stat
 				if (src.hasStatus("stunned"))
 					setStat = 0
-				if (src.hasStatus("weakened") && !src.fakedead)
+				if (src.hasStatus("weakened") || src.hasStatus("pinned") && !src.fakedead)
 					if (!cant_lie) src.lying = 1
 					setStat = 0
 				if (src.hasStatus("paralysis"))

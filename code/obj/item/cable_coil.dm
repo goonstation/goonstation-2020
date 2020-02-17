@@ -24,9 +24,13 @@
 	stamina_cost = 5
 	stamina_crit_chance = 10
 	rand_pos = 1
+	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
+	special_grab = /obj/item/grab
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
+
+	var/cable_obj_type = /obj/cable
 
 	// will use getMaterial() to apply these at spawn
 	var/spawn_insulator_name = "synthrubber"
@@ -145,6 +149,8 @@
 
 	spawn_insulator_name = "synthblubber"
 	spawn_conductor_name = "pharosium"
+
+	cable_obj_type = /obj/cable/reinforced
 
 	New(loc, length = MAXCOIL)
 		..(loc, length)
@@ -282,7 +288,7 @@
 	for (var/obj/cable/C in A)
 		if (C.d1 == dirn || C.d2 == dirn)
 			return
-	var/obj/cable/NC = new(A, src)
+	var/obj/cable/NC = new cable_obj_type(A, src)
 
 	applyCableMaterials(NC, src.insulator, src.conductor)
 	NC.d1 = 0
@@ -327,7 +333,7 @@
 			if ((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
 				return
 		qdel(C)
-		var/obj/cable/NC = new(T, src)
+		var/obj/cable/NC = new cable_obj_type(T, src)
 		applyCableMaterials(NC, src.insulator, src.conductor)
 		NC.d1 = nd1
 		NC.d2 = nd2
@@ -365,7 +371,7 @@
 				boutput(user, "There's already a cable at that position.")
 				return
 
-		var/obj/cable/C = new(F, src)
+		var/obj/cable/C = new cable_obj_type(F, src)
 		C.d1 = 0
 		C.d2 = dirn
 		C.add_fingerprint(user)
@@ -411,7 +417,7 @@
 					boutput(user, "There's already a cable at that position.")
 					return
 
-			var/obj/cable/NC = new(U, src)
+			var/obj/cable/NC = new cable_obj_type(U, src)
 			applyCableMaterials(NC, src.insulator, src.conductor)
 			NC.d1 = 0
 			NC.d2 = fdirn
@@ -442,7 +448,7 @@
 				return
 		C.shock(user, 25)
 		qdel(C)
-		var/obj/cable/NC = new(T, src)
+		var/obj/cable/NC = new cable_obj_type(T, src)
 		applyCableMaterials(NC, src.insulator, src.conductor)
 		NC.d1 = nd1
 		NC.d2 = nd2

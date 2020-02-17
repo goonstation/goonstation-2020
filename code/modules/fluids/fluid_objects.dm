@@ -24,6 +24,7 @@
 	var/drain_min = 2
 	var/drain_max = 7
 	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 
 	big
@@ -224,6 +225,7 @@
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick
 	mats = 20
+	deconstruct_flags = DECON_CROWBAR | DECON_WELDER
 
 	var/slurping = 0
 	var/pissing = 0
@@ -450,6 +452,7 @@
 	anchored = 0
 
 	mats = 16
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	flags = FPRINT
 
 	var/active = 1

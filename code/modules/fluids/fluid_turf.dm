@@ -33,7 +33,7 @@
 
 	special_volume_override = 0.62
 
-	turf_flags = CAN_BE_SPACE_SAMPLE
+	turf_flags = CAN_BE_SPACE_SAMPLE | FLUID_MOVE
 
 	var/datum/light/point/light = 0
 	var/light_r = 0.16
@@ -226,7 +226,7 @@
 
 		if (!prob(severity*20))
 			for (var/obj/O in src)
-				if (istype(O, /obj/lattice) || istype(O, /obj/cable/reinforced) || istype(O, /obj/item/heat_dowsing) || istype(O, /obj/machinery/conveyor) )
+				if (istype(O, /obj/lattice) || istype(O, /obj/cable/reinforced) || istype(O, /obj/item/heat_dowsing) || istype(O, /obj/machinery/conveyor) || istype(O,/obj/item/cable_coil/reinforced) )
 					return
 
 			blow_hole()
@@ -258,7 +258,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
-		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced))
+		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile))
 			return
 		if (locate(/obj/lattice) in src)
 			return
@@ -266,8 +266,7 @@
 
 		try_build_turf_list()
 
-		if (L && L.len && !istype(AM,/obj/overlay) && !istype(AM,/obj/torpedo_targeter))
-
+		if (L && L.len)
 			SPAWN_DBG(3)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span style=\"color:red\">[AM] falls down [src]!</span>")
@@ -293,13 +292,9 @@
 
 	try_build_turf_list()
 		if (!L || L.len == 0)
-			for(var/turf/space/fluid/T in range(10,locate(src.x,src.y,5)))
+			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break
-		..()
-
-	Entered(var/atom/movable/AM)
-		try_build_turf_list()
 		..()
 
 

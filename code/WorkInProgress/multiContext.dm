@@ -591,7 +591,7 @@ var/list/globalContextActions = null
 				spawn(1)
 					ghost.enter_ghostdrone_queue()
 			..()
-			
+
 	ghost_respawn/afterlife_bar
 		name = "Afterlife Bar"
 		desc = "Enter the afterlife Bar"
@@ -730,3 +730,175 @@ var/list/globalContextActions = null
 				.= "PRICE : [GBP.cost]<br>[GBP.desc]<br><br>There are [GBP.uses] applications left."
 			else
 				..()
+
+	deconstruction
+		icon = 'icons/ui/context16x16.dmi'
+		name = "Deconstruct with Tool"
+		desc = "You shouldn't be reading this, bug."
+		icon_state = "wrench"
+
+		execute(var/atom/target, var/mob/user)
+			if (isobj(target))
+				var/obj/O = target
+				if (O.decon_contexts)
+					O.decon_contexts -= src
+					if (O.decon_contexts.len <= 0)
+						user.show_text("Looks like [target] is ready to be deconstructed with the device.", "blue")
+					else
+						user.showContextActions(O.decon_contexts, O)
+			else
+				target.removeContextAction(src.type)
+
+		checkRequirements(var/atom/target, var/mob/user)
+			.= 0
+			for (var/obj/item/deconstructor/D in user.equipped_list())
+				return 1
+
+		wrench
+			name = "Wrench"
+			desc = "Wrenching required to deconstruct."
+			icon_state = "wrench"
+
+			execute(var/atom/target, var/mob/user)
+				for (var/obj/item/I in user.equipped_list())
+					if (iswrenchingtool(I))
+						user.show_text("You wrench [target]'s bolts.", "blue")
+						playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+						return ..()
+
+		cut
+			name = "Cut"
+			desc = "Cutting required to deconstruct."
+			icon_state = "cut"
+
+			execute(var/atom/target, var/mob/user)
+				for (var/obj/item/I in user.equipped_list())
+					if (iscuttingtool(I) || issnippingtool(I))
+						user.show_text("You cut some vestigial wires from [target].", "blue")
+						playsound(get_turf(target), "sound/items/Wirecutter.ogg", 50, 1)
+						return ..()
+		weld
+			name = "Weld"
+			desc = "Welding required to deconstruct."
+			icon_state = "weld"
+
+			execute(var/atom/target, var/mob/user)
+				user.show_text("You weld [target] carefully.", "blue")
+				for (var/obj/item/weldingtool/W in user.equipped_list())
+					if (W.get_fuel())
+						W.use_fuel(2)
+						playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+						return ..()
+
+		pry
+			name = "Pry"
+			desc = "Prying required to deconstruct. Try a crowbar."
+			icon_state = "bar"
+
+			execute(var/atom/target, var/mob/user)
+				for (var/obj/item/I in user.equipped_list())
+					if (ispryingtool(I))
+						user.show_text("You pry on [target] without remorse.", "blue")
+						playsound(get_turf(target), "sound/items/Crowbar.ogg", 50, 1)
+						return ..()
+
+		screw
+			name = "Screw"
+			desc = "Screwing required to deconstruct."
+			icon_state = "screw"
+
+			execute(var/atom/target, var/mob/user)
+				for (var/obj/item/I in user.equipped_list())
+					if (isscrewingtool(I))
+						user.show_text("You unscrew some of the screws on [target].", "blue")
+						playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+						return ..()
+
+		pulse
+			name = "Pulse"
+			desc = "Pulsing required to deconstruct. Try a multitool."
+			icon_state = "pulse"
+
+			execute(var/atom/target, var/mob/user)
+				for (var/obj/item/I in user.equipped_list())
+					if (ispulsingtool(I))
+						user.show_text("You pulse [target]. In a general sense.", "blue")
+						playsound(get_turf(target), "sound/items/penclick.ogg", 50, 1)
+						return ..()
+
+/*
+	offered
+		icon = null
+		icon_background = null
+
+		maptext = "<span class='ps2p ol vt c' style='color: #f00;'>Do you want to?</span>"
+		charge.maptext_y = -5
+		charge.maptext_width = 96
+		charge.maptext_x = -9
+
+		execute(var/atom/target, var/mob/user)
+			.= 0
+
+		checkRequirements(var/atom/target, var/mob/user)
+			.= 0
+
+		item
+			var/obj/item/I = null
+
+			disposing()
+				I = null
+				..()
+
+			buildBackgroundIcon-(var/atom/target, var/mob/user)
+				var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
+				background.appearance_flags = RESET_COLOR
+				.= background
+
+
+			getIcon()
+				if (I)
+					.= I.icon
+				else
+					..()
+
+			getIconState()
+				if (I)
+					.= I.icon_state
+				else
+					..()
+
+			getName(var/atom/target, var/mob/user)
+				if (I)
+					.= I.name
+				else
+					..()
+
+			getDesc(var/atom/target, var/mob/user)
+				if (I)
+					.= I.desc
+				else
+					..()
+
+	accept
+		icon_state = "yes"
+		var/datum/yesno_dialog/give_dialog = null
+
+		checkRequirements(var/atom/target, var/mob/user)
+			return 1
+
+		execute(var/atom/target, var/mob/user)
+			target.addContextAction(/datum/contextAction/testfour)
+			return 0
+
+	refuse
+		icon_state = "no"
+		var/datum/yesno_dialog/give_dialog = null
+
+
+		checkRequirements(var/atom/target, var/mob/user)
+			return 1
+
+		execute(var/atom/target, var/mob/user)
+			target.addContextAction(/datum/contextAction/testfour)
+			return 0
+*/

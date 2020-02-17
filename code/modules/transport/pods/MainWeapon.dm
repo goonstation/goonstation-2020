@@ -57,7 +57,7 @@
 		return
 
 
-/obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user)
+/obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(isfiring) return
 	isfiring = 1
 	if(uses_ammunition)
@@ -67,9 +67,11 @@
 			return
 
 	var/rdir = ship.dir
-	if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
-		if ((rdir - 1) & rdir)
-			rdir &= 12
+	if (shot_dir_override > 1)
+		rdir = shot_dir_override
+	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
+	//	if ((rdir - 1) & rdir)
+	//		rdir &= 12
 	logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
@@ -262,13 +264,16 @@
 		mode = !mode
 		..()
 
-	Fire(var/mob/user)
+	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
 			if(0)
 				if(isfiring) return
 				isfiring = 1
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.dir = ship.dir
+				if (shot_dir_override > 1)
+					D.dir = shot_dir_override
+
 				D.name = "metal foam spray"
 				D.icon = 'icons/obj/chemical.dmi'
 				D.icon_state = "chempuff"

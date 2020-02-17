@@ -9,6 +9,7 @@
 	density = 1
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
 	mats = 10
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	var/mode = 1 // 1 = charge APC, 2 = charge inserted power cell.
 	var/active = 0
 

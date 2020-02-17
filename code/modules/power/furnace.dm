@@ -12,6 +12,7 @@
 	var/genrate = 5000
 	var/stoked = 0 // engine ungrump
 	mats = 20
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	process()
 		if(status & BROKEN) return

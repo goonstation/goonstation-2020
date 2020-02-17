@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
 	var/mode = "ready"
@@ -1555,7 +1556,7 @@
 		src.build_icon()
 
 	proc/claim_free_resources()
-		if (mats == "Built")
+		if (src.deconstruct_flags & DECON_BUILT)
 			free_resource_amt = 0
 		if (free_resources.len && free_resource_amt > 0)
 			var/looper = src.free_resource_amt

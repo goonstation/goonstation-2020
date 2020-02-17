@@ -16,6 +16,7 @@
 	brutevuln = 1
 	is_syndicate = 1
 	mats = 8
+	deconstruct_flags = DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	seek_target()
 		src.anchored = 0

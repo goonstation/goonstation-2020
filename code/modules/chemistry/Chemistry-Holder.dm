@@ -55,6 +55,7 @@ datum
 		var/covered_cache_volume = 0
 
 		var/temperature_cap = 10000
+		var/temperature_min = 0
 
 		var/postfoam = 0 //attempt at killing infinite foam
 
@@ -120,7 +121,7 @@ datum
 			else if (exposed_temperature < total_temperature)
 				total_temperature -= change
 
-			total_temperature = max(min(total_temperature, temperature_cap), 0) //Cap for the moment.
+			total_temperature = max(min(total_temperature, temperature_cap), temperature_min) //Cap for the moment.
 			temperature_react()
 
 			handle_reactions()
@@ -975,7 +976,8 @@ datum
 		//there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 		proc/smoke_start(var/volume, var/classic = 0)
 			del_reagent("thalmerite")
-			//del_reagent("big_bang") //remove this later when we fix rreaction order stuff etc
+			del_reagent("big_bang") //remove later if we can get a better fix
+			del_reagent("big_bang_precursor")
 
 			var/list/covered = covered_turf()
 
