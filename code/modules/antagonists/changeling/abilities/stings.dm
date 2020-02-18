@@ -7,6 +7,7 @@
 	cooldown = 900
 	targeted = 1
 	target_anything = 1
+	target_in_inventory = 1
 	sticky = 1
 
 	cast(atom/target)
