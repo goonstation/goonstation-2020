@@ -69,6 +69,7 @@ TRAYS
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
+	dir = NORTH
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -133,6 +134,7 @@ TRAYS
 	force = 7.0
 	throwforce = 5
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
+	dir = NORTH
 
 	New()
 		..()
@@ -265,6 +267,7 @@ TRAYS
 	name = "spoon"
 	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
 	icon_state = "spoon"
+	dir = NORTH
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
