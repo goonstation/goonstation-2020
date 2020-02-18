@@ -1190,6 +1190,12 @@
 	icon_state = "glass-oldf"
 	glass_style = "oldf"
 	initial_volume = 20
+	
+/obj/item/reagent_containers/food/drinks/drinkingglass/round
+	name = "round glass"
+	icon_state = "glass-round"
+	glass_style = "round"
+	initial_volume = 100
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine
 	name = "wine glass"
