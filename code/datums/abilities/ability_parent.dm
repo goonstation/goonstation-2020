@@ -640,6 +640,7 @@
 		max_range = 10
 		targeted = 0
 		target_anything = 0
+		target_in_inventory = 0
 		last_cast = 0
 		cooldown = 100
 		start_on_cooldown = 0
