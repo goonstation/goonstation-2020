@@ -1061,7 +1061,12 @@
 				src.targeting_spell = S
 				update_cursor()
 			return 100
-		if (!isturf(target.loc) && !isturf(target))
+		if (!S.target_in_inventory && !isturf(target.loc) && !isturf(target))
+			if(S.sticky)
+				src.targeting_spell = S
+				update_cursor()
+			return 100
+		if (S.target_in_inventory && ( get_dist(src, target) > 1 || isturf(target)))
 			if(S.sticky)
 				src.targeting_spell = S
 				update_cursor()
