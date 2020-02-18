@@ -1066,12 +1066,12 @@
 				src.targeting_spell = S
 				update_cursor()
 			return 100
-		if (S.target_in_inventory && ( get_dist(src, target) > 1 || isturf(target)))
+		if (S.target_in_inventory && ( get_dist(src, target) > 1 || isturf(target)) || get_step(src, 0).z != get_step(target, 0).z)
 			if(S.sticky)
 				src.targeting_spell = S
 				update_cursor()
 			return 100
-		if (S.check_range && (get_dist(src, target) > S.max_range) )
+		if (S.check_range && (get_dist(src, target) > S.max_range))
 			src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
 			if(S.sticky)
 				src.targeting_spell = S
