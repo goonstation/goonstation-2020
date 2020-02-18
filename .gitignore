@@ -1,0 +1,37 @@
+# DM build/intermediate files
+*.dmb
+*.rsc
+*.int
+*.lk
+
+# runtime generated files
+goonstation/data
+goonstation/data/*
+*.log
+goonstation/adventure
+
+# ignore config
+goonstation/config/config.txt
+goonstation/config/admins.txt
+goonstation/_std/__build.dm
+goonstation/z_build_opts.dm
+
+# Pre-processor related
+node_modules
+build
+.tmp
+.sass-cache
+/objectTreeBrowser/objectTree.txt
+/objectTreeBrowser/objectTree.xml
+/objectTreeBrowser/objectTree.json
+Build System.dm
+
+# editor files
+*.sublime-project
+*.sublime-workspace
+*.vscode
+*.idea
+
+#Misc
+Thumbs.db
+goonstation/unversioned/
