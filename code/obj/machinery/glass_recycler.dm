@@ -56,16 +56,17 @@
 					<A href='?src=\ref[src];type=largebeaker'>Large Beaker</A><br>
 					<A href='?src=\ref[src];type=bottle'>Bottle</A><br>
 					<A href='?src=\ref[src];type=vial'>Vial</A><br>
-					<A href='?src=\ref[src];type=drinkbottle'>Drink Bottle</A><br>
-					<A href='?src=\ref[src];type=plate'>Plate</A><br>
-					<A href='?src=\ref[src];type=bowl'>Bowl</A><br>
-					<A href='?src=\ref[src];type=drinking'>Drinking Glass</A><br>
-					<A href='?src=\ref[src];type=shot'>Shot Glass</A><br>
-					<A href='?src=\ref[src];type=oldf'>Old Fashioned Glass</A><br>
-					<A href='?src=\ref[src];type=wine'>Wine Glass</A><br>
-					<A href='?src=\ref[src];type=cocktail'>Cocktail Glass</A><br>
 					<A href='?src=\ref[src];type=flute'>Champagne Flute</A><br>
-					<A href='?src=\ref[src];type=pitcher'>Pitcher</A>
+					<A href='?src=\ref[src];type=cocktail'>Cocktail Glass</A><br>
+					<A href='?src=\ref[src];type=drinkbottle'>Drink Bottle</A><br>
+					<A href='?src=\ref[src];type=drinking'>Drinking Glass</A><br>
+					<A href='?src=\ref[src];type=oldf'>Old Fashioned Glass</A><br>
+					<A href='?src=\ref[src];type=pitcher'>Pitcher</A><br>
+					<A href='?src=\ref[src];type=round'>Round Glass</A><br>
+					<A href='?src=\ref[src];type=shot'>Shot Glass</A><br>
+					<A href='?src=\ref[src];type=wine'>Wine Glass</A><br>
+					<A href='?src=\ref[src];type=bowl'>Bowl</A><br>
+					<A href='?src=\ref[src];type=plate'>Plate</A><br>
 					<HR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 					<BR><BR><A href='?action=mach_close&window=glass'>Close</A>"}
 		//user.Browse(dat, "window=glass;size=220x240")
@@ -132,6 +133,9 @@
 			if("oldf")
 				new /obj/item/reagent_containers/food/drinks/drinkingglass/oldf(get_turf(src))
 				src.glass_amt -= 1
+			if("round")
+				new /obj/item/reagent_containers/food/drinks/drinkingglass/round(get_turf(src))
+				src.glass_amt -= 2
 			if("wine")
 				G = new /obj/item/reagent_containers/food/drinks/drinkingglass/wine(get_turf(src))
 				src.glass_amt -= 1
