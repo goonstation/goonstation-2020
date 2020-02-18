@@ -238,26 +238,6 @@
 	proc/return_air()
 		return null
 
-	proc/grab_smash(obj/item/grab/G as obj, mob/user as mob)
-		var/mob/M = G.affecting
-
-		if  (!(ismob(G.affecting)))
-			return 0
-
-		if (get_dist(src, M) > 1)
-			return 0
-
-		user.visible_message("<span style=\"color:red\"><B>[M] has been smashed against [src] by [user]!</B></span>")
-		logTheThing("combat", user, M, "smashes %target% against [src]")
-
-		random_brute_damage(G.affecting, rand(2,3))
-		G.affecting.TakeDamage("chest", 0, rand(4,5))
-		playsound(G.affecting.loc, "punch", 25, 1, -1)
-
-		user.u_equip(G)
-		G.dispose()
-		return 1
-
 // Convenience proc to see if a container is open for chemistry handling
 // returns true if open
 // false if closed
@@ -647,8 +627,10 @@
 	if (!( src.anchored ))
 		var/mob/user = usr
 		user.set_pulling(src)
-		if (user.at_gunpoint && usr.at_gunpoint.holding_at_gunpoint != user)
-			user.at_gunpoint.shoot_at_gunpoint(user)
+
+		if (user.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
+				G.shoot()
 	return
 
 /atom/proc/get_desc(dist)

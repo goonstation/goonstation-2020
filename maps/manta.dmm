@@ -3015,7 +3015,7 @@
 "bfY" = (/obj/disposalpipe/segment/mail,/obj/cable{icon_state = "4-8"},/turf/simulated/floor/caution/west,/area/station/crew_quarters/fitness)
 "bfZ" = (/obj/fitness/stacklifter,/obj/cable{icon_state = "1-2"},/obj/disposalpipe/segment,/obj/cable{icon_state = "2-8"},/turf/simulated/floor,/area/station/crew_quarters/fitness)
 "bga" = (/obj/machinery/light/incandescent/netural{dir = 4; nostick = 1},/turf/simulated/floor/caution/east{dir = 8},/area/station/crew_quarters/fitness)
-"bgb" = (/obj/stool/chair/wooden,/obj/machinery/power/apc/autoname_west,/obj/cable{d2 = 4; icon_state = "0-4"; pixel_y = 0},/obj/trigger/mantasecrettrigger,/turf/simulated/floor/wood/five,/area/station/chapel/main)
+"bgb" = (/obj/stool/chair/wooden,/obj/machinery/power/apc/autoname_west,/obj/cable{d2 = 4; icon_state = "0-4"; pixel_y = 0},/turf/simulated/floor/wood/five,/area/station/chapel/main)
 "bgc" = (/obj/machinery/door/unpowered/wood/pyro{dir = 8; name = "Confessional"},/obj/cable{icon_state = "4-8"},/turf/simulated/floor/wood/five,/area/station/chapel/main)
 "bgd" = (/obj/disposalpipe/segment,/turf/simulated/floor/carpet{icon_state = "purple2"; dir = 8},/area/station/chapel/main)
 "bge" = (/obj/cable{icon_state = "2-4"; d1 = 2; d2 = 4},/obj/cable{icon_state = "1-4"},/turf/simulated/floor/carpet{icon_state = "purple1"},/area/station/chapel/main)

@@ -342,6 +342,7 @@
 	var/turretsExist = 1
 
 	req_access = list(access_ai_upload)
+	object_flags = CAN_REPROGRAM_ACCESS
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return

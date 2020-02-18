@@ -103,12 +103,8 @@
 	stamina_crit_chance = 5
 
 	proc/can_use()
+		.= 1
 		if (!ismob(loc))
-			return 0
-		var/mob/M = loc
-		if (src in M.get_equipped_items())
-			return 1
-		else
 			return 0
 
 	MouseDrop(obj/over_object as obj, src_location, over_location)

@@ -42,7 +42,7 @@
 				flash.icon_state = "white"
 
 		set_scan(scanline)
-			scan.alpha = scanline ? 200 : 0
+			scan.alpha = scanline ? 50 : 0
 
 		set_color_mod(color)
 			color_mod.color = color

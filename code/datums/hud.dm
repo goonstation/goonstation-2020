@@ -13,8 +13,11 @@
 	var/obj/item/item
 
 	clicked(list/params)
-		if (master && (!master.click_check || (usr in master.mobs)))
-			master.clicked(src.id, usr, params)
+		sendclick(params, usr)
+
+	proc/sendclick(list/params,mob/user = null)
+		if (master && (!master.click_check || (user in master.mobs)))
+			master.clicked(src.id, user, params)
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)

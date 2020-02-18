@@ -31,6 +31,8 @@
 	// cirr's effort to make these work like normal huds, take 1
 	var/datum/hud/hud
 
+	var/next_update = 0
+	
 	New(var/mob/M)
 		owner = M
 		hud = new()
@@ -671,13 +673,14 @@
 
 	New()
 		..()
-		var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
+		if (src.icon && src.icon_state)
+			var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+			B.icon = src.icon
+			B.icon_state = src.icon_state
+			B.owner = src
+			B.name = src.name
+			B.desc = src.desc
+			src.object = B
 
 	disposing()
 		if (object && object.owner == src)
@@ -851,7 +854,10 @@
 			return targets
 
 		display_available()
-			.= 1
+			.= (src.icon && src.icon_state)
+
+		flip_callback()
+			.= 0
 
 /obj/screen/pseudo_overlay
 	// this is hack as all get out
@@ -937,10 +943,11 @@
 		y_occupied = 0
 		any_abilities_displayed = 0
 		for (var/datum/abilityHolder/H in holders)
-			H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
-			x_occupied = H.x_occupied
-			y_occupied = H.y_occupied
-			any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
+			if (H.topBarRendered || H.rendered)
+				H.updateButtons(called_by_owner = 1, start_x = x_occupied, start_y = y_occupied)
+				x_occupied = H.x_occupied
+				y_occupied = H.y_occupied
+				any_abilities_displayed = any_abilities_displayed || H.any_abilities_displayed
 
 	addBonus(var/value)
 		for (var/datum/abilityHolder/H in holders)
@@ -984,7 +991,7 @@
 				H.abilities += A
 				A.onAttach(H)
 				//H.updateButtons()
-				return
+				return A
 		var/datum/abilityHolder/X = holders[1]
 		A.holder = X
 		X.abilities += A

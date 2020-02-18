@@ -5,6 +5,7 @@
 	icon_base = "pdoor"
 	cant_emag = 1
 	layer = 2.8
+	object_flags = 0
 
 	health = 1800
 	health_max = 1800

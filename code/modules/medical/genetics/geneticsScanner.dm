@@ -6,6 +6,7 @@ var/list/genescanner_addresses = list()
 	icon_state = "scanner_0"
 	density = 1
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
 	var/locked = 0
 	anchored = 1.0

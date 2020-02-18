@@ -122,8 +122,6 @@
 	var/breathtimer = 0
 	var/breathstate = 0
 
-	var/datum/light/burning_light
-
 	var/obj/item/trinket = null //Used for spy_theft mode - this is an item that is eligible to have a bounty on it
 
 	//dismemberment stuff
@@ -200,10 +198,6 @@
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
 	arrestIconsAll.Add(arrestIcon)
-
-	burning_light = new /datum/light/point
-	burning_light.attach(src)
-	burning_light.set_color(0.94, 0.69, 0.27)
 
 	src.organHolder = new(src)
 
@@ -834,7 +828,7 @@
 			if (/obj/item/clothing/suit/armor/heavy)
 				tally += 2
 			if (/obj/item/clothing/suit/armor/EOD)
-				tally += 0.5 // i'd like people to actually consider using these
+				tally += 0.6 // i'd like people to actually consider using these
 			if (/obj/item/clothing/suit/armor/ancient) // cogwerks - new evil armor thing
 				tally += 2
 			if (/obj/item/clothing/suit/space/emerg)
@@ -904,17 +898,7 @@
 		if (src.limbs.r_leg)
 			tally -= src.limbs.r_leg.effect_modifier
 
-	if (src.r_hand && istype(src.r_hand, /obj/item/grab))
-		var/obj/item/grab/G = src.r_hand
-		var/mob/living/carbon/human/H = G.affecting
-		if (G.state == 0)
-			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
-				if(istype(H) && H.intent != INTENT_HELP && H.lying)
-					tally *= max(H.p_class, 1)
-		else
-			tally *= max(H.p_class, 1)
-	if (src.l_hand && istype(src.l_hand, /obj/item/grab))
-		var/obj/item/grab/G = src.l_hand
+	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor=0))
 		var/mob/living/carbon/human/H = G.affecting
 		if (G.state == 0)
 			if (get_dist(src,H) > 0 && get_dist(move_target,H) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
@@ -924,14 +908,15 @@
 			tally *= max(H.p_class, 1)
 
 	var/has_fluid_move_gear = 0
-	for (var/obj/item/I in get_equipped_items())
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/I = atom
 		tally += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
 
 	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
 		var/turf/T = get_turf(src)
 		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
-			if (! (T.active_liquid || istype(T,/turf/space/fluid)) )
+			if (! (T.active_liquid || istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid)) )
 				tally += has_fluid_move_gear
 		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
 			if (T.active_liquid)
@@ -1195,9 +1180,10 @@
 				for(var/mob/M in view(7, item.loc))
 					shake_camera(M, 20, 1)
 
+		if (mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in grabbed_by)
+				G.shoot()
 
-		if (src.at_gunpoint)
-			src.at_gunpoint.shoot_at_gunpoint(src)
 		src.next_click = world.time + src.combat_click_delay
 
 /mob/living/carbon/human/click(atom/target, list/params)
@@ -1341,8 +1327,9 @@
 				A.material.triggerOnAttacked(A, M, src, gloves)
 
 	if (M.a_intent != INTENT_HELP)
-		if (M.at_gunpoint && M.at_gunpoint.holding_at_gunpoint != M)
-			M.at_gunpoint.shoot_at_gunpoint(M)
+		if (M.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
+				G.shoot()
 
 	switch(M.a_intent)
 		if (INTENT_HELP)
@@ -2671,10 +2658,19 @@
 			for (var/obj/item/grab/G in src.grabbed_by)
 				G.do_resist()
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		else
+			for (var/obj/item/grab/G in src.grabbed_by)
+				if (G.stunned_targets_can_break())
+					G.do_resist()
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 
 		if (!src.grabbed_by || !src.grabbed_by.len)
 			if (src.buckled)
 				src.buckled.attack_hand(src)
+				src.force_laydown_standup() //safety because buckle code is a mess
+				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
+					src.targeting_spell = null
+					src.update_cursor()
 			else
 				if (!src.getStatusDuration("burning"))
 					for (var/mob/O in AIviewers(src, null))
@@ -3403,7 +3399,7 @@
 							else if (priority < 0)
 								priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
 
-							playsound(NewLoc, "[priority]", src.m_intent == "run" ? 55 : 35, 1, extrarange = 3)
+							playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
 

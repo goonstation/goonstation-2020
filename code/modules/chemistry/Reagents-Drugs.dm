@@ -222,6 +222,18 @@ datum
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
 
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_crank", 50)
+				return
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_crank")
+				return
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(ishuman(M))
@@ -233,9 +245,6 @@ datum
 						H.sims.affectMotive("hunger", -0.5)
 						H.sims.affectMotive("thirst", -0.5)
 						H.sims.affectMotive("comfort", -0.25)
-				M.changeStatus("paralysis", -20 * mult)
-				M.changeStatus("stunned", -20 * mult)
-				M.changeStatus("weakened", -20 * mult)
 				if(prob(15)) M.emote(pick("twitch", "twitch_s", "grumble", "laugh"))
 				if(prob(8))
 					boutput(M, "<span style=\"color:blue\"><b>You feel great!</b></span>")
@@ -494,13 +503,20 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 1)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_nicotine", 4)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_nicotine")
 				return
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(ishuman(M))
@@ -509,9 +525,6 @@ datum
 						H.sims.affectMotive("fun", 0.2)
 				if(prob(50))
 					M.make_jittery(5)
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
 
 				if(src.volume > src.overdose)
 					M.take_toxin_damage(1 * mult)
@@ -574,12 +587,18 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("nicotine2", 3)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_nicotine2", 6)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("nicotine2")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_nicotine2")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -589,9 +608,6 @@ datum
 						H.sims.affectMotive("fun", 2)
 				if(prob(75))
 					M.make_jittery(10)
-					M.changeStatus("paralysis", -10 * mult)
-					M.changeStatus("stunned", -10 * mult)
-					M.changeStatus("weakened", -10 * mult)
 				if(prob(25))
 					M.emote(pick("drool","shudder","groan","moan","shiver"))
 					boutput(M, "<span style=\"color:green\"><b>You feel... pretty good... and calm... weird.</b></span>")
@@ -862,7 +878,9 @@ datum
 			value = 39 // 13c * 3  :v
 
 			on_add()
-				return
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_triplemeth", 1000)
 
 			on_remove()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
@@ -871,7 +889,11 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_triplemeth")
 				return
+
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -897,9 +919,6 @@ datum
 				M.make_dizzy(5 * mult)
 				M.change_misstep_chance(15 * mult)
 				M.take_brain_damage(1 * mult)
-				if(M.getStatusDuration("paralysis")) M.delStatus("paralysis")
-				M.delStatus("stunned")
-				M.delStatus("weakened")
 				M.delStatus("disorient")
 				if(M.sleeping) M.sleeping = 0
 				..()
@@ -958,12 +977,18 @@ datum
 			on_add()
 				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
 					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 3)
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stun_resist_mod("reagent_meth", 50)
 				return
 
 			on_remove()
 				if(remove_buff)
 					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
 						holder.my_atom:remove_stam_mod_regen("consumable_good")
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stun_resist_mod("reagent_meth")
 
 				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
@@ -983,9 +1008,6 @@ datum
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.drowsyness = max(M.drowsyness-10, 0)
-				M.changeStatus("paralysis", -20 * mult)
-				M.changeStatus("stunned", -20 * mult)
-				M.changeStatus("weakened", -20 * mult)
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)

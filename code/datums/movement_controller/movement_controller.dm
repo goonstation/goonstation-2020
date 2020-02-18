@@ -11,5 +11,8 @@
 		modify_keymap(datum/keymap/keymap, client/C)
 			// stub
 
+		update_owner_dir(var/atom/movable/owner)
+
+
 	disposing()
 		..()

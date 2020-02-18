@@ -184,6 +184,7 @@
 	icon_state = "vrbed"//_0"
 	anchored = 1
 	density = 1
+	deconstruct_flags = DECON_MULTITOOL
 	var/active = 0
 	var/internal_id = 0
 	var/network = "none"

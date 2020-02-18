@@ -921,10 +921,7 @@ proc/Create_Tommyname()
 	icon_state = "garrote0"
 
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
-
-	// The actual grab in charge of maintaining the chokehold
-	// Will be stored inside the garroteing player's mob because grabs are horrid
-	var/obj/item/grab/garrote_grab/chokehold = null
+	special_grab = /obj/item/grab/garrote_grab
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
@@ -953,8 +950,8 @@ proc/Create_Tommyname()
 
 /obj/item/garrote/proc/update_state()
 	if(src.chokehold)
-
-		if(!src.chokehold.extra_deadly)
+		var/obj/item/grab/garrote_grab/GG = src.chokehold
+		if(!GG.extra_deadly)
 			icon_state = "garrote2"
 			//We're choking someone out - apply a hefty slowdown
 			src.setProperty("movespeed", 6)
@@ -1001,30 +998,17 @@ proc/Create_Tommyname()
 		return 1
 
 // Actually apply the grab (called via action bar)
-/obj/item/garrote/proc/do_grab(var/mob/living/assailant, var/mob/living/target)
-	if(!chokehold && istype(target) && istype(assailant))
-		//Apply the grab
+/obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
+	if(..())
 		assailant.visible_message("<span class='combat bold'>[assailant] wraps \the [src] around [target]'s neck!</span>")
-		src.chokehold = new /obj/item/grab/garrote_grab(src)
-
-		chokehold.assailant = assailant
-		chokehold.affecting = target
 		chokehold.state = GRAB_NECK
-		target.grabbed_by += chokehold
-
 		chokehold.upgrade_to_kill()
-
 		update_state()
-		processing_items.Add(src)
-
 
 // Drop the grab
-/obj/item/garrote/proc/drop_grab()
-	if(src.chokehold)
-		qdel(chokehold)
-		chokehold = null
-		update_state()
-		processing_items.Remove(src)
+/obj/item/garrote/drop_grab()
+	..()
+	update_state()
 
 // It will crumple when dropped
 /obj/item/garrote/dropped()
@@ -1037,17 +1021,15 @@ proc/Create_Tommyname()
 	..()
 
 // Repeatedly process when in a chokehold, to verify things are as they should be
-/obj/item/garrote/process()
+/obj/item/garrote/process_grab()
 	..()
 	if(src.chokehold && src.loc != src.chokehold.assailant)
 		set_readiness(0)
-	else if (!src.chokehold)
-		processing_items.Remove(src)
 
 // Change the size of the garrote or the posture
 /obj/item/garrote/attack_self()
-	..()
 	if(!chokehold)
+		..()
 		toggle_wire_readiness()
 	else
 		var/obj/item/grab/garrote_grab/GG = src.chokehold
@@ -1119,7 +1101,7 @@ proc/Create_Tommyname()
 		if(check_conditions())
 			return
 
-		the_garrote.do_grab(owner, target)
+		the_garrote.try_grab(target, owner)
 
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
@@ -1146,6 +1128,8 @@ proc/Create_Tommyname()
 				// Wire digging into a neck.
 				take_bleeding_damage(affecting, assailant, rand(0, 20) * mult)
 		..()
+
+	attack_self(user)
 
 
 /proc/trigger_anti_cheat(var/mob/M, var/message, var/external_alert = 1)

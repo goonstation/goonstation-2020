@@ -690,7 +690,7 @@
 			SPAWN_DBG(0)
 				L.changeStatus("weakened", 2 SECONDS)
 				L.force_laydown_standup()
-				L.throw_at(targetTurf, rand(5,7), rand(1,2))
+				L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
 	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
 		if (P != passing_thing)

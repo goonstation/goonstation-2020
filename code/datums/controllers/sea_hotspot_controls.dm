@@ -612,6 +612,7 @@
 	item_state = "vent"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	mats = 8
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
@@ -767,6 +768,7 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	flags = FPRINT
 
 	var/mode_toggle = 0

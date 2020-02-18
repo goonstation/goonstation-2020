@@ -6,7 +6,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-/obj/screen/proc/clicked(list/params)
+/obj/screen/proc/clicked(list/params, mob/user = null)
 
 /obj/screen/proc/add_to_client(var/client/C)
 	if (clients)

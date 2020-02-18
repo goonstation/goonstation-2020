@@ -11,6 +11,7 @@
 	var/mob/occupant // Mob who has been put inside
 	var/output_direction = "W" // Spray gibs and meat in that direction.
 	mats = 15
+	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 
 	output_north
 		output_direction = "N"

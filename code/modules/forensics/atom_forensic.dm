@@ -317,7 +317,7 @@
 			if (Lstate) B.add_volume(blood_color_to_pass, 0.5, src.tracked_blood, Lstate, src.last_move, 0)
 			if (Rstate) B.add_volume(blood_color_to_pass, 0.5, src.tracked_blood, Rstate, src.last_move, 0)
 		else
-			B.add_volume(blood_color_to_pass, 1, src.tracked_blood, "smear2", src.last_move)
+			B.add_volume(blood_color_to_pass, 1, src.tracked_blood, "smear2", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // maybe this will fix the bad index runtime PART
 		src.tracked_blood["count"] --
@@ -349,7 +349,7 @@
 		if (Lstate) B.add_volume(blood_color_to_pass, 0.5, src.tracked_blood, Lstate, src.last_move, 0)
 		if (Rstate) B.add_volume(blood_color_to_pass, 0.5, src.tracked_blood, Rstate, src.last_move, 0)
 	else
-		B.add_volume(blood_color_to_pass, 1, src.tracked_blood, "smear2", src.last_move)
+		B.add_volume(blood_color_to_pass, 1, src.tracked_blood, "smear2", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) //mirror from above
 		src.tracked_blood["count"] --

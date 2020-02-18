@@ -11,6 +11,13 @@
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 
+	New()
+		..()
+		if (c_flags & COVERSMOUTH | MASKINTERNALS)
+			special_grab = /obj/item/grab/force_mask
+			event_handler_flags |= USE_GRAB_CHOKE
+
+	
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
@@ -67,6 +74,7 @@
 		..()
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
+		setProperty("disorient_resist_eye", 10)
 
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
@@ -215,6 +223,11 @@
 	w_class = 2
 	c_flags = COVERSMOUTH | COVERSEYES
 	permeability_coefficient = 0.50
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 1)
+		setProperty("disorient_resist_eye", 10)
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"

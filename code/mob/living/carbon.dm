@@ -1,4 +1,7 @@
-// carbon-based lifeforms
+
+/mob/
+	var/list/stun_resist_mods = list()
+
 
 /mob/living/carbon/
 	gender = MALE // WOW RUDE
@@ -61,7 +64,8 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for(var/obj/item/C in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
@@ -97,9 +101,41 @@
 		val += stamina_mods_regen[x]
 
 	var/stam_mod_items = 0
-	for(var/obj/item/C in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
 		stam_mod_items += C.getProperty("stamregen")
 	return val
+
+
+/mob/proc/add_stun_resist_mod(var/key, var/value)
+	if(!isnum(value)) return
+	if(stun_resist_mods.Find(key)) return 0
+	stun_resist_mods.Add(key)
+	stun_resist_mods[key] = value
+	return 1
+
+//Removes a stamina max modifier with the given key.
+/mob/proc/remove_stun_resist_mod(var/key)
+	if(!stun_resist_mods.Find(key)) return 0
+	stun_resist_mods.Remove(key)
+	return 1
+
+//Returns the total modifier for stamina max
+/mob/proc/get_stun_resist_mod()
+	.= 0
+	var/highest = 0
+	for(var/x in stun_resist_mods)
+		. += stun_resist_mods[x]
+		if (stun_resist_mods[x] > highest)
+			highest = stun_resist_mods[x]
+
+
+	var/max_allowed = 80 //basically if we dont have a singular 100% or above protection moddifier, we wont allow the user to completely ignore stuns
+	if (highest > 80)
+		max_allowed = min(highest, 100)
+
+	.= clamp(., 0, max_allowed)
+
 
 //Restores stamina
 /mob/proc/add_stamina(var/x)
@@ -125,7 +161,8 @@
 				del(src.client)
 
 	var/stam_mod_items = 0
-	for(var/obj/item/C in src.get_equipped_items())
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -202,10 +239,79 @@
 
 
 //new disorient thing
+
+#define DISORIENT_BODY 1
+#define DISORIENT_EYE 2
+#define DISORIENT_EAR 4
+
+/mob/proc/get_disorient_protection()
+	.= 0
+
+	var/res = 0
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
+		if(C.hasProperty("disorient_resist"))
+			res = C.getProperty("disorient_resist")
+			if (res >= 100)
+				return 100 //a singular item with resistance 100 or higher will block ALL
+			. += res
+
+	.= clamp(.,0,90) //0 to 90 range
+
+/mob/proc/get_disorient_protection_eye()
+	.= 0
+
+	var/res = 0
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
+		if(C.hasProperty("disorient_resist_eye"))
+			res = C.getProperty("disorient_resist_eye")
+			if (res >= 100)
+				return 100 //a singular item with resistance 100 or higher will block ALL
+			. += res
+
+	.= clamp(.,0,90) //90 max!
+
+/mob/living/get_disorient_protection_eye()
+	.= ..()
+
+	if (. >= 100)
+		return .
+
+	if (organHolder)//factor in me eyes
+		if (organHolder.left_eye)
+			var/res = organHolder.left_eye.getProperty("disorient_resist_eye")
+			if (res >= 100)
+				return 100
+			.+= res
+		if (organHolder.right_eye)
+			var/res = organHolder.right_eye.getProperty("disorient_resist_eye")
+			if (res >= 100)
+				return 100
+			.+= res
+
+	.= clamp(.,0,90)
+
+/mob/proc/get_disorient_protection_ear()
+	.= 0
+
+	var/res = 0
+	for(var/atom in src.get_equipped_items())
+		var/obj/item/C = atom
+		if(C.hasProperty("disorient_resist_ear"))
+			res = C.getProperty("disorient_resist_ear")
+			if (res >= 100)
+				return 100 //a singular item with resistance 100 or higher will block ALL
+			. += res
+
+	.= clamp(.,0,90) //0 to 90 range
+
+
 /mob/proc/force_laydown_standup() //the real force laydown lives in Life.dm
 	.=0
 
-/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0)
+/mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	.= 1
 	if (stunned)
 		src.changeStatus("stunned", stunned)
 	if (weakened)
@@ -213,12 +319,31 @@
 	if (paralysis)
 		src.changeStatus("paralysis", paralysis)
 
-	if (weakened || paralysis)
-		src.force_laydown_standup()
+	src.force_laydown_standup()
 
+	if (src.canmove)
+		.= 0
 
 //Do stamina damage + disorient above 0 stamina. Stun/Weaken/Paralyze when we hit or drop below 0.
-/mob/living/carbon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0)
+/mob/living/carbon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	var/protection = 0
+
+	if (target_type & DISORIENT_BODY)
+		protection = max (protection, get_disorient_protection())
+	if (target_type & DISORIENT_EYE)
+		protection =  max (protection, get_disorient_protection_eye())
+	if (target_type & DISORIENT_EAR)
+		protection =  max (protection, get_disorient_protection_ear())
+
+	if (protection >= 100)
+		return
+
+	var/disorient_mult = 1 - (protection/100)
+	var/stamdmg_mult = lerp(disorient_mult, 1, 0.25) // apply 3/4 the reduction effect to the stamina damage
+
+	disorient *= disorient_mult
+	stamina_damage *= stamdmg_mult
+
 	if (remove_stamina_below_zero)
 		src.remove_stamina(stamina_damage)
 	else if (src.stamina > 0)
@@ -226,7 +351,8 @@
 
 	if(src.stamina <= 0)
 		.= 1
-		..()
+		if (! ..()) //stun failed, do a disorient!
+			src.changeStatus("disorient", disorient)
 	else
 		.= 0
 		src.changeStatus("disorient", disorient)

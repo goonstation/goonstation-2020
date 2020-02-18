@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	mats = 8
+	deconstruct_flags = DECON_SIMPLE
 	//var/money = 1000000
 	var/plays = 0
 	var/working = 0
@@ -164,6 +165,7 @@
 	anchored = 1
 	density = 1
 	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	//var/money = 1000000
 	var/plays = 0
 	var/working = 0

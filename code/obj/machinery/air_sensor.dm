@@ -11,6 +11,9 @@ obj/machinery/air_sensor
 
 	var/on = 1
 	var/output = 3
+
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
+
 	//Flags:
 	// 1 for pressure
 	// 2 for temperature

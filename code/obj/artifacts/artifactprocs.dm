@@ -243,6 +243,13 @@
 			src.visible_message("<span style=\"color:red\">[user.name] burns the artifact with [ZIP]!</span>")
 			return 0
 
+	if (istype(W, /obj/item/robodefibrillator))
+		var/obj/item/robodefibrillator/R = W
+		if (R.do_the_shocky_thing(user))
+			src.ArtifactStimulus("elec", 2500)
+			src.visible_message("<span style=\"color:red\">[user.name] shocks \the [src] with \the [R]!</span>")
+		return 0
+
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W
 		if (BAT.can_stun(1, 1, user) == 1)
@@ -255,9 +262,35 @@
 
 	if (istype(W,/obj/item/parts/robot_parts))
 		var/obj/item/parts/robot_parts/THISPART = W
-		src.visible_message("<b>[user.name]</b> activates the [THISPART] and it reaches out to the artifact.</span>")
+		src.visible_message("<b>[user.name]</b> presses \the [THISPART] against \the [src].</span>")
 		src.ArtifactStimulus("silitouch", 1)
 		return 0
+
+	if (istype(W, /obj/item/parts/human_parts))
+		var/obj/item/parts/human_parts/THISPART = W
+		src.visible_message("<b>[user.name]</b> smooshes \the [THISPART] against \the [src].</span>")
+		src.ArtifactStimulus("carbtouch", 1)
+		return 0
+
+	if (istype(W, /obj/item/grab))
+		var/obj/item/grab/GRAB = W
+		if (ismob(GRAB.affecting))
+			if (GRAB.state < 1)
+				// Not a strong grip so just smoosh em into it
+				// generally speaking only humans and the like can be grabbed so whatev
+				if (istype(GRAB.affecting, /mob/living/carbon))
+					src.visible_message("<b>[user]</b> gently presses [GRAB.affecting] against \the [src].")
+					src.ArtifactStimulus("carbtouch", 1)
+				return 0
+
+			var/mob/M = GRAB.affecting
+			var/mob/A = GRAB.assailant
+			if (get_dist(src.loc, M.loc) > 1)
+				return
+			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
+			logTheThing("combat", A, M, "forces %target% to touch \an ([A.type]) artifact at [log_loc(src)].")
+			src.ArtifactTouched(M)
+			return 0
 
 	if (istype(W,/obj/item/circuitboard))
 		var/obj/item/circuitboard/CIRCUITBOARD = W

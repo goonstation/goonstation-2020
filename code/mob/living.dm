@@ -344,8 +344,11 @@
 			var/atom/movable/movable = target
 			if (istype(movable))
 				movable.pull()
-				if (src.at_gunpoint && src.at_gunpoint.holding_at_gunpoint != src)
-					src.at_gunpoint.shoot_at_gunpoint(src)
+
+				if (mob_flags & AT_GUNPOINT)
+					for(var/obj/item/grab/gunpoint/G in grabbed_by)
+						G.shoot()
+
 				.= 0
 				return
 		else

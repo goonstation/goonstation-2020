@@ -15,6 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	req_access = list(access_medlab) //For premature unlocking.
+	object_flags = CAN_REPROGRAM_ACCESS
 	mats = 15
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant

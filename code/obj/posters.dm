@@ -390,6 +390,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals.dmi', "wanted-unk
 	density = 1
 	anchored = 1
 	mats = 6
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"
 	var/pdata = null

@@ -211,6 +211,7 @@
 	desc = "For Emergency Use Only"
 	configure_mode = 0
 	code = "54321"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	New()
 		..()

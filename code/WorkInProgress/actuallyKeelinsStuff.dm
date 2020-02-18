@@ -3011,6 +3011,12 @@ var/list/electiles = list()
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	event_handler_flags = USE_CANPASS
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if (mover && mover.throwing)
+			return 1
+		return ..()
 
 /obj/pool/ladder
 	name = "pool ladder"
@@ -3042,6 +3048,10 @@ var/list/electiles = list()
 	attackby(obj/item/W as obj, mob/user as mob)
 		return attack_hand(user)
 
+	MouseDrop_T(atom/target, mob/user)
+		if (get_dist(user,src) < 1 && target == user)
+			src.attack_hand(user)
+
 	attack_hand(mob/user as mob)
 		if(in_use)
 			boutput(user, "<span style=\"color:red\">Its already in use - wait a bit.</span>")
@@ -3059,6 +3069,7 @@ var/list/electiles = list()
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
+			user.buckled = src
 			sleep(3)
 			user.pixel_x = -3
 			sleep(3)
@@ -3075,6 +3086,7 @@ var/list/electiles = list()
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
 			sleep(5)
 			user.pixel_y = 25
+			user.start_chair_flip_targeting(extrarange = 2)
 			sleep(5)
 			user.pixel_y = 15
 			playsound(user, "sound/effects/spring.ogg", 60, 1)
@@ -3084,8 +3096,11 @@ var/list/electiles = list()
 			sleep(2)
 			if(range == 1) boutput(user, "<span style=\"color:red\">You slip...</span>")
 			user.layer = MOB_LAYER
-			user.throw_at(target, 5, 1)
-			user:changeStatus("weakened", 2 SECONDS)
+			user.buckled = null
+			if (user.targeting_spell == user.chair_flip_ability) //we havent chair flipped, just do normal jump
+				user.throw_at(target, 5, 1)
+				user:changeStatus("weakened", 2 SECONDS)
+			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message("<span style=\"color:red\"><b>[user.name] dives headfirst at the [target.name]!</b></span>")
 				SPAWN_DBG(3) //give them time to land

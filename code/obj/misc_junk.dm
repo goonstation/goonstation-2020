@@ -736,6 +736,7 @@
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
+	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 
 	attack_hand(mob/user as mob)

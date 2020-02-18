@@ -294,6 +294,79 @@
 			SPAWN_DBG(1)
 				animate(M.attack_particle, alpha = 0, time = 1, flags = ANIMATION_PARALLEL)
 
+
+/proc/pull_particle(var/mob/M, var/atom/target)
+	if (!M || !target) return
+	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
+
+	var/diff_x = target.x
+	var/diff_y = target.y
+	SPAWN_DBG(0)
+		if (target && M) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+			diff_x = diff_x - M.x
+			diff_y = diff_y - M.y
+
+		M.last_interact_particle = world.time
+
+		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
+			return
+
+		var/atom/I = target
+
+		M.attack_particle.icon = 'icons/mob/mob.dmi'
+		M.attack_particle.icon_state = "pull"
+
+		M.attack_particle.alpha = 230
+		M.attack_particle.loc = M.loc
+		M.attack_particle.pixel_x = I.pixel_x + (diff_x*32)
+		M.attack_particle.pixel_y = I.pixel_y + (diff_y*32)
+
+		var/matrix/start = matrix()//(I.transform)
+		M.attack_particle.transform = start
+		var/matrix/t_size = matrix()
+		t_size.Scale(0.3,0.3)
+		t_size.Turn(rand(-40,40))
+
+		animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 2, easing = LINEAR_EASING)
+		sleep(5)
+		M.attack_particle.alpha = 0
+
+/proc/unpull_particle(var/mob/M, var/atom/target)
+	if (!M || !target) return
+	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
+
+	var/diff_x = target.x
+	var/diff_y = target.y
+	SPAWN_DBG(0)
+		if (target && M) //I want these to be recent, but sometimes they can be deleted during course of a spawn
+			diff_x = diff_x - M.x
+			diff_y = diff_y - M.y
+
+		M.last_interact_particle = world.time
+
+		if (!M || !M.attack_particle) //ZeWaka: Fix for Cannot modify null.icon.
+			return
+
+		var/atom/I = target
+
+		M.attack_particle.icon = 'icons/mob/mob.dmi'
+		M.attack_particle.icon_state = "unpull"
+
+		M.attack_particle.alpha = 230
+		M.attack_particle.loc = M.loc
+		M.attack_particle.pixel_x = M.get_hand_pixel_x()
+		M.attack_particle.pixel_y = M.get_hand_pixel_y()
+
+		var/matrix/start = matrix()//(I.transform)
+		M.attack_particle.transform = start
+		var/matrix/t_size = matrix()
+		t_size.Scale(0.3,0.3)
+		t_size.Turn(rand(-40,40))
+
+		animate(M.attack_particle, pixel_x = I.pixel_x + (diff_x*32), pixel_y = I.pixel_y + (diff_y*32), time = 2, easing = LINEAR_EASING)
+		sleep(5)
+		M.attack_particle.alpha = 0
+			
 /proc/attack_twitch(var/atom/A)
 	if (!istype(A) || istype(A, /mob/living/object))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
@@ -344,10 +417,10 @@
 			return
 
 		A:twitching = 1
-	var/which
+	var/which = 0
 	if (usr)
 		which = get_dir(usr,A)
-	else
+	if (!which)
 		which = pick(alldirs)
 	SPAWN_DBG(1)
 		if (A)
@@ -878,13 +951,13 @@
 	var/matrix/M1 = matrix(0.1, 0.1, MATRIX_SCALE)
 	A.transform = M1
 	A.pixel_y = 300
-	
+
 	animate(A, transform = M1, time = 10, pixel_y = -16, alpha = 255, easing = QUAD_EASING)
 
 	M1.Scale(10, 1)
 	animate(transform = M1, time = 2, easing = SINE_EASING)
-	
-	
+
+
 	M1.Scale(1, 10)
 	animate(transform = null, time = 2, pixel_y = 0, easing = SINE_EASING)
 

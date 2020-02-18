@@ -306,6 +306,8 @@
 					master.a_intent = INTENT_HELP
 				update_intent()
 			if ("pulling")
+				if (master.pulling)
+					unpull_particle(master,pulling)
 				master.pulling = null
 				update_pulling()
 			if ("upgrades")

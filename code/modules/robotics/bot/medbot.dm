@@ -39,7 +39,6 @@
 	var/treatment_tox = "charcoal"
 	var/treatment_virus = "spaceacillin"
 	var/terrifying = 0 // for making the medbots all super fucked up
-	var/datum/light/light
 
 /obj/machinery/bot/medbot/no_camera
 	no_camera = 1
@@ -135,10 +134,7 @@
 
 /obj/machinery/bot/medbot/New()
 	..()
-	light = new /datum/light/point
-	light.attach(src)
-	light.set_brightness(0.5)
-
+	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
 	SPAWN_DBG(5)
 		if (src)
 			src.botcard = new /obj/item/card/id(src)
@@ -430,9 +426,9 @@
 /obj/machinery/bot/medbot/proc/toggle_power()
 	src.on = !src.on
 	if (src.on)
-		light.enable()
+		add_simple_light("medbot", list(220, 220, 255, 0.5*255))
 	else
-		light.disable()
+		remove_simple_light("medbot")
 	src.patient = null
 	src.oldpatient = null
 	src.oldloc = null

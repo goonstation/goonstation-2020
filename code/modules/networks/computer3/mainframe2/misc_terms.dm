@@ -108,6 +108,7 @@
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
 	mats = 12
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
 	var/locked = 1
@@ -1064,6 +1065,7 @@
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	mats = 80 //haha this is a bad idea
+	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
 	New()
@@ -1387,6 +1389,7 @@
 	device_tag = "PNET_PR6_RADIO"
 	//var/freq = 1219
 	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/list/frequencies = list()
 	var/datum/radio_frequency/radio_connection
 	var/transmission_range = 100 //How far does our signal reach?
@@ -1714,6 +1717,7 @@
 	desc = "A networked printer.  It's designed to print."
 	anchored = 1
 	density = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
 	mats = 6
