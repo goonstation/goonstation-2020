@@ -10,8 +10,8 @@ datum/pathogeneffects/benevolent/mending
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5))
-			M.HealDamage("chest", origin.stage < 3 ? 1 : 2, 0)
+		//if (prob(origin.stage * 5))
+		M.HealDamage("chest", origin.stage / 2, 0)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -30,8 +30,8 @@ datum/pathogeneffects/benevolent/healing
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5))
-			M.HealDamage("chest", 0, origin.stage < 3 ? 1 : 2)
+		//if (prob(origin.stage * 5))
+		M.HealDamage("chest", 0, origin.stage / 2)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -122,14 +122,11 @@ datum/pathogeneffects/benevolent/cleansing
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5) && M.get_toxin_damage())
-			M.take_toxin_damage(-1)
-			if (origin.stage > 3)
-				M.take_toxin_damage(-1)
-				if (origin.stage > 4)
-					M.take_toxin_damage(-1)
+		//if (prob(origin.stage * 5) && M.get_toxin_damage())
+		if (M.get_toxin_damage())
+			M.take_toxin_damage(-origin.stage / 2)
 			M.updatehealth()
-			if (prob(10))
+			if (prob(12))
 				M.show_message("<span style=\"color:blue\">You feel cleansed.</span>")
 
 	react_to(var/R, var/zoom)
