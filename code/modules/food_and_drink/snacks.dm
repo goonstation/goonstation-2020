@@ -44,7 +44,7 @@
 			for (var/obj/item/I in M)
 				I.dispose()
 		..()
-		
+
 /obj/item/reagent_containers/food/snacks/grill_holder
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
@@ -985,7 +985,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
 			boutput(user, "<span style=\"color:blue\">You create [random_spaghetti_name()] with tomato sauce...</span>")
-			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D 
+			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONER)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span style=\"color:red\">... whoa, that felt good. Like really good.</span>")
@@ -1029,7 +1029,7 @@
 	heal_amt = 3
 	amount = 5
 	food_effects = list("food_energized","food_brute","food_burn")
-	
+
 	New()
 		..()
 		name = "[random_spaghetti_name()] with tomato sauce"
@@ -1491,7 +1491,7 @@
 				food_effects = list("food_energized_big","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
-			
+
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/spooky))
 				var/wowspooky = 0
 #ifdef HALLOWEEN
@@ -1573,27 +1573,133 @@
 			W.reagents.trans_to(src,W.reagents.total_volume)
 			pool(W)
 
+		else if (istype(W,/obj/item/kitchen/utensil/knife))
+			if(src.GetOverlayImage("bun"))
+				return
+			var/hotloc = get_turf(src)
+			var/obj/item/reagent_containers/food/snacks/hotdog_half/l = new /obj/item/reagent_containers/food/snacks/hotdog_half
+			var/obj/item/reagent_containers/food/snacks/hotdog_half/r = new /obj/item/reagent_containers/food/snacks/hotdog_half
+			l.icon_state = "hotdogl"
+			r.icon_state = "hotdogr"
+			if(src in user.contents)
+				user.u_equip(src)
+				src.set_loc(user)
+				l.set_loc(get_turf(user))
+				r.set_loc(get_turf(user))
+			else
+				src.set_loc(user)
+				l.set_loc(hotloc)
+				r.set_loc(hotloc)
+			qdel(src)
 		else
 			..()
 		return
 
 	proc/update_icon()
-		src.overlays.len = 0
-		switch(src.bun)
-			if(1)
-				src.overlays += image(src.icon, "hotdog-bun")
-			if(2)
-				src.overlays += image(src.icon, "hotdog-bunb")
-			if(3)
-				src.overlays += image(src.icon, "hotdog-bunbr")
-			if(4)
-				src.overlays += image(src.icon, "elvisdog")
-			if(5)
-				src.icon_state = "hauntdog"
-		if (src.reagents.has_reagent("juice_tomato"))
-			src.overlays += image(src.icon, "hotdog-k")
-			//to-do: mustard
+		if(!(src.GetOverlayImage("bun")))
+			switch(src.bun)
+				if(1)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bun"),"bun")
+				if(2)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bunb"),"bun")
+				if(3)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bunbr"),"bun")
+				if(4)
+					src.UpdateOverlays(new /image(src.icon,"elvisdog"),"bun")
+				if(5)
+					src.icon_state = "hauntdog"
+		if ((src.reagents.has_reagent("ketchup")))
+			if(!(src.GetOverlayImage("ketchup")))
+				if(!src.GetOverlayImage("mustard"))
+					src.UpdateOverlays(new /image(src.icon,"hotdog-k1"),"ketchup")
+				else
+					src.UpdateOverlays(new /image(src.icon,"hotdog-k2"),"ketchup")
+		if (src.reagents.has_reagent("mustard"))
+			if(!(src.GetOverlayImage("mustard")))
+				if(!src.GetOverlayImage("ketchup"))
+					src.UpdateOverlays(new /image(src.icon,"hotdog-m1"),"mustard")
+				else
+					src.UpdateOverlays(new /image(src.icon,"hotdog-m2"),"mustard")
 		return
+
+/obj/item/reagent_containers/food/snacks/hotdog_half
+	name = "half hotdog"
+	desc = "A hot dog chopped in half!"
+	icon_state = "hotdog"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 15
+	//initial_reagents = list("porktonium"=5)
+	var/list/cuts = list("chunks","octopus")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/kitchen/utensil/knife))
+			var/inp
+			inp = input("Which cut would you like?", "Yay chopping a hotdog", null) as null|anything in cuts
+			var/inplayer
+			var/halfloc = get_turf(src)
+			if(src in user.contents)
+				inplayer = 1
+			else
+				inplayer = 0
+			if(inp && (user in range(1,src)))
+				switch(inp)
+					if("chunks")
+						if(inplayer)
+							user.u_equip(src)
+						src.set_loc(user)
+						for(var/i=1,i<=4,i++)
+							var/obj/item/reagent_containers/food/snacks/hotdog_chunk/c = new /obj/item/reagent_containers/food/snacks/hotdog_chunk
+							c.pixel_y = rand(-8,8)
+							c.pixel_x = rand(-8,8)
+							if(inplayer)
+								c.set_loc(get_turf(user))
+							else
+								c.set_loc(halfloc)
+						qdel(src)
+					if("octopus")
+						var/obj/item/reagent_containers/food/snacks/hotdog_octo/o = new /obj/item/reagent_containers/food/snacks/hotdog_octo
+						if(inplayer)
+							user.u_equip(src)
+							src.set_loc(user)
+							user.put_in_hand_or_drop(o)
+						else
+							o.set_loc(halfloc)
+						qdel(src)
+			else
+				..()
+		else
+			..()
+
+/obj/item/reagent_containers/food/snacks/hotdog_chunk
+	name = "chunk of hotdog"
+	desc = "A hot dog chopped in half!"
+	icon_state = "hotdog_chunk"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 5
+	//initial_reagents = list("porktonium"=1)
+
+/obj/item/reagent_containers/food/snacks/hotdog_octo
+	name = "hotdog octopus"
+	desc = "A hot dog chopped into the shape of an octopus! How cute!"
+	icon_state = "hotdog_octo"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 5
+	initial_reagents = list("love"=1)
+
+	/*New()
+		..()
+		src.reagents.add_reagent("love", 1)*/
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog_octo"))
+			src.visible_message("<span style=\"color:green\">[user.name] carves a cute little face on the [src]!</span>")
+			src.icon_state = "hotdog_octo2"
+			src.reagents.add_reagent("love", 1)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/hotdog/syndicate
 	var/mob/living/carbon/cube/meat/victim = null
@@ -2525,7 +2631,3 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	get_desc(dist)
 		. = "<br><span style='color: blue'>It says: [phrase]</span>"
-
-
-
-
