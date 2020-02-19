@@ -5,13 +5,13 @@ datum/pathogeneffects/benevolent
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
-	rarity = RARITY_UNCOMMON
+	rarity = RARITY_COMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		//if (prob(origin.stage * 5))
-		M.HealDamage("chest", origin.stage / 2, 0)
+		M.HealDamage("All", origin.stage / 2, 0)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -20,18 +20,18 @@ datum/pathogeneffects/benevolent/mending
 				return "Microscopic damage on the synthetic flesh appears to be mended by the pathogen."
 
 	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
+		return "The pathogen appears to have the ability to mend organic tissue."
 
 datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
-	rarity = RARITY_UNCOMMON
+	rarity = RARITY_COMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		//if (prob(origin.stage * 5))
-		M.HealDamage("chest", 0, origin.stage / 2)
+		M.HealDamage("All", 0, origin.stage / 2)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -43,7 +43,37 @@ datum/pathogeneffects/benevolent/healing
 				return "The pathogen repels the scalding hot chemical and quickly repairs any damage caused by it to organic tissue."
 
 	may_react_to()
-		return "The pathogen appears to have the ability to bond with organic tissue."
+		return "The pathogen appears to have the ability to repair burned tissue."
+
+datum/pathogeneffects/benevolent/fleshrestructuring
+	name = "Flesh Restructuring"
+	desc = "Fast paced general healing."
+	rarity = RARITY_RARE
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (prob(origin.stage * 5))
+			M.HealDamage("All", origin.stage, origin.stage)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.bleeding)
+					repair_bleeding_damage(M, 80, 2)
+			if (prob(50))
+				M.show_message("<span style=\"color:blue\">You feel your wounds closing by themselves.</span>")
+		M.updatehealth()
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			if (zoom)
+				return "The pathogen appears to mimic the behavior of the synthflesh."
+		if (R == "acid")
+			if (zoom)
+				return "The pathogen becomes agitated and works to repair the damage caused by the sulfuric acid."
+
+	may_react_to()
+		return "The pathogen appears to be rapidly repairing the other cells around it."
+	//podrickequus's first code, yay
 
 datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
@@ -112,12 +142,12 @@ datum/pathogeneffects/benevolent/metabolisis
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
 
 	may_react_to()
-		return null
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
 datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
-	rarity = RARITY_RARE
+	rarity = RARITY_UNCOMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -133,7 +163,7 @@ datum/pathogeneffects/benevolent/cleansing
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
 
 	may_react_to()
-		return null
+		return "The pathogen seems to be much cleaner than normal."
 
 datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
@@ -141,7 +171,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 	rarity = RARITY_VERY_RARE
 
 	may_react_to()
-		return "The pathogen appears to radiate a bubble of oxygen."
+		return "The pathogen appears to radiate a red bubble of oxygen."
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
