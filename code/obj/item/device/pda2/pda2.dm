@@ -73,7 +73,7 @@
 		icon_state = "pda-c"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
-		mailgroups = list("command","security","science","Party Line")
+		mailgroups = list("command","Party Line")
 
 	heads
 		icon_state = "pda-h"
