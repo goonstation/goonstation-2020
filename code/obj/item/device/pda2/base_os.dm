@@ -138,8 +138,9 @@
 
 						. += "<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> | "
 						. += "<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> | "
-						. += "<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a> | "
-						. += "<a href='byond://?src=\ref[src];message_mode=1'>Messages</a><br>"
+						. += "<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>"
+						. += "<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> | "
+						. += "<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>"
 
 						. += "<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>"
 						. += "<b>Detected PDAs</b><br>"
@@ -179,7 +180,7 @@
 						if (count == 0 && !page_departments.len)
 							. += "None detected.<br>"
 
-					else
+					else if (src.message_mode == 1)
 						. += "<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> | "
 						. += "<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>"
 
@@ -187,6 +188,23 @@
 
 						. += src.message_note
 						. += "<br>"
+
+					else
+						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> | "
+						. += "<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>"
+						. += "<h4>Groups</h4>"
+
+						var/myReservedGroups = ""
+						var/myCustomGroups = ""
+
+						for (var/mailgroup in src.master.mailgroups)
+							if (mailgroup in src.master.reserved_mailgroups)
+								myReservedGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a><br>"
+							else
+								myCustomGroups += "<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a> (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)<br>"
+
+						. += myReservedGroups
+						. += myCustomGroups
 
 				if(3)
 					//File Browser.
@@ -450,6 +468,21 @@
 						src.target_filereq_id = target_id
 						src.message_last = world.time
 
+					if ("mailgroup")
+						var/groupname = input(usr, "Enter group name", src.name, null) as text
+						if (!groupname || !isalive(usr))
+							return
+
+						if (groupname in src.master.reserved_mailgroups)
+							// You can't join one of these!
+							src.master.display_message("You may not join [groupname] - this group is private")
+							return
+						var/cleanGroupname = replacetext(groupname, ";", "")
+						cleanGroupname = replacetext(cleanGroupname, "&", "")
+						cleanGroupname = replacetext(cleanGroupname, "=", "")
+						cleanGroupname = replacetext(cleanGroupname, "|", "")
+						src.master.mailgroups += sanitize(adminscrub(strip_html(cleanGroupname)))
+
 
 
 			else if(href_list["message_func"]) //Messenger specific topic junk
@@ -478,6 +511,10 @@
 							newsignal.data["address_1"] = last_filereq_id
 							newsignal.data["command"] = "file_send_acc"
 							src.post_signal(newsignal)
+					if("leave_group")
+						var/groupname = href_list["groupname"]
+						if (groupname)
+							src.master.mailgroups -= groupname
 
 
 			else if(href_list["note_func"]) //Note program specific topic junk
@@ -619,8 +656,8 @@
 						return
 
 					var/groupAddress = signal.data["group"]
-					if(groupAddress) //Check to see if it's our ~mailgroup~
-						if(groupAddress != src.master.mailgroup && groupAddress != "ai")
+					if(groupAddress) //Check to see if we have this ~mailgroup~
+						if(!(groupAddress in src.master.mailgroups) && groupAddress != "ai")
 							return
 
 					var/sender = signal.data["sender_name"]
@@ -631,8 +668,6 @@
 					var/messageFrom = sender
 					if (senderAssignment)
 						messageFrom = "[messageFrom] - [senderAssignment]"
-					if (groupAddress)
-						messageFrom = "[messageFrom] (to [groupAddress])"
 
 					if((length(signal.data["sender"]) == 8) && (is_hex(signal.data["sender"])) )
 						if (!(signal.data["sender"] in src.detected_pdas))
@@ -644,6 +679,8 @@
 					//Only add the reply link if the sender is another pda2.
 
 					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
+					if (groupAddress)
+						senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -658,7 +695,11 @@
 								src.master.explode()
 
 					src.master.display_alert(alert_beep)
-					src.master.display_message("<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>:</b></i> [signal.data["message"]]")
+					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
+					if (groupAddress)
+						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"
+					displayMessage += ":</b></i> [signal.data["message"]]"
+					src.master.display_message(displayMessage)
 
 					src.master.updateSelfDialog()
 

@@ -56,7 +56,8 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroup = "staff" //What special mail group the PDA is part of.
+	var/mailgroups = list("staff","Party Line") //What default mail groups the PDA is part of.
+	var/reserved_mailgroups = list("command","security","science","ai","sillicon","medresearch","medbay","cargo","janitor","chaplain","engineer","mining","kitchen","mechanic","botany") //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -72,19 +73,19 @@
 		icon_state = "pda-c"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
-		mailgroup = "command"
+		mailgroups = list("command","security","science","Party Line")
 
 	heads
 		icon_state = "pda-h"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
-		mailgroup = "command"
+		mailgroups = list("command","Party Line")
 
 	hos
 		icon_state = "pda-hos"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
-		mailgroup = "security" // should be merged with command
+		mailgroups = list("security","command","Party Line")
 
 	ai
 		icon_state = "pda-h"
@@ -92,7 +93,7 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroup = "ai" //"special" mailgroup, just recieves everything
+		mailgroups = list("ai") //"special" mailgroup, just recieves everything
 
 	cyborg
 		icon_state = "pda-h"
@@ -100,52 +101,52 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroup = "silicon"
+		mailgroups = list("silicon","Party Line")
 
 	research_director
 		icon_state = "pda-rd"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
-		mailgroup = "science" // merge with command
+		mailgroups = list("science","command","Party Line")
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroup = "medresearch" // merge with command
+		mailgroups = list("medresearch","medbay","command","Party Line")
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroup = "medbay"
+		mailgroups = list("medbay")
 
 		robotics
-			mailgroup = "medresearch"
+			mailgroups = list("medresearch","Party Line")
 
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		mailgroup = "security"
+		mailgroups = list("security","Party Line")
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
-		mailgroup = "security"
+		mailgroups = list("security","Party Line")
 
 	toxins
 		icon_state = "pda-tox"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroup = "science"
+		mailgroups = list("science","Party Line")
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroup = "medresearch"
+		mailgroups = list("medresearch","Party Line")
 
 	quartermaster
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroup = "cargo"
+		mailgroups = list("cargo","Party Line")
 
 	clown
 		icon_state = "pda-clown"
@@ -174,11 +175,11 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroup = "janitor"
+		mailgroups = list("janitor","Party Line")
 
 	chaplain
 		icon_state = "pda-holy"
-		mailgroup = "chaplain"
+		mailgroups = list("chaplain","Party Line")
 
 	atmos
 		icon_state = "pda-a"
@@ -187,28 +188,28 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroup = "engineer"
+		mailgroups = list("engineer","Party Line")
 
 	mining
 		icon_state = "pda-e"
-		mailgroup = "mining"
+		mailgroups = list("mining","Party Line")
 
 	chef
-		mailgroup = "kitchen"
+		mailgroups = list("kitchen","Party Line")
 
 	barman
-		mailgroup = "kitchen"
+		mailgroups = list("kitchen","Party Line")
 
 	mechanic
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroup = "mechanic"
+		mailgroups = list("mechanic","Party Line")
 
 	botanist
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
-		mailgroup = "botany"
+		mailgroups = list("botany","Party Line")
 
 	syndicate
 		icon_state = "pda-syn"
@@ -518,8 +519,8 @@
 
 			return
 
-		else if(!src.mailgroup || (signal.data["group"] != src.mailgroup))
-			if (src.mailgroup != "ai" || !signal.data["group"])
+		else if(!src.mailgroups || !(signal.data["group"] in src.mailgroups))
+			if (!("ai" in src.mailgroups) || !signal.data["group"])
 				return
 
 	if(src.host_program)
