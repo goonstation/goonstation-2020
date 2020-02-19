@@ -5,16 +5,16 @@
 *.lk
 
 # runtime generated files
-goonstation/data
-goonstation/data/*
+data
+/data/*
 *.log
-goonstation/adventure
+adventure
 
 # ignore config
-goonstation/config/config.txt
-goonstation/config/admins.txt
-goonstation/_std/__build.dm
-goonstation/z_build_opts.dm
+/config/config.txt
+/config/admins.txt
+/_std/__build.dm
+z_build_opts.dm
 
 # Pre-processor related
 node_modules
@@ -34,4 +34,4 @@ Build System.dm
 
 #Misc
 Thumbs.db
-goonstation/unversioned/
+/unversioned/
