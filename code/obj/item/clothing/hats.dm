@@ -1060,3 +1060,15 @@
 	icon_state = "birthday-blue"
 	item_state = "birthday-blue"
 	desc = "Happy birthday to you, happy birthday to you, in 200 years nobody will remember you."
+
+/obj/item/clothing/head/cwhat
+	name = "Moebius-brand headwear"
+	desc = "This hat looks patently ridiculous. Is this what passes for fashionable in the Commonwealth of Free Worlds?"
+	icon_state = "cwhat"
+	item_state = "cwhat"
+
+/obj/item/clothing/head/fthat
+	name = "trader's headwear"
+	desc = "Why in the name of space would anyone trade with someone who wears a hat that looks this dumb? Yuck."
+	icon_state = "fthat"
+	item_state = "fthat"
