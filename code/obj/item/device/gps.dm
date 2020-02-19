@@ -17,6 +17,9 @@ var/global/list/all_GPSs = list()
 	g_amt = 100
 	mats = 2
 	module_research = list("science" = 1, "devices" = 1, "miniaturization" = 8)
+	var/frequency = "1453"
+	var/net_id
+	var/datum/radio_frequency/radio_control
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -91,10 +94,10 @@ var/global/list/all_GPSs = list()
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
 		HTML += "<HR>"
 		if (allowtrack == 0)
-			HTML += "<A href='byond://?src=\ref[src];track1=2'>Enable Tracking</A>"
+			HTML += "<A href='byond://?src=\ref[src];track1=2'>Enable Tracking</A> | "
 		if (allowtrack == 1)
-			HTML += "<A href='byond://?src=\ref[src];track2=3'>Disable Tracking</A>"
-		HTML += "<A href='byond://?src=\ref[src];changeid=4'>Change Identifier</A>"
+			HTML += "<A href='byond://?src=\ref[src];track2=3'>Disable Tracking</A> | "
+		HTML += "<A href='byond://?src=\ref[src];changeid=4'>Change Identifier</A> | "
 		HTML += "<A href='byond://?src=\ref[src];help=5'>Toggle Distress Signal</A></div>"
 		HTML += "<hr>"
 
@@ -169,16 +172,11 @@ var/global/list/all_GPSs = list()
 				if(!distress)
 					boutput(usr, "<span style=\"color:red\">Sending distress signal.</span>")
 					distress = 1
-					//IBMNOTE: This really should be changed to use the radio system, for (x in world) sucks
-					for(var/obj/item/device/gps/G in all_GPSs)//world)
-						LAGCHECK(LAG_LOW)
-						G.visible_message("<b>[bicon(G)] [G]</b> beeps, \"NOTICE: Distress signal recieved.\".")
+					src.send_distress_signal(distress)
 				else
 					distress = 0
 					boutput(usr, "<span style=\"color:red\">Distress signal cleared.</span>")
-					for(var/obj/item/device/gps/G in all_GPSs)//world)
-						LAGCHECK(LAG_LOW)
-						G.visible_message("<b>[bicon(G)] [G]</b> beeps, \"NOTICE: Distress signal cleared.\".")
+					src.send_distress_signal(distress)
 			if(href_list["refresh"])
 				..()
 
@@ -218,6 +216,9 @@ var/global/list/all_GPSs = list()
 		if (!islist(all_GPSs))
 			all_GPSs = list()
 		all_GPSs.Add(src)
+		if (radio_controller)
+			src.net_id = generate_net_id(src)
+			radio_control = radio_controller.add_object(src, "[frequency]")
 
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
@@ -251,6 +252,18 @@ var/global/list/all_GPSs = list()
 			process()
 			boutput(usr, "<span style=\"color:blue\">You activate the gps</span>")
 
+	proc/send_distress_signal(distress)
+		var/distressAlert = distress ? "help" : "clear"
+		var/turf/T = get_turf(usr)
+		var/datum/signal/reply = get_free_signal()
+		reply.source = src
+		reply.data["sender"] = src.net_id
+		reply.data["identifier"] = "[src.serial]-[src.identifier]"
+		reply.data["coords"] = "[T.x],[T.y]"
+		reply.data["location"] = "[src.get_z_info(T)]"
+		reply.data["distress_alert"] = "[distressAlert]"
+		radio_control.post_signal(src, reply)
+
 	process()
 		if(!active || !tracking_target)
 			active = 0
@@ -273,7 +286,57 @@ var/global/list/all_GPSs = list()
 	disposing()
 		if (islist(all_GPSs))
 			all_GPSs.Remove(src)
+		if (radio_controller)
+			radio_controller.remove_object(src, "[src.frequency]")
 		..()
+
+	receive_signal(datum/signal/signal)
+		if(!signal || signal.encryption)
+			return
+
+		if (lowertext(signal.data["distress_alert"]))
+			var/senderName = signal.data["identifier"]
+			if (!senderName)
+				return
+			if (lowertext(signal.data["distress_alert"] == "help"))
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+			else if (lowertext(signal.data["distress_alert"] == "clear"))
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
+			return
+
+		else if (signal.data["address_1"] == src.net_id && src.allowtrack)
+			switch (lowertext(signal.data["command"]))
+				if ("status")
+					var/sender = signal.data["sender"]
+					if (!sender)
+						return
+
+					var/turf/T = get_turf(usr)
+					var/datum/signal/reply = get_free_signal()
+					reply.source = src
+					reply.data["sender"] = src.net_id
+					reply.data["address_1"] = sender
+					reply.data["identifier"] = "[src.serial]-[src.identifier]"
+					reply.data["coords"] = "[T.x],[T.y]"
+					reply.data["location"] = "[src.get_z_info(T)]"
+					reply.data["distress"] = "[src.distress]"
+
+					radio_control.post_signal(src, reply)
+					return
+
+		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
+			var/datum/signal/pingsignal = get_free_signal()
+			pingsignal.source = src
+			pingsignal.data["device"] = "WNET_GPS"
+			pingsignal.data["netid"] = src.net_id
+			pingsignal.data["address_1"] = signal.data["sender"]
+			pingsignal.data["command"] = "ping_reply"
+			pingsignal.data["identifier"] = "[src.serial]-[src.identifier]"
+			pingsignal.data["distress"] = "[src.distress]"
+			pingsignal.transmission_method = TRANSMISSION_RADIO
+
+			radio_control.post_signal(src, pingsignal)
+			return
 
 // coordinate beacons. pretty useless but whatever you never know
 
