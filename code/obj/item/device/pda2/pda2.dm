@@ -118,7 +118,7 @@
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list("medbay")
+		mailgroups = list("medbay","Party Line")
 
 		robotics
 			mailgroups = list("medresearch","Party Line")
