@@ -1127,7 +1127,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				for (var/reagent_id in M.reagents.reagent_list)
-					if (reagent_id != id && !(reagent_id in chem_whitelist))
+					if (reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 4 * mult)
 				M.changeStatus("radiation", -70, 1)
 				if (M.get_toxin_damage() && prob(75))
