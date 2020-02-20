@@ -7,11 +7,29 @@
 	cooldown = 900
 	targeted = 1
 	target_anything = 1
+	target_in_inventory = 1
 	sticky = 1
 
 	cast(atom/target)
 		if (..())
 			return 1
+
+		if (target.is_open_container() == 1 || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
+			if (target.reagents.total_volume >= target.reagents.maximum_volume)
+				boutput(holder.owner, "<span style=\"color:red\">[target] is full.</span>")
+				return 1
+			if (istype(target,/obj/item/reagent_containers/patch))
+				var/obj/item/reagent_containers/patch/P = target
+				if (P.medical == 1)
+					//break the seal
+					boutput(holder.owner, "<span style=\"color:red\">You break [P]'s tamper-proof seal!</span>")
+					P.medical = 0
+			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
+			target.reagents.add_reagent(venom_id, inject_amount)
+			holder.owner.show_message(__blue("We stealthily sting [target]."))
+			return 0
+		
+
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
@@ -72,6 +90,12 @@
 		cast(atom/target)
 			if (..())
 				return 1
+			if (target.is_open_container() == 1 || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch))
+				if (target.reagents.total_volume >= target.reagents.maximum_volume)
+					return 0
+				var/max_amount = min(15,target.reagents.maximum_volume - target.reagents.total_volume)
+				target.reagents.add_reagent("blood", max_amount, targeting.dna_sting_target)
+				return 0
 			var/mob/MT = target
 			MT.reagents.add_reagent("blood", 15, targeting.dna_sting_target)
 			return 0
