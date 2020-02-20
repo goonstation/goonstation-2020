@@ -21,8 +21,8 @@
 		M.hand = h
 	if (prob(3))
 		M.visible_message("<span style=\"color:red\"><B>[M.name]</B> stumbles and falls!</span>")
-		M.changeStatus("stunned", 1 SECONDS)
-		M.changeStatus("weakened", 1 SECONDS)
+		M.changeStatus("stunned", 1 SECOND)
+		M.changeStatus("weakened", 1 SECOND)
 		if (ishuman(M) && prob(25))
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.head, /obj/item/clothing/head/helmet))

@@ -54,7 +54,7 @@
 			src.triggering_device:sense()
 			break
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()

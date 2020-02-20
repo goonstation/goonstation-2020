@@ -24,7 +24,7 @@
 		else
 			M.drop_item()
 			if (prob(25))
-				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("stunned", 1 SECOND)
 			M.take_oxygen_deprivation(1)
 			M.emote("cough")
 	return
@@ -37,7 +37,7 @@
 		else
 			M.drop_item()
 			if (prob(25))
-				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("stunned", 1 SECOND)
 			M.take_oxygen_deprivation(1)
 			M.emote("cough")
 	return

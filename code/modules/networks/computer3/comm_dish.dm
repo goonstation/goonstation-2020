@@ -20,7 +20,7 @@
 	New()
 		..()
 		comm_dishes += src
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -113,7 +113,7 @@
 		post_reply(error_text, target_id)
 			if(!error_text || !target_id)
 				return
-			SPAWN_DBG(3)
+			SPAWN_DBG(3 DECI SECONDS)
 				src.post_status(target_id, "command", "device_reply", "status", error_text)
 			return
 
@@ -140,7 +140,7 @@
 		//Otherwise, ff they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_COM_ARRAY", "netid", src.net_id)
 
 			return
@@ -181,14 +181,14 @@
 				if(target in src.terminals)
 					//something might be wrong here, disconnect them!
 					src.terminals.Remove(target)
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
 				src.terminals.Add(target) //Accept the connection!
 				src.post_status(target, "command","term_connect","data","noreply","device","PNET_COM_ARRAY")
 				src.updateUsrDialog()
-				SPAWN_DBG(2) //Hello!
+				SPAWN_DBG(2 DECI SECONDS) //Hello!
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -209,7 +209,7 @@
 
 							.["[add_zero("[x]",2)]"] = "[mtitle]"
 
-						SPAWN_DBG(3)
+						SPAWN_DBG(3 DECI SECONDS)
 							src.post_status(target, "command","term_message","data",list2params(.),"render","multiline")
 						return
 
@@ -240,7 +240,7 @@
 						filesig.data["address_1"] = target
 						filesig.data["sender"] = src.net_id
 
-						SPAWN_DBG(3)
+						SPAWN_DBG(3 DECI SECONDS)
 							src.link.post_signal(src, filesig)
 
 /*
@@ -262,7 +262,7 @@
 						if(!listdat)
 							listdat = "No messages available."
 
-						SPAWN_DBG(3)
+						SPAWN_DBG(3 DECI SECONDS)
 							src.post_status(target, "command","term_message","data",listdat,"render","multiline")
 						return
 
@@ -294,7 +294,7 @@
 						filesig.data["address_1"] = target
 						filesig.data["sender"] = src.net_id
 
-						SPAWN_DBG(3)
+						SPAWN_DBG(3 DECI SECONDS)
 							src.link.post_signal(src, filesig)
 */
 				return

@@ -69,7 +69,7 @@
 					if(locate(/obj/decal/icefloor) in TT.contents)
 						continue
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(TT)
-					SPAWN_DBG(800)
+					SPAWN_DBG(80 SECONDS)
 						B.dispose()
 				for (var/mob/living/M in range(T,2))
 					if (M.bioHolder)
@@ -87,7 +87,7 @@
 					attack_amt = 1
 					var/list/affected = DrawLine(M, user, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
-						SPAWN_DBG(6)
+						SPAWN_DBG(6 DECI SECONDS)
 							pool(OB)
 						M.TakeDamage("chest", 0, 25)
 						M.changeStatus("stunned", 50)

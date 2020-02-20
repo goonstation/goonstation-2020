@@ -52,7 +52,7 @@
 			src.update_icon()
 			src.overlays = null
 			src.overlays += "ashtray-smoke"
-			SPAWN_DBG(800)
+			SPAWN_DBG(80 SECONDS)
 				src.overlays -= "ashtray-smoke"
 		else
 			return ..()

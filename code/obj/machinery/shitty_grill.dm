@@ -231,7 +231,7 @@
 		user.TakeDamage("head", 0, 175)
 		user.updatehealth()
 		SubscribeToProcess()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

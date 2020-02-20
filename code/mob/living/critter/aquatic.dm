@@ -206,7 +206,7 @@
 	switch (act)
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.water_need)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					animate_bumble(src)
 				return null
 		if ("dance")
@@ -442,7 +442,7 @@
 					src.pixel_x-= 2
 					src.dir = turn(src.dir, 90)
 					sleep(2)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
 				return "<span style='color:red'><b>[src]</b> does a sinister dance.</span>"
@@ -456,7 +456,7 @@
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
 				src.health_burn_vuln = 0.5
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3

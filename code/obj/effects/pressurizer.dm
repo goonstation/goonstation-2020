@@ -4,7 +4,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.do_pressurize()
 			sleep(10)
 			qdel(src)

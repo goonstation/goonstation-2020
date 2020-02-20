@@ -6,7 +6,7 @@ datum/controller/process/blob
 
 	setup()
 		name = "Blob"
-		schedule_interval = 31 // 3.1 seconds
+		schedule_interval = 31 // 3.1 SECOND
 
 		detailed_count = new
 

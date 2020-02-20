@@ -365,7 +365,7 @@
 	var/active = 0
 
 	New()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			gunsim = locate() in world
 
 	attack_hand(mob/user as mob)

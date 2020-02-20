@@ -311,7 +311,7 @@
 	//if(JOB.name == "Captain")
 		//boutput(world, "<b>[src] is the Captain!</b>")
 	if (JOB.announce_on_join)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			boutput(world, "<b>[src.name] is the [JOB.name]!</b>")
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name

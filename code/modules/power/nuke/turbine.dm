@@ -13,7 +13,7 @@
 
 	New()
 		nturbine = src
-		spawn(5)
+		spawn(5 DECI SECONDS)
 			var/obj/fluid_pipe/sink/temp_i = locate(/obj/fluid_pipe/sink) in get_step(src,SOUTH)
 			var/obj/fluid_pipe/source/temp_o = locate(/obj/fluid_pipe/source) in get_step(src,NORTH)
 			//n_input = temp_i.network

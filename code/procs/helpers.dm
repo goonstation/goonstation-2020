@@ -100,7 +100,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
-		SPAWN_DBG(6) pool(Q)
+		SPAWN_DBG(6 DECI SECONDS) pool(Q)
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
@@ -112,7 +112,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
-		SPAWN_DBG(6) pool(O)
+		SPAWN_DBG(6 DECI SECONDS) pool(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", 1, 1)
@@ -1003,7 +1003,7 @@ proc/get_angle(atom/a, atom/b)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		if(!M || !M.client || M.shakecamera)
 			return
 		M.shakecamera = 1

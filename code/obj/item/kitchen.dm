@@ -115,7 +115,7 @@ TRAYS
 	suicide(var/mob/user as mob)
 		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
 		src.break_fork(user)
-		spawn(100)
+		SPAWN_DBG(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		return 1
@@ -175,7 +175,7 @@ TRAYS
 	suicide(var/mob/user as mob)
 		user.visible_message("<span style=\"color:red\"><b>[user] tries to slash  \his own throat with [src]!</b></span>")
 		src.break_knife(user)
-		spawn(100)
+		SPAWN_DBG(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		return 1
@@ -312,7 +312,7 @@ TRAYS
 	suicide(var/mob/user as mob)
 		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
 		src.break_spoon(user)
-		spawn(100)
+		SPAWN_DBG(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		return 1
@@ -356,7 +356,7 @@ TRAYS
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (!ispath(src.contained_food))
 				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)

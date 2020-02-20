@@ -199,7 +199,7 @@ atom/disposing()
 
 turf/New()
 	..()
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		for(var/A in contents)
 			collidable_change(A, 1)
 

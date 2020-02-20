@@ -103,7 +103,7 @@
 			else
 				random_brute_damage(target, 15)
 
-			target.changeStatus("weakened", 1 SECONDS)
+			target.changeStatus("weakened", 1 SECOND)
 			target.changeStatus("stunned", 2 SECONDS)
 			target.force_laydown_standup()
 

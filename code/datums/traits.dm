@@ -210,7 +210,7 @@
 	category = "body"
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(40) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
+		SPAWN_DBG(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
@@ -232,7 +232,7 @@
 	category = "body"
 
 	onAdd(var/mob/owner)
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)

@@ -185,6 +185,6 @@
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			spam_flag = 0
 	return

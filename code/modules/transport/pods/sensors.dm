@@ -127,7 +127,7 @@
 
 	//Tracking loop
 	proc/track_target(var/gps_coord)
-		tracking_gps_coord = gps_coord		//Dumb stuff cause I made this on 2016 which didn't have an items processing loop. 
+		tracking_gps_coord = gps_coord		//Dumb stuff cause I made this on 2016 which didn't have an items processing loop.
 		cur_dist = 0
 		same_z_level = 0
 		trackable_range = 0
@@ -146,7 +146,7 @@
 				animate_tracking_hud(src.ship.myhud.tracking, src.tracking_target)
 
 			//If the target is out of seek range, move to top and change to lost state
-			else 
+			else
 				src.ship.myhud.tracking.icon_state = "lost"
 				//if we're off the z-level or tracking a ship and twice as far out: lose the signal
 				//If it's a static gps target from the coordinate picker, we can track from anywhere. Maybe unneeded
@@ -157,7 +157,7 @@
 					playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
 
 			// sleep(SENSOR_REFRESH_RATE)
-			
+
 
 	//If the engine is off or we're using 10% of power capacity, make it harder for people to track us.
 	//currently only using this for tracking. It doesn't effect the active sensor scan button.
@@ -173,21 +173,21 @@
 	//Turns the sprite around
 	proc/animate_tracking_hud(var/atom/A, var/atom/target)
 		if (!istype(A) || !istype(target))
-			return		
+			return
 		var/ang = get_angle(src.ship, target)
 		//Was maybe thinking about having it get further out or something the further the target is, but no.
 		//var/dist = get_dist(src.ship, target)
-		//var/number = round(ang/(45-(50-dist)))*(45-(50-dist))		
+		//var/number = round(ang/(45-(50-dist)))*(45-(50-dist))
 		var/matrix/M = matrix()
 		M = M.Turn(ang)
 		M = M.Translate(32 * sin(ang),32 * cos(ang))
 
 		animate(A, transform = M, time = 10, loop = 0)
 
-	//arguments: O is the target to track. If O is within sensor range after .1 seconds, it is tracked by the sensor
+	//arguments: O is the target to track. If O is within sensor range after .1 SECOND, it is tracked by the sensor
 	proc/obtain_tracking_target(var/obj/O)
 		if (!O)
-			return 
+			return
 		scanning = 1
 		src.tracking_target = O
 		boutput(usr, "<span style=\"color:blue\">Attempting to pinpoint energy source...</span>")
@@ -207,7 +207,7 @@
 	//For use by clicking a pod to target them, instantly add them as your tracking target
 	proc/quick_obtain_target(var/obj/machinery/vehicle/O)
 		if (!O)
-			return 
+			return
 		src.tracking_target = O
 		boutput(usr, "<span style=\"color:blue\">Tracking target: [src.tracking_target.name]</span>")
 		SPAWN_DBG(0)
@@ -220,7 +220,7 @@
 //Doing nothing with the Z-level value right now.
 	proc/obtain_target_from_coords(href_list)
 	//The default Z coordinate given. Just use current Z-Level where the object is. Pods won't
-		#define DEFAULT_Z_VALUE -1		
+		#define DEFAULT_Z_VALUE -1
 		scanning = 1
 		if (href_list["dest_cords"])
 			tracking_target = null
@@ -238,7 +238,7 @@
 			boutput(usr, "<span style=\"color:blue\">Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]</span>")
 			playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
 			sleep(10)
-			var/turf/T = locate(x,y,z) 
+			var/turf/T = locate(x,y,z)
 
 			//Set located turf to be the tracking_target
 			if (isturf(T))
@@ -348,7 +348,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 		var/display_text = target.name
 		if (isturf(target))
 			display_text += " at X:[target.x], Y:[target.y]"
-		dat += {"<BR>Currently Tracking: [display_text] 
+		dat += {"<BR>Currently Tracking: [display_text]
 		<a href=\"byond://?src=\ref[A];stop_tracking=1\">Stop Tracking</a>"}
 
 	return {"
@@ -380,7 +380,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 		</style>
 
 		<div id=topDiv>
-			<center><A href='byond://?src=\ref[A];getcords=1' style='width:calc(100% - 5px);'>Get Local Coordinates</A><BR></center>		
+			<center><A href='byond://?src=\ref[A];getcords=1' style='width:calc(100% - 5px);'>Get Local Coordinates</A><BR></center>
 			<button class='button' id='dest' style='width:calc(100% - 5px);' onClick='(showInput())' >Select Destination</button><BR>
 			<div style='display:none' id = 'destInput'>
 					X Coordinate: <input class='inputs' id='idX' type='number' min='0' max='500' name='X' value='1' pattern='[0-9]+' title='Numbers 0-9'><br>

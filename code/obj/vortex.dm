@@ -10,7 +10,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(prob(25))
 				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 				s.set_up(3, 1, src.loc)
@@ -80,7 +80,7 @@
 			horror_path = pick(/obj/critter/killertomato, /obj/critter/spore, /obj/critter/zombie, /obj/critter/martian/warrior, /obj/machinery/bot/firebot/emagged, /obj/machinery/bot/secbot/emagged, /obj/machinery/bot/medbot/mysterious/emagged, /obj/machinery/bot/cleanbot/emagged)
 		var/obj/horror = new horror_path(src.loc)
 		src.visible_message("<span style=\"color:red\"><b>[horror] emerges from the [src]!</b></span>","<span style=\"color:red\">You hear a sharp buzzing noise.</span>")
-		SPAWN_DBG(200)
+		SPAWN_DBG(20 SECONDS)
 			qdel(src)
 
 		return

@@ -235,7 +235,7 @@
 				external_pressure_bound = number
 
 			if("refresh")
-				SPAWN_DBG(5) broadcast_status()
+				SPAWN_DBG(5 DECI SECONDS) broadcast_status()
 
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

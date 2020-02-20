@@ -223,7 +223,7 @@
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
 
 						flick("vendbreak", src)
-						SPAWN_DBG(8)
+						SPAWN_DBG(8 DECI SECONDS)
 							src.icon_state = "fallen"
 							sleep(70)
 							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
@@ -311,7 +311,7 @@ var/list/cached_colors = new/list()
 	uses = 5
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			var/colorname = "Weird"
 			switch(rand(1,6))
 				if(1)

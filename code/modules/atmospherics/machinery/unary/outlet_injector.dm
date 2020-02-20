@@ -123,7 +123,7 @@
 				volume_rate = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(5) broadcast_status()
+			SPAWN_DBG(5 DECI SECONDS) broadcast_status()
 		update_icon()
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

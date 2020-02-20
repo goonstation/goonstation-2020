@@ -100,7 +100,7 @@
 		src.visible_message("<span style=\"color:red\">[src] splats onto the floor messily!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
-		src.reagents.trans_to(splat,5)
+		if (splat) src.reagents.trans_to(splat,5) //could be deleted immediately
 		pool(src)
 
 /obj/item/reagent_containers/food/snacks/plant/tomato/explosive
@@ -183,7 +183,7 @@
 		src.visible_message("<span style=\"color:red\">[src] pops violently!</span>")
 		playsound(src.loc, "sound/effects/pop.ogg", 50, 1)
 		flick("cornsplode", src)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
 			pool(src)
 

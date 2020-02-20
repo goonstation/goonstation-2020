@@ -173,7 +173,7 @@ VUVUZELA
 			if(prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			spam_flag = 0
 	return
 
@@ -206,7 +206,7 @@ VUVUZELA
 			if(prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			spam_flag = 0
 	return
 
@@ -230,7 +230,7 @@ VUVUZELA
 	SPAWN_DBG(80)
 		if(prob(50))
 			playsound(user.loc, whistlesound, 35, 1)
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		if(prob(50))
 			playsound(user.loc, whistlesound, 35, 1)
 		if (user)
@@ -268,7 +268,7 @@ VUVUZELA
 			if(prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			spam_flag = 0
 	return
 

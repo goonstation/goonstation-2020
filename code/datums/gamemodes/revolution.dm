@@ -89,7 +89,7 @@
 				command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
 				SPAWN_DBG(3000) // 5 minutes until everyone dies
 					command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
-					SPAWN_DBG(100) // welp
+					SPAWN_DBG(10 SECONDS) // welp
 						for(var/mob/living/carbon/M in mobs)
 							M.gib()
 						endthisshit = 1
@@ -97,7 +97,7 @@
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
 
-	var/the_slot = ""
+	//var/the_slot = ""
 
 	/*
 	if (!rev_mob.w_uniform)

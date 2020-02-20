@@ -76,7 +76,7 @@
 	var/datum/effects/system/expl_particles/P = new/datum/effects/system/expl_particles()
 	P.set_up(10,location)
 	P.start()
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		var/datum/effects/system/harmless_smoke_spread/S = new/datum/effects/system/harmless_smoke_spread()
 		S.set_up(3,0,location,null)
 		S.start()

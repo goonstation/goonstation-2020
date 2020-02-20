@@ -271,7 +271,7 @@
 			if (prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			spam_flag = 0
 	return
 
@@ -305,7 +305,7 @@
 			if (prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			spam_flag = 0
 	return
 
@@ -337,7 +337,7 @@
 				if (prob(60))
 					G.howl()
 			src.add_fingerprint(user)
-			SPAWN_DBG(100)
+			SPAWN_DBG(10 SECONDS)
 				fiddling = 0
 
 	proc/satanic_home_run(var/mob/living/some_poor_fucker)
@@ -395,7 +395,7 @@
 				if (prob(60))
 					G.howl()
 			src.add_fingerprint(user)
-			SPAWN_DBG(100)
+			SPAWN_DBG(10 SECONDS)
 				spam_flag = 0
 		return
 
@@ -454,7 +454,7 @@
 				continue
 			else
 				src.dootize(L)
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			spam_flag = 0
 	return
 */
@@ -538,7 +538,7 @@
 			if (M != user)
 				M.change_misstep_chance(50)
 
-		SPAWN_DBG(60)
+		SPAWN_DBG(6 SECONDS)
 			spam_flag = 0
 
 /obj/item/rubber_hammer
@@ -775,7 +775,7 @@
 		boutput(user, "<span style=\"color:blue\"><b>You are surrounded by a BATTLE BARRIER!</b></span>")
 		user.visible_message("<span style=\"color:red\">[user] is encased in a protective shield.</span>")
 		user.spellshield = 1
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			user.spellshield = 0
 			boutput(user, "<span style=\"color:blue\"><b>Your magical barrier fades away!</b></span>")
 			user.visible_message("<span style=\"color:red\">The shield protecting [user] fades away.</span>")

@@ -491,7 +491,7 @@
 /client/proc/checkScreenAspect(list/params)
 	if (params.len)
 		if ((params["screenW"]/params["screenH"]) == (4/3))
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
 					set_splitter_orientation(0)
 					winset( src, "menu", "horiz_split.is-checked=true" )
@@ -1042,7 +1042,7 @@ var/global/curr_day = null
 /client/verb/set_tg_controls()
 	set hidden = 1
 	set name = "set-tg-controls"
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		set_controls(!tg_controls)
 
 
@@ -1077,7 +1077,7 @@ var/global/curr_day = null
 /client/verb/set_tg_layout()
 	set hidden = 1
 	set name = "set-tg-layout"
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		set_layout(!tg_layout)
 
 /client/verb/set_fps()

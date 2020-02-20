@@ -31,7 +31,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	flags = NOSPLASH
 	layer = DECAL_LAYER
-	//plane = PLANE_DEFAULT + 1 //bugg
+	plane = PLANE_NOSHADOW_BELOW
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	//plane = PLANE_FLOOR - BAD IDEA, STUFF GOES BELOW WALLS

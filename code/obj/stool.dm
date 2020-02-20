@@ -576,7 +576,7 @@
 				chump.visible_message("<span style=\"color:red\"><b>[chump.name] falls off of [src]!</b></span>")
 				chump.on_chair = 0
 				chump.pixel_y = 0
-				chump.changeStatus("weakened", 1 SECONDS)
+				chump.changeStatus("weakened", 1 SECOND)
 				chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chump, 15)
 				playsound(chump.loc, "swing_hit", 50, 1)

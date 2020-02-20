@@ -188,7 +188,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			update_icon()
 
 	update_icon()
@@ -316,7 +316,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			update_icon()
 
 

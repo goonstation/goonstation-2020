@@ -180,7 +180,7 @@
 			SPAWN_DBG(0)
 				S.open()
 		allow_processing = 1
-		SPAWN_DBG(1200)
+		SPAWN_DBG(2 MINUTES)
 			if (state == 1 && current_match_id == spawned_match_id)
 				announceAll("Game did not start after 2 minutes. Resetting arena.")
 				resetArena()
@@ -371,7 +371,7 @@
 		resetting = 0
 
 	New()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
 			for (var/area/colosseum/G in world)
@@ -1224,7 +1224,7 @@ proc/get_colosseum_message(var/name, var/message)
 		update_indicators(INDICATOR_ALL)
 		add_indicators(M)
 		may_exit = 0
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			may_exit = 1
 
 	proc/on_exit(var/mob/M)
@@ -1420,7 +1420,7 @@ proc/get_colosseum_message(var/name, var/message)
 		if(dying)
 			return
 		dying = 1
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.visible_message("<b>[src] is breaking apart!</b>")
 			new /obj/effects/explosion (src.loc)
 			var/sound/expl_sound = sound('sound/effects/Explosion1.ogg')
@@ -1451,7 +1451,7 @@ proc/get_colosseum_message(var/name, var/message)
 				remove_indicators(piloting)
 				piloting = null
 				M.set_loc(Q)
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					var/dx = rand(-10, 10)
 					var/dy = rand(-10, 10)
 					var/turf/T = locate(Q.x + dx, Q.y + dy, Q.z)

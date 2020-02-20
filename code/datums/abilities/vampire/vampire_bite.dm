@@ -146,7 +146,7 @@
 						HH.changeStatus("paralysis", 100)
 					else
 						if (prob(65))
-							HH.changeStatus("weakened", 1 SECONDS)
+							HH.changeStatus("weakened", 1 SECOND)
 							HH.stuttering = min(HH.stuttering + 3, 10)
 
 			if (istype(H)) H.blood_tracking_output()

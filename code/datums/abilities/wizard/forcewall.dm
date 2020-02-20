@@ -37,7 +37,7 @@
 			if (holder.owner.wizard_spellpower()) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
 			if (holder.owner.wizard_spellpower()) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
-		SPAWN_DBG(300)
+		SPAWN_DBG(30 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)

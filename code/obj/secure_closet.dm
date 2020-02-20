@@ -115,7 +115,7 @@
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.radio_control.post_signal(src, reply, 2)
 			return
 
@@ -1132,7 +1132,7 @@
 				sleep(1)
 			src.pixel_x = 0
 			src.pixel_y = 0
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.jiggled = 0
 
 	return

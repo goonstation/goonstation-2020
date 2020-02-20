@@ -583,7 +583,7 @@ datum
 									old_glasses.layer = initial(old_glasses.layer)
 							else
 								qdel(H.glasses)
-							SPAWN_DBG(5)
+							SPAWN_DBG(5 DECI SECONDS)
 								if (H)
 									var/obj/item/clothing/glasses/eyepatch/E = new /obj/item/clothing/glasses/eyepatch(H)
 									E.name = "Pirate Eyepatch"
@@ -1032,7 +1032,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 1000 * mult)
 					if (prob(50))
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")
@@ -1452,7 +1452,7 @@ datum
 				if(prob(0.2 * volume))
 					M.emote("scream")
 					boutput(M, "<span style=\"color:blue\"><b>Oh. God.</b></span>")
-					SPAWN_DBG(20)
+					SPAWN_DBG(2 SECONDS)
 						if (M)
 							M:become_ice_statue()
 				..()
@@ -3609,7 +3609,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 1000 * mult)
 					if(prob(50))
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							//Roast up the player
 							if (M)
 								boutput(M, "<span style=\"color:red\"><b>IT BURNS!!!!</b></span>")

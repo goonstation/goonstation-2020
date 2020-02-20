@@ -192,7 +192,7 @@
 			if (M.client && isliving(M) && !M.unobservable)
 				candidates += M
 		if (candidates.len)
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				src.insert_observer(pick(candidates))
 #endif
 
@@ -229,7 +229,7 @@
 
 	updateButtons()
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
 //#ifdef HALLOWEEN

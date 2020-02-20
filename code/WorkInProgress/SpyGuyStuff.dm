@@ -69,7 +69,7 @@ Fibre wire
 
 		H.changeStatus("weakened", 10 SECONDS)
 
-		SPAWN_DBG(70)
+		SPAWN_DBG(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
@@ -90,7 +90,7 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			SPAWN_DBG(15) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
+			SPAWN_DBG(1.5 SECONDS) playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			flick("skull_ominous_explode", src)
 			sleep(30)
 			qdel(src)
@@ -118,7 +118,7 @@ proc/Create_Tommyname()
 	else
 		T.key = src.key
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		qdel(src)
 
 /mob/living/carbon/human/proc/tommyize_reshape()
@@ -160,7 +160,7 @@ proc/Create_Tommyname()
 	if(src.bioHolder)
 		src.bioHolder.mobAppearance = AH
 		src.bioHolder.AddEffect("accent_tommy")
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		src.bioHolder.mobAppearance.UpdateMob()
 
 //////////////////////////////

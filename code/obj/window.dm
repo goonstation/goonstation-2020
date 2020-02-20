@@ -718,7 +718,7 @@
 			loc = initialPos//LULLE
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			ini_dir = 5//gurgle
 			dir = 5//grumble
 	smash(var/actuallysmash)
@@ -793,7 +793,7 @@
 	var/no_dirs = 0 //ignore directional
 
 	New()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.set_up()
 			SPAWN_DBG(10)
 				qdel(src)

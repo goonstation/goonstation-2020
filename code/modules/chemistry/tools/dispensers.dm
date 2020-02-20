@@ -100,7 +100,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (src && src.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -131,7 +131,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (src && src.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
@@ -237,7 +237,7 @@
 			var/mob/living/L = user
 			L.changeStatus("burning", 100)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

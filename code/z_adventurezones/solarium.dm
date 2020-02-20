@@ -109,7 +109,7 @@ var/global/derelict_mode = 0
 		src.loc = null
 		world.save_intra_round_value("somebody_ate_the_fucking_thing", 1)
 		breakdown()
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			boutput(that_asshole, "<span style=\"color:red\"><b>IT BURNS!</b></span>")
 
 	proc/breakdown()
@@ -137,7 +137,7 @@ var/global/derelict_mode = 0
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
 			world << sound('sound/machines/lavamoon_plantalarm.ogg')
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(30)
 					shake_camera(H, 210, 2)
@@ -165,7 +165,7 @@ proc/voidify_world()
 		the_ss13_screen.icon = 'icons/misc/fullscreen.dmi'
 		the_ss13_screen.icon_state = "title_broken"
 		the_ss13_screen.pixel_x = 0
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		for (var/turf/space/space in world)
 			LAGCHECK(LAG_LOW)
 			if(was_eaten)

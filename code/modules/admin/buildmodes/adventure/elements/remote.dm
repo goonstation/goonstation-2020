@@ -32,7 +32,7 @@
 				var/obj/item/adventurepuzzle/triggerer/remotecontrol/key = new /obj/item/adventurepuzzle/triggerer/remotecontrol(T)
 				key.name = key_name
 				key.triggered = selected_triggerable.Copy()
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					key.color = color_rgb
 		else if (pa.Find("right"))
 			if (istype(object, /obj/adventurepuzzle/triggerable))

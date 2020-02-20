@@ -10,7 +10,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "ADMIN IRC:" : "ADMIN LOG:"]</span> <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD:" : "ADMIN LOG:"]</span> <span class=\"message\">[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -399,7 +399,7 @@ var/global/noir = 0
 						return
 
 					addPlayerNote(player, usr.ckey, the_note)
-					SPAWN_DBG(20) src.viewPlayerNotes(player)
+					SPAWN_DBG(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing("admin", usr, null, "added a note for [player]: [the_note]")
 					logTheThing("diary", usr, null, "added a note for [player]: [the_note]", "admin")

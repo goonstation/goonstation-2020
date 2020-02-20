@@ -512,7 +512,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15))
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)

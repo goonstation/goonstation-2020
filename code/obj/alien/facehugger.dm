@@ -274,7 +274,7 @@
 			if(frustration >= 35) set_null()
 
 		if(quick_move)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.process()
 		else
 			SPAWN_DBG(cycle_pause)
@@ -358,7 +358,7 @@
 					quick_move = 1
 
 		if(quick_move)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				idle()
 		else
 			SPAWN_DBG(cycle_pause)

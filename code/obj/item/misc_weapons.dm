@@ -81,7 +81,7 @@
 			if (user.a_intent == INTENT_HELP)
 				user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
 				if(prob(3))
-					SPAWN_DBG(2)
+					SPAWN_DBG(2 DECI SECONDS)
 						target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
 						target.changeStatus("stunned", 50)
 						target.changeStatus("weakened", 5 SECONDS)
@@ -163,7 +163,7 @@
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
 	user.updatehealth()
-	SPAWN_DBG(500)
+	SPAWN_DBG(50 SECONDS)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1
@@ -806,7 +806,7 @@
 	blood_slash(user, 25)
 	user.TakeDamage("chest", 150, 0)
 	user.updatehealth()
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1

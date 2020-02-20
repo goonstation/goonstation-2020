@@ -36,7 +36,7 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.make_my_stuff()
 
 	disposing()
@@ -92,7 +92,7 @@
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O in src.contents)
 			user.drop_item()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 
 	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
@@ -377,7 +377,7 @@
 			return
 
 		I.throwforce += 8 //Ugly. Who cares.
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			if (I)
 				I.throwforce -= 8
 

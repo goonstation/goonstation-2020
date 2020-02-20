@@ -153,7 +153,7 @@ var/list/all_toilets = null
 
 	playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 	user.updatehealth()
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1

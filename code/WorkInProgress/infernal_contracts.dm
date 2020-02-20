@@ -172,7 +172,7 @@
 	else
 		return
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		qdel(src)
 
 /obj/item/pen/fancy/satan
@@ -249,7 +249,7 @@
 
 	make_my_stuff()
 		..()
-		SPAWN_DBG(5) //to give the buylist enough time to assign a merchant var to the briefcase
+		SPAWN_DBG(5 DECI SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
 			var/list/contracts = list(/obj/item/contract/yeti,
 			/obj/item/contract/genetic/demigod,
 			/obj/item/contract/vampire,
@@ -384,7 +384,7 @@
 			boutput(user, "<span style=\"color:blue\"><b>The depleted contract vanishes in a puff of smoke!</b></span>")
 		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
 		spawncontract(badguy, 0, 0) //huzzah for efficient code
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -410,7 +410,7 @@
 				M.visible_message("<span style=\"color:red\">[user] forces [M] to sign [src]!</span>")
 				logTheThing("combat", user, M, "forces [M] to sign a [src] at [log_loc(user)].")
 				MagicEffect(M, user)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.inuse = 0
 					soulcheck(user)
 		else
@@ -432,7 +432,7 @@
 				if(user.mind)
 					user.mind.damned = 1
 				MagicEffect(user, src.merchant)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					soulcheck(src.merchant)
 			else
 				user.visible_message("<span style=\"color:red\"><b>[user] looks puzzled as [he_or_she(user)] realizes [his_or_her(user)] pen isn't evil enough to sign [src]!</b></span>")
@@ -450,7 +450,7 @@ obj/item/contract/satan
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)]name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a satan contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.satanclownize()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
@@ -470,7 +470,7 @@ obj/item/contract/macho
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in slim jims upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a macho contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.machoize(1)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
@@ -491,7 +491,7 @@ obj/item/contract/wrestle
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in cocaine upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a wrestler contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.mind.special_role = "Faustian Wrestler"
 			sleep(1)
 			user.make_wrestler(1)
@@ -522,7 +522,7 @@ obj/item/contract/yeti
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a yeti contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.makesuperyeti()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			if (src.limiteduse == 1)
@@ -543,7 +543,7 @@ obj/item/contract/genetic
 		logTheThing("admin", user, null, "signed a genetic modifiying contract at [log_loc(user)]!")
 		user.sellsoul()
 		boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("activator", 0, 0, 1)
 			user.bioHolder.AddEffect("mutagenic_field", 0, 0, 1)
 			boutput(user, "<span style=\"color:blue\">You have finally achieved your full potential! Mom would so proud!</span>")
@@ -552,7 +552,7 @@ obj/item/contract/genetic
 					boutput(user, "<span style=\"color:green\">You feel an upwelling of additional power!</span>")
 					user:unkillable = 1
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
-					SPAWN_DBG(2)
+					SPAWN_DBG(2 DECI SECONDS)
 						boutput(user, "<span style=\"color:blue\">You have ascended beyond mere humanity!</span>")
 						user.mind.special_role = "Genetic Demigod"
 						ticker.mode.Agimmicks.Add(user)
@@ -578,7 +578,7 @@ obj/item/contract/horse
 			if (total_souls_value >= 20) //20 souls needed to start the end-times. Sufficiently difficult?
 				boutput(user, "<span style=\"color:red\"><font size=6><B>NEIGH!</b></font></span>")
 				src.endtimes()
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					soulcheck(user)
 				return
 			else
@@ -597,7 +597,7 @@ obj/item/contract/horse
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name with [his_or_her(user)] own blood inside [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a horse contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.horse()
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span style=\"color:red\"><font size=6><B>NEIGH</b></font></span>")
@@ -650,7 +650,7 @@ obj/item/contract/vampire
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a vampire contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.mind.special_role = "vampire"
 			user.make_vampire(1)
 			ticker.mode.Agimmicks.Add(user)
@@ -671,7 +671,7 @@ obj/item/contract/juggle
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a juggle contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("juggler", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
@@ -689,7 +689,7 @@ obj/item/contract/fart
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a fart contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("linkedfart", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
@@ -707,7 +707,7 @@ obj/item/contract/bee
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a bee contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_bee", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
@@ -725,7 +725,7 @@ obj/item/contract/rested
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a sleep contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_pentetic", 0, 0, 1)
 			user.bioHolder.AddEffect("regenerator_super", 0, 0, 1)
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
@@ -747,7 +747,7 @@ obj/item/contract/reversal
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a damage reversal contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("breathless_contract", 0, 0, 1)
 			user.traitHolder.addTrait("reversal")
 			boutput(user, "<span style=\"color:blue\">You feel like you could take a shotgun blast to the face without getting a scratch on you!</span>")
@@ -767,7 +767,7 @@ obj/item/contract/chemical
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a chemical contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			user.bioHolder.AddEffect("drunk_random", 0, 0, 1)
 			if (src.limiteduse == 1)
 				src.used++
@@ -787,7 +787,7 @@ obj/item/contract/hair
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a hair contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			for(var/mob/living/carbon/human/H in mobs)
 				if (H == user || isdiabolical(H))
 					continue
@@ -809,14 +809,14 @@ obj/item/contract/greed
 		user.visible_message("<span style=\"color:red\"><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a greed contract at [log_loc(user)]!")
 		user.sellsoul()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			var/obj/item/spacecash/random/tourist/S = unpool(/obj/item/spacecash/random/tourist)
 			S.setup(user.loc)
 
 			boutput(user, "<span style=\"color:blue\">Some money appears at your feet. What, did you expect some sort of catch or trick?</span>")
 			var/wealthy = rand(1,2)
 			if (wealthy == 1)
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					boutput(user, "<span style=\"color:blue\">What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
@@ -828,7 +828,7 @@ obj/item/contract/greed
 							else
 								new /obj/item/coin(T)
 			if (wealthy == 2)
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					boutput(user, "<span style=\"color:blue\">Well, you were right.</span>")
 					var/mob/living/carbon/human/H = user
 					H.become_gold_statue(1)

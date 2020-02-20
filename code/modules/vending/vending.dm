@@ -1698,7 +1698,7 @@
 	src.icon_state = "[initial(icon_state)]-fallen"
 //	SPAWN_DBG(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
-//		SPAWN_DBG(20)
+//		SPAWN_DBG(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
 		victim.changeStatus("weakened", 300)

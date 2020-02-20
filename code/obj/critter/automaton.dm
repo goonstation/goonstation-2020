@@ -174,7 +174,7 @@ var/global/the_automaton = null
 				user.anchored = 1
 				user.set_loc(src.loc)
 				K.burn_possible = 1
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					src.visible_message("<span style=\"color:red\"><B>[src] forces [user] inside one of the keyholes!</B>.</span>")
 					user.implode()
 					K.combust()
@@ -408,7 +408,7 @@ var/global/the_automaton = null
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
 		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			swirl.pixel_y = 0
 			pool(swirl)
 
@@ -444,7 +444,7 @@ var/global/the_automaton = null
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(T)
-				SPAWN_DBG(20) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
@@ -455,7 +455,7 @@ var/global/the_automaton = null
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 40, 0)
 						var/obj/somesparks = unpool(/obj/effects/sparks)
 						somesparks.set_loc(T)
-						SPAWN_DBG(20) if (somesparks) pool(somesparks)
+						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -475,7 +475,7 @@ var/global/the_automaton = null
 
 		for(var/mob/living/carbon/human/H in mobs)
 			animate_float(H, 5, 10)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				H.flash(30)
 				shake_camera(H, 210, 2)
 			SPAWN_DBG(rand(10,70))

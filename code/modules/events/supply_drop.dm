@@ -75,7 +75,7 @@
 	pixel_y = -32
 
 	New()
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			qdel(src)
 		..()
 
@@ -255,7 +255,7 @@
 			icon_state = "lootb2"
 			flick("lootb1", src)
 
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
 				var/obj/item/I = makeRandomLootTrash()
 				if(istype(H))
@@ -273,7 +273,7 @@
 						var/mob/living/carbon/human/dude = usr
 						dude.put_in_hand_or_drop(I)
 
-					SPAWN_DBG(25)
+					SPAWN_DBG(2.5 SECONDS)
 						del(B)
 						del(S)
 						del(P)

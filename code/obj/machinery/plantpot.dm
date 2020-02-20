@@ -111,7 +111,7 @@
 		src.plant_sprite = image('icons/obj/hydroponics/hydroponics.dmi', "")
 		update_icon()
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if(radio_controller)
 				radio_controller.add_object(src, "[report_freq]")
 
@@ -653,7 +653,7 @@
 
 			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
 			if (!frequency) return
-			SPAWN_DBG(5) //Send a reply for those curious jerks
+			SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 				frequency.post_signal(src, pingsignal)
 
 		return //Just toss out the rest of the signal then I guess

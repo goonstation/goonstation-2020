@@ -1913,7 +1913,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 			<li><b>Eyes</b> - You see out of these.
 			<li><b>Lungs</b> - These steal Oxygen from the air on space stations and give it to you to use for respiration. Atmos engineers hate em!
 			<li><b>Kidneys</b> - These filter out "toxins", or "thetans" as I like to call them, from your blood and turn them into pee.
-			<li><b>Liver</b> - This is basically the same as kidneys, but looks different, has a different name, and does some different things. 
+			<li><b>Liver</b> - This is basically the same as kidneys, but looks different, has a different name, and does some different things.
 			<li><b>Stomach</b> - This digests all the food you eat orally. If this is empty, you will not be able to puke, be very careful.
 			<li><b>Intestines</b> - This is the glorious organ that turns food into poo. Rather it did, until something catastrophic happened a few years ago and now nobody's makes poo anymore.
 			<li><b>Spleen</b> - This has some function. Mainly it is involved in making blood in spacemen, maybe it does something else too.
@@ -1933,7 +1933,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 			<li><b>Garden Snips</b> - Used for snipping.
 			<li><b>Hemostat</b> - Used for clamping down bleeders. Hold this in your off hand to make most surgery cause less bleeding.
 			<br>
-			<li><b>Health Analyzer Organ Upgrade</b> - Until now, it was only possible for health analyzers to crudely detect brain damage in a subject. With this upgrade, health analyzers will be able to crudely detect the health of ANY organ! 
+			<li><b>Health Analyzer Organ Upgrade</b> - Until now, it was only possible for health analyzers to crudely detect brain damage in a subject. With this upgrade, health analyzers will be able to crudely detect the health of ANY organ!
 			<li>The last tool, if it can be called such, is the operating table or bed. For some reason that continues to baffle medical science, the type of surface that the patient is placed on in surgery is important for being able to perform surgery. Operating tables are the gold standard for surgery, next comes regular beds, these work just as well. Finally you can perform surgery on any old table, provided the patient is knocked out, stunned, or otherwise sufficiently anesthetized/drunk.
 		</ul>
 		</div>
@@ -1953,7 +1953,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 			<li>liver = 		snip -> snip -> cut
 			<li>stomach = 		snip -> cut -> snip
 			<li>intestines = 	snip -> cut -> cut
-			<li>pancreas = 		cut -> snip -> snip 
+			<li>pancreas = 		cut -> snip -> snip
 			<li>spleen = 		cut -> snip -> cut
 			<li>kidneys = 		cut -> cut -> snip*
 			<li>heart = 		cut -> saw -> cut -> saw<sup>2</sup>
@@ -1971,7 +1971,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 			<li>butt = I do not know how to remove butts, and if I did I wouldn't spread that knowledge for it is a cruel and inhumane practice to remove a butt from anyone.
 		</ul>
 		</div>
-		<h3>Organ Functions</h3> 
+		<h3>Organ Functions</h3>
 		<div id ="functions">
 		<b><p>Brain</b></p>
 		<p>This organ takes damage in a number of ways, through concussions, oxygen loss, or neurotoxins. That's pretty much it actually.</p>
@@ -2028,14 +2028,14 @@ globules of this sludge can be harvested from the plant however - with proper pr
 		<b><p>Treating Organ Diseases</b></p>
 		<p>In most cases, removal/replacement of the organ in failure will cure the disease. Certain reagents can be effective at healing organ damage, and curing their respective diseases.</p>
 		<br>
-		
+
 		</div>
 		<h3>Organ Damage Treatment</h3>
 		<div id ="treatment">
 		<p>Presently there are only a few known ways to treat organ damage, provided they are not damaged too extensively. This "chapter" will discuss the most common ways.</p>
 		<p>It is probably helpful to seperate organs into 3 different groups in order to more quickly and easily treat them.<br>
 		The reason for each grouping should be completely obvious to anyone who cares to think about it so I will not explain the logic behind each grouping.</p>
-		
+
 		<p><b>Group I: Lungs and Spleen</b></p>
 		<p>Medicine that heals respiratory damage is most effective here. Salbutamol and Perfluorodecalin are good candidates.</p>
 		<br>
@@ -2778,7 +2778,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 					playsound(H.loc, "swing_hit", 50, 1)
 					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)

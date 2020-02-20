@@ -95,7 +95,7 @@
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		if (src.skin)
 			src.overlays += "medskin-[src.skin]"
 			src.overlays += "medibot-arm"
@@ -331,7 +331,7 @@
 	visible_message("<b>[src]</b> points at [target]!")
 	if (iscarbon(target))
 		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			qdel(D)
 
 /obj/machinery/bot/medbot/process()
@@ -413,7 +413,7 @@
 	if(src.path && src.path.len && src.patient)
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
-		SPAWN_DBG(3)
+		SPAWN_DBG(3 DECI SECONDS)
 			if(src.path && src.path.len)
 				step_to(src, src.path[1])
 				src.path -= src.path[1]
@@ -545,7 +545,7 @@
 	else
 		src.update_icon(stun = 0, heal = 1)
 		src.visible_message("<span style=\"color:red\"><B>[src] is trying to inject [src.patient]!</B></span>")
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if ((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
@@ -566,7 +566,7 @@
 					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 					playsound(src.loc, glitchsound, 50, 1)
 					// let's grustle a bit
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						src.pixel_x += rand(-2,2)
 						src.pixel_y += rand(-2,2)
 						sleep(1)

@@ -16,7 +16,7 @@
 		return
 
 	M.verbs -= /mob/proc/bball_nova
-	SPAWN_DBG(300)
+	SPAWN_DBG(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
 	M.visible_message("<span style=\"color:red\">A swarm of basketballs erupts from [M]!</span>")
@@ -49,7 +49,7 @@
 		return
 
 	M.verbs -= /mob/proc/showboat_slam
-	SPAWN_DBG(300)
+	SPAWN_DBG(30 SECONDS)
 		M.verbs += /mob/proc/showboat_slam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -84,7 +84,7 @@
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(35) qdel(O)
+	SPAWN_DBG(3.5 SECONDS) qdel(O)
 
 	for(var/mob/N in AIviewers(M, null))
 		if(get_dist(N, target) <= 2)
@@ -111,7 +111,7 @@
 		return
 
 	M.verbs -= /mob/proc/holy_jam
-	SPAWN_DBG(150)
+	SPAWN_DBG(15 SECONDS)
 		M.verbs += /mob/proc/holy_jam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -177,7 +177,7 @@
 	if(!isturf(picked)) return
 	M.set_loc(picked)
 	M.verbs -= /mob/proc/blitz_slam
-	SPAWN_DBG(40)
+	SPAWN_DBG(4 SECONDS)
 		M.verbs += /mob/proc/blitz_slam
 
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
@@ -417,7 +417,7 @@
 	M.transforming = 0
 
 	M.verbs -= /mob/proc/spin
-	SPAWN_DBG(40)
+	SPAWN_DBG(4 SECONDS)
 		M.verbs += /mob/proc/spin
 
 /obj/item/bball_uplink

@@ -168,7 +168,7 @@
 			src.part1.sense()
 			break
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		prox_check()
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////

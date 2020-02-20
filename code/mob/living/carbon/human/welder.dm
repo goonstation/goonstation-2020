@@ -90,7 +90,7 @@
 	var/mob/dead/observer/O = new/mob/dead/observer(src)
 	src.mind.transfer_to(O)
 	O.make_welder()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		if(!src.client)
 			qdel(src)
 
@@ -101,7 +101,7 @@
 
 
 	var/mob/living/carbon/human/welder/mob = new /mob/living/carbon/human/welder(src.loc)
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		var/obj/item/device/radio/R = new /obj/item/device/radio/headset(mob)
 		mob.equip_if_possible(R, mob.slot_ears)
 		mob.equip_if_possible(new /obj/item/clothing/gloves/black(mob), mob.slot_gloves)
@@ -129,7 +129,7 @@
 		mob.make_welder()
 		mob.welder_damage = src.welder_damage
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(!src.client)
 				del(src)
 
@@ -152,7 +152,7 @@
 	set desc= "Opens some doors"
 
 	for(var/obj/machinery/door/G in oview(3))
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			G.open()
 
 /mob/living/carbon/human/welder/proc/welder_portal()
@@ -208,9 +208,9 @@
 	var/number_left = 5
 
 /obj/hellportal/New()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		new /obj/effects/void_break(src.loc)
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		critter_spam()
 
 /obj/hellportal/proc/critter_spam()

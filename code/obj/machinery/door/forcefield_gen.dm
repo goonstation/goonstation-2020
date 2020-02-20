@@ -113,14 +113,14 @@
 			boutput(M, "<span style=\"color:red\">[A] was shocked by [src]!</span>")
 		boutput(A, "<span style=\"color:red\">[src] shocks you.</span>")
 		A.TakeDamage("All", 0, 75)
-		if(hasvar(A,"weakened")) A:changeStatus("weakened", 1 SECONDS)
+		if(hasvar(A,"weakened")) A:changeStatus("weakened", 1 SECOND)
 		var/dirmob = turn(A.dir,180)
 		var/location = get_turf(A)
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(3, 1, location)
 		s.start()
 		step(A,dirmob)
-		SPAWN_DBG(5) step(A,dirmob)
+		SPAWN_DBG(5 DECI SECONDS) step(A,dirmob)
 		playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 		return 0
 

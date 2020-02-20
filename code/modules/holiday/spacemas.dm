@@ -148,7 +148,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(prob(5) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(src.loc)
-				SPAWN_DBG(20) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
@@ -324,7 +324,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		for (var/obj/critter/walrus/W in view(7,src))
 			if(W.alive)
 				W.aggressive = 1
-				SPAWN_DBG(7)
+				SPAWN_DBG(7 DECI SECONDS)
 				W.aggressive = 0
 
 	attack_hand(var/mob/user as mob)
@@ -344,7 +344,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			if(!src.defensive)
 				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 				walk_away(src,user,10,1)
-				SPAWN_DBG(7) walk(src,0)
+				SPAWN_DBG(7 DECI SECONDS) walk(src,0)
 		else
 			src.visible_message("<b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!", 1)
 			if(prob(80))
@@ -363,7 +363,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 				src.visible_message("<b>[src]</b> gets frightened by [W]!", 1)
 				walk_away(src,user,10,1)
-				SPAWN_DBG(10) walk(src,0)
+				SPAWN_DBG(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
@@ -377,7 +377,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		else
 			src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
 			walk_away(src,user,10,1)
-			SPAWN_DBG(4) walk(src,0)
+			SPAWN_DBG(4 DECI SECONDS) walk(src,0)
 			..()
 
 /obj/critter/walrus
@@ -423,7 +423,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		src.attacking = 1
 		M.visible_message("<span class='combat'><b>[src]</b> drives its tusks through [src.target]!</span>")
 		random_brute_damage(M, rand(8,16))
-		SPAWN_DBG(20) src.attacking = 0
+		SPAWN_DBG(2 SECONDS) src.attacking = 0
 
 
 	ChaseAttack(mob/M)
@@ -469,7 +469,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		else if (!src.on_fire && burning == 1)
 			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
 			src.on_fire = 1
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				if (src.on_fire)
 					src.visible_message("<span class='combat'>[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b></span>")
 					for (var/turf/simulated/floor/T in range(1,src))
@@ -520,7 +520,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	proc/hit(var/mob/living/M as mob, var/message = 1)
 		if (!M || !isliving(M))
 			return
-		M.changeStatus("stunned", 1 SECONDS)
+		M.changeStatus("stunned", 1 SECOND)
 		M.take_eye_damage(rand(0, 2))
 		M.change_eye_blurry(25)
 		M.make_dizzy(rand(0, 5))
@@ -659,7 +659,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 			bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			real_name = "Santa Claus"
@@ -697,7 +697,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			src.visible_message("<span style=\"color:red\"><B>[src] calls on the power of Spacemas to heal everyone!</B></span>")
 			for (var/mob/living/M in view(src,5))
 				M.HealDamage("All", 30, 30)
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				boutput(src, "<span style=\"color:blue\">You may now use your healing spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_heal
 
@@ -728,7 +728,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				sleep(2)
 			src.transforming = 0
 
-			SPAWN_DBG(1200)
+			SPAWN_DBG(2 MINUTES)
 				boutput(src, "<span style=\"color:blue\">You may now summon gifts again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_gifts
 
@@ -761,7 +761,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				sleep(1)
 			src.transforming = 0
 
-			SPAWN_DBG(800)
+			SPAWN_DBG(80 SECONDS)
 				boutput(src, "<span style=\"color:blue\">You may now summon snacks again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_food
 
@@ -780,7 +780,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			for (var/mob/living/M in view(src,5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 60)
-			SPAWN_DBG(800)
+			SPAWN_DBG(80 SECONDS)
 				boutput(src, "<span style=\"color:blue\">You may now use your warmth spell again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_warmth
 
@@ -817,7 +817,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 						L+=T
 			src.loc = pick(L)
 
-			SPAWN_DBG(300)
+			SPAWN_DBG(30 SECONDS)
 				boutput(src, "<span style=\"color:blue\">You may now teleport again.</span>")
 				src.verbs += /mob/living/carbon/human/santa/verb/santa_teleport
 
@@ -865,7 +865,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			bioHolder.mobAppearance.customization_first = "None"
 			bioHolder.mobAppearance.customization_second = "None"
 			bioHolder.mobAppearance.customization_third = "None"
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.mind = new
@@ -951,7 +951,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 			playsound(src.loc, "sound/voice/animal/bull.ogg", 80, 1, 0, 0.4)
 			src.visible_message("<span style=\"color:red\"><B>[src] goes completely apeshit!</B></span>")
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_rampage
-			SPAWN_DBG(300)
+			SPAWN_DBG(30 SECONDS)
 				src.stance = "normal"
 				boutput(src, "<span style=\"color:red\">Your rage burns out for a while.</span>")
 			SPAWN_DBG(1800)
@@ -995,7 +995,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					playsound(X.loc, "fleshbr1.ogg", 50, 1, -1)
 				src.transforming = 0
 
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				boutput(src, "<span style=\"color:blue\">You may now leap again.</span>")
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_leap
 
@@ -1022,7 +1022,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
-				SPAWN_DBG(600)
+				SPAWN_DBG(1 MINUTE)
 					boutput(src, "<span style=\"color:blue\">You may now stomp again.</span>")
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_stomp
 
@@ -1083,7 +1083,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 				usr.put_in_hand_or_drop(G)
 				G.affecting = M
 				M.grabbed_by += G
-				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("stunned", 1 SECOND)
 				G.state = 1
 				G.update_icon()
 				src.dir = get_dir(src, M)

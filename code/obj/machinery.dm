@@ -28,7 +28,7 @@
 	..()
 	SubscribeToProcess()
 	if (current_state > GAME_STATE_WORLD_INIT)
-		spawn(5)
+		spawn(5 DECI SECONDS)
 			src.power_change()
 
 /obj/machinery/initialize()
@@ -247,7 +247,7 @@
 	pulse2.anchored = 1
 	pulse2.dir = pick(cardinal)
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		qdel(pulse2)
 	return
 

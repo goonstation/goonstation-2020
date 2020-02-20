@@ -63,7 +63,7 @@
 							var/obj/decal/icefloor/B = new /obj/decal/icefloor(A.loc)
 							//B.sd_SetLuminosity(1)
 							//B.sd_SetColor(0, 0.1, 0.8)
-							SPAWN_DBG(200)
+							SPAWN_DBG(20 SECONDS)
 								qdel (B)
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)

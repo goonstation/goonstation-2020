@@ -100,7 +100,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if(radio_controller)
 				radio_controller.add_object(src, "[frequency]")
 

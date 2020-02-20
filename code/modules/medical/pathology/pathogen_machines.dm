@@ -414,7 +414,7 @@
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=900x800", src)
 		gui.validate_user = 1
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			rescan()
 
 	proc/rescan()
@@ -1155,7 +1155,7 @@
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
 		if (!pathogen_controller || !pathogen_controller.cure_bases || !pathogen_controller.cure_bases.len)
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
 		else

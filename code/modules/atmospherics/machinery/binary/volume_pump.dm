@@ -115,7 +115,7 @@ obj/machinery/atmospherics/binary/volume_pump
 				transfer_rate = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(5) broadcast_status()
+			SPAWN_DBG(5 DECI SECONDS) broadcast_status()
 		update_icon()
 
 obj/machinery/atmospherics/binary/volume_pump/attackby(obj/weapon as obj, mob/user as mob)

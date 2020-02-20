@@ -36,7 +36,7 @@
 			src.info = ""
 
 		if("Remove")
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 			qdel(src)
 
 		if("Change Icon")
@@ -85,7 +85,7 @@
 				src.info = ""
 
 			if("Remove")
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 				qdel(src)
 
 

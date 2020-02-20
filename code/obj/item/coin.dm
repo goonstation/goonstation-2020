@@ -12,7 +12,7 @@
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span style='color:blue'>You flip the coin</span>")
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		if(prob(49))
 			boutput(user, "<span style='color:blue'>It comes up heads</span>")
 		else if(prob(49))

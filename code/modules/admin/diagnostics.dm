@@ -229,7 +229,8 @@
 				if(!group.gencolor)
 					group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
 				theImage.color = group.gencolor
-				theImage.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]"
+				theImage.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
+				if (group.spaced) theImage.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 				var/list/borders_space = list()
 				for(var/turf/spaceses in group.space_borders)
 					if(get_dist(spaceses, theTurf) == 1)

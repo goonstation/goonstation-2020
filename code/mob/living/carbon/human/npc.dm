@@ -15,9 +15,9 @@
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			ai_init()
 
 /mob/living/carbon/human/npc/assistant
@@ -163,7 +163,7 @@
 		if(src.canmove && !ai_busy)
 			ai_busy = 1
 			src.visible_message("<span style=\"color:red\"><B>[src] attempts to remove the handcuffs!</B></span>")
-			SPAWN_DBG(1200)
+			SPAWN_DBG(2 MINUTES)
 				ai_busy = 0
 				if(src.handcuffed && !ai_incapacitated())
 					src.visible_message("<span style=\"color:red\"><B>[src] manages to remove the handcuffs!</B></span>")
@@ -173,7 +173,7 @@
 	ai_move()
 
 	if(ai_target)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			ai_move()
 		action_delay += 10
 	else

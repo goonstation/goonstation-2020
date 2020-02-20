@@ -89,7 +89,7 @@
 		switch (severity)
 			if (0)
 				affected_mob.visible_message("<span style=\"color:red\">[affected_mob] is knocked off-balance by the curse upon [src]!</span>")
-				affected_mob.do_disorient(30, weakened = 1 SECONDS, stunned = 0, disorient = 1 SECONDS, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(30, weakened = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 2
 				affected_mob.take_brain_damage(2)
 

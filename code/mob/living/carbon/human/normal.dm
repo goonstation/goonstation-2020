@@ -4,7 +4,7 @@
 		SPAWN_DBG(0)
 			randomize_look(src, 1, 1, 1, 1, 1, 1)
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
 
 /mob/living/carbon/human/normal/assistant

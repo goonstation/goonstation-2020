@@ -196,7 +196,7 @@ var/global/list/the_very_holy_global_bible_list_amen = list() // this is becomin
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(30)//this code is awful lol.
+		SPAWN_DBG(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 500, i++ )
 				for( var/obj/gib in gibz )
 					if(!gib.loc) continue
@@ -216,7 +216,7 @@ var/global/list/the_very_holy_global_bible_list_amen = list() // this is becomin
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
 		var/list/gibz = user.gib(0, 1)
-		SPAWN_DBG(30)//this code is awful lol.
+		SPAWN_DBG(3 SECONDS)//this code is awful lol.
 			for( var/i = 1, i <= 50, i++ )
 				for( var/obj/gib in gibz )
 					step_to( gib, src )

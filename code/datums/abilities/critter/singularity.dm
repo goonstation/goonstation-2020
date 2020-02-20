@@ -112,7 +112,7 @@
 	holder.owner.show_message("<span class='combat'><b>You emit a wave of radiation!</b></span>")
 
 	for(var/mob/living/L in orange(7, holder.owner))
-		L.changeStatus("radiation", 1 SECONDS)
+		L.changeStatus("radiation", 1 SECOND)
 		L.updatehealth()
 		L.show_text("You feel odd.", "red")
 

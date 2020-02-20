@@ -163,7 +163,7 @@
 		if (src.cover!=null)
 			flick("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (popping==1) popping = 0
 			set_density(1)
 
@@ -174,7 +174,7 @@
 		if (src.cover!=null)
 			flick("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
-		SPAWN_DBG(13)
+		SPAWN_DBG(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = 2
 				popping = 0
@@ -245,7 +245,7 @@
 		qdel(cover)
 	sleep(3)
 	flick("explosion", src)
-	SPAWN_DBG(13)
+	SPAWN_DBG(1.3 SECONDS)
 		qdel(src)
 
 /*
@@ -258,7 +258,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			src.net_id = generate_net_id(src)
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -281,7 +281,7 @@
 
 		var/sender = signal.data["sender"]
 		if((signal.data["address_1"] == "ping") && sender)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.post_status(sender, "command", "ping_reply", "device", "PNET_SEC_TURRT", "netid", src.net_id)
 			return
 
@@ -290,7 +290,7 @@
 			switch(command)
 				if("status")
 					var/status_string = "on=[!(status & NOPOWER)]&health=[src.health]&lethal=[src.lasers]&active=[src.enabled]"
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])

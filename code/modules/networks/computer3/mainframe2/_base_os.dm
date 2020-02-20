@@ -109,7 +109,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 		src.ping_accept = 4
 		src.master.timeout = 1
 		src.master.timeout_alert = 0
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
 
 		//Run "init" program, if present.
@@ -488,7 +488,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				src.master.timeout_alert = 0
 				src.master.timeout = 5
 				src.ping_accept = 5
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
 
 				return ESIG_SUCCESS
@@ -832,7 +832,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 			if (src.rescan_timer <= 0)
 				src.rescan_timer = initial(src.rescan_timer)
 				src.ping_accept = 4
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.master.post_status("ping","data","DWAINE","net","[src.master.net_number]")
 
 		return

@@ -112,7 +112,7 @@ SYNDICATE DRONE FACTORY AREAS
 		..()
 
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			process()
 
 	proc/process()
@@ -175,7 +175,7 @@ SYNDICATE DRONE FACTORY AREAS
 			return_if_overlay_or_effect(O)
 
 			if (O.throwing && !isliving(O))
-				SPAWN_DBG(8)
+				SPAWN_DBG(8 DECI SECONDS)
 					if (O && O.loc == src)
 						melt_away(O)
 				return
@@ -346,7 +346,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 		src.set_loc(tile)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			tile.invisibility = 100
 			tile.opacity = 1
 			active = 0
@@ -373,7 +373,7 @@ SYNDICATE DRONE FACTORY AREAS
 		var/list/possible = find_suitable_tiles()
 
 		if(!possible.len)
-			SPAWN_DBG(30) update()
+			SPAWN_DBG(3 SECONDS) update()
 			return
 
 		active = 1
@@ -387,7 +387,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 		src.set_loc(picked)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			picked.invisibility = 100
 			picked.opacity = 1
 			active = 0
@@ -452,7 +452,7 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(usr, "<span style=\"color:red\">You pull yourself to the stalagtite using the whip.</span>")
 				usr.set_loc(T)
 
-			SPAWN_DBG(2) pool(O)
+			SPAWN_DBG(2 DECI SECONDS) pool(O)
 
 		if(istype(target_r, /obj/whip_trg_dummy)) qdel(target_r)
 
@@ -594,7 +594,7 @@ SYNDICATE DRONE FACTORY AREAS
 					active = 1
 					for(var/obj/shifting_wall/sneaky/cave/C in orange(7, usr))
 						C.update()
-					SPAWN_DBG(100) active = 0
+					SPAWN_DBG(10 SECONDS) active = 0
 
 //////// cogwerks - reward item, based on the old cyborg suit
 
@@ -635,26 +635,26 @@ SYNDICATE DRONE FACTORY AREAS
 		src.processing++
 		if (!(src in processing_items))
 			processing_items.Add(src)
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 		boutput(user, "<span style=\"color:blue\">The [src] feels like it's getting tighter. Ouch! Seems to have a lot of sharp edges inside.</span>")
 		random_brute_damage(user, 5)
 		take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 		bleed(user, 5, 5)
-		SPAWN_DBG(90)
+		SPAWN_DBG(9 SECONDS)
 			user.visible_message("<span style=\"color:red\"><b>[src] violently contracts around [user]!</B></span>")
 			playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
 			random_brute_damage(user, 15)
 			user.emote("scream")
 			take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 			bleed(user, 5, 1)
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				user.visible_message("<span style=\"color:red\"><b>[src] digs into [user]!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -1)
 				random_brute_damage(user, 15)
 				user.emote("scream")
 				take_bleeding_damage(user, null, 0, DAMAGE_STAB, 0)
 				bleed(user, 5, 5)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					var/mob/living/carbon/human/H = user
 					playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 					H.visible_message("<span style=\"color:red\"><b>[src] absorbs some of [user]'s skin!</b></span>")
@@ -712,7 +712,7 @@ SYNDICATE DRONE FACTORY AREAS
 			if(AM:client)
 				if(prob(15))
 					active = 1
-					SPAWN_DBG(50) active = 0
+					SPAWN_DBG(5 SECONDS) active = 0
 					playsound(get_turf(AM), pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
 					for(var/mob/M in view(src, 5))
@@ -748,7 +748,7 @@ SYNDICATE DRONE FACTORY AREAS
 		set_density(0)
 		opacity = 0
 		src = null
-		SPAWN_DBG(180)
+		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
 				pool(smoke)
@@ -814,19 +814,19 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/item/paper/alchemy/north
 	name = "notebook page 2"
 	New()
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["north"]] stands above all else ..."
 
 /obj/item/paper/alchemy/southeast
 	name = "notebook page 3"
 	New()
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			info = "... in the place the sun rises, [alchemy_symbols["southeast"]] is required ..."
 
 /obj/item/paper/alchemy/southwest
 	name = "notebook page 4"
 	New()
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["southwest"]] where light fades ..."
 
 /obj/item/alchemy/symbol
@@ -946,7 +946,7 @@ SYNDICATE DRONE FACTORY AREAS
 				sleep(2)
 				var/obj/graveyard/loose_rock/R = locate("loose_rock_[target_id]")
 				if(istype(R))
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						R.crumble()
 				var/area/the_catacombs = get_area(src)
 				for (var/mob/living/M in the_catacombs)
@@ -1100,7 +1100,7 @@ var/satellite_crash_event_status = -1
 		explode.set_up( src.loc )
 		explode.start()
 		playsound(src.loc, "sound/effects/kaboom.ogg", 90, 1)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			fireflash(src.loc, 4)
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(get_dist(src.loc, L))

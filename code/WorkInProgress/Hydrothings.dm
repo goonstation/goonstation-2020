@@ -401,7 +401,7 @@ obj/item/gnomechompski/elf
 			playsound(user, "sound/voice/animal/hoot.ogg", 70, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)	O.show_message("<span style=\"color:red\"><B>HOOT!</B> [user] explodes revealing an owl within.</span>", 1, "<span style=\"color:red\">You hear an owl.</span>", 2)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 				user.owlgib()
 			return 1
 		else
@@ -1262,7 +1262,7 @@ obj/critter/madnessowl/switchblade
 		SPAWN_DBG(0)
 			src.visible_message("<span style=\"color:red\"><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(!spazzing) src.spaz()
 			src.set_loc(M.loc)
 			src.frenzied = 20
@@ -1289,7 +1289,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			process()
 
 	proc/process()

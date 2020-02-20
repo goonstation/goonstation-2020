@@ -592,8 +592,8 @@
 				SPAWN_DBG(5)
 					hitmob = 0
 				var/mob/M = target
-				//M.changeStatus("stunned", 1 SECONDS)
-				//M.changeStatus("weakened", 1 SECONDS)
+				//M.changeStatus("stunned", 1 SECOND)
+				//M.changeStatus("weakened", 1 SECOND)
 				M.TakeDamage("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
@@ -823,7 +823,7 @@
 	if(exploding)
 		return
 	exploding = 1
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		src.visible_message("<b>[src] is breaking apart!</b>")
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -1553,7 +1553,7 @@
 						ship.stall += 1
 						ship.fire_delay += 1
 						ship.m_w_system.Fire(usr, src.facing)
-						SPAWN_DBG(15)
+						SPAWN_DBG(1.5 SECONDS)
 							ship.fire_delay -= 1 // cogwerks: no more spamming lasers until the server dies
 							if (ship.fire_delay > 0) ship.fire_delay = 0
 					else

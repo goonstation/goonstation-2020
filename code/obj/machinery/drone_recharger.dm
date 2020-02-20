@@ -70,7 +70,7 @@
 
 		//Do opening thing
 		src.icon_state = "drone-charger-open"
-		SPAWN_DBG(7) //Animation is 6 ticks, 1 extra for byond
+		SPAWN_DBG(7 DECI SECONDS) //Animation is 6 ticks, 1 extra for byond
 			src.occupant = G
 			src.updateSprite()
 			G.charging = 1
@@ -101,7 +101,7 @@
 		//Do closing thing
 		src.icon_state = "drone-charger-close"
 		src.transition = 1
-		SPAWN_DBG(7)
+		SPAWN_DBG(7 DECI SECONDS)
 			src.set_density(0)
 			src.transition = 0
 			src.updateSprite()

@@ -42,7 +42,7 @@
 	src.ai = new /datum/aiHolder/flock/drone()
 	src.ai.owner = src
 
-	SPAWN_DBG(30) // aaaaaaa
+	SPAWN_DBG(3 SECONDS) // aaaaaaa
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
 	src.name = "[pick_string("flockmind.txt", "flockdrone_name_adj")] [pick_string("flockmind.txt", "flockdrone_name_noun")]"
@@ -585,7 +585,7 @@
 		B = new(get_turf(src), F = src.flock)
 		if(src.flock)
 			src.flock.registerUnit(B)
-		SPAWN_DBG(2)
+		SPAWN_DBG(2 DECI SECONDS)
 			B.loc = pick(candidate_turfs)
 	sleep(1) // make sure the animation finishes
 	// finally, away with us

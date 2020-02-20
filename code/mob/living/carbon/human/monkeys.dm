@@ -5,7 +5,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (!src.disposed)
 				cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
@@ -21,7 +21,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/color/blue(src), slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/mrs_muggles
@@ -30,7 +30,7 @@
 	gender = "female"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/color/magenta(src), slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/mr_rathen
@@ -39,7 +39,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/engineer(src), slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/albert
@@ -48,7 +48,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/suit/space(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/space(src), slot_head)
 
@@ -58,7 +58,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/space(src), slot_head)
 
@@ -68,7 +68,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/mask/horse_mask/cursed/monkey(src), slot_wear_mask)
 
 /mob/living/carbon/human/npc/monkey/tanhony
@@ -77,7 +77,7 @@
 	gender = "female"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/head/paper_hat(src), slot_head)
 
 /mob/living/carbon/human/npc/monkey/krimpus
@@ -86,7 +86,7 @@
 	gender = "female"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/hydroponics(src), slot_w_uniform)
 
 /mob/living/carbon/human/npc/monkey/stirstir
@@ -95,7 +95,7 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/color/orange(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/head/beret/prisoner(src), slot_head)
 
@@ -111,7 +111,7 @@
 	New()
 		..()
 		npcmonkeypals += src
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (!src.disposed)
 				src.bioHolder.mobAppearance.customization_first = "None"
 				src.cust_one_state = "None"
@@ -175,7 +175,7 @@
 			src.was_harmed(A)
 		else
 			walk_away(src, A, 10, 1)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				walk(src, 0)
 
 	proc/done_with_you(var/atom/T as mob|obj)
@@ -341,7 +341,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_if_possible(new head(src), slot_head)
 
@@ -353,7 +353,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (!src.disposed)
 				cust_one_state = "None"
 				src.bioHolder.AddEffect("seamonkey")
@@ -372,7 +372,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/under(src), slot_w_uniform)
 
@@ -385,7 +385,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/gun/kinetic/detectiverevolver(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/clothing/under(src), slot_w_uniform)
@@ -399,7 +399,7 @@
 	ai_aggression_timeout = null
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/head/crown(src), slot_head)
 
 /mob/living/carbon/human/npc/monkey/sea/lab
@@ -408,7 +408,7 @@
 	gender = "female"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/scientist(src), slot_w_uniform)
 
@@ -419,6 +419,6 @@
 	gender = "male"
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.equip_if_possible(new /obj/item/clothing/under/suit(src), src.slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), src.slot_shoes)

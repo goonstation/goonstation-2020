@@ -14,7 +14,7 @@
 
 /obj/effects/sparks/unpooled(var/poolname)
 	..(poolname)
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		playsound(src.loc, "sparks", 100, 1)
 		var/turf/T = src.loc
 		if (istype(T, /turf))
@@ -49,7 +49,7 @@
 		for(var/turf/X in view(1, src.loc))
 			if (istype(X, /turf))
 				X.hotspot_expose(1000,100,usr)
-		SPAWN_DBG(20) qdel(src)
+		SPAWN_DBG(2 SECONDS) qdel(src)
 
 /obj/effects/sparks/end
 	icon_state = "sparks_attack"

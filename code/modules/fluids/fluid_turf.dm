@@ -267,7 +267,7 @@
 		try_build_turf_list()
 
 		if (L && L.len)
-			SPAWN_DBG(3)//you can 'jump' over a hole by running real fast or being thrown!!
+			SPAWN_DBG(3 DECI SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span style=\"color:red\">[AM] falls down [src]!</span>")
 					if (ismob(AM))
@@ -434,7 +434,7 @@
 				for(var/obj/machinery/computer/sea_elevator/C in machines)
 					active = 1
 					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
@@ -457,7 +457,7 @@
 		var/area/start_location = locate(/area/shuttle/sea_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/sea_elevator/lower)
 		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				random_brute_damage(M, 30)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")

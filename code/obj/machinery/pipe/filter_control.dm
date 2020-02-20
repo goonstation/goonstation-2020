@@ -3,7 +3,7 @@
 
 /obj/machinery/filter_control/New()
 	..()
-	SPAWN_DBG(5)	//wait for world
+	SPAWN_DBG(5 DECI SECONDS)	//wait for world
 		for(var/obj/machinery/inlet/filter/F in machines)
 			if(F.control == src.control)
 				F.f_mask = src.f_mask

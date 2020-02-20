@@ -46,7 +46,7 @@
 					else dogrowth = 0
 			if (dogrowth == 1)
 				var/obj/alien/weeds/B = new /obj/alien/weeds(Vspread)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(B)
 						B.Life()
 			count++

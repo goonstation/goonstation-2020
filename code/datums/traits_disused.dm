@@ -162,7 +162,7 @@
 			curr.can_scramble = 0
 			str += " [curr.name]"
 
-			SPAWN_DBG(40) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
+			SPAWN_DBG(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
 		return
 
 /obj/trait/goodgenes
@@ -186,7 +186,7 @@
 			curr = owner.bioHolder.effects[curr_id]
 			str += " [curr.name]"
 
-			SPAWN_DBG(40) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
+			SPAWN_DBG(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
 		return
 
 

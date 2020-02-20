@@ -1122,7 +1122,7 @@
 	if (src.is_hulk())
 		SPAWN_DBG(0)
 			if (prob(20))
-				target.changeStatus("stunned", 1 SECONDS)
+				target.changeStatus("stunned", 1 SECOND)
 				step_away(target,src,15)
 				sleep(3)
 				step_away(target,src,15)

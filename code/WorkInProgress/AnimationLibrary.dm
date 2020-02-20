@@ -291,7 +291,7 @@
 
 			animate(M.attack_particle, pixel_x = M.get_hand_pixel_x(), pixel_y = M.get_hand_pixel_y(), time = 1, easing = LINEAR_EASING)
 			animate(transform = t_size, time = 1, easing = LINEAR_EASING,  flags = ANIMATION_PARALLEL)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				animate(M.attack_particle, alpha = 0, time = 1, flags = ANIMATION_PARALLEL)
 
 
@@ -422,7 +422,7 @@
 		which = get_dir(usr,A)
 	if (!which)
 		which = pick(alldirs)
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		if (A)
 			var/ipx = A.pixel_x
 			var/ipy = A.pixel_y
@@ -794,7 +794,7 @@
 	E.alpha = 0
 	animate(E,transform = matrix(0.5, MATRIX_SCALE), time = 20, alpha = 255, pixel_y = 27, easing = ELASTIC_EASING)
 	animate(time = 5, alpha = 0, pixel_y = -16, easing = CIRCULAR_EASING)
-	SPAWN_DBG(30) qdel(E)
+	SPAWN_DBG(3 SECONDS) qdel(E)
 	return
 
 /proc/animate_horizontal_wiggle(var/atom/A, var/loopnum = 5, speed = 10, X1 = 3, X2 = -3, var/slightly_random = 1)
@@ -901,7 +901,7 @@
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
 			pool(swirl)
@@ -917,7 +917,7 @@
 		return
 	var/obj/decal/residual_energy/e = unpool(/obj/decal/residual_energy)
 	e.set_loc(target_turf)
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		if (e)
 			pool(e)
 	return
@@ -943,7 +943,7 @@
 	animate(teleporter, transform = null, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	//HAXXX sorry - kyle
 	if (istype(teleporter, /mob/dead/observer))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			animate_bumble(teleporter)
 
 

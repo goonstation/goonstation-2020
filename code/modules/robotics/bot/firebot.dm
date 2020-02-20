@@ -263,7 +263,7 @@
 	if(src.path && src.path.len && src.target)
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
-		SPAWN_DBG(3)
+		SPAWN_DBG(3 DECI SECONDS)
 			if(src.path && src.path.len)
 				step_to(src, src.path[1])
 				src.path -= src.path[1]

@@ -28,7 +28,7 @@
 	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
 
 	if(derelict_mode)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			var/list/CORPSES = list()
 			var/list/JUNK = list()
 			JUNK = halloweenspawn.Copy()
@@ -55,7 +55,7 @@
 							new/obj/critter/floateye(T)
 						if(4)
 							var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
-							SPAWN_DBG(20)
+							SPAWN_DBG(2 SECONDS)
 								G.on = 1
 								G.icon_state = "glowstick-on"
 								G.light.enable()
@@ -75,37 +75,37 @@
 			command_alert("The shuttle has been called.","Emergency Shuttle Update")
 
 	if(derelict_mode) // ready up some effects and noises
-		SPAWN_DBG(2)
+		SPAWN_DBG(2 DECI SECONDS)
 			for(var/mob/living/carbon/human/H in mobs)
 				H.flash(30)
 
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 3)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(200)
+		SPAWN_DBG(20 SECONDS)
 			if(scarysounds && scarysounds.len)
 				world << sound(pick(scarysounds))
 
-		SPAWN_DBG(300)
+		SPAWN_DBG(30 SECONDS)
 			if(scarysounds && scarysounds.len)
 				world << sound(pick(scarysounds))
 
-		SPAWN_DBG(400)
+		SPAWN_DBG(40 SECONDS)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 2)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(600)
+		SPAWN_DBG(1 MINUTE)
 			world << sound('sound/effects/creaking_metal1.ogg')
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 7, 1)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(800)
+		SPAWN_DBG(80 SECONDS)
 			if(scarysounds && scarysounds.len)
 				world << sound(pick(scarysounds))
 
@@ -158,7 +158,7 @@
 	if(derelict_mode)
 		command_alert("[disaster_name] eve## de####ed on **e stat!on. **$00AA curren#_ unava!l4ble due t0 [contrived_excuse]. All per#############ERR","Haz4rD*## Ev##_ A**Rt")
 		world << sound('sound/machines/siren_generalquarters_quiet.ogg')
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			random_events.announce_events = 0
 			random_events.force_event("Power Outage","Scripted Disaster Mode Event")
 

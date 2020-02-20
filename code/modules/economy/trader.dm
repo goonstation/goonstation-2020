@@ -510,7 +510,7 @@
 			if (O:locked)
 				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				user.visible_message("<span style=\"color:blue\">[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null

@@ -53,5 +53,5 @@
 	on_hit(atom/hit)
 
 		if(ishuman(hit))
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 			hit:owlgib()

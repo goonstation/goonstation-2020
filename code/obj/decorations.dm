@@ -16,7 +16,7 @@
 		R.my_atom = src
 		R.add_reagent("cleaner", 5)
 		R.add_reagent("water", 5)
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (src.float_anim)
 				for (var/atom/movable/A in src.loc)
 					if (!A.anchored)
@@ -441,7 +441,7 @@
 		..()
 		if (!src.name || src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch"))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.locate_blinds()
 	ex_act(var/severity)
 		switch(severity)

@@ -34,7 +34,7 @@
 		var/mob/ownerMob = owner
 		playsound(ownerMob.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
 		boutput(target, "<span style=\"color:red\">You feel a horrible pain in your head!</span>")
-		target.changeStatus("stunned", 1 SECONDS)
+		target.changeStatus("stunned", 1 SECOND)
 
 	onEnd()
 		..()

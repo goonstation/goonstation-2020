@@ -22,7 +22,7 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(5)
+		//SPAWN_DBG(5 DECI SECONDS)
 		M.gib()
 		SPAWN_DBG(35)
 			if (O)
@@ -44,7 +44,7 @@
 			logTheThing("diary", usr, M, "has partygibbed %target%", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M.partygib()
+		SPAWN_DBG(5 DECI SECONDS) M.partygib()
 
 /client/proc/cmd_admin_owlgib(mob/M as mob in world)
 	set category = null
@@ -61,7 +61,7 @@
 			logTheThing("diary", usr, M, "has owlgibbed %target%", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M.owlgib()
+		SPAWN_DBG(5 DECI SECONDS) M.owlgib()
 
 /client/proc/cmd_admin_firegib(mob/M as mob in world)
 	set category = null
@@ -78,7 +78,7 @@
 			logTheThing("diary", usr, M, "has firegibbed %target%", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M.firegib()
+		SPAWN_DBG(5 DECI SECONDS) M.firegib()
 
 /client/proc/cmd_admin_elecgib(mob/M as mob in world)
 	set category = null
@@ -95,7 +95,7 @@
 			logTheThing("diary", usr, M, "has elecgibbed %target%", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M.elecgib()
+		SPAWN_DBG(5 DECI SECONDS) M.elecgib()
 
 /client/proc/cmd_admin_icegib(mob/M as mob in world)
 	set category = null
@@ -116,7 +116,7 @@
 			logTheThing("diary", usr, M, "has icegibbed %target%", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M:become_ice_statue()
+		SPAWN_DBG(5 DECI SECONDS) M:become_ice_statue()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	set category = null
@@ -138,7 +138,7 @@
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A very fancy statue of a shitty player."
-		SPAWN_DBG(5) M:become_gold_statue()
+		SPAWN_DBG(5 DECI SECONDS) M:become_gold_statue()
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	set category = null
@@ -159,7 +159,7 @@
 			logTheThing("diary", usr, M, "has spidergibbed %target%", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
-		SPAWN_DBG(5) M:spidergib()
+		SPAWN_DBG(5 DECI SECONDS) M:spidergib()
 
 /client/proc/cmd_admin_implodegib(mob/M as mob in world)
 	set category = null
@@ -180,7 +180,7 @@
 			logTheThing("diary", usr, M, "has imploded %target%", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
 
-		SPAWN_DBG(5) M:implode()
+		SPAWN_DBG(5 DECI SECONDS) M:implode()
 
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
 	set category = null
@@ -200,7 +200,7 @@
 			logTheThing("diary", usr, M, "has set a floor cluwne upon %target%", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(5) M.cluwnegib(duration)
+		SPAWN_DBG(5 DECI SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
 	set category = null
@@ -218,7 +218,7 @@
 			logTheThing("diary", usr, M, "has damned %target% to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(5) M.damn()
+		SPAWN_DBG(5 DECI SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
 	set category = null
@@ -236,7 +236,7 @@
 			logTheThing("diary", usr, M, "has undamned %target% from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
-		SPAWN_DBG(5) M.un_damn()
+		SPAWN_DBG(5 DECI SECONDS) M.un_damn()
 
 /client/proc/cmd_admin_gib_self()
 	set name = "gibself"
@@ -253,7 +253,7 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			qdel(O)
 	src.mob.gib()
 
@@ -384,7 +384,7 @@
 
 	Bump(M as turf|obj|mob)
 		M:density = 0
-		SPAWN_DBG(4)
+		SPAWN_DBG(4 DECI SECONDS)
 			M:density = 1
 		sleep(1)
 		var/turf/T = get_turf(M)
@@ -467,7 +467,7 @@
 
 	Bump(M as turf|obj|mob)
 		M:density = 0
-		SPAWN_DBG(4)
+		SPAWN_DBG(4 DECI SECONDS)
 			M:density = 1
 		sleep(1)
 		var/turf/T = get_turf(M)

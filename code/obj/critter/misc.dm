@@ -215,7 +215,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		random_brute_damage(src.target, rand(2,4))
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			src.attacking = 0
 */
 /obj/critter/wraithskeleton
@@ -545,7 +545,7 @@
 			playsound(src.loc, "punch", 30, 1, -2)
 			random_brute_damage(M, rand(10,15))
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath(mob/M)
@@ -596,7 +596,7 @@
 		reagents = R
 		R.my_atom = src
 
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			if(!reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
@@ -670,7 +670,7 @@
 		var/datum/chemical_reaction/smoke/thesmoke = new
 		thesmoke.on_reaction(src.reagents, 12)
 		invisibility = 100
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			qdel(src)
 
 /obj/critter/townguard
@@ -761,7 +761,7 @@
 			C.health -= 6
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(25)
+			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -775,13 +775,13 @@
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
 					M:changeStatus("weakened", 80)
-			SPAWN_DBG(25)
+			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
 			src.visible_message("<span class='combat'><B>[src]</B> kicks [src.target]!</span>")
 			playsound(src.loc, "swing_hit", 50, 1, -1)
 			random_brute_damage(src.target, rand(4,8))
-			SPAWN_DBG(25)
+			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -872,7 +872,7 @@
 			else
 				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			attacking = 0
 
 
@@ -958,7 +958,7 @@
 		src.visible_message("<span class='combat'><B>The [src.name]</B> starts to envelop [M]!</span>")
 
 		var/lastloc = M.loc
-		SPAWN_DBG(60)
+		SPAWN_DBG(6 SECONDS)
 			if (get_dist(src, M) <= 1 && ((M.loc == lastloc)))
 				if(isliving(M))
 					logTheThing("combat", M, null, "was enveloped by [src] (obj) at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -1140,7 +1140,7 @@
 			doomedMob.gib()
 			src.target = null
 
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			src.attacking = 0
 
 	proc/appear()
@@ -1149,7 +1149,7 @@
 		src.name = pick("something","weird thing","odd thing","whatchamacallit","thing","something weird","old thing")
 		src.icon_state = "ancientrobot-appear"
 		src.invisibility = 0
-		SPAWN_DBG(12)
+		SPAWN_DBG(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
 		return
 
@@ -1191,7 +1191,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(60)
+		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1208,7 +1208,7 @@
 		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
 		src.icon_state = "crunched-dead"
 		src.alive = 0
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			qdel(src)
 
 	seek_target()

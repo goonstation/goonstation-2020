@@ -242,7 +242,7 @@ datum/shuttle_controller
 								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
-								SPAWN_DBG(1)
+								SPAWN_DBG(1 DECI SECOND)
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M

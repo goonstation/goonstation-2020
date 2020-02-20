@@ -61,7 +61,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 
 			src.net_id = generate_net_id(src)
 
@@ -251,7 +251,7 @@
 			return
 		use_power(500)
 		if(prob(3))
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_computer), 50, 1)
 
 		for (var/progIndex = 1, progIndex <= src.processing.len, progIndex++)
@@ -303,7 +303,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id)
 
 			return
@@ -323,7 +323,7 @@
 					//qdel(conn)
 					if (conn)
 						conn.dispose()
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -368,7 +368,7 @@
 
 			if("term_ping")
 				if(!(target in src.terminals))
-					SPAWN_DBG(3) //Go away!!
+					SPAWN_DBG(3 DECI SECONDS) //Go away!!
 						src.post_status(target, "command","term_disconnect")
 					return
 				if(target in src.timeout_list)
@@ -704,7 +704,7 @@
 		src.stage = 1
 		src.ping_wait = 4
 		src.current = null
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.master.post_status("ping","data","NETBOOT","net","[src.master.net_number]")
 		return
 

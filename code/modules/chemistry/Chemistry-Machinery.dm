@@ -56,7 +56,7 @@
 			B.set_loc(src)
 		else
 			roboworking = user
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				robot_disposal_check()
 
 		boutput(user, "You add the beaker to the machine!")
@@ -219,7 +219,7 @@
 
 		src.updateUsrDialog()
 
-		SPAWN_DBG(10) active()
+		SPAWN_DBG(1 SECOND) active()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
@@ -241,7 +241,7 @@
 			beaker = null
 			set_inactive()
 		else
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				robot_disposal_check()
 
 	proc/set_inactive()

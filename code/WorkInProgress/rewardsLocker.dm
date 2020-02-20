@@ -623,7 +623,7 @@
 	animate_emote(usr, /obj/effect/smug)
 	usr.verbs -= /proc/smugproc
 	usr.verbs += /proc/smugprocCD
-	SPAWN_DBG(300)
+	SPAWN_DBG(30 SECONDS)
 		boutput(usr, "<span style=\"color:blue\">You can now be smug again! Go hog wild.</span>")
 		usr.verbs += /proc/smugproc
 		usr.verbs -= /proc/smugprocCD

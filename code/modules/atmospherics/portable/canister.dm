@@ -274,7 +274,7 @@
 		del(src.det) //Otherwise canister bombs detonate after rupture
 	if (!destroyed)
 		rupturing = 1
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.visible_message("<span style=\"color:red\">[src] hisses ominously!</span>")
 			playsound(src.loc, "sound/machines/hiss.ogg", 55, 1)
 			sleep(50)
