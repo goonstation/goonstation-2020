@@ -807,36 +807,6 @@
 		health_deficiency -= 50
 	if (health_deficiency >= 30) tally += (health_deficiency / 25)
 
-	if (src.wear_suit) //mbc : what the heck? Why isn't this using the ObjectProperty system? better leave it alone!
-		switch(src.wear_suit.type)
-			if (/obj/item/clothing/suit/straight_jacket)
-				tally += 15
-			if (/obj/item/clothing/suit/fire)	//	firesuits slow you down a bit
-				tally += 1
-			if (/obj/item/clothing/suit/fire/armored)	//	firesuits slow you down a bit
-				tally += 1
-			if (/obj/item/clothing/suit/fire/heavy)	//	firesuits slow you down a bit
-				tally += 2
-			if (/obj/item/clothing/suit/space)
-				if (!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space;
-					tally += 0.8
-			if (/obj/item/clothing/suit/space/engineer)
-				if (!istype(src.loc, /turf/space)) // bulky engineering space suits slow you down quite a lot unless in space;
-					tally += 0.8
-			if (/obj/item/clothing/suit/space/captain)
-				tally += 0.4 // it's more ornamental okay??
-			if (/obj/item/clothing/suit/armor/heavy)
-				tally += 2
-			if (/obj/item/clothing/suit/armor/EOD)
-				tally += 0.6 // i'd like people to actually consider using these
-			if (/obj/item/clothing/suit/armor/ancient) // cogwerks - new evil armor thing
-				tally += 2
-			if (/obj/item/clothing/suit/space/emerg)
-				if (!istype(src.loc, /turf/space))
-					tally += 2 // cogwerks - lowered this from 10 //Noah Buttes - Lowered this from 3 because they're practically useless as is
-			if (/obj/item/clothing/suit/space/suv)
-				tally += 1.0
-
 	var/in_wheelchair = 0
 	if (src.buckled)
 		if (istype(src.buckled, /obj/stool/chair/comfy/wheelchair))
@@ -908,15 +878,24 @@
 			tally *= max(H.p_class, 1)
 
 	var/has_fluid_move_gear = 0
+	var/has_space_move_gear = 0
+
 	for(var/atom in src.get_equipped_items())
 		var/obj/item/I = atom
 		tally += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
+		has_space_move_gear += I.getProperty("space_movespeed")
+
+
+	if (has_space_move_gear)
+		var/turf/T = get_turf(src)
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
+			tally += has_space_move_gear
 
 	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
 		var/turf/T = get_turf(src)
 		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
-			if (! (T.active_liquid || istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid)) )
+			if (!T.active_liquid && !(T.turf_flags & FLUID_MOVE))
 				tally += has_fluid_move_gear
 		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
 			if (T.active_liquid)
@@ -2669,8 +2648,7 @@
 				src.buckled.attack_hand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
 				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
-					src.targeting_spell = null
-					src.update_cursor()
+					src.end_chair_flip_targeting()
 			else
 				if (!src.getStatusDuration("burning"))
 					for (var/mob/O in AIviewers(src, null))
