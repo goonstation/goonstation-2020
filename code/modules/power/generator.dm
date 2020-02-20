@@ -14,7 +14,7 @@
 /obj/machinery/power/generator/New()
 	..()
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
 		circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
 		if(!circ1 || !circ2)

@@ -37,12 +37,12 @@
 						I.pixel_y = yoffset
 						SPAWN_DBG( 20 )
 							if (I && !I.disposed) pool(I)
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()
 			else
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()

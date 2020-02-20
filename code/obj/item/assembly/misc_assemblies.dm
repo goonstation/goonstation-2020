@@ -86,7 +86,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			src.part5.do_explode()
 			qdel(src)
 	return
@@ -429,7 +429,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			src.part5.do_explode()
 			qdel(src)
 	return
@@ -608,7 +608,7 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			src.part5.do_explode()
 			qdel(src)
 	return

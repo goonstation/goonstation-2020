@@ -35,7 +35,7 @@
 
 		E.special = 1
 		the_mob.transforming = 1
-		SPAWN_DBG(30) if (the_mob) the_mob.transforming = 0
+		SPAWN_DBG(3 SECONDS) if (the_mob) the_mob.transforming = 0
 		sleep(30)
 
 		var/theturf
@@ -49,7 +49,7 @@
 		for(var/i=0, i<9, i++)
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
-			SPAWN_DBG(150) qdel(S)
+			SPAWN_DBG(15 SECONDS) qdel(S)
 			S.dir = direction
 			S.original_dir = direction
 			direction = turn(direction,45)
@@ -224,7 +224,7 @@
 				for(var/i=0, i<15, i++)
 					var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
 					A.set_loc(the_mob.loc)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
 							pool(A)
@@ -252,7 +252,7 @@
 				if(!the_mob) break
 				var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
 				A.set_loc(the_mob.loc)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					src = null
 					if(A)
 						pool(A)
@@ -665,7 +665,7 @@
 			heh += src
 			boutput(world, "heh len = [heh.len]")
 		if(!the_mob)
-			SPAWN_DBG(30) check_abilities()
+			SPAWN_DBG(3 SECONDS) check_abilities()
 			return
 
 		if(!(src in the_mob.get_equipped_items()))
@@ -675,7 +675,7 @@
 				clear_buttons()
 			show_buttons()
 
-		SPAWN_DBG(10) check_abilities()
+		SPAWN_DBG(1 SECOND) check_abilities()
 */
 
 	proc/clear_buttons()

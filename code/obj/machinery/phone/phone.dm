@@ -214,7 +214,7 @@
 		src.dialing = 1
 		if(src.handset.holder)
 			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
@@ -327,7 +327,7 @@
 		src.dialing = 1
 		if(src.handset.holder)
 			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)

@@ -27,7 +27,7 @@
 			R.losebreath = max(5, R.losebreath)
 			R.emote("scream")
 			if (prob(25))
-				R.changeStatus("stunned", 1 SECONDS)
+				R.changeStatus("stunned", 1 SECOND)
 			R.updatehealth()
 	return
 
@@ -40,7 +40,7 @@
 		R.TakeDamage("chest", 0, 10)
 		R.emote("scream")
 		if (prob(25))
-			R.changeStatus("stunned", 1 SECONDS)
+			R.changeStatus("stunned", 1 SECOND)
 		R.updatehealth()
 	return
 

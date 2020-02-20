@@ -86,7 +86,7 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		SPAWN_DBG(5)	// must wait for map loading to finish
+		SPAWN_DBG(5 DECI SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
@@ -565,7 +565,7 @@
 							path -= loc
 
 							if(mode==4)
-								SPAWN_DBG(1)
+								SPAWN_DBG(1 DECI SECOND)
 									send_status()
 
 							if(destination == home_destination)
@@ -588,7 +588,7 @@
 								src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 								playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 
-								SPAWN_DBG(2)
+								SPAWN_DBG(2 DECI SECONDS)
 									calc_path(next)
 									if(path)
 										src.visible_message("[src] makes a delighted ping!", "You hear a ping.")

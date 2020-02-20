@@ -651,7 +651,7 @@ var/global/datum/numbers_station/lincolnshire = new
 			src.real_name = "Unknown"
 			randomize_look(src, 1, 1, 1, 1, 1, 0)
 			bioHolder.AddEffect("strong")
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			bioHolder.mobAppearance.UpdateMob()
 
 

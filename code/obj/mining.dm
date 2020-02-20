@@ -1406,7 +1406,7 @@
 			coloration_overlay = image(src.icon, "color_overlay")
 		coloration_overlay.color = src.stone_color
 		src.overlays += coloration_overlay
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			if (istype(src)) //Wire note: just roll with this ok
 				for (var/turf/simulated/wall/asteroid/A in orange(src,1))
 					src.apply_edge_overlay(get_dir(src, A))
@@ -1750,7 +1750,7 @@ obj/item/clothing/gloves/concussive
 					else
 						boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						concussive_blast()
 						qdel (src)
 						return
@@ -2041,7 +2041,7 @@ obj/item/clothing/gloves/concussive
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
-	SPAWN_DBG(1200)
+	SPAWN_DBG(2 MINUTES)
 		if (user && user.client)
 			user.client.images -= O
 			user.client.screen -= O

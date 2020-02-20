@@ -334,7 +334,7 @@
 				return
 	if (!( src.state ))
 		qdel(src.first)
-	SPAWN_DBG(3)
+	SPAWN_DBG(3 DECI SECONDS)
 		src.state = 0
 	return
 
@@ -368,7 +368,7 @@
 
 /obj/machinery/computer/laser_computer/New()
 	..()
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		for(var/obj/machinery/engine_laser_spawner/M in machines)
 			if(src.id == M.id)
 				src.emitters += M
@@ -473,6 +473,6 @@ text("<A href='?src=\ref[];pattern=1'>[src.pattern]</A>", src))
 
 
 /obj/machinery/computer/laser_computer/process()
-	SPAWN_DBG(2)
+	SPAWN_DBG(2 DECI SECONDS)
 		src.updateDialog()
 

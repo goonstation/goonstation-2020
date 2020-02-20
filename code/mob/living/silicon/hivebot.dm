@@ -64,7 +64,7 @@
 	src.radio = new /obj/item/device/radio(src)
 	src.ears = src.radio
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera(src)
@@ -379,7 +379,7 @@
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					src.emote_allowed = 1
 		else
 			src.show_text("Invalid Emote: [act]")
@@ -1006,7 +1006,7 @@ Frequency:
 		hud = new(src)
 		src.attach_hud(hud)
 		bioHolder = new/datum/bioHolder( src )
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (src.module)
 				qdel(src.module)
 			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction))

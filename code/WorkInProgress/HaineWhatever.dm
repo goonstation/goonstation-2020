@@ -31,7 +31,7 @@
 				var/obj/machinery/disposal/mail/mail_chute = D
 
 				mail_chute.Topic("?rescan=1", params2list("rescan=1"))
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					for(var/dest in mail_chute.destinations)
 						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
 						MD.source_disposal = mail_chute
@@ -97,7 +97,7 @@
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
 	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = 1
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 		die()
 	..()
 
@@ -1244,7 +1244,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		src.bioHolder.mobAppearance.UpdateMob()
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
@@ -1294,7 +1294,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1346,7 +1346,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			bling.set_loc(T)
 			bling.throwforce = 8
 			src.cash_amt = max(src.cash_amt-src.shot_cost, 0)
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)

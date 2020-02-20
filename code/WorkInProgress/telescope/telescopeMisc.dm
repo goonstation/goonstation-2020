@@ -71,7 +71,7 @@ var/list/magnet_locations = list()
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN_DBG(6) M.set_loc(target)
+					SPAWN_DBG(6 DECI SECONDS) M.set_loc(target)
 				SPAWN_DBG(10) busy = 0
 
 		if(href_list["recieve"])
@@ -87,7 +87,7 @@ var/list/magnet_locations = list()
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN_DBG(6) M.set_loc(src.loc)
+					SPAWN_DBG(6 DECI SECONDS) M.set_loc(src.loc)
 				SPAWN_DBG(10) busy = 0
 
 //////////////////////////////////////////////////
@@ -207,7 +207,7 @@ var/list/magnet_locations = list()
 		if(prob(20) && alive)
 			src.visible_message("<span style=\"color:red\"><b>[src]</b> begins to reassemble!</span>")
 			var/turf/T = src.loc
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)
 				if(src)
 					qdel(src)

@@ -28,7 +28,7 @@
 			src.icon_old = P.icon_state
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.dir = pdir
 			qdel(P)
 

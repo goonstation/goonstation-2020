@@ -143,7 +143,7 @@
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO What layer should this be on?
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radstrength = 5
@@ -207,7 +207,7 @@
 			POT.visible_message("<span style=\"color:red\"><b>[POT]</b> begins to bubble and expand!</span>")
 			playsound(POT.loc, "sound/effects/bubbles.ogg", 50, 1)
 
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				POT.visible_message("<span style=\"color:red\"><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
 				playsound(POT.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 

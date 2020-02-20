@@ -20,7 +20,7 @@
 				door.time_limit = door_delay
 				if (door_type == "glass" || door_type == "runes")
 					door.opacity = 0
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					door.color = color_rgb
 		else if (pa.Find("right"))
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))

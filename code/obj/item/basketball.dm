@@ -25,7 +25,7 @@
 	user.visible_message("<span style=\"color:red\"><b>[user] fouls out, permanently.</b></span>")
 	user.TakeDamage("head", 175, 0)
 	user.updatehealth()
-	SPAWN_DBG(300)
+	SPAWN_DBG(30 SECONDS)
 		if (user)
 			user.suiciding = 0
 	return 1
@@ -113,7 +113,7 @@
 				user.visible_message("<span class='combat'><b>[user] knocks their head into the rim of [src]!</b></span>")
 				user.changeStatus("weakened", 5 SECONDS)
 			if (!src.shoot(W, user))
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					src.visible_message("<span style=\"color:red\">[user] whiffs the dunk.</span>")
 		return
 
@@ -193,7 +193,7 @@
 		playsound(get_turf(src), "rustle", 75, 1)
 		A.invisibility = 100
 		flick("bbasket1", src)
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			A.invisibility = 0
 			src.active = 0
 

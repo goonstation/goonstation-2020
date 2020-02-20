@@ -194,7 +194,7 @@ This works
 
 			src.icon = make_icon_with_turf(the_turf)
 
-			SPAWN_DBG(5) src.Life()
+			SPAWN_DBG(5 DECI SECONDS) src.Life()
 
 		else
 			logTheThing("admin", null, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]")

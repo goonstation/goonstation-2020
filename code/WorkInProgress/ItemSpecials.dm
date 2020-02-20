@@ -1082,7 +1082,7 @@
 		desc = "Pop out a flame 1 tile away from you in a direction."
 
 		var/time = 6 SECONDS
-		var/tiny_time = 1 SECONDS
+		var/tiny_time = 1 SECOND
 
 		onAdd()
 			if(master)
@@ -1252,7 +1252,7 @@
 
 		var/secondhit_delay = 1
 		var/stamina_damage = 80
-		var/obj/item/katana/K 
+		var/obj/item/katana/K
 		var/reversed = 0
 
 		onAdd()
@@ -1274,10 +1274,10 @@
 				var/turf/T1 = get_turf(user)
 				var/turf/T2 = null
 				var/turf/T3 = null
-				var/turf/T4 = null				
+				var/turf/T4 = null
 
 				//This steps the user to his destination and gets the turfs needed for drawing the effects and where the attack hits
-				var/stopped = 0 
+				var/stopped = 0
 				if (step(user, direction))
 					T2 = get_turf(user)
 				else
@@ -1324,7 +1324,7 @@
 					flick(K.end.icon_state, K.end)
 
 				//Reset the effects after they're drawn and put back into master for re-use later
-				SPAWN_DBG(8)
+				SPAWN_DBG(8 DECI SECONDS)
 					K.start.loc = master
 					K.mid1.loc = master
 					K.mid2.loc = master
@@ -1407,7 +1407,7 @@
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.attackby(master, user, params, 1)
-						SPAWN_DBG(5)
+						SPAWN_DBG(5 DECI SECONDS)
 							A.attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
@@ -1556,7 +1556,7 @@
 		icon_state = "clash"
 		pixel_x = 0
 		pixel_y = 0
-		
+
 		pooled()
 			..()
 			transform = null
@@ -1624,7 +1624,7 @@
 		setup(atom/location, forced = 0)
 			loc = location
 			if (del_self)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					pool(src)
 
 		was_clashed(var/playsound = 1)

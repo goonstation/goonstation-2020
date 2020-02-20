@@ -69,7 +69,7 @@
 		switch (act)
 			if ("flip")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						animate_bumble(src)
 					return null
 			if ("snap","buzz")
@@ -134,7 +134,7 @@
 			LAGCHECK(LAG_HIGH)
 			if (fellow_bee && fellow_bee.alive)
 				fellow_bee.aggressive = 1
-				SPAWN_DBG(7)
+				SPAWN_DBG(7 DECI SECONDS)
 					fellow_bee.aggressive = 0
 		..()
 
@@ -515,7 +515,7 @@
 		if (MT.loc != holder.owner)
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] swallows [MT] whole!</b></span>")
 			MT.set_loc(holder.owner)
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
 				honeycube.name = "block of honey"
@@ -562,7 +562,7 @@
 		playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
@@ -842,7 +842,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src]. Fuck!")
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				W.icon_state = "key_gold"
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")

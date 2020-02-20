@@ -224,7 +224,7 @@
 		if(dying) return
 		applyDeathState()
 		dying = 1 // this was dying = 0. ha ha.
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
 				if (prob(25))
 					new /obj/item/device/prox_sensor(src.loc)
@@ -650,7 +650,7 @@
 		//			var/turf/T = O.loc
 		//			for(var/atom/A in T.contents)
 		//				boutput(src, "There is a [A.name] at this location.")
-					SPAWN_DBG(3) pool(O)
+					SPAWN_DBG(3 DECI SECONDS) pool(O)
 
 				if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 			return
@@ -1059,7 +1059,7 @@
 			playsound(C.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			C.ex_act(3)
 
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			for (var/obj/O in lineObjs)
 				pool(O)
 
@@ -1194,7 +1194,7 @@
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
 			poorPod.ex_act(3)
 
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			for (var/obj/O in lineObjs)
 				pool(O)*/
 
@@ -1324,13 +1324,13 @@
 		playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
 		src.visible_message("[src] emits a very small clicking noise.")
 		icon_state = dead_state
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			explosion(src, get_turf(src), -1, -1, 2, 3)
 		..()
 
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			task = "sleeping"
 			src.health = 0
 			src.CritterDeath()

@@ -342,7 +342,7 @@
 	New()
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (!nostick) // unless nostick is set in which case... dont
-			SPAWN_DBG(1) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
+			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
@@ -414,7 +414,7 @@
 	light.set_color(initial(src.light_type.color_r), initial(src.light_type.color_g), initial(src.light_type.color_b))
 	light.set_height(2.4)
 	light.attach(src)
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		update()
 
 // update the icon_state and luminosity of the light depending on its state

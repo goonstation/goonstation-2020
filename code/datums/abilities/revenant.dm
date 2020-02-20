@@ -302,7 +302,7 @@
 					current_prob *= 0.75
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(target, 32, 2)
 
@@ -325,7 +325,7 @@
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("weakened", 2 SECONDS)
 			animate_revenant_shockwave(T, 1, 3)
-			SPAWN_DBG(3)
+			SPAWN_DBG(3 DECI SECONDS)
 				for (var/mob/living/carbon/human/M in T)
 					if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 						M.changeStatus("weakened", 6 SECONDS)
@@ -342,7 +342,7 @@
 						T:to_plating()
 					else
 						T:break_tile()
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					T.pixel_y = 0
 					T.transform = null
 
@@ -484,7 +484,7 @@
 		if (!RH || !istype(RH, /datum/abilityHolder/revenant/))
 			return
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			var/iterations = 0
 			while (holder.owner.loc == location && isalive(holder.owner) && !holder.owner.equipped())
 				iterations++

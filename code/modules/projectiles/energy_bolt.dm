@@ -109,7 +109,7 @@ toxic - poisons
 	on_hit(atom/hit)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.changeStatus("slowed", 1 SECONDS)
+			L.changeStatus("slowed", 1 SECOND)
 			L.change_misstep_chance(1)
 			L.emote("twitch_v")
 		return
@@ -316,7 +316,7 @@ toxic - poisons
 		animate(transform=m2,time=5)
 
 
-		spawn(7) del(src)
+		spawn(7 DECI SECONDS) del(src)
 
 /datum/projectile/energy_bolt/pulse
 	name = "pulse"

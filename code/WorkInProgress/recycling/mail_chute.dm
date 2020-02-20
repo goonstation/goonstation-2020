@@ -25,7 +25,7 @@
 		if (src.autoname == 1 && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			if (src)
 				if (radio_controller)
 					radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -116,7 +116,7 @@
 				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["command"] = "mail_inquire"
 
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					if (radio_connection) radio_connection.post_signal(src, signal)
 
 			if(href_list["handle"])

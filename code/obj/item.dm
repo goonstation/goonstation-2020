@@ -571,7 +571,7 @@
 
 		var/succ = src.try_put_hand_mousedrop(user, storage)
 		if (succ)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
 					storage.attackby(src, user)
 			return
@@ -582,7 +582,7 @@
 		if ( !user.restrained() && !user.stat )
 			var/succ = src.try_put_hand_mousedrop(user)
 			if (succ)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					if (user.is_in_hands(src))
 						S.sendclick(params, user)
 
@@ -842,7 +842,7 @@
 			if (istype(HH.limb,/datum/limb/small_critter))
 				if (M.equipped())
 					M.drop_item()
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						HH.limb.attack_hand(src,M,1)
 				else
 					HH.limb.attack_hand(src,M,1)
@@ -852,7 +852,7 @@
 	//the verb is PICK-UP, not 'smack this object with that object'
 	if (M.equipped())
 		M.drop_item()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.attack_hand(M)
 	else
 		src.attack_hand(M)

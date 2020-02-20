@@ -120,7 +120,7 @@
 	..()
 
 	cameras.Add(src)
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		// making life easy for mappers since 2013
 		if (dd_hasprefix(name, "autoname"))
 			var/area/where = get_area(src)
@@ -238,7 +238,7 @@
 		src.remove_from_turfs()
 
 
-	SPAWN_DBG(900)
+	SPAWN_DBG(90 SECONDS)
 		camera_status++
 		src.network = initial(src.network)
 		if(!istype(src, /obj/machinery/camera/television))

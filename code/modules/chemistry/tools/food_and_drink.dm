@@ -574,7 +574,7 @@
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, src.amount_per_transfer_from_this)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1
@@ -727,7 +727,7 @@
 			blood_slash(user, 25)
 			user.TakeDamage("head", 150, 0, 0, DAMAGE_CUT)
 			user.updatehealth()
-			SPAWN_DBG(500)
+			SPAWN_DBG(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
 			return 1

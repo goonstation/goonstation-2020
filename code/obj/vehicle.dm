@@ -578,7 +578,7 @@ Contains:
 	if(..() && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			pixel_x = rand(-1, 1)
 			pixel_y = rand(-1, 1)
 		if (!src.sprayer_active)
@@ -1229,7 +1229,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			eject_rider(1)
 		pixel_x = rand(-6, 6)
 		pixel_y = rand(-2, 2)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
 
@@ -1554,7 +1554,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(my_mob.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 		playsound(the_turf, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			active = 0
 
 		return

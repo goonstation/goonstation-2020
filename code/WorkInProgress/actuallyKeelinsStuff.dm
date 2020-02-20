@@ -309,7 +309,7 @@ var/list/electiles = list()
 		light.set_brightness(0.5)
 		light.attach(src)
 		light.enable()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			if (target_tag)
 				var/atom/target = locate(target_tag)
 				if(target)
@@ -360,7 +360,7 @@ var/list/electiles = list()
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = unpool(/obj/effects/sparks)
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(20) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
 		return
 
@@ -373,7 +373,7 @@ var/list/electiles = list()
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = unpool(/obj/effects/sparks)
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(20) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
 		return
 	*/
@@ -734,27 +734,27 @@ var/list/electiles = list()
 	pixel_y = -16
 	blend_mode = 2
 	New()
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			name = "growing wormhole"
 			desc = "a slowly growing wormhole"
 			icon_state = "whole-growing"
 			blend_mode = 2
-		SPAWN_DBG(200)
+		SPAWN_DBG(20 SECONDS)
 			name = "stable wormhole"
 			desc = "a wormhole leading who-knows-where"
 			icon_state = "whole"
 			blend_mode = 1
-		SPAWN_DBG(300)
+		SPAWN_DBG(30 SECONDS)
 			name = "massive wormhole"
 			desc = "a huge wormhole leading to unknown space"
 			icon_state = "whole-massive"
 			blend_mode = 1
-		SPAWN_DBG(400)
+		SPAWN_DBG(40 SECONDS)
 			name = "unstable wormhole"
 			desc = "an unstable wormhole, about to collapse"
 			icon_state = "whole-unstable"
 			blend_mode = 1
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			qdel(src)
 		..()
 
@@ -767,7 +767,7 @@ var/list/electiles = list()
 	layer = EFFECTS_LAYER_1
 
 	New()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			qdel(src)
 		..()
 
@@ -814,7 +814,7 @@ var/list/electiles = list()
 		var/image/I = image(S)
 		I.appearance_flags = 0
 		src.overlays += image(S)
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			qdel(src)
 		..()
 
@@ -1459,7 +1459,7 @@ var/list/electiles = list()
 				pixels += P
 
 	qdel(A)
-	SPAWN_DBG(70)
+	SPAWN_DBG(7 SECONDS)
 		for(var/datum/D in pixels)
 			pool(D)
 
@@ -1981,7 +1981,7 @@ var/list/electiles = list()
 							T:break_tile()
 						else
 							T:burn_tile()
-			SPAWN_DBG(6) qdel(B)
+			SPAWN_DBG(6 DECI SECONDS) qdel(B)
 			sleep(3)
 		sleep(1)
 
@@ -2369,7 +2369,7 @@ var/list/electiles = list()
 			return
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
@@ -2383,7 +2383,7 @@ var/list/electiles = list()
 
 			R.process()
 
-		SPAWN_DBG(25) ready = 1
+		SPAWN_DBG(2.5 SECONDS) ready = 1
 */
 
 /obj/movable_area_controller
@@ -2708,7 +2708,7 @@ var/list/electiles = list()
 					playsound(H.loc, "swing_hit", 50, 1)
 
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -2835,7 +2835,7 @@ var/list/electiles = list()
 		light.set_brightness(0.5)
 		light.attach(src)
 		light.enable()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
 
@@ -2846,7 +2846,7 @@ var/list/electiles = list()
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
 			var/obj/sparks = unpool(/obj/effects/sparks)
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(20) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 			qdel(src)
 
 
@@ -2913,7 +2913,7 @@ var/list/electiles = list()
 
 	unpooled(var/poolname)
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			var/atom/myloc = loc
 			if(myloc && !istype(myloc,/turf/space))
 				my_dir = pick(alldirs)
@@ -2942,13 +2942,13 @@ var/list/electiles = list()
 			possible +=  current
 
 		if(!possible.len)
-			SPAWN_DBG(30) update()
+			SPAWN_DBG(3 SECONDS) update()
 			return
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = 0
 		src.set_loc(picked)
-		SPAWN_DBG(5) picked.invisibility = 100
+		SPAWN_DBG(5 DECI SECONDS) picked.invisibility = 100
 
 		SPAWN_DBG(rand(50,80)) update()
 
@@ -2988,7 +2988,7 @@ var/list/electiles = list()
 		var/list/possible = find_suitable_tiles()
 
 		if(!possible.len)
-			SPAWN_DBG(30) update()
+			SPAWN_DBG(3 SECONDS) update()
 			return
 
 		var/turf/picked = pick(possible)
@@ -2997,7 +2997,7 @@ var/list/electiles = list()
 
 		src.set_loc(picked)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			picked.invisibility = 100
 			picked.opacity = 1
 
@@ -3103,7 +3103,7 @@ var/list/electiles = list()
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message("<span style=\"color:red\"><b>[user.name] dives headfirst at the [target.name]!</b></span>")
-				SPAWN_DBG(3) //give them time to land
+				SPAWN_DBG(3 DECI SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
 						user.updatehealth()
@@ -3124,7 +3124,7 @@ var/list/electiles = list()
 		suiciding = 1 //reset in attack_hand() at the same time as in_use
 		attack_hand(user)
 
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (src)
 				src.suiciding = 0
 			if (user && !isdead(user))
@@ -3163,7 +3163,7 @@ var/list/lag_list = new/list()
 	var/before = world.timeofday
 	sleep(1)
 	add_and_average( (world.timeofday - before) )
-	SPAWN_DBG(5) lag_loop()
+	SPAWN_DBG(5 DECI SECONDS) lag_loop()
 
 /proc/get_lag_average()
 	boutput(usr, "<span style=\"color:green\">[average_tenth] at [lag_list.len] samples.</span>")
@@ -3323,7 +3323,7 @@ var/list/lag_list = new/list()
 
 		update()
 			rebuild_icon()
-			SPAWN_DBG(5) update()
+			SPAWN_DBG(5 DECI SECONDS) update()
 
 /obj/spook
 	var/active = 0
@@ -3344,7 +3344,7 @@ var/list/lag_list = new/list()
 	proc/loop()
 
 		if(active)
-			SPAWN_DBG(30) loop()
+			SPAWN_DBG(3 SECONDS) loop()
 			return
 
 
@@ -3352,7 +3352,7 @@ var/list/lag_list = new/list()
 			if(prob(20)) spook(L)
 			break
 
-		SPAWN_DBG(20) loop()
+		SPAWN_DBG(2 SECONDS) loop()
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
@@ -3368,7 +3368,7 @@ var/list/lag_list = new/list()
 		src.invisibility = 100
 		src.set_loc(startloc)
 		walk(src,0)
-		SPAWN_DBG(100) active = 0
+		SPAWN_DBG(10 SECONDS) active = 0
 
 
 /datum/engibox_mode
@@ -3717,7 +3717,7 @@ var/list/lag_list = new/list()
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			process()
 
 	proc/process()

@@ -317,7 +317,7 @@
 						M.operating = 0
 			M.setdir()
 
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
 	src.add_fingerprint(usr)
@@ -661,7 +661,7 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		SPAWN_DBG(5)	// must wait for map loading to finish
+		SPAWN_DBG(5 DECI SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
 				radio_controller.add_object(src, "[frequency]")
 

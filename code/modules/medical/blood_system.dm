@@ -222,6 +222,9 @@ this is already used where it needs to be used, you can probably ignore it.
 */
 	//BLOOD_DEBUG("[H] processes bleeding: increase_chance now [increase_chance], increase_amount now [increase_amount]")
 
+	if (H.lying)
+		increase_chance -= rand(0,15)
+
 	if (H.reagents)
 		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
 		if (anticoag_amt)

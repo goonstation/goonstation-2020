@@ -62,7 +62,7 @@
 	var/obj/item/device/microphone/myMic = null
 
 	New()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			if (!myMic)
 				myMic = new(src)
 		return ..()

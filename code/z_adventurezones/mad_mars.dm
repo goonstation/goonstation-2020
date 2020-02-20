@@ -364,7 +364,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'>The <B>[src]</B> slams itself against [src.target]!</span>")
 		random_brute_damage(src.target, rand(7,17))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 
@@ -628,7 +628,7 @@
 		S.volume = 60
 		S.priority = 255
 		S.status = SOUND_UPDATE
-		SPAWN_DBG(10) process()
+		SPAWN_DBG(1 SECOND) process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -760,7 +760,7 @@
 
 					playsound(src.loc, 'sound/weapons/ak47shot.ogg', 50, 1)
 					var/tturf = get_turf(target)
-					SPAWN_DBG(2)
+					SPAWN_DBG(2 DECI SECONDS)
 						Shoot(tturf, src.loc, src)
 						src.pixel_x += rand(-3,3)
 						src.pixel_y += rand(-3,3)

@@ -117,8 +117,7 @@ var/global/list/falloff_cache = list()
 				//volume-related handling
 				var/ourvolume = vol
 
-
-
+				//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
 				if (dist > falloff_cache.len)
 					falloff_cache.len = dist
 				var/falloffmult = falloff_cache[dist]
@@ -321,11 +320,11 @@ var/global/list/falloff_cache = list()
 	switch (type) //After play actions, let the area know
 		if (AMBIENCE_FX_1)
 			A.played_fx_1 = 1
-			SPAWN_DBG(400) //40s
+			SPAWN_DBG(40 SECONDS) //40s
 				A.played_fx_1 = 0
 		if (AMBIENCE_FX_2)
 			A.played_fx_2 = 1
-			SPAWN_DBG(200) //20s
+			SPAWN_DBG(20 SECONDS) //20s
 				A.played_fx_2 = 0
 
 

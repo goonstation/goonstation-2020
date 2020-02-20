@@ -4,7 +4,7 @@
 /obj/cryotron_spawner
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 #ifdef RP_MODE
 			new /obj/cryotron(src.loc)
 #endif
@@ -96,7 +96,7 @@
 		flick("cryotron_go_down", src)
 
 		//sleep(19)
-		SPAWN_DBG(19)
+		SPAWN_DBG(1.9 SECONDS)
 			if (!thePerson)
 				busy = 0
 				return (folks_to_spawn.len != 0)
@@ -107,7 +107,7 @@
 				O.set_loc(firstLoc)
 
 		//sleep(10)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (!thePerson)
 					busy = 0
 					return (folks_to_spawn.len != 0)
@@ -125,7 +125,7 @@
 								A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
 //#endif
 		//sleep(9)
-				SPAWN_DBG(9)
+				SPAWN_DBG(9 DECI SECONDS)
 					busy = 0
 					return (folks_to_spawn.len != 0)
 

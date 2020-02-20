@@ -14,7 +14,7 @@
 
 /obj/machinery/computer/operating/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.table = locate(/obj/machinery/optable, orange(2,src))
 
 /obj/machinery/computer/operating/attack_ai(mob/user)

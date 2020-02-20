@@ -370,7 +370,7 @@
 		else
 			if (E.icon_state == "gold")
 				boutput(user, "You show \the [E] to [src]! They are super impressed!")
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
 					sleep(10)
 					boutput(user, "Or the president. The president of space.")
@@ -394,7 +394,7 @@
 			else
 				if (W.icon_state == "gold")
 					boutput(user, "You show \the [W] to [src]! They are super impressed!")
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						boutput(user, "Like, really REALLY impressed.  They probably think you're some kind of celebrity or something.")
 						sleep(10)
 						boutput(user, "Or the president. The president of space.")
@@ -1241,7 +1241,7 @@
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(6) pool(O)
+					SPAWN_DBG(6 DECI SECONDS) pool(O)
 
 				if(isliving(target_r)) //Probably unsafe.
 					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -1806,7 +1806,7 @@
 									master.visible_message("<span style=\"color:red\"><b>[master] is trying to put handcuffs on [arrest_target]!</b></span>")
 									var/cuffloc = arrest_target.loc
 
-									SPAWN_DBG(60)
+									SPAWN_DBG(6 SECONDS)
 										if (!master)
 											return
 
@@ -2107,7 +2107,7 @@
 				new_destination = "__nearest__"
 				master.post_status("!BEACON!", "findbeacon", "patrol")
 				awaiting_beacon = 5
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					if(!master || !master.on || master.stunned || master.idle) return
 					if(master.task != src) return
 					awaiting_beacon = 0
@@ -2214,7 +2214,7 @@
 					if(get_dist(master, hug_target) <= 1)
 						if (prob(2))
 							master.speak("Merry Spacemas!")
-							SPAWN_DBG(10)
+							SPAWN_DBG(1 SECOND)
 								if (master)
 									master.speak("Warning: Real-time clock battery low or missing.")
 						else
@@ -2848,7 +2848,7 @@
 							src.master.speak("And here comes Officer Beepsky, the proud guard of this station. Proud.")
 							src.master.speak("Not at all terrible.  No Sir.  Not at all.")
 							if (prob(10))
-								SPAWN_DBG(15)
+								SPAWN_DBG(1.5 SECONDS)
 									src.master.speak("Well okay, maybe a little.")
 
 							return
@@ -2866,7 +2866,7 @@
 							src.master.speak("Good day, Captain!  You look a little different today, did you get a haircut?")
 							var/otherBuddyID = otherBuddy.net_id
 							//Notify other buddy
-							SPAWN_DBG(10)
+							SPAWN_DBG(1 SECOND)
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "captain_greet")
 							return
@@ -2879,7 +2879,7 @@
 								src.master.speak("We hope that we aren't disrupting any sort of wiz-biz or wizness deal.")
 							//As before, notify the other buddy
 							var/otherBuddyID = otherBuddy.net_id
-							SPAWN_DBG(10)
+							SPAWN_DBG(1 SECOND)
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "wizard_greet")
 
@@ -3093,7 +3093,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			src.icon_state = "robuddy_frame-[buddy_model]-[stage]"
 			if(src.stage >= 2)
 				src.created_cell = new
@@ -3198,7 +3198,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(8)
+		SPAWN_DBG(8 DECI SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if(!src.net_id)
@@ -3264,7 +3264,7 @@
 			var/rem_host = src.host_id
 			src.host_id = null
 			src.post_wire_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.post_wire_status(rem_host, "command","term_connect","device","PNET_PR6_CHARG")
 
 			src.updateUsrDialog()
@@ -3283,7 +3283,7 @@
 		var/target = signal.data["sender"]
 		if(signal.transmission_method == TRANSMISSION_WIRE)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && target)
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.post_wire_status(target, "command", "ping_reply", "device", "PNET_PR6_CHARG", "netid", src.net_id, "net", src.net_number)
 				return
 			if(signal.data["address_1"] != src.net_id || !target)
@@ -3305,7 +3305,7 @@
 					src.host_id = target
 					if(signal.data["data"] != "noreply")
 						src.post_wire_status(target, "command","term_connect","data","noreply","device","PNET_PR6_CHARG")
-					SPAWN_DBG(2) //Sign up with the driver (if a mainframe contacted us)
+					SPAWN_DBG(2 DECI SECONDS) //Sign up with the driver (if a mainframe contacted us)
 						src.post_wire_status(target,"command","term_message","data","command=register&status=[current ? current.net_id : "nobot"]")
 					src.updateUsrDialog()
 					return
@@ -3411,7 +3411,7 @@
 
 								newsignal.data_file = task_copy
 
-								SPAWN_DBG(2)
+								SPAWN_DBG(2 DECI SECONDS)
 									src.link.post_signal(src, newsignal)
 
 							else
@@ -3643,7 +3643,7 @@
 			signal.data["address_1"] = target_id
 			signal.data["sender"] = src.net_id
 
-			SPAWN_DBG(2)
+			SPAWN_DBG(2 DECI SECONDS)
 				if (src.link) //ZeWaka: Fix for null.post_signal
 					src.link.post_signal(src, signal)
 
@@ -3823,7 +3823,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			src.icon_state = "goldbuddy_frame-[buddy_model]-[stage]"
 			if(src.stage >= 2)
 				src.created_cell = new
@@ -3989,7 +3989,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 		user.visible_message("It came up Hugs.")
 
 #undef GUARDBOT_DOCK_RESET_DELAY

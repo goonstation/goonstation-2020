@@ -38,7 +38,7 @@
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -72,7 +72,7 @@
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1

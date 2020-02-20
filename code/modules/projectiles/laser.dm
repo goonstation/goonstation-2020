@@ -113,7 +113,7 @@ toxic - poisons
 			fireflash(get_turf(hit), 0)
 		else if (isturf(hit))
 			fireflash(hit, 0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(prob(40) && istype(hit, /turf/simulated))
 					hit.meteorhit(src)
 		else

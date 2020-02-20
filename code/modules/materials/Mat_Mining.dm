@@ -106,7 +106,7 @@
 
 		var/obj/meleeeffect/pick/DA = new/obj/meleeeffect/pick(start)
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			qdel(DA)
 
 		var/list/extra_dmg = list()
@@ -115,7 +115,7 @@
 			for(var/turf/T in extra_dmg)
 				if(istype(T,/turf/simulated/wall/asteroid))
 					var/obj/meleeeffect/conc/conc = new/obj/meleeeffect/conc(T)
-					SPAWN_DBG(10) qdel(conc)
+					SPAWN_DBG(1 SECOND) qdel(conc)
 					T:change_health(-(round(power/7)))
 
 		if(istype(start,/turf/simulated/wall/asteroid))
@@ -175,7 +175,7 @@
 		animate(EA,alpha=0, time=5)
 		animate(EB,alpha=0, time=5)
 
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			qdel(EA)
 			qdel(EB)
 
@@ -188,7 +188,7 @@
 			for(var/turf/T in extra_dmg)
 				if(istype(T,/turf/simulated/wall/asteroid))
 					var/obj/meleeeffect/conc/conc = new/obj/meleeeffect/conc(T)
-					SPAWN_DBG(10) qdel(conc)
+					SPAWN_DBG(1 SECOND) qdel(conc)
 					T:change_health(-(round(power/7)))
 
 		if(istype(start,/turf/simulated/wall/asteroid))
@@ -235,7 +235,7 @@
 		var/obj/meleeeffect/hammer/DB = new/obj/meleeeffect/hammer(middle)
 		var/obj/meleeeffect/hammer/DC = new/obj/meleeeffect/hammer(end)
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			qdel(DA)
 			qdel(DB)
 			qdel(DC)
@@ -248,7 +248,7 @@
 			for(var/turf/T in extra_dmg)
 				if(istype(T,/turf/simulated/wall/asteroid))
 					var/obj/meleeeffect/conc/conc = new/obj/meleeeffect/conc(T)
-					SPAWN_DBG(10) qdel(conc)
+					SPAWN_DBG(1 SECOND) qdel(conc)
 					T:change_health(-(round(power/7)))
 
 		if(istype(start,/turf/simulated/wall/asteroid))
@@ -308,7 +308,7 @@
 		D.dir = attackDir
 
 		animate(D, pixel_x = anim_x, pixel_y = anim_y, time = 5, easing = QUAD_EASING)
-		SPAWN_DBG(20) qdel(D)
+		SPAWN_DBG(2 SECONDS) qdel(D)
 
 		var/list/extra_dmg = list()
 		if(blasting)
@@ -318,7 +318,7 @@
 			for(var/turf/T in extra_dmg)
 				if(istype(T,/turf/simulated/wall/asteroid))
 					var/obj/meleeeffect/conc/conc = new/obj/meleeeffect/conc(T)
-					SPAWN_DBG(10) qdel(conc)
+					SPAWN_DBG(1 SECOND) qdel(conc)
 					T:change_health(-(round(power/7)))
 
 		if(istype(start,/turf/simulated/wall/asteroid))

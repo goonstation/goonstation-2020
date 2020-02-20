@@ -590,7 +590,7 @@
 
 		if(task == "following path")
 			follow_path()
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				follow_path()
 		else if(task == "sleeping")
 			do_wake_check()
@@ -684,7 +684,7 @@
 							food_target.reagents.trans_to(src, 5)
 					if (src.food_target != null && src.food_target.amount <= 0)
 						src.food_target.loc = null
-						SPAWN_DBG(10)
+						SPAWN_DBG(1 SECOND)
 							qdel(src.food_target)
 						src.task = "thinking"
 						src.food_target = null

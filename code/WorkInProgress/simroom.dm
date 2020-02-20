@@ -17,7 +17,7 @@
 
 /*
 /obj/machinery/sim/transmitter/New()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		Connect()
 	..()
 */

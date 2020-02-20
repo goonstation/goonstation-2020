@@ -301,7 +301,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				var/mob/living/carbon/human/H = pick(HL)
 				if(istype(H))
 					skull_key_assigned = 1
-					SPAWN_DBG(50)
+					SPAWN_DBG(5 SECONDS)
 						if(H.organHolder && H.organHolder.skull)
 							H.organHolder.skull.key = new /obj/item/device/key/skull (H.organHolder.skull)
 							logTheThing("debug", H, null, "has the dubious pleasure of having a key embedded in their skull.")

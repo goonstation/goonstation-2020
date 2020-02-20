@@ -8,7 +8,7 @@ datum/controller/process/ticker
 			ticker = new /datum/controller/gameticker()
 
 		// start the pregame process
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			ticker.pregame()
 	doWork()
 		ticker.process()

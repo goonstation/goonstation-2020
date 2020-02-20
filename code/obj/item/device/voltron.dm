@@ -33,7 +33,7 @@
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/effects/sparks/O = unpool(/obj/effects/sparks)
 				O.set_loc(src.loc)
-				SPAWN_DBG(20) if (O) pool(O)
+				SPAWN_DBG(2 SECONDS) if (O) pool(O)
 
 	relaymove(mob/user, direction)
 
@@ -220,7 +220,7 @@
 		activating = 1
 
 		on_cooldown = 1
-		SPAWN_DBG(30) on_cooldown = 0
+		SPAWN_DBG(3 SECONDS) on_cooldown = 0
 
 		var/atom/dummy = D
 		if(D)

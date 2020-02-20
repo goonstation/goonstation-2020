@@ -40,7 +40,7 @@
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span style=\"color:red\"><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
-	SPAWN_DBG(80)
+	SPAWN_DBG(8 SECONDS)
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
 		boutput(src, "<span style=\"color:red\"><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")

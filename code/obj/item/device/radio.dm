@@ -507,7 +507,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
 			UpdateOverlays(speech_bubble, "speech_bubble")
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				UpdateOverlays(null, "speech_bubble")
 
 /obj/item/device/radio/examine()

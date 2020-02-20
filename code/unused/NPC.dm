@@ -76,7 +76,7 @@
 			if((T.sl_gas || T.poison) && !special) // ahaha what a shitty workaround.
 				mainstate = 4
 				SaferTurf()
-				SPAWN_DBG(5) //////////////////////////////////////!!!
+				SPAWN_DBG(5 DECI SECONDS) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -90,7 +90,7 @@
 					TempHp = M.health
 			if ((Temp && prob( ( (100 - TempHp) * 2) + aggressiveness )) || Temp && health < 90 + (aggressiveness / 2) )
 				if (!isliving(Temp))
-					SPAWN_DBG(5) //////////////////////////////////////!!!
+					SPAWN_DBG(5 DECI SECONDS) //////////////////////////////////////!!!
 						think()
 					return
 				mainstate = 1
@@ -105,7 +105,7 @@
 			if(!target || cantact || target:stat)
 				mainstate = 0
 				target = null
-				SPAWN_DBG(5) //////////////////////////////////////!!!
+				SPAWN_DBG(5 DECI SECONDS) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -113,7 +113,7 @@
 				boutput(M, "<span style=\"color:red\">The [src.name] stares at [target]</span>")
 			if (prob(10) && !special) emote("gnarl")
 			mainstate = 2
-			SPAWN_DBG(15) //////////////////////////////////////!!!
+			SPAWN_DBG(1.5 SECONDS) //////////////////////////////////////!!!
 				think()
 			return
 
@@ -121,7 +121,7 @@
 
 			if(!target)
 				mainstate = 0
-				SPAWN_DBG(5) //////////////////////////////////////!!!
+				SPAWN_DBG(5 DECI SECONDS) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -131,7 +131,7 @@
 				target = null
 				count = 0
 				mainstate = 0
-				SPAWN_DBG(10) //////////////////////////////////////!!!
+				SPAWN_DBG(1 SECOND) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -160,7 +160,7 @@
 				target = null
 				count = 0
 				mainstate = 0
-				SPAWN_DBG(10) //////////////////////////////////////!!!
+				SPAWN_DBG(1 SECOND) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -170,7 +170,7 @@
 				target = null
 				count = 0
 				mainstate = 0
-				SPAWN_DBG(10) //////////////////////////////////////!!!
+				SPAWN_DBG(1 SECOND) //////////////////////////////////////!!!
 					think()
 				return
 
@@ -190,7 +190,7 @@
 					target:weakened += 3
 					step_towards(src,target)
 					step_towards(src,target)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						think()
 					return
 
@@ -203,7 +203,7 @@
 					for(var/mob/M as mob in oview(world.view,src))
 						boutput(M, "<span style=\"color:red\">[target] has been infected.</span>")
 				target:TakeDamage("chest", 5, 0)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					think()
 				return
 
@@ -217,7 +217,7 @@
 				if(target) mainstate = 2
 				if(!target) mainstate = 0
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		think()
 	return
 

@@ -15,7 +15,7 @@
 
 /obj/machinery/optable/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.computer = locate(/obj/machinery/computer/operating, orange(2,src))
 
 /obj/machinery/optable/ex_act(severity)

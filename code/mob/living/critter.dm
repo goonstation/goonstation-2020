@@ -114,7 +114,7 @@
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 		..()
 
-		SPAWN_DBG(5) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
+		SPAWN_DBG(5 DECI SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
@@ -340,7 +340,7 @@
 				var/mob/living/carbon/C = item
 				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 				if ( ishuman(C) )
-					C.changeStatus("weakened", 1 SECONDS)
+					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 				logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")

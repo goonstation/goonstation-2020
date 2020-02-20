@@ -32,7 +32,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..() // your parents miss you
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
@@ -410,7 +410,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				return
 
 			spam_flag = 1
-			SPAWN_DBG(40) spam_flag = 0
+			SPAWN_DBG(4 SECONDS) spam_flag = 0
 
 			use_power(50000)
 
@@ -437,7 +437,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
-					SPAWN_DBG(6) pool(O)
+					SPAWN_DBG(6 DECI SECONDS) pool(O)
 
 				if(istype(target_r, /obj/machinery/power/generatorTemp))
 					var/obj/machinery/power/generatorTemp/gen = target_r

@@ -106,7 +106,7 @@
 			rare_products -= C //so we don't get duplicates
 
 	proc/process()
-		SPAWN_DBG(300)
+		SPAWN_DBG(30 SECONDS)
 			if(prob(20) && !scan)
 				teleport()
 			process()

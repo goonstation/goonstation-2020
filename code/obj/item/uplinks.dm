@@ -636,7 +636,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.
 				if (!ticker.mode.spy_market)
 					ticker.mode.spy_market = new /datum/game_mode/spy_theft
-					SPAWN_DBG(50) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
+					SPAWN_DBG(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 						ticker.mode.spy_market.build_bounty_list()
 						ticker.mode.spy_market.update_bounty_readouts()
 				game = ticker.mode.spy_market

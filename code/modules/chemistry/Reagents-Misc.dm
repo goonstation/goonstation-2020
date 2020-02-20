@@ -557,7 +557,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN_DBG(15)
+					SPAWN_DBG(1.5 SECONDS)
 						T.icon_state = "grimy"
 				src = null
 				return
@@ -597,7 +597,7 @@ datum
 				if (!F)
 					F = unpool(/obj/fire_foam)
 					F.set_loc(target)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						if (F && !F.disposed)
 							pool(F)
 				return
@@ -710,7 +710,7 @@ datum
 				if (istype(T))
 					if (T.wet >= 3) return
 					T.wet = 3
-					SPAWN_DBG(800)
+					SPAWN_DBG(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -962,7 +962,7 @@ datum
 				if (volume >= 3)
 					if (locate(/obj/decal/icefloor) in target) return
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(target)
-					SPAWN_DBG(800)
+					SPAWN_DBG(80 SECONDS)
 						if (B)
 							B.dispose()
 
@@ -1041,7 +1041,7 @@ datum
 				if (volume >= 5)
 					for (var/obj/decal/bloodtrace/B in T)
 						B.invisibility = 0
-						SPAWN_DBG(300)
+						SPAWN_DBG(30 SECONDS)
 							if (B)
 								B.invisibility = 101
 					for (var/obj/item/W in T)
@@ -1052,7 +1052,7 @@ datum
 							I.Blend(new /icon('icons/effects/blood.dmi', "lum-item"),ICON_MULTIPLY)
 							I.Blend(new /icon(W.icon, W.icon_state),ICON_UNDERLAY)
 							W.icon = I
-							SPAWN_DBG(300)
+							SPAWN_DBG(30 SECONDS)
 								if (W && icon_old)
 									W.icon = icon_old
 
@@ -1112,7 +1112,7 @@ datum
 								make_cleanable(/obj/decal/cleanable/oil/streak,T)
 							if (20 to INFINITY)
 								make_cleanable(/obj/decal/cleanable/oil,T)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						T.wet = 0
 						T.UpdateOverlays(null, "wet_overlay")
 
@@ -1214,7 +1214,7 @@ datum
 						if (11)
 							M.lying = 0
 						if (12 to INFINITY)
-							SPAWN_DBG(50)
+							SPAWN_DBG(5 SECONDS)
 								if (!M.reagents.has_reagent("montaguone_extra"))
 									M.lying = 1
 									M.emote("deathgasp")
@@ -1457,13 +1457,13 @@ datum
 				src = null
 				if (method == INGEST)
 					boutput(M, "<span style=\"color:red\">Aaaagh! It tastes fucking horrendous!</span>")
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						M.visible_message("<span style=\"color:red\">[M] pukes violently!</span>")
 						M.vomit()
 				else
 					boutput(M, "<span style=\"color:red\">Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
-						SPAWN_DBG(10)
+						SPAWN_DBG(1 SECOND)
 							M.visible_message("<span style=\"color:red\">[M] pukes violently!</span>")
 							M.vomit()
 				return
@@ -1917,7 +1917,7 @@ datum
 				if(method == TOUCH)
 					boutput(M, "<span class='text-blue'>It feels like you got smudged with oil paints.</span>")
 					M.color = col
-					SPAWN_DBG(30)
+					SPAWN_DBG(3 SECONDS)
 						boutput(M, "<span class='text-red'>Oh god it's not coming off! You're tinted like this forever!</span>")
 
 			reaction_turf(var/turf/T, var/volume)
@@ -3184,7 +3184,7 @@ datum
 				if (istype(T))
 					if (T.wet >= 2) return
 					T.wet = 2
-					SPAWN_DBG(800)
+					SPAWN_DBG(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
@@ -3589,7 +3589,7 @@ datum
 
 	Bump(M as turf|obj|mob)
 		M:density = 0
-		SPAWN_DBG(4)
+		SPAWN_DBG(4 DECI SECONDS)
 			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
 		sleep(1)
 		var/turf/T = get_turf(M)

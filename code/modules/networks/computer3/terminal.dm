@@ -390,7 +390,7 @@ file_save - Save file to local disk."}
 
 			var/obj/target_serv = locate(target_tag)
 			if(istype(target_serv) && hasvar(target_serv,"net_id"))
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					if (target_serv)
 						src.input_text("connect [target_serv:net_id]")
 

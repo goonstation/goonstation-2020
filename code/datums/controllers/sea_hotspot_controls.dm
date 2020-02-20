@@ -296,7 +296,7 @@
 			if (phenomena_flags & PH_QUAKE)
 				shake_camera(M, 5, 0.5)
 				random_brute_damage(M, 3)
-				M.changeStatus("weakened", 1 SECONDS)
+				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span style='color:red'><b>The ground quakes and rumbles violently!</b></span>")
 
 			LAGCHECK(LAG_HIGH)
@@ -324,7 +324,7 @@
 
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 
@@ -498,7 +498,7 @@
 
 				speech_bubble.icon_state = "[val]"
 				UpdateOverlays(speech_bubble, "speech_bubble")
-				SPAWN_DBG(15)
+				SPAWN_DBG(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
 
@@ -893,7 +893,7 @@
 
 		for (var/mob/M in src.loc)
 			random_brute_damage(M, 40)
-			M.changeStatus("weakened", 1 SECONDS)
+			M.changeStatus("weakened", 1 SECOND)
 			M.emote("scream")
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 

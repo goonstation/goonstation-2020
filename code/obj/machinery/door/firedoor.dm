@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.setup()
 			SPAWN_DBG(10)
 				qdel(src)
@@ -56,7 +56,7 @@
 		var/area/A = get_area(loc)
 		if (A && A.name)
 			zone = A.name
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		if (radio_controller)
 			radio_controller.add_object(src, "[control_frequency]")
 

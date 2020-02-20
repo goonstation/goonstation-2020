@@ -65,7 +65,7 @@ var/list/mechanics_telepads = new/list()
 	proc/fireInput(var/name, var/datum/mechanicsMessage/msg)
 		if(!inputs.Find(name)) return
 		var/path = inputs[name]
-		SPAWN_DBG(1) call(master, path)(msg)
+		SPAWN_DBG(1 DECI SECOND) call(master, path)(msg)
 		return
 
 	//Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!
@@ -541,7 +541,7 @@ var/list/mechanics_telepads = new/list()
 				if(M == src || M.anchored || isAI(M)) continue
 				M.set_loc(src)
 			flushit()
-			SPAWN_DBG(20) ready = 1
+			SPAWN_DBG(2 SECONDS) ready = 1
 		return
 
 	proc/flushit()
@@ -568,7 +568,7 @@ var/list/mechanics_telepads = new/list()
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(AM)
 					AM.throw_at(target, 5, 1)
 
@@ -591,7 +591,7 @@ var/list/mechanics_telepads = new/list()
 		if(level == 2 || !ready) return
 		if(input)
 			ready = 0
-			SPAWN_DBG(50) ready = 1
+			SPAWN_DBG(5 SECONDS) ready = 1
 			flick("comp_tprint1",src)
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
@@ -651,7 +651,7 @@ var/list/mechanics_telepads = new/list()
 				boutput(user, "<span style=\"color:red\">This scanner only accepts thermal paper.</span>")
 				return
 			ready = 0
-			SPAWN_DBG(30) ready = 1
+			SPAWN_DBG(3 SECONDS) ready = 1
 			flick("comp_pscan1",src)
 			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
 			var/obj/item/paper/P = W
@@ -817,7 +817,7 @@ var/list/mechanics_telepads = new/list()
 		if(level != 2 && ready)
 			if(ishuman(user) && user.bioHolder)
 				ready = 0
-				SPAWN_DBG(30) ready = 1
+				SPAWN_DBG(3 SECONDS) ready = 1
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
 				var/sendstr = (send_name ? user.real_name : md5(user.bioHolder.Uid))
@@ -887,7 +887,7 @@ var/list/mechanics_telepads = new/list()
 					icon_state = "[under_floor ? "u":""]comp_accel1"
 					active = 1
 					SPAWN_DBG(0) drivecurrent()
-					SPAWN_DBG(5) drivecurrent()
+					SPAWN_DBG(5 DECI SECONDS) drivecurrent()
 				sleep(30)
 				if(src)
 					icon_state = "[under_floor ? "u":""]comp_accel"
@@ -1592,7 +1592,7 @@ var/list/mechanics_telepads = new/list()
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
 		ready = 0
-		SPAWN_DBG(30) ready = 1
+		SPAWN_DBG(3 SECONDS) ready = 1
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		if(changesig)
 			input.signal = mechanics.outputSignal
@@ -1667,7 +1667,7 @@ var/list/mechanics_telepads = new/list()
 		if(!converted.len || !ready) return
 
 		ready = 0
-		SPAWN_DBG(30) ready = 1
+		SPAWN_DBG(3 SECONDS) ready = 1
 
 		var/datum/signal/sendsig = get_free_signal()
 
@@ -1707,7 +1707,7 @@ var/list/mechanics_telepads = new/list()
 				pingsignal.data["data"] = "Wifi Component"
 				pingsignal.transmission_method = TRANSMISSION_RADIO
 
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
@@ -2181,7 +2181,7 @@ var/list/mechanics_telepads = new/list()
 	proc/activate(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
 		ready = 0
-		SPAWN_DBG(30) ready = 1
+		SPAWN_DBG(3 SECONDS) ready = 1
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
@@ -2457,7 +2457,7 @@ var/list/mechanics_telepads = new/list()
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !ready) return
 		ready = 0
-		SPAWN_DBG(20) ready = 1
+		SPAWN_DBG(2 SECONDS) ready = 1
 		if(input)
 			componentSay("[input.signal]")
 		return
@@ -2683,7 +2683,7 @@ var/list/mechanics_telepads = new/list()
 	fire(var/datum/mechanicsMessage/input)
 		if(charging || !ready) return
 		ready = 0
-		SPAWN_DBG(30) ready = 1
+		SPAWN_DBG(3 SECONDS) ready = 1
 		return ..()
 
 	updateIcon()

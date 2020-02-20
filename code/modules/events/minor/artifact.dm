@@ -12,6 +12,6 @@
 
 		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 		swirl.set_loc(T)
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			pool(swirl)
 		return

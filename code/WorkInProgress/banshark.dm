@@ -100,7 +100,7 @@
 
 	Bump(M as turf|obj|mob)
 		M:density = 0
-		SPAWN_DBG(4)
+		SPAWN_DBG(4 DECI SECONDS)
 			M:density = 1
 		sleep(1)
 		var/turf/T = get_turf(M)
@@ -121,7 +121,7 @@
 			else if (get_dist(src, src.sharktarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span style=\"color:red\"><B>[src]</B> bites [sharktarget2]!</span>", 1)
-				sharktarget2.changeStatus("weakened", 1 SECONDS)
+				sharktarget2.changeStatus("weakened", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 				banproc()
@@ -167,7 +167,7 @@
 
 	Bump(M as turf|obj|mob)
 		M:density = 0
-		SPAWN_DBG(4)
+		SPAWN_DBG(4 DECI SECONDS)
 			M:density = 1
 		sleep(1)
 		var/turf/T = get_turf(M)
@@ -179,7 +179,7 @@
 			if (get_dist(src, src.sharktarget2) <= 1)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span style=\"color:red\"><B>[src]</B> bites [sharktarget2]!</span>", 1)
-				sharktarget2.changeStatus("weakened", 1 SECONDS)
+				sharktarget2.changeStatus("weakened", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 				gibproc()

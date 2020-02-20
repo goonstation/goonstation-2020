@@ -565,7 +565,7 @@ var/list/globalContextActions = null
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
 				var/mob/dead/observer/ghost = user
-				spawn(1)
+				spawn(1 DECI SECOND)
 					ghost.go_to_vr()
 			..()
 
@@ -577,7 +577,7 @@ var/list/globalContextActions = null
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
 				var/mob/dead/observer/ghost = user
-				spawn(1)
+				spawn(1 DECI SECOND)
 					ghost.respawn_as_animal()
 			..()
 
@@ -588,7 +588,7 @@ var/list/globalContextActions = null
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
 				var/mob/dead/observer/ghost = user
-				spawn(1)
+				spawn(1 DECI SECOND)
 					ghost.enter_ghostdrone_queue()
 			..()
 
@@ -600,7 +600,7 @@ var/list/globalContextActions = null
 		execute(var/atom/target, var/mob/user)
 			if (user && istype(user, /mob/dead/observer))
 				var/mob/dead/observer/ghost = user
-				spawn(1)
+				spawn(1 DECI SECOND)
 					ghost.go_to_deadbar()
 			..()
 

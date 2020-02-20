@@ -149,7 +149,7 @@
 		tokenized_message(chase_text, target)
 		play_optional_sound(chase_sound)
 		if (stun_prob)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (get_dist(src, target) <= 1)
 					if (prob(stun_prob))
 						M.changeStatus("stunned", 3 SECONDS)
@@ -187,7 +187,7 @@
 		for (var/datum/critterEvent/E in events)
 			if (E.attachment_point == EVENT_ATTACHMENT_POINT_MELEE)
 				E.trigger()
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			src.attacking = 0
 
 	CritterDeath()

@@ -62,7 +62,7 @@
 
 /obj/machinery/computer/cloning/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		if(portable) return
 		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
@@ -853,7 +853,7 @@
 		if(prob(50))
 			playsound(get_turf(src), 'sound/machines/mixer.ogg', 50, 1)
 		if(prob(30))
-			SPAWN_DBG(3)
+			SPAWN_DBG(3 DECI SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \
 									'sound/impact_sounds/Slimy_Hit_3.ogg', \
 									'sound/impact_sounds/Slimy_Hit_4.ogg', \

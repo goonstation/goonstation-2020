@@ -262,7 +262,7 @@
 				if(O.invisibility == 101)
 					O.invisibility = 0
 					O.alpha = 128
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						if(O)
 							var/turf/U = O.loc
 							if(!istype(U))
@@ -274,7 +274,7 @@
 			var/mob/living/M = locate() in T
 			if(M && M.invisibility == 2)
 				M.invisibility = 0
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if(M)
 						M.invisibility = 2
 

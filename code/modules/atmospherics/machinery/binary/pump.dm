@@ -118,7 +118,7 @@ obj/machinery/atmospherics/binary/pump
 
 		switch(signal.data["command"])
 			if("broadcast_status")
-				SPAWN_DBG(5) broadcast_status()
+				SPAWN_DBG(5 DECI SECONDS) broadcast_status()
 
 			if("power_on")
 				on = 1
@@ -136,7 +136,7 @@ obj/machinery/atmospherics/binary/pump
 				target_pressure = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(5) broadcast_status()
+			SPAWN_DBG(5 DECI SECONDS) broadcast_status()
 
 		update_icon()
 

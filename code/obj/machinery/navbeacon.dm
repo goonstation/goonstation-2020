@@ -32,7 +32,7 @@
 		var/turf/T = loc
 		hide(T.intact)
 
-		SPAWN_DBG(5)	// must wait for map loading to finish
+		SPAWN_DBG(5 DECI SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
 				radio_controller.add_object(src, "[freq]")
 
@@ -85,7 +85,7 @@
 
 		var/request = signal.data["findbeacon"]
 		if(request && ((request in codes) || request == "any" || request == location))
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				post_signal()
 
 
@@ -279,7 +279,7 @@ Transponder Codes:<UL>"}
 		var/turf/T = get_turf(src)
 		hide(T.intact)
 
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			if(!nav_tag)
 				src.nav_tag = "NOWHERE"
 				var/area/A = get_area(src)
@@ -316,7 +316,7 @@ Transponder Codes:<UL>"}
 			reply.data["netid"] = src.net_id
 			reply.data["data"] = src.nav_tag
 			reply.data["navdat"] = "x=[src.x]&y=[src.y]&z=[src.z]"
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.link.post_signal(src, reply)
 			return
 

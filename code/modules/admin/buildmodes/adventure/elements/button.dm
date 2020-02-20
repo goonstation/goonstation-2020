@@ -41,7 +41,7 @@
 				button.button_type = button_type
 				button.set_density(button.density)
 				button.triggered = selected_triggerable.Copy()
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					button.color = color_rgb
 		else if (pa.Find("right"))
 			if (istype(object, /obj/adventurepuzzle/triggerable))
@@ -80,7 +80,7 @@
 			pressed = 1
 			icon_state = "button_[button_type]_pressed"
 			post_trigger()
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				icon_state = "button_[button_type]_unpressed"
 				pressed = 0
 

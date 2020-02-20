@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			if (src.owner)
 				var/client/C = src.owner
 				C.chatOutput.getContextFlag()

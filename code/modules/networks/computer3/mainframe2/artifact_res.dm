@@ -621,7 +621,7 @@
 								driverID &= ~ESIG_DATABIT
 
 								signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="poke", "field"=current_field, "value"=valueToAdjust))
-								SPAWN_DBG(5)
+								SPAWN_DBG(5 DECI SECONDS)
 									signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driverID, "dcommand"="peek", "field"=current_field))
 
 							return
@@ -944,7 +944,7 @@
 		..()
 
 		entries = list("","","","","|cLoading...","","","")
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -976,7 +976,7 @@
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -991,7 +991,7 @@
 					src.host_id = null
 					src.entries[5] = "No Connection"
 					src.updateUsrDialog(REASON_ALERT)
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -1399,7 +1399,7 @@
 			DEBUG_OUT(6)
 			src.post_status(old, "command", "term_connect", "device", src.device_tag)
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (!old_host_id)
 					old_host_id = old
 

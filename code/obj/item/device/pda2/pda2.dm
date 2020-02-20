@@ -232,7 +232,7 @@
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.hd = new /obj/item/disk/data/fixed_disk(src)
 		src.hd.file_amount = src.setup_drive_size
 		src.hd.name = "Minidrive"
@@ -513,7 +513,7 @@
 			pingreply.data["address_1"] = signal.data["sender"]
 			pingreply.data["command"] = "ping_reply"
 			pingreply.data["data"] = src.owner
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.post_signal(pingreply)
 
 			return

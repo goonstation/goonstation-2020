@@ -263,7 +263,7 @@ var/global/list/all_GPSs = list()
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(5) .()
+		SPAWN_DBG(5 DECI SECONDS) .()
 
 	disposing()
 		..()

@@ -42,7 +42,7 @@
 		var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards")
 		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Be wary of closets.", "Anomaly Alert")
 
-		spawn(1)
+		spawn(1 DECI SECOND)
 			for(var/i = 0, i<spawn_amount, i++)
 				if(closets.len > 0)
 					var/obj/storage/temp = pick(closets)

@@ -21,7 +21,7 @@
 		hotspots += h
 
 		T.hotspot_expose(h.temperature, h.volume)
-		//SPAWN_DBG(15) T.hotspot_expose(2000, 400)
+		//SPAWN_DBG(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		SPAWN_DBG(0)
@@ -33,7 +33,7 @@
 				if(istype(C, "/obj/critter/zombie")) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
@@ -61,7 +61,7 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		for(var/atom in hotspots)
 			var/obj/hotspot/A = atom
 			if (!A.pooled)
@@ -156,11 +156,11 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-	SPAWN_DBG(1) // dumb lighting hotfix
+	SPAWN_DBG(1 DECI SECOND) // dumb lighting hotfix
 		for(var/obj/hotspot/A in hotspots)
 			A.set_real_color() // enable light
 
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
 			if (!A.pooled)
 				pool(A)

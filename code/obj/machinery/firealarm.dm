@@ -171,7 +171,7 @@
 
 
 	src.dont_spam = 1
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 	if(src)
 		src.dont_spam = 0
 
@@ -231,7 +231,7 @@
 		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone
 		reply.data["type"] = "Fire"
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.frequency.post_signal(src, reply)
 		return
 

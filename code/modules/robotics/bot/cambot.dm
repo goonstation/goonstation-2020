@@ -309,7 +309,7 @@
 	src.photographing = 1
 	src.flash_blink(3, 1)
 
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 		if (src.on)
 			if (get_dist(src,target) <= 1)
 				src.flash_blink(1, 5)

@@ -163,7 +163,7 @@
 			if (ishellbanned(usr))
 				force_dud = 1
 			toggle_valve()
-			SPAWN_DBG(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
+			SPAWN_DBG(5 SECONDS) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 				toggle = 1
 
 	process()
@@ -282,7 +282,7 @@
 
 				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					update_icon()
 				return
 
@@ -341,7 +341,7 @@
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		toggle_valve()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (user)
 				user.suiciding = 0
 				if(isalive(user) && src && get_dist(user,src) <= 7)

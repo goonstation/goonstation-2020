@@ -322,6 +322,6 @@
 		else if (src.time > 0)
 			icon_state = "doortimer0"
 		else
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"

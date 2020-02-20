@@ -31,7 +31,7 @@
 	// create a blank icon at the appropriate size
 	var/icon/canvas = icon('icons/misc/flatBlank.dmi')
 	canvas.Crop(1, 1, areaW * iconWidth, areaH * iconHeight)
-	
+
 	var/turf/startT = C.mob.loc
 	var/startX = startT.x
 	var/startY = startT.y
@@ -69,7 +69,7 @@
 				// ignore things we don't want in the final image. lighting etc
 				if (thing.invisibility || istype(thing, /obj/overlay/tile_effect))
 					continue
-				
+
 				// TODO: handle large items (multi-tile things)
 				// TODO: handle pixel offsets somehow
 
@@ -118,7 +118,7 @@ var/global/deathConfettiActive = 0
 
 /mob/proc/deathConfetti()
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		playsound(src.loc, "sound/voice/yayyy.ogg", 50, 1)
 
 /client/proc/toggle_death_confetti()
@@ -220,7 +220,7 @@ var/global/deathConfettiActive = 0
 	var/hardRebootFilePath = "data/hard-reboot"
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
-	
+
 	if (hardRebootFileExists && alert("A hard reboot is already queued, would you like to remove it?",, "Yes", "No") == "Yes")
 		fdel(hardRebootFilePath)
 		logMessage = "removed a server hard reboot"

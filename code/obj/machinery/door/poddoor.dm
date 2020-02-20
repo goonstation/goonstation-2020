@@ -23,7 +23,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			open()
 
 	Bump()
@@ -562,7 +562,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(150)
+			SPAWN_DBG(15 SECONDS)
 				autoclose()
 	return 1
 
@@ -670,7 +670,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(150)
+			SPAWN_DBG(15 SECONDS)
 				autoclose()
 	return 1
 
