@@ -4,7 +4,7 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
-var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","ryetalin","hydronalin","penteticacid","oculine","epinephrine","mannitol","synthflesh")
+var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 datum
 	reagent
@@ -26,7 +26,7 @@ datum
 		var/addiction_min = 0 // how high the tally for this addiction needs to be before addiction_prob starts rolling
 		var/max_addiction_severity = "HIGH" // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
 		var/dispersal = 4 // The range at which this disperses from a grenade. Should be lower for heavier particles (and powerful stuff).
-		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number whose square is added to explosion power.
+		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number which linerally affects explosive power.
 		var/reacting = 0 // fuck off chemist spam
 		var/overdose = 0 // if reagents are at or above this in a mob, it's an overdose - if double this, it's a major overdose
 		var/depletion_rate = 0.4 // this much goes away per tick

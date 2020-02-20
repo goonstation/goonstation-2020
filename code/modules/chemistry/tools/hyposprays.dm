@@ -1,7 +1,9 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
 "silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh")
+"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
+"menthol", "cold_medicine", "antihistamine", "ipecac",\
+"booster_enzyme", "anti_fart", /*, "directed_nanites"*/) //fix the reagent ID?
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */
