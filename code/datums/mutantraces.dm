@@ -57,6 +57,7 @@
 	var/image/detail_1
 	var/image/detail_2
 	var/image/detail_3
+	var/image/detail_over_suit
 
 
 	proc/say_filter(var/message)
@@ -236,6 +237,7 @@
 				detail_1 = null
 				detail_2 = null
 				detail_3 = null
+				detail_over_suit = null
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
@@ -401,12 +403,14 @@
 			detail_1 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-1", layer = MOB_LIMB_LAYER+0.1)
 			detail_2 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-2", layer = MOB_LIMB_LAYER+0.2)
 			detail_3 = image('icons/effects/genetics.dmi', icon_state="lizard_detail-3", layer = MOB_LIMB_LAYER+0.3)
+			detail_over_suit = image('icons/effects/genetics.dmi', icon_state="lizard_over_suit", layer = MOB_LAYER_BASE+0.3)
 
 			hex_to_rgb_list(aH.customization_first_color)
 
 			detail_1.color = fix_colors(aH.customization_first_color)
 			detail_2.color = fix_colors(aH.customization_second_color)
 			detail_3.color = fix_colors(aH.customization_third_color)
+			detail_over_suit.color = fix_colors(aH.customization_first_color)
 
 			// detail_1.color = aH.customization_first_color
 			// detail_2.color = aH.customization_second_color
