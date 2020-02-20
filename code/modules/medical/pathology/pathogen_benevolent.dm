@@ -180,6 +180,50 @@ datum/pathogeneffects/benevolent/oxygenproduction
 			M.take_oxygen_deprivation(0 - origin.stage)
 			M.updatehealth()
 
+datum/pathogeneffects/benevolent/resurrection
+	name = "Resurrection"
+	desc = "The pathogen resurrects you. Fuck you I don't get paid to write descriptions! Sorry for swearing, It's late. I hope we can remain friends...."
+	rarity = RARITY_VERY_RARE
+
+	may_react_to()
+		return "Some dead pathogen cells appear to keep moving around."
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (origin.stage < 5)
+			return
+		M.show_message("<span style=\"color:red\">Read to die!</span>")
+
+	ondeath(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (origin.stage < 5)
+			return
+		// Shamelessly stolen from Strange Reagent
+		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
+			var/brute = M.get_brute_damage()>45?45:M.get_brute_damage()
+			var/burn = M.get_burn_damage()>45?45:M.get_burn_damage()
+			M.full_heal()
+			M.TakeDamage("chest", brute, burn)	// this makes it so our burn and brute are between 0-45, so at worst we will have 10% hp
+			M.take_brain_damage(70)				// and a lot of brain damage
+			setalive(M)
+			M.changeStatus("paralysis", 150) 	// paralyze the person for a while, because coming back to life is hard work
+			M.change_misstep_chance(30)			// even after getting up they still have some grogginess for a while
+			M.stuttering = 15
+			M.updatehealth()
+			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
+				M.ghost.show_text("<span style=\"color:red\"><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				M.ghost.mind.transfer_to(M)
+				qdel(M.ghost)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
+				H.cured(origin)			// cure the pathogen and immunize us against it, so we can't use it twice!
+				H.immunity(origin)
+				H.visible_message("<span style=\"color:red\">[H] seems to rise from the dead!</span>","<span style=\"color:red\">You feel the pathogen leaving your body as you rise from the dead.</span>")
+
+
 datum/pathogeneffects/benevolent/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."

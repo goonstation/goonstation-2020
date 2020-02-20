@@ -523,6 +523,9 @@
 
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
+	for (var/uid in src.pathogens)
+		var/datum/pathogen/P = src.pathogens[uid]
+		P.ondeath()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -636,7 +639,6 @@
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
-
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
 

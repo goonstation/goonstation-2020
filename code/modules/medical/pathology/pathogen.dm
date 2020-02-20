@@ -1400,6 +1400,13 @@ datum/pathogen
 		for (var/effect in src.effects)
 			. *= effect:onemote(infected, act, src)
 
+	// Act when dying. Returns nothing.
+	proc/ondeath()
+		for (var/effect in src.effects)
+			effect:ondeath(infected, src)
+		suppressant.ondeath(src)
+		return
+
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
 		for (var/i = 0, i < 10, i++)
 			var/T = pick(allowed)

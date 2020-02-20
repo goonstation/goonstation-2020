@@ -1535,7 +1535,7 @@
 					if (found)
 						is_cure = 1
 				else
-					found = 1
+					is_cure = 1
 		if (use_antiagent && src.antiagent)
 			src.antiagent.reagents.clear_reagents()
 		if (use_suppressant && src.suppressant)

@@ -35,6 +35,7 @@
 	proc/onsay(message, var/datum/pathogen/P)
 	proc/onadd(var/datum/pathogen/P)
 	proc/onemote(var/mob/target, message, var/datum/pathogen/P)
+	proc/ondeath(var/datum/pathogen/P)
 
 	// While doing pathogen research, the suppression method may define how the pathogen reacts to certain reagents.
 	// Returns null if the pathogen does not react to the reagent.

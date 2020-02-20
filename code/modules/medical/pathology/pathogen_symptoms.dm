@@ -116,6 +116,11 @@ datum/pathogeneffects
 	proc/onemote(var/mob/target, act, var/datum/pathogen/P)
 		return 1
 
+	// ondeath(mob, datum/pathogen) : void
+	// OVERRIDE: Overriding this is situational.
+	proc/ondeath(var/mob/M as mob, var/datum/pathogen/origin)
+		return
+
 	// End of events: please do not add any event definitions outside this block.
 	// ====
 
