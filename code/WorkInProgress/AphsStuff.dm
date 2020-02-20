@@ -107,7 +107,7 @@
 			src.icon_state = "oldai_mem-1"
 			sleep(10)
 			src.icon_state = "oldai_mem-2"
-			SPAWN_DBG(50) src.icon_state = "oldai_mem-1"
+			SPAWN_DBG(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
 			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)

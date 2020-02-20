@@ -28,7 +28,6 @@ datum
 				var/SD = size_divisor
 
 				var/list/covered = holder.covered_turf()
-				src = null
 
 				if (covered.len > 9)
 					volume = (volume/covered.len)
@@ -255,7 +254,7 @@ datum
 					var/myid = id
 					var/datum/reagents/myholder = holder
 					var/vol = volume
-					spawn(1)
+					spawn(1 DECI SECOND)
 						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 					myholder.del_reagent(myid)
 
@@ -281,7 +280,7 @@ datum
 					var/myid = id
 					var/datum/reagents/myholder = holder
 					var/vol = volume
-					spawn(1)
+					spawn(1 DECI SECOND)
 						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 					myholder.del_reagent(myid)
 

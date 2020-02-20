@@ -356,7 +356,7 @@
 	src.update_cursor()
 	src.update_keymap()
 
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		if (src && src.client) //Wire: fix for runtime error: Cannot execute null.setup macros().
 			src.client.setup_macros()
 
@@ -2302,7 +2302,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(100)
+					SPAWN_DBG(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)
@@ -2678,11 +2678,11 @@
 	animation.master = src
 	animation.icon_state = "ungibbed"
 	src = null //Detach this, what if we get deleted before the animation ends??
-	SPAWN_DBG(7) //Length of animation.
+	SPAWN_DBG(7 DECI SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
 		src.anchored = 1 // Stop running into the lava every half second jeez!
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			src.anchored = 0
 	return
 

@@ -61,7 +61,7 @@ obj/item/coin/bombini
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.b = locate(/obj/machinery/shower/puzzle/part_two, orange(2,src))
 			src.c = locate(/obj/machinery/shower/puzzle/part_three, orange(2,src))
 			src.tub = locate(/obj/machinery/floorflusher/bathtub, orange(2,src))
@@ -76,7 +76,7 @@ obj/item/coin/bombini
 				cycle()
 
 /obj/machinery/shower/puzzle/part_two
-// thats it no meat just existence. warcrimes is a douche. 
+// thats it no meat just existence. warcrimes is a douche.
 /obj/machinery/shower/puzzle/part_three
 // thats it no meat just existence
 

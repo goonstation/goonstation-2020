@@ -38,7 +38,7 @@
 		B.set_density(0)
 		B.layer = MOB_EFFECT_LAYER
 		target.canmove = 0
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			qdel(B)
 			target.canmove = 1
 		boutput(target, "<span style=\"color:blue\">Your eyes cry out in pain!</span>")
@@ -57,13 +57,13 @@
 			target.changeStatus("weakened", 2 SECONDS)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(450)
+				SPAWN_DBG(45 SECONDS)
 					if (target) target.bioHolder.RemoveEffect("bad_eyesight")
 			target.take_eye_damage(blindProtected ? 5 : 10, 1)
 			target.change_eye_blurry(blindProtected ? 10 : 20)
 		else
 			boutput(holder.owner, "<span style=\"color:red\">Your spell doesn't last as long without a staff to focus it!</span>")
-			target.changeStatus("weakened", 1 SECONDS)
+			target.changeStatus("weakened", 1 SECOND)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(300)

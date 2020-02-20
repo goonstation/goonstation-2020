@@ -257,7 +257,7 @@
 						H.vomit()
 						H.visible_message("<span style=\"color:red\">[H] throws up all over \himself. Gross!</span>")
 						boutput(H, "<span style=\"color:red\">You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
-				holder.owner.changeStatus("stunned", 1 SECONDS)
+				holder.owner.changeStatus("stunned", 1 SECOND)
 				holder.owner.visible_message("<span style=\"color:red\">[holder.owner] throws up all over \himself. Gross!</span>")
 				holder.owner.vomit()
 				showOwner("<span style=\"color:red\">You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
@@ -485,7 +485,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10) //Give it some time to finish creating the simsController because fak
+		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
 #ifdef RP_MODE

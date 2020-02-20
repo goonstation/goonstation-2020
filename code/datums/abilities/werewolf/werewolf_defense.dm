@@ -47,7 +47,7 @@
 			H.delStatus("burning")
 			H.visible_message("<span style=\"color:red\"><B>[H] deafening howl completely extinguishes the fire on it!</B></span>")
 
-		//SPAWN_DBG(80)
+		//SPAWN_DBG(8 SECONDS)
 		//	playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 70, 1, 0, 0.7)
 
 		H.stance = "defensive"

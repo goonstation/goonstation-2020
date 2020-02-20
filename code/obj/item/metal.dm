@@ -134,7 +134,7 @@ MATERIAL
 				return
 			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.weakened && !usr.getStatusDuration("stunned"))
 					src.amount -= 2
 					var/atom/G = new /obj/grille(usr.loc)

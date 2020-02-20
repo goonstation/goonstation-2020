@@ -229,7 +229,7 @@
 
 				src.changeStatus("radiation", damage SECONDS)
 				if (src.add_stam_mod_regen("projectile", -5))
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						src.remove_stam_mod_regen("projectile")
 
 			if (D_TOXIC)
@@ -281,7 +281,7 @@
 	src.flash(30)
 
 	if (isdead(src) && src.client)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.gib(1)
 		return
 
@@ -348,7 +348,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += max(500 - reduction, 0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.gib(1)
 			return
 
@@ -499,7 +499,7 @@
 				visible_message("<span style=\"color:red\"><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
 				if (prob(50))
-					src.changeStatus("weakened", 1 SECONDS)
+					src.changeStatus("weakened", 1 SECOND)
 		if ("r_leg")
 			if (temp)
 				temp.take_damage(damage, 0)
@@ -507,7 +507,7 @@
 				visible_message("<span style=\"color:red\"><b>The blob has knocked [src] off-balance!</b></span>")
 				drop_item()
 				if (prob(50))
-					src.changeStatus("weakened", 1 SECONDS)
+					src.changeStatus("weakened", 1 SECOND)
 
 	src.UpdateDamageIcon()
 	return
@@ -746,7 +746,7 @@
 					eyeblind = 5
 					src.change_eye_blurry(5)
 					src.bioHolder.AddEffect("bad_eyesight")
-					SPAWN_DBG(100)
+					SPAWN_DBG(10 SECONDS)
 						src.bioHolder.RemoveEffect("bad_eyesight")
 
 			if (25 to INFINITY)

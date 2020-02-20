@@ -190,12 +190,12 @@ var/global/list/airbridge_controllers = list()
 						if(added.Find(A) == added.len)
 							if(D.slide(path[T]))
 								D.layer = 3 // TODO LAYER
-								SPAWN_DBG(20)  qdel(D)
+								SPAWN_DBG(2 SECONDS)  qdel(D)
 						else
 							SPAWN_DBG(0)
 								if(D && D.slide(path[T]))
 									D.layer = 3 // TODO LAYER
-									SPAWN_DBG(20) qdel(D)
+									SPAWN_DBG(2 SECONDS) qdel(D)
 
 				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 				sleep(1)
@@ -220,7 +220,7 @@ var/global/list/airbridge_controllers = list()
 		maintaining_bridge = 0
 		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			var/list/path_reverse = reverse_list(path)
 
 			if (!is_drawbridge)
@@ -310,7 +310,7 @@ var/global/list/airbridgeComputers = list()
 		..()
 		update_status()
 		if (starts_established && links.len)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 		return
 

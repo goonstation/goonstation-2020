@@ -78,7 +78,7 @@
 				mode = 1
 				if(result) result.Cut()
 				master.updateSelfDialog()
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					mode = 0
 					master.updateSelfDialog()
 				return
@@ -438,7 +438,7 @@
 
 				src.post_signal(signal,"[send_freq]")
 				master.updateSelfDialog()
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					mode = 0
 					master.updateSelfDialog()
 

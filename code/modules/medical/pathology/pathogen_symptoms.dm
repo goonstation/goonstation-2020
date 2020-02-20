@@ -640,7 +640,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
 			var/point = new /obj/decal/point(get_turf(M))
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				qdel(point)
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
@@ -1061,7 +1061,7 @@ datum/pathogeneffects/malevolent/capacitor
 		if (load > 4e6)
 			M.visible_message("<span style=\"color:red\">[M] releases a burst of lightning into the air!</span>", "<span style=\"color:red\">You discharge your energy into the air. It leaves your skin burned to a fine crisp.</span>", "<span style=\"color:red\">You hear a burst of electricity.</span>")
 			M.TakeDamage("chest", 0, 30)
-			M.changeStatus("stunned", 1 SECONDS)
+			M.changeStatus("stunned", 1 SECOND)
 			for (var/mob/V in orange(4, M))
 				electrocute(V, load / 10)
 		else if (load > 1e6)
@@ -1083,7 +1083,7 @@ datum/pathogeneffects/malevolent/capacitor
 			for (var/mob/V in orange(2, M))
 				electrocute(V, load / 10)
 		else if (load > 5000)
-			M.changeStatus("stunned", 1 SECONDS)
+			M.changeStatus("stunned", 1 SECOND)
 			M.visible_message("<span style=\"color:red\">[M] releases a few sparks into the air.</span>", "<span style=\"color:red\">You discharge your energy into the air.</span>", "<span style=\"color:red\">You hear a burst of electricity.</span>")
 			for (var/mob/V in orange(1, M))
 				electrocute(V, load / 10)
@@ -1680,7 +1680,7 @@ datum/pathogeneffects/malevolent/seriouschills
 					else
 						M.bodytemperature -= 20
 						M.show_message("<span style=\"color:red\">You feel pretty damn cold.</span>")
-						M.changeStatus("stunned", 1 SECONDS)
+						M.changeStatus("stunned", 1 SECOND)
 						M.emote("shiver")
 
 			if (5)
@@ -1737,7 +1737,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 					else
 						M.bodytemperature -= 30
 						M.show_message("<span style=\"color:red\">You pretty damn cold.</span>")
-						M.changeStatus("stunned", 1 SECONDS)
+						M.changeStatus("stunned", 1 SECOND)
 						M.emote("shiver")
 
 			if (5)

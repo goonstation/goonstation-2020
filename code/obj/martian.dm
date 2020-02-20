@@ -30,7 +30,7 @@
 	else if(prob(10))
 		boutput(user, "<span style=\"color:red\"><B>Something has clamped down on your hand!</B></span>")
 		user.changeStatus("stunned", 10 SECONDS)
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			if(prob(25))
 				boutput(user, "<span style=\"color:red\"><B>You fail to break free!</B></span>")
 				var/mob/dead/observer/newmob

@@ -224,7 +224,7 @@ mob/new_player
 						close_spawn_windows()
 						latejoin.activated = 1
 						src.mind.transfer_to(S)
-						SPAWN_DBG(1)
+						SPAWN_DBG(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
 					else

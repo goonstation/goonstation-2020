@@ -337,7 +337,7 @@
 		if(!src.impacted)
 			world << sound('sound/weapons/energy/howitzer_impact.ogg', volume = 70)
 			src.impacted = 1
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
 					shake_camera(M, 2, 1)
 

@@ -90,13 +90,13 @@
 			C.health -= 10
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				src.attacking = 0
 			return
 
 		src.visible_message("<span class='combat'><B>[src]</B> claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,10))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)

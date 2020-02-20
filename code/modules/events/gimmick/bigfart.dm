@@ -23,7 +23,7 @@
 		if (fart_attack == 1)
 			return
 		fart_attack = 1
-		SPAWN_DBG(120)
+		SPAWN_DBG(12 SECONDS)
 			fart_attack = 0
 		if (random_events.announce_events)
 			var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors", 20; "neckbeards")

@@ -94,7 +94,7 @@
 		playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 		SPAWN_DBG(10)
 			E.throwforce = 1
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			icon_state = "goosebot"
 
 	return

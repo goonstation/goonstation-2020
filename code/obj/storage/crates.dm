@@ -10,7 +10,7 @@
 	throwforce = 50 //ouch
 	can_flip_bust = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
-	
+
 	get_desc()
 		. = ..()
 		if(src.delivery_destination)
@@ -19,7 +19,7 @@
 	update_icon()
 		..()
 		if(src.delivery_destination)
-			src.overlays += "crate-barcode" 
+			src.overlays += "crate-barcode"
 
 
 	CanPass(atom/movable/mover, turf/target)
@@ -213,7 +213,7 @@
 /obj/storage/crate/syndicate_surplus
 	var/ready = 0
 	New()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (!ready)
 				spawn_items()
 

@@ -95,7 +95,7 @@
 			C.health -= 4
 			if(C.health <= 0)
 				C.CritterDeath()
-			SPAWN_DBG(25)
+			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -116,7 +116,7 @@
 				SPAWN_DBG(0)
 					M:changeStatus("paralysis", 2 SECONDS)
 					step_away(M,src,15)
-					SPAWN_DBG(3) step_away(M,src,15)
+					SPAWN_DBG(3 DECI SECONDS) step_away(M,src,15)
 			SPAWN_DBG(25)
 				src.attacking = 0
 		else
@@ -130,7 +130,7 @@
 				SPAWN_DBG(25)
 					src.attacking = 0
 				return
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				if (get_dist(src, M) <= 1 && ((M:loc == target_lastloc)) && M.lying)
 					if(iscarbon(M))
 						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
@@ -223,7 +223,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN_DBG(20) playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+						SPAWN_DBG(2 SECONDS) playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 				else
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> gnashes its teeth in fustration!</span>")
 				src.attacking = 0

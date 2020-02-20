@@ -18,7 +18,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
 				drivers += D
@@ -60,7 +60,7 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(100)
+						SPAWN_DBG(10 SECONDS)
 							if (door)
 								door.close() //this may need some adjusting still
 
@@ -156,11 +156,11 @@
 			driver_operating = 1
 
 			SPAWN_DBG(0)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					driver_operating = 0
 					driver = null
 
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					if (driver)
 						driver.drive()
 

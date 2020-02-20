@@ -18,7 +18,7 @@ var/list/genescanner_addresses = list()
 
 	New()
 		..()
-		SPAWN_DBG(8)
+		SPAWN_DBG(8 DECI SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if(!src.net_id)
@@ -485,7 +485,7 @@ var/list/genescanner_addresses = list()
 			if(!usercl || !target_mob)
 				qdel(src)
 				return
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				src.process()
 			return
 

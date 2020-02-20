@@ -505,7 +505,7 @@
 		if(components.len > 0)
 			light.enable()
 			playsound(src.loc, sound_zap, 40, 1)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				playsound(src.loc, sound_bubble, 40, 1)
 			if(components.len == 1)
 				boutput(user, "<span style=\"color:red\">You activate the [src].</span>")
@@ -532,7 +532,7 @@
 				output.generation++
 				logTheThing("station", user, null, "creates a [output] bar (<b>Material:</b> <i>[output.mat_id]</i>) with the [src] at [log_loc(src)].") // Sorry for code duplication, but I'm regularly seeing runtime errors for some reason if this proc is called after handleSlag (Convair880).
 				handleSlag()
-			SPAWN_DBG(8)
+			SPAWN_DBG(8 DECI SECONDS)
 				playsound(src.loc, sound_hiss, 45, 1)
 				light.disable()
 		else

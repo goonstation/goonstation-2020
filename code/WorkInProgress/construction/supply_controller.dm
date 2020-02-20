@@ -607,7 +607,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			recheck()
 
 	proc/is_sellable(var/obj/O)

@@ -1,8 +1,8 @@
 /mob/living/critter/flock
-	var/resources = 0	
+	var/resources = 0
 	name = "concept of a bird machine"
 	desc = "Well, that's a thing."
-	icon = 'icons/misc/featherzone.dmi'	
+	icon = 'icons/misc/featherzone.dmi'
 	density = 0
 	say_language = "feather"
 	voice_name = "synthetic chirps"
@@ -12,7 +12,7 @@
 	speechverb_ask = "inquires"
 	speechverb_gasp = "clatters"
 	speechverb_stammer = "buzzes"
-	custom_gib_handler = /proc/flockdronegibs	
+	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
 	// HEALTHS
 	var/health_brute = 1
@@ -45,7 +45,7 @@
 	// flockless drones act differently
 	src.flock = F
 	// wait for like one tick for the unit to set up properly before registering
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		if(!isnull(src.flock))
 			src.flock.registerUnit(src)
 
@@ -111,12 +111,12 @@
 		playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = 1
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
 			if (!F)
 				F = unpool(/obj/fire_foam)
 				F.set_loc(src.loc)
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					if (F && !F.disposed)
 						pool(F)
 			playsound(get_turf(src), "sound/effects/spray.ogg", 50, 1, -3)
@@ -287,7 +287,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/drone/F = owner		
+		var/mob/living/critter/flock/drone/F = owner
 		if (F && !F.can_afford(100))
 			interrupt(INTERRUPT_ALWAYS)
 			F.canmove = 1

@@ -31,12 +31,12 @@
 				SPAWN_DBG(10)
 					if (I && !I.disposed) pool(I)
 					src.number--
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()
 			else
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()

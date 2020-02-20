@@ -30,7 +30,7 @@ datum/special_respawn
 				if(!check)
 					break
 				r_number ++
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 
@@ -76,7 +76,7 @@ datum/special_respawn
 				//M.ckey = player:ckey
 
 				r_number ++
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -97,7 +97,7 @@ datum/special_respawn
 				player.mind.transfer_to(M)
 
 				r_number ++
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -119,7 +119,7 @@ datum/special_respawn
 				r_number++
 				SPAWN_DBG(rand(1,10))
 					M.set_clothing_icon_dirty()
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -143,7 +143,7 @@ datum/special_respawn
 			check = spawn_character_human("The Welder",player,B,"Welder")
 			if(!check)
 				return
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				if(trashstation == "Yes")
 					creepify_station()
 					bust_lights()
@@ -167,7 +167,7 @@ datum/special_respawn
 				if(!check)
 					break
 				r_number ++
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 		message_admins("[r_number] officers spawned.")
@@ -184,7 +184,7 @@ datum/special_respawn
 				var/check = spawn_character_alien(player,location)
 				if(!check)
 					break
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 				return 1
@@ -214,7 +214,7 @@ datum/special_respawn
 				if(!check)
 					break
 				r_number ++
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 
@@ -235,7 +235,7 @@ datum/special_respawn
 			check = spawn_character_human("The Smiling Man",player,B,"Smiling Man")
 			if(!check)
 				return
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				if(player && !player:client)
 					qdel(player)
 
@@ -282,7 +282,7 @@ datum/special_respawn
 		//mob.key = player.key
 		^*/
 		mob.mind.special_role = equip
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (mob)
 				eq_mob(equip,mob)
 				mob.set_clothing_icon_dirty()

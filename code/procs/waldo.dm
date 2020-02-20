@@ -27,7 +27,7 @@
 	if(!isturf(picked)) return
 	usr.set_loc(picked)
 	usr.verbs -= /client/proc/waldo_decoys
-	SPAWN_DBG(300)
+	SPAWN_DBG(30 SECONDS)
 		usr.verbs += /client/proc/waldo_decoys
 
 /client/proc/mass_teleport()

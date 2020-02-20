@@ -653,7 +653,7 @@
 					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							if (src.master)
 								src.master.explode()
 

@@ -25,7 +25,7 @@
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "aitrack"
@@ -229,7 +229,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "railtrack"

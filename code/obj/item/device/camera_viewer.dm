@@ -40,5 +40,5 @@
 		else
 			user.set_eye(C)
 
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				attack_self(user)

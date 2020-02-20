@@ -66,7 +66,7 @@
 	var/sound_load = 'sound/weapons/gunload_light.ogg'
 
 	New()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
 

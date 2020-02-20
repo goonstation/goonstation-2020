@@ -12,9 +12,9 @@
 
 	New()
 		..()
-		spawn(1)
+		spawn(1 DECI SECOND)
 			src.link_elements()
-			spawn(10)
+			spawn(1 SECOND)
 				qdel(src)
 
 	proc/link_elements()
@@ -144,7 +144,7 @@
 	New()
 		..()
 		if(start_on)
-			spawn(10)
+			spawn(1 SECOND)
 				src.trigger("on")
 
 	trigger_actions()
@@ -180,7 +180,7 @@
 #if ASS_JAM
 	New()
 		..()
-		spawn(1)
+		spawn(1 DECI SECOND)
 			for(var/obj/adventurepuzzle/invisible/target_link/T)
 				if (T.id == "UD-LANDING-ZONE")
 					target = get_turf(T)
@@ -189,7 +189,7 @@
 	equipped(var/mob/user, var/slot)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == "eyes")
-			spawn(10)
+			spawn(1 SECOND)
 				enter_urs_dungeon(user)
 		return
 
@@ -233,7 +233,7 @@
 	equipped(var/mob/user, var/slot)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == "eyes")
-			spawn(10)
+			spawn(1 SECOND)
 				exit_urs_dungeon(user)
 		return
 

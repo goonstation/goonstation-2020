@@ -50,7 +50,7 @@
 					step(P, the_dir)
 					sleep(2)
 
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			holder.owner.set_loc(D.loc)
 			qdel(D)
 			qdel(P)
@@ -94,4 +94,4 @@
 			src.x--
 
 	src.can_move = 0
-	SPAWN_DBG(2) src.can_move = 1
+	SPAWN_DBG(2 DECI SECONDS) src.can_move = 1

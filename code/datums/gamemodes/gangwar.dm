@@ -220,7 +220,7 @@
 	slow_process ++
 	if (slow_process < 60)
 		return
-	else 
+	else
 		slow_process = 0
 
 	for(var/datum/gang/G in gangs)
@@ -358,7 +358,7 @@
 		if (prob(10))
 			temp_name = pick_string("gangwar.txt", "fullchosen")
 			fullchosen = temp_name
-		else 
+		else
 			var/list/part1 = pick_string("gangwar.txt", "part1")
 			var/list/part2 = pick_string("gangwar.txt", "part2")
 			part1chosen = pick(part1)
@@ -421,7 +421,7 @@
 
 	SPAWN_DBG(hot_zone_timer-600)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
-		SPAWN_DBG(600)
+		SPAWN_DBG(1 MINUTE)
 			if(hot_zone != null && hot_zone.gang_owners != null)
 				var/datum/gang/G = hot_zone.gang_owners
 				G.score_event += hot_zone_score
@@ -732,7 +732,7 @@
 			new/datum/gang_item/ninja/sneaking_suit,
 			new/datum/gang_item/space/phaser_gun,
 			new/datum/gang_item/space/laser_gun,
-			
+
 			new/datum/gang_item/country_western/colt_saa,
 			new/datum/gang_item/country_western/colt_45_bullet,
 
@@ -797,7 +797,7 @@
 
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
-			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;"> 
+			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
 				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
 				<font size="3">You have [gang.spendable_points] points to spend!</font>
 			</div>
@@ -807,7 +807,7 @@
 		"}
 
 
-		dat += {"<table> 
+		dat += {"<table>
 		<tr>
 			<th>Name</th>
 			<th>Price</th>
@@ -818,7 +818,7 @@
 		"}
 		for (var/datum/gang_item/GI in buyable_items)
 			dat += "<tr><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td><td>[GI.class1]</td><td>[GI.class2]</td>  </tr>"
-		
+
 		dat += "</table></HTML>"
 
 		HTML = dat
@@ -870,7 +870,7 @@
 
 		src.overlays -= default_screen_overlay
 		src.overlays += overlay
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.overlays -= overlay
 			src.overlays += default_screen_overlay
 
@@ -939,7 +939,7 @@
 		score += O.reagents.get_reagent_amount("krokodil")
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
-		
+
 		return round(score)
 
 	proc/cash_amount()
@@ -965,7 +965,7 @@
 		if(istype(ticker.mode,/datum/game_mode/gang) && damage_warning_timeout == 0)
 			ticker.mode:broadcast_to_gang("Your locker is under attack!",src.gang)
 			damage_warning_timeout = 1
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				damage_warning_timeout = 0
 
 		if(health <= 0)
@@ -1345,12 +1345,12 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 
 	//items purchasable from gangs
 /datum/gang_item
-	var/name = "commodity"	// Name of the item 
+	var/name = "commodity"	// Name of the item
 	var/desc = "item"		//Description for item
 	var/class1 = ""			//This should be general category: weapon, clothing/armor, misc
 	var/class2 = ""			//This should be the gang item style: Street Gang, Western Gang, Space Gang
-	var/item_path = null 		// Type Path of the item 
-	var/price = 100 			// 
+	var/item_path = null 		// Type Path of the item
+	var/price = 100 			//
 /datum/gang_item/street
 	class1 = "Street Gang"
 /datum/gang_item/thirties_chicago
@@ -1576,7 +1576,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 		..()
 		if (!ishuman(src.owner))
 			return
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
 
 /obj/item/implanter/gang

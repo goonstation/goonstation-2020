@@ -189,7 +189,7 @@
 				SPAWN_DBG(0)
 					S.open()
 		allow_processing = 1
-		SPAWN_DBG(1200)
+		SPAWN_DBG(2 MINUTES)
 			if (state == 1 && current_match_id == spawned_match_id)
 				announceAll("Game did not start after 2 minutes. Resetting arena.")
 				resetArena()
@@ -338,7 +338,7 @@
 		new /obj/item/extinguisher/virtual(target)
 		new /obj/item/card/id/gauntlet(target, forwhom)
 		var/obj/item/artifact/activator_key/A = new /obj/item/artifact/activator_key(target)
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			A.name = "Artifact Activator Key"
 
 	proc/spawnMeds(var/turf/target)
@@ -361,7 +361,7 @@
 			critters_left -= name
 
 	New()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			viewing = locate() in world
 			staging = locate() in world
 			for (var/area/gauntlet/G in world)
@@ -600,7 +600,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/T = pick(gauntlet_controller.spawnturfs)
 			var/obj/O = new ST(T)
 			showswirl(T)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				O.ArtifactActivated()
 
 		forcewall
@@ -981,7 +981,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 					var/turf/target = pick(gauntlet_controller.spawnturfs)
 					target.overlays += marker
 
-					SPAWN_DBG(20)
+					SPAWN_DBG(2 SECONDS)
 						if (!D2)
 							return
 						D2.set_loc(target)

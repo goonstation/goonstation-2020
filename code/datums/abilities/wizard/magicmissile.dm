@@ -62,7 +62,7 @@
 					B.anchored = 1
 					B.set_density(0)
 					B.layer = EFFECTS_LAYER_BASE
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						qdel(B)
 					step_to(A,M,0)
 					if (get_dist(A,M) == 0)

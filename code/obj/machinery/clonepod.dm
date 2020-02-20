@@ -71,7 +71,7 @@
 		light.set_height(0.75)
 		light.attach(src)
 
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			if (radio_controller)
 				pda_connection = radio_controller.add_object(src, "[pdafrequency]")
 			if (!src.net_id)
@@ -167,7 +167,7 @@
 	src.failed_tick_counter = 0 // make sure we start here
 
 	src.eject_wait = 1
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		src.eject_wait = 0
 
 	src.occupant = new /mob/living/carbon/human(src)
@@ -194,7 +194,7 @@
 
 	src.update_icon()
 	//Get the clone body ready
-	SPAWN_DBG(5) //Organs may not exist yet if we call this right away.
+	SPAWN_DBG(5 DECI SECONDS) //Organs may not exist yet if we call this right away.
 		random_brute_damage(src.occupant, 90, 1)
 	src.occupant.take_toxin_damage(50)
 	src.occupant.take_oxygen_deprivation(40)
@@ -582,7 +582,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 		src.failed_tick_counter = 0
 		src.update_icon()
 		src.occupant.ghostize()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			qdel(src.occupant)
 	return
 
@@ -902,7 +902,7 @@ var/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.7
 
 		src.start_cycle()
 
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1

@@ -53,7 +53,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return Tcontent
 
 	New()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
@@ -196,10 +196,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up) && ishuman(user))
 		if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
-			SPAWN_DBG(2)
+			SPAWN_DBG(2 DECI SECONDS)
 				user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 		else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
-			SPAWN_DBG(2)
+			SPAWN_DBG(2 DECI SECONDS)
 				user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 
 	return 1
@@ -242,14 +242,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ishuman(user))
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if (get_dist(user,M)<=1)
 						user.r_hand:shoot_point_blank(M,user,second_shot = 1)
 					else
 						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if (get_dist(user,M)<=1)
 						user.l_hand:shoot_point_blank(M,user,second_shot = 11)
 					else

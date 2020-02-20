@@ -37,11 +37,11 @@
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0
@@ -64,11 +64,11 @@
 
 				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0

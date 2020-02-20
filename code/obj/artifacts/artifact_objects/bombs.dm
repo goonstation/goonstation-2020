@@ -46,7 +46,7 @@
 				playsound(T, alarm_final, 100, 1, -1)
 			animate_flash_color_fill(O,flascustomization_first_color,10,3)
 
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				T = get_turf(O)
 				if (src.activated)
 					deploy_payload(O)

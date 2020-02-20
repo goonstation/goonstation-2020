@@ -637,7 +637,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				SPAWN_DBG(1200)
+				SPAWN_DBG(2 MINUTES)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -653,7 +653,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				SPAWN_DBG(1200)
+				SPAWN_DBG(2 MINUTES)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -669,7 +669,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				SPAWN_DBG(1200)
+				SPAWN_DBG(2 MINUTES)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."

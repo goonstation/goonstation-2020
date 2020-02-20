@@ -238,7 +238,7 @@
 						else
 							feeding = 0
 
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				src.attacking = 0
 
 	ChaseAttack(mob/M)

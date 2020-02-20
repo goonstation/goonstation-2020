@@ -325,7 +325,7 @@
 		if(SOUTHWEST)
 			divert_to = SOUTH
 			divert_from = WEST
-	SPAWN_DBG(2)
+	SPAWN_DBG(2 DECI SECONDS)
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
@@ -426,7 +426,7 @@
 	conveyor_switches += src
 	update()
 
-	SPAWN_DBG(5)		// allow map load
+	SPAWN_DBG(5 DECI SECONDS)		// allow map load
 		conveyors = list()
 		for(var/obj/machinery/conveyor/C in machines)
 			if(C.id == id)

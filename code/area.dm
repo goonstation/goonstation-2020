@@ -167,7 +167,7 @@
 			var/mob/M = A
 			if (M.client)
 				if (sound_loop)
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						if (M && (get_area(M).sound_group != src.sound_group))
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
@@ -3067,7 +3067,7 @@ area/station/security/visitation
 	else
 		luminosity = 0
 
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
 

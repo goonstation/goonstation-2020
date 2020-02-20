@@ -383,7 +383,7 @@ var/const/PHASER_SNIPER = 256
 			O.dest = get_turf(target)
 			O.origin = user
 			O.impactsounds = shot_impactsounds.Copy()
-			SPAWN_DBG(15) qdel(O)
+			SPAWN_DBG(1.5 SECONDS) qdel(O)
 
 			if(shot_overlays.len)
 				for(var/S in shot_overlays)
@@ -496,7 +496,7 @@ var/const/PHASER_SNIPER = 256
 								var/obj/OV = unpool(/obj/effects/sparks)
 								OV.set_loc(T)
 								OV.dir = pick(alldirs)
-								SPAWN_DBG(20) if (OV) pool(OV)
+								SPAWN_DBG(2 SECONDS) if (OV) pool(OV)
 						if(34 to 66)
 							playsound(O.loc, "sound/effects/exlow.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
@@ -504,7 +504,7 @@ var/const/PHASER_SNIPER = 256
 								OV.icon = 'icons/effects/effects.dmi'
 								OV.icon_state = "empdisable"
 								OV.dir = pick(alldirs)
-								SPAWN_DBG(3) qdel(OV)
+								SPAWN_DBG(3 DECI SECONDS) qdel(OV)
 								if(prob(O.power/2) || !O.range)
 									T.burn_tile()
 						if(67 to 100)
@@ -554,7 +554,7 @@ var/const/PHASER_SNIPER = 256
 			boutput(usr, "<span style=\"color:red\">Your phaser overloads.</span>");
 			overloading = 1
 			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1)
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				var/turf/curr = get_turf(src)
 				curr.hotspot_expose(700,125)
 				explosion(src, curr, 0, 0, 2, 4)

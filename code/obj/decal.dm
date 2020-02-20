@@ -127,7 +127,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.loc = location
-		SPAWN_DBG(20) qdel(src)
+		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/shockwave
@@ -142,7 +142,7 @@
 	mouse_opacity = 0
 	New(var/atom/location)
 		src.loc = location
-		SPAWN_DBG(20) qdel(src)
+		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
 /obj/decal/point

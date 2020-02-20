@@ -120,7 +120,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			process()
 
 	proc/process()
@@ -240,7 +240,7 @@
 						M.activate()
 
 		src.add_fingerprint(user)
-		SPAWN_DBG(60)
+		SPAWN_DBG(6 SECONDS)
 			spam_flag = 0
 	return
 
@@ -332,7 +332,7 @@
 		if (!istype(other))
 			return
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
 			user.visible_message("<span style=\"color:red\"><b>[user] is warped away by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
@@ -400,7 +400,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.default_state = src.opened
 			active = 0
 			pitch = rand(0,12)
@@ -459,7 +459,7 @@
 			src.icon_state = "bluedoor_0"
 			set_density(0)
 			opacity = 0
-			SPAWN_DBG(13)
+			SPAWN_DBG(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -478,7 +478,7 @@
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
-			SPAWN_DBG(13)
+			SPAWN_DBG(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -543,7 +543,7 @@
 			src.activate()
 
 		if(function == "electrical")
-			SPAWN_DBG(40)
+			SPAWN_DBG(4 SECONDS)
 				linked_object = locate("sphere_[id]")
 
 		return
@@ -590,7 +590,7 @@
 						if (isdead(poorSoul) && prob(15))
 							poorSoul.gib()
 
-					SPAWN_DBG(6)
+					SPAWN_DBG(6 DECI SECONDS)
 						for (var/obj/O in lineObjs)
 							pool(O)
 						light.disable()
@@ -637,7 +637,7 @@
 		..()
 		src.name = "[pick("ominous","tall","bulky","chilly","pointy","spinny","metallic","smooth","oblong","dapper")] [pick("device","doodad","gizmo","machine","column","thing","thingmabob")]"
 		//boutput(world, "[src] is checking for controller")
-		SPAWN_DBG(10) // wait for the game to get started, then set up linkages with the controller object
+		SPAWN_DBG(1 SECOND) // wait for the game to get started, then set up linkages with the controller object
 			linked_controller = locate("controller_[id]")
 			if(linked_controller)
 				if(src.linked_controller) // just in case
@@ -779,7 +779,7 @@
 					target_blue++
 
 
-		SPAWN_DBG(10) // set up linkages to the shields
+		SPAWN_DBG(1 SECOND) // set up linkages to the shields
 			for(var/obj/precursor_puzzle/shield/S in range(src,7))
 				if(S.id == src.id)
 					src.linked_shields += S
@@ -790,7 +790,7 @@
 		update()
 			if(active) return
 			src.active = 1
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.active = 0
 
 			var/setting_red = src.effector_NE.setting_red + src.effector_SE.setting_red + src.effector_SW.setting_red + src.effector_NW.setting_red
@@ -866,7 +866,7 @@
 				src.visible_message("<span style=\"color:blue\"><b>[src] powers up!</b></span>")
 				light.enable()
 
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					changing_state = 0
 			return
 
@@ -882,7 +882,7 @@
 				changing_state = 1
 				light.disable()
 
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					changing_state = 0
 			return
 
@@ -1001,7 +1001,7 @@
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
 			return
 		else
@@ -1049,7 +1049,7 @@
 			boutput(M, "<span style=\"color:red\"><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 
-		SPAWN_DBG(60)
+		SPAWN_DBG(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1201,7 +1201,7 @@
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(T)
-				SPAWN_DBG(20) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
@@ -1236,7 +1236,7 @@
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 						var/obj/somesparks = unpool(/obj/effects/sparks)
 						somesparks.set_loc(T)
-						SPAWN_DBG(20) if (somesparks) pool(somesparks)
+						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1332,7 +1332,7 @@
 			poorPod.bullet_act(src)
 
 
-		SPAWN_DBG(6)
+		SPAWN_DBG(6 DECI SECONDS)
 			for (var/obj/O in lineObjs)
 				pool(O)
 
@@ -1357,7 +1357,7 @@
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(600) active = 0
+					SPAWN_DBG(1 MINUTE) active = 0
 					playsound(get_turf(AM), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 75, 0)
 
 // cogwerks- variant for glaciers
@@ -1377,7 +1377,7 @@
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(600) active = 0
+					SPAWN_DBG(1 MINUTE) active = 0
 					if(prob(10))
 						playsound(get_turf(AM), pick('sound/voice/animal/wendigo_scream.ogg', 'sound/voice/animal/wendigo_cry.ogg'),25, 1) // play these quietly so as to spook
 					else

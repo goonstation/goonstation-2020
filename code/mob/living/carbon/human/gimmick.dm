@@ -64,7 +64,7 @@
 			abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
 			abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
 			abilityHolder.addAbility(/datum/targetable/gimmick/floorgrab)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				abilityHolder.updateButtons()
 
 // Come to collect a poor unfortunate soul
@@ -105,7 +105,7 @@
 			abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
 			abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
 			abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 				abilityHolder.updateButtons()
 
@@ -128,7 +128,7 @@
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			bioHolder.mobAppearance.UpdateMob()
 			abilityHolder.updateButtons()
 
@@ -171,7 +171,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chaplain(src), slot_w_uniform)
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/fatherjack
@@ -186,7 +186,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			src.equip_if_possible(new /obj/item/clothing/under/misc/chaplain(src), slot_w_uniform)
 			src.traitHolder.addTrait("training_chaplain")
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 	Life(datum/controller/process/mobs/parent)
@@ -199,7 +199,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say("Aye! Bill won't stop talking about it!")
 			return
 		..()
@@ -331,7 +331,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	/*
 	proc/n()
 		keys_changed(KEY_FORWARD, KEY_FORWARD)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			keys_changed(0,0xFFFF)
 	proc/s()
 		src.process_move(SOUTH)
@@ -345,7 +345,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.process_move(SOUTHWEST)
 	proc/ne()
 		keys_changed(KEY_FORWARD|KEY_RIGHT, KEY_FORWARD|KEY_RIGHT)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			keys_changed(0,KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT)
 	proc/se()
 		src.process_move(SOUTHEAST)
@@ -362,7 +362,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			bioHolder.bloodType = "A-"
 			bioHolder.mobAppearance.gender = "male"
 			bioHolder.mobAppearance.underwear = "briefs"
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -407,7 +407,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 			//FUCK I AM GOOG GOOD GOOD CODER
-			SPAWN_DBG(500)
+			SPAWN_DBG(50 SECONDS)
 				if (!twitch_mob || !twitch_mob.client)
 					for (var/client/C in clients)
 						if (C.ckey == TWITCH_BOT_CKEY)
@@ -418,7 +418,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 
-			SPAWN_DBG(1000)
+			SPAWN_DBG(100 SECONDS)
 				if (!twitch_mob || !twitch_mob.client)
 					for (var/client/C in clients)
 						if (C.ckey == TWITCH_BOT_CKEY)
@@ -571,7 +571,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 							say("I think my [pick(BILL_friends)] [pick(BILL_friendActions)].")
 /* commenting out the bartender stuff because he aint around much. replacing with john bill retorts.
 					if (prob(10))
-						SPAWN_DBG(40)
+						SPAWN_DBG(4 SECONDS)
 							for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_hearers(7, src))
 								switch (speech_type)
 									if (4)
@@ -593,7 +593,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 */
 
 					if (johnbills.len > 0 && prob(25))
-						SPAWN_DBG(40)
+						SPAWN_DBG(4 SECONDS)
 							var/mob/living/carbon/human/john/MJ = pick(johnbills)
 							switch (speech_type)
 								if (4)
@@ -621,12 +621,12 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say("Hard to believe, but I think my [pick(BILL_friends)] would be proud to see it.")
 			return
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say("Yep, can't wait to go on that trip! That [pick(JOHN_insults)] oughta be here soon!")
 			return
 		if (istype(W, /obj/item/ursium/U))
@@ -636,7 +636,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/obj/item/ursium/antiU/aU = W
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
 			say("Whoa nelly! Mind if i have a taste?")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				M.visible_message("<span style=\"color:red\">[src] touches the [W]! Something isnt right! </span>")
 				aU:annihilation(2 * aU.ursium)
 			return
@@ -686,7 +686,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.gender = "male"
 			src.real_name = "Myke"
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/red(src), slot_shoes)
@@ -730,7 +730,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.bioHolder.mobAppearance.s_tone = pick("#FAD7D0", "#BD8A57", "#935D37")
 			src.real_name = "[pick(prob(150); "W", "V")][pick(prob(150); "a", "au", "o", "e")][pick(prob(150); "l", "ll")][pick(prob(150); "d", "t")][pick(prob(150); "o", "oh", "a", "e")]"
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			var/shoes = text2path("/obj/item/clothing/shoes/" + pick("black","brown","red"))
@@ -784,7 +784,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			bioHolder.mobAppearance.customization_first_color = "#F6D646"
 			bioHolder.mobAppearance.gender = "male"
 			bioHolder.mobAppearance.underwear = "boxers"
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/orange(src), slot_shoes)
@@ -795,7 +795,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [pick(BILL_insults)]? He won't stop going on and on and on...")
 		..()
 
@@ -826,7 +826,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			bioHolder.mobAppearance.gender = "male"
 			bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			bioHolder.AddEffect("accent_tommy")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} (src), slot_shoes)
@@ -869,7 +869,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			bioHolder.mobAppearance.gender = "male"
 			bioHolder.mobAppearance.underwear = "boxers"
 			real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/orange(src), slot_shoes)
@@ -890,7 +890,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick(JOHN_insults)]."))
 			return
 		..()

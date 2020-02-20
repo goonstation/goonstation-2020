@@ -62,7 +62,7 @@
 
 			if (state == GRAB_PIN)
 				assailant.changeStatus("weakened",2 SECONDS)
-				affecting.changeStatus("weakened",1 SECONDS)
+				affecting.changeStatus("weakened",1 SECOND)
 				assailant.force_laydown_standup()
 				affecting.force_laydown_standup()
 

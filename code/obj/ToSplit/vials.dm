@@ -108,7 +108,7 @@
 				M.weakened += 5
 				M.contract_disease(src.contained,null,null,1)
 			if(2)
-				SPAWN_DBG(200)
+				SPAWN_DBG(20 SECONDS)
 					M.contract_disease(src.contained,null,null,1)
 	return
 
@@ -216,7 +216,7 @@
 					for(i=0, i<pick(1,2,3), i++)
 						sleep(5)
 						step(water1,direction)
-					SPAWN_DBG(20)
+					SPAWN_DBG(2 SECONDS)
 						qdel(water1)
 
 		sleep(time)
@@ -273,7 +273,7 @@
 			src.y--
 			src.x--
 	src.canmove = 0
-	SPAWN_DBG(20) canmove = 1
+	SPAWN_DBG(2 SECONDS) canmove = 1
 
 /obj/dummy/liquid/ex_act(blah)
 	return

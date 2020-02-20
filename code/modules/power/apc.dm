@@ -197,7 +197,7 @@ var/zapLimiter = 0
 	terminal.dir = tdir
 	terminal.master = src
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.update()
 
 /obj/machinery/power/apc/disposing()
@@ -292,7 +292,7 @@ var/zapLimiter = 0
 	src.lighting = 0
 	src.equipment = 0
 	src.environ = 0
-	SPAWN_DBG(600)
+	SPAWN_DBG(1 MINUTE)
 		src.equipment = 3
 		src.environ = 3
 	return
@@ -915,20 +915,20 @@ var/zapLimiter = 0
 	switch(wireIndex)
 		if(APC_WIRE_IDSCAN)			//unlocks the APC for 30 seconds, if you have a better way to hack an APC I'm all ears
 			src.locked = 0
-			SPAWN_DBG(300)
+			SPAWN_DBG(30 SECONDS)
 				src.locked = 1
 				src.updateDialog()
 		if (APC_WIRE_MAIN_POWER1)
 			if(shorted == 0)
 				shorted = 1
-			SPAWN_DBG(1200)
+			SPAWN_DBG(2 MINUTES)
 				if(shorted == 1)
 					shorted = 0
 				src.updateDialog()
 		if (APC_WIRE_MAIN_POWER2)
 			if(shorted == 0)
 				shorted = 1
-			SPAWN_DBG(1200)
+			SPAWN_DBG(2 MINUTES)
 				if(shorted == 1)
 					shorted = 0
 				src.updateDialog()
@@ -936,7 +936,7 @@ var/zapLimiter = 0
 			if (src.aidisabled == 0)
 				src.aidisabled = 1
 			src.updateDialog()
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (src.aidisabled == 1)
 					src.aidisabled = 0
 				src.updateDialog()
@@ -1316,7 +1316,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
 	else set_broken()
 	return
@@ -1325,7 +1325,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			qdel(src)
 	else
 		switch(severity)
@@ -1346,7 +1346,7 @@ var/zapLimiter = 0
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 		explosion(src, src.loc, 1, 2, 4, 6, 1)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			qdel (src)
 
 /obj/machinery/power/apc/blob_act(var/power)
@@ -1409,7 +1409,7 @@ var/zapLimiter = 0
 
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.post_status(target, "command", "ping_reply", "device", "PNET_PWR_CNTRL", "netid", src.net_id)
 
 		return
@@ -1424,7 +1424,7 @@ var/zapLimiter = 0
 
 				src.host_id = null
 				src.updateUsrDialog()
-				SPAWN_DBG(3)
+				SPAWN_DBG(3 DECI SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
@@ -1437,7 +1437,7 @@ var/zapLimiter = 0
 			if(signal.data["data"] != "noreply")
 				src.post_status(target, "command","term_connect","data","noreply","device","PNET_PWR_CNTRL")
 			//src.updateUsrDialog()
-			SPAWN_DBG(2)
+			SPAWN_DBG(2 DECI SECONDS)
 				src.post_status(target,"command","term_message","data","command=register&data=[ckey("[src.area]")]")
 			return
 

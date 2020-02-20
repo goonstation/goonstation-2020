@@ -580,7 +580,7 @@ var/sound/iomoon_alarm_sound = null
 			src.task = "thinking"
 			src.attacking = 0
 			return
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -659,7 +659,7 @@ var/sound/iomoon_alarm_sound = null
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			src.attacking = 0
 
 		var/atom/last = src
@@ -680,7 +680,7 @@ var/sound/iomoon_alarm_sound = null
 			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(6) pool(O)
+				SPAWN_DBG(6 DECI SECONDS) pool(O)
 
 			if(isliving(target_r)) //Probably unsafe.
 				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -963,7 +963,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = 1
 			src.dir = 1
 			src.visible_message("<span style=\"color:red\">[src] begins to whirr ominously!</span>")
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				if (health <= 0)
 					dir = 2
 					return
@@ -1018,7 +1018,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!tag)
 				tag = "IOMOON_BOSS"
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				//target_marker = image('icons/misc/worlds.dmi', "boss_marker")
 				//target_marker.layer = FLY_LAYER
 
@@ -1117,7 +1117,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				active = 1
 				src.icon_state = "powercore_core_startup"
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					src.icon_state = "powercore_core"
 
 				if (rotors)
@@ -1271,7 +1271,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					if (isdead(poorSoul) && prob(25))
 						poorSoul.gib()
 
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					for (var/obj/O in lineObjs)
 						pool(O)
 
@@ -1392,7 +1392,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.default_state = src.opened
 			active = 0
 
@@ -1411,7 +1411,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			opacity = 0
 			desc = "One hell of a foreboding door. It's not entirely clear how it opened, as the seams did not exist prior..."
 			src.name = "unsealed door"
-			SPAWN_DBG(13)
+			SPAWN_DBG(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1430,7 +1430,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
 			src.name = initial(src.name)
-			SPAWN_DBG(13)
+			SPAWN_DBG(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -1485,7 +1485,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				current.next.opened = src.opened
 				current = current.next
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (src.opened)
 				src.invisibility = 100
 				src.set_density(0)
@@ -1559,7 +1559,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (findtext(id, ";"))
 			id = params2list(id)
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			for (var/atom/potential_activator in src.loc)
 				if (potential_activator.density)
 					Crossed(potential_activator)

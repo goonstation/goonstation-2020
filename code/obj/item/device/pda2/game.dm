@@ -156,7 +156,7 @@
 
 			src.master.updateSelfDialog()
 			if(speedup)
-				SPAWN_DBG(5) //Ugh the process loop for items is so slow most of the time
+				SPAWN_DBG(5 DECI SECONDS) //Ugh the process loop for items is so slow most of the time
 					src.process(0)
 
 		return

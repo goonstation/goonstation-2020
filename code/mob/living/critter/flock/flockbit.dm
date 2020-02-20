@@ -11,13 +11,13 @@
 	flags = TABLEPASS
 
 /mob/living/critter/flock/bit/New(var/datum/flock/F=null)
-	..(F)	
+	..(F)
 
 	// ai setup
 	src.ai = new /datum/aiHolder/flock/bit()
 	src.ai.owner = src
 
-	SPAWN_DBG(10) // aaaaaaa
+	SPAWN_DBG(1 SECOND) // aaaaaaa
 		animate_bumble(src)
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
@@ -28,7 +28,7 @@
 	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 		special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"		
+		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
 		special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%"
 		special_desc += "<br><span class='bold'>Cognition:</span> PREDEFINED"
 		special_desc += "<br><span class='bold'>###=-</span></span>"
@@ -94,7 +94,7 @@
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					animate_bumble(src) // start the floaty animation again (stolen from bees of course)
 				return null
 	return null

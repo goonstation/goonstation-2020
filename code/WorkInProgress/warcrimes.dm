@@ -263,7 +263,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 			bioHolder.mobAppearance.underwear = "briefs"
 			bioHolder.mobAppearance.u_color = "#996633"
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				bioHolder.mobAppearance.UpdateMob()
 
 			src.equip_if_possible(new /obj/item/clothing/shoes/thong(src), slot_shoes)
@@ -455,7 +455,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 							say("I think my [pick(JOHN_friends)] [pick(JOHN_friendActions)].")
 
 					if (prob(25) && shittybills.len > 0)
-						SPAWN_DBG(35)
+						SPAWN_DBG(3.5 SECONDS)
 							var/mob/living/carbon/human/biker/MB = pick(shittybills)
 							switch (speech_type)
 								if (4)
@@ -482,7 +482,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			boutput(M, "<span style=\"color:blue\"><b>You show [W] to [src]</b> </span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				say("One of them [pick(JOHN_people)] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || (istype(W, /obj/item/clothing/mask/cigarette/cigarillo) && !gotsmokes))
@@ -493,7 +493,7 @@ area/adventure/urs_dungeon/john_talk = list("This place smells like my bro.","Hu
 			src.drop_item()
 			src.put_in_hand_or_drop(W)
 
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				say("Oh? [W] eh?")
 				say(pick("No kiddin' fer me?","I guess I could go fer a quick one yeah!","Oh dang dang dang! Haven't had one of these babies in a while!","Well I never get tired of those!","You're offering this to me? Don't mind if i do, [pick(JOHN_people)]"))
 				src.a_intent = INTENT_HELP // pacify a juicer with food, obviously
@@ -657,7 +657,7 @@ var/bombini_saved = 0
 
 				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machines)
 					T = get_turf(B)
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
 						sleep(30)
 						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
@@ -682,7 +682,7 @@ var/bombini_saved = 0
 							shake_camera(M, 10, 4)
 
 				T = get_turf(src)
-				SPAWN_DBG(250)
+				SPAWN_DBG(25 SECONDS)
 					playsound(T, "sound/effects/flameswoosh.ogg", 70, 1)
 					call_shuttle()
 

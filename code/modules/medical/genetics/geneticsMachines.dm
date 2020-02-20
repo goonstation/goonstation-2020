@@ -29,7 +29,7 @@ var/list/genetics_computers = list()
 /obj/machinery/computer/genetics/New()
 	..()
 	genetics_computers += src
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 		return
 	return

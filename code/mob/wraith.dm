@@ -152,7 +152,7 @@
 			boutput(src, "<span style=\"color:red\"><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
 			src.set_loc(pick(latejoin))
-			SPAWN_DBG(150) //15 seconds
+			SPAWN_DBG(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span style=\"color:red\"><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
@@ -313,7 +313,7 @@
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span style=\"color:red\">You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(600) //one minute
+				SPAWN_DBG(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
 			return

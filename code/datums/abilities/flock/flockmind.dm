@@ -156,14 +156,14 @@
 	if(..())
 		return 1
 	if(!istype(target))
-		return 1	
+		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if(F && F.flock)
 		if(F.flock.getComplexDroneCount() == 1)
-			boutput(holder.owner, "<span class='text-red'>That's your last complex drone. Diffracting it would be suicide.</span>")	
+			boutput(holder.owner, "<span class='text-red'>That's your last complex drone. Diffracting it would be suicide.</span>")
 			return 1
-	boutput(holder.owner, "<span class='text-blue'>You diffract the drone.</span>")	
+	boutput(holder.owner, "<span class='text-blue'>You diffract the drone.</span>")
 	target.split_into_bits()
 
 
@@ -189,7 +189,7 @@
 		sleep(15)
 		for(var/obj/machinery/door/airlock/A in targets)
 			// open the door
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				A.open()
 	else
 		boutput(holder.owner, "<span class='text-red'>No targets in range that can be opened via radio.</span>")

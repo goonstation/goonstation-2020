@@ -37,7 +37,7 @@
 
 		if (level == 2)
 			//add effect
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
 				EE.color = "#AAAAFF"
 				EE.setup(M.loc)
@@ -52,7 +52,7 @@
 					if (i > 20)
 						break
 		else
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				var/obj/itemspecialeffect/screech/EE = unpool(/obj/itemspecialeffect/screech)
 				EE.color = "#FFFFFF"
 				EE.setup(M.loc)

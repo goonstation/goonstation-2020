@@ -106,7 +106,7 @@
 				src.stapled = 0
 			. = 1
 			allow_staple = 0
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				allow_staple = 1
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)

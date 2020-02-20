@@ -318,7 +318,7 @@
 		src.icon_state = "wendigo_appear"
 		src.invisibility = 0
 		set_density(1)
-		SPAWN_DBG(12)
+		SPAWN_DBG(1.2 SECONDS)
 			if(king)
 				src.icon_state = "wendigoking"
 			else
@@ -333,7 +333,7 @@
 
 		src.icon_state = "wendigo_melt"
 		set_density(0)
-		SPAWN_DBG(12)
+		SPAWN_DBG(1.2 SECONDS)
 			src.invisibility = 16
 			if(king)
 				src.icon_state = "wendigoking"
@@ -369,7 +369,7 @@
 			if(king)
 				playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 				src.visible_message("<span style=\"color:red\"><b>[src] roars!</b></span>")
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(!spazzing) src.spaz()
 			src.set_loc(M.loc)
 			src.frenzied = 20

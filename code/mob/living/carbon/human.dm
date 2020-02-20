@@ -269,7 +269,7 @@
 		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder)
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			if (holder && !l_arm || !r_arm || !l_leg || !r_leg)
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create()
@@ -754,7 +754,7 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
-		SPAWN_DBG(7) //Length of animation.
+		SPAWN_DBG(7 DECI SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
@@ -767,7 +767,7 @@
 	return
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
-	var/baseSpeed = 1.28 // 1.2 run, 2 walk, 0.75 sprint were base
+	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
 	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
 
 	var/tally = baseSpeed
@@ -1160,7 +1160,7 @@
 			var/mob/living/carbon/C = item
 			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
-				C.changeStatus("weakened", 1 SECONDS)
+				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
@@ -1484,7 +1484,7 @@
 
 	/*
 	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN_DBG(150)
+		SPAWN_DBG(15 SECONDS)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
 	*/
 	return
@@ -1797,7 +1797,7 @@
 	//mbc FUCK why doesn't this have any parent to call
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
@@ -2339,7 +2339,7 @@
 
 		var/loc = usr.loc
 
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
 				boutput(usr, "<span style=\"color:red\">Your consumption of [H] was interrupted!</span>")
 				return
@@ -2552,7 +2552,7 @@
 					if (src.shoes)
 						src.drop_from_slot(src.shoes)
 					make_cleanable(/obj/decal/cleanable/ash,src.loc)
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						src.elecgib()
 				else
 					boutput(src, "<span style=\"color:red\"><b>[origin] blasts you with an arc flash!</b></span>")
@@ -2767,7 +2767,7 @@
 		flick("spidergib", animation)
 		src.visible_message("<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span style=\"color:red\">You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/I = 0, I < 4, I++)
 				new /obj/critter/spider/baby(src.loc)
@@ -2778,7 +2778,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		qdel(src)
 
 /mob/living/carbon/human/get_equipped_items()
@@ -3268,7 +3268,7 @@
 		else
 			// If it's not an "item", deal medium damage
 			src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
-			src.changeStatus("stunned", 1 SECONDS)
+			src.changeStatus("stunned", 1 SECOND)
 			src.TakeDamage("chest", 20, 0, 0, DAMAGE_BLUNT)
 			take_bleeding_damage(src, src, 5)
 		// added log - cirr

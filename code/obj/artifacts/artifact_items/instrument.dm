@@ -14,7 +14,7 @@
 
 	New(var/loc, var/forceartitype)
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			var/datum/artifact/A = src.artifact
 			if(A && A.artitype)
 				sounds_instrument = A.artitype.instrument_sounds

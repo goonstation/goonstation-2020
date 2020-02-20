@@ -70,7 +70,7 @@
 
 	SPAWN_DBG(3 + metal*3)
 		process()
-	SPAWN_DBG(120)
+	SPAWN_DBG(12 SECONDS)
 		expand = 0 // stop expanding
 		sleep(30)
 
@@ -170,7 +170,7 @@
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("foam-disolve", src)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			die()
 			expand = 0
 

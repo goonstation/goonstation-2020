@@ -188,7 +188,7 @@
 		usr.machine = src
 		if (href_list["spell_teleport"])
 			//src.TPR = 1
-			//SPAWN_DBG(600)
+			//SPAWN_DBG(1 MINUTE)
 			//	if(src)
 			//		src.TPR = 0
 			//		src.updateDialog()

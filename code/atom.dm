@@ -388,7 +388,7 @@
 	icon = 'icons/mob/mob.dmi'
 
 /atom/movable/overlay/gibs/proc/delaydispose()
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		if (src)
 			dispose(src)
 

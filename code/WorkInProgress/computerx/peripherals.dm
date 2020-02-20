@@ -254,7 +254,7 @@
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
-					SPAWN_DBG(5) //Send a reply for those curious jerks
+					SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 						src.radio_connection.post_signal(src, pingsignal, broadcast_range)
 
 				return //Just toss out the rest of the signal then I guess
@@ -288,7 +288,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_connection()
 			//Let's blindy attempt to generate a unique network ID!
@@ -372,7 +372,7 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return //Just toss out the rest of the signal then I guess
@@ -468,7 +468,7 @@
 				if(!print_data)
 					src.printing = 0
 					return
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 					P.info = print_data
 					if(print_title)
@@ -498,7 +498,7 @@
 			if(!print_data)
 				src.printing = 0
 				return
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				var/obj/item/paper/P = new /obj/item/paper( src.host.loc )
 				P.info = print_data
 				if(print_title)
@@ -660,7 +660,7 @@
 				newrec.fields["access"] = jointext(src.authid.access, ";")
 				newrec.fields["balance"] = src.authid.money
 
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					send_command("card_authed", newrec)
 
 				return newrec
@@ -677,7 +677,7 @@
 					newrec.fields["registered"] = src.authid.registered
 					newrec.fields["assignment"] = src.authid.assignment
 					newrec.fields["balance"] = src.authid.money
-					SPAWN_DBG(4)
+					SPAWN_DBG(4 DECI SECONDS)
 						send_command("card_authed", newrec)
 
 					return newrec
@@ -688,13 +688,13 @@
 
 				//We need correct PIN numbers you jerks.
 				if(text2num(rec.fields["pin"]) != src.authid.pin)
-					SPAWN_DBG(4)
+					SPAWN_DBG(4 DECI SECONDS)
 						send_command("card_bad_pin")
 					return
 
 				var/charge_amount = text2num(rec.fields["amount"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
-					SPAWN_DBG(4)
+					SPAWN_DBG(4 DECI SECONDS)
 						send_command("card_bad_charge")
 					return
 
@@ -717,7 +717,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = new_access
 */
-					SPAWN_DBG(4)
+					SPAWN_DBG(4 DECI SECONDS)
 						send_command("card_add")
 
 					return
@@ -737,7 +737,7 @@
 					var/datum/signal/newrec = new
 					newrec.fields["access"] = rem_access
 */
-					SPAWN_DBG(4)
+					SPAWN_DBG(4 DECI SECONDS)
 						send_command("card_remove")
 
 					return

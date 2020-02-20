@@ -72,14 +72,14 @@
 
 		var/obj/decal/icefloor/B
 		B = new /obj/decal/icefloor(T)
-		SPAWN_DBG(800)
+		SPAWN_DBG(80 SECONDS)
 			if (B)
 				B.dispose()
 
 		if (linked_power.power)
 			for (var/turf/TF in orange(1,T))
 				B = new /obj/decal/icefloor(TF)
-				SPAWN_DBG(800)
+				SPAWN_DBG(80 SECONDS)
 					B.dispose()
 
 		for (var/mob/living/L in T.contents)
@@ -447,7 +447,7 @@
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
 		owner.visible_message("<span style=\"color:red\"><b>[owner]</b> touches [target], then begins to shifts and contort!</span>")
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(H && owner)
 				playsound(owner.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
@@ -1295,7 +1295,7 @@
 
 			owner.visible_message("<span style=\"color:red\"><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(7)
+			SPAWN_DBG(7 DECI SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				active = 0
@@ -1334,7 +1334,7 @@
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
 			animate(owner, color = "#0000FF", time = 5, easing = LINEAR_EASING)
 			animate(alpha = 0, time = 5, easing = LINEAR_EASING)
-			SPAWN_DBG(7)
+			SPAWN_DBG(7 DECI SECONDS)
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
@@ -1351,7 +1351,7 @@
 
 			owner.visible_message("<span style=\"color:red\"><b>[owner] appears in a burst of blue light!</b></span>")
 			playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
-			SPAWN_DBG(7)
+			SPAWN_DBG(7 DECI SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 				P.active = 0
@@ -1661,7 +1661,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -1683,7 +1683,7 @@
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(owner, 32, 2)
 
@@ -2047,7 +2047,7 @@
 
 					owner.visible_message("<span style=\"color:red\"><b>[thrown_limb][linked_power.power ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
 					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
-					spawn(10)
+					spawn(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 

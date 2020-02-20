@@ -1110,7 +1110,7 @@
 		..()
 
 
-	//if it has no owner prints scanned, the next person to attack_self it is the owner. 
+	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -1139,7 +1139,7 @@
 		if (!islist(msg))
 			return
 
-		//only work if the voice is the same as the voice of your owner fingerprints. 
+		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (owner_prints && (md5(H.bioHolder.Uid) != owner_prints))
@@ -1181,12 +1181,12 @@
 					playsound(M, "sound/vox/sleep.ogg", 50)
 				if ("hotshot")
 					current_projectile = projectiles["hotshot"]
-					current_projectile.cost = 60					
+					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
 					playsound(M, "sound/vox/hot.ogg", 50)
 				if ("bigshot","highexplosive","he")
 					current_projectile = projectiles["bigshot"]
-					current_projectile.cost = 220					
+					current_projectile.cost = 220
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
 					sleep(4)
@@ -1227,7 +1227,7 @@
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawgiver.")
 
-					spawn(20)
+					spawn(2 SECONDS)
 						explosion_new(null, get_turf(src), 15)
 					return 0
 				else
@@ -1286,7 +1286,7 @@
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
 			// if (!fingerprints_can_shoot(user))
-			// 	// shock(user, 70)	
+			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
 			// 	user.changeStatus("weakened", 4 SECONDS)
 			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
@@ -1352,7 +1352,7 @@
 		boutput(user, "<span style=\"color:red\">Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
 		owner_prints = null
 	return 0
-			
+
 //stolen from firebreath in powers.dm
 /obj/item/gun/energy/lawgiver/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))

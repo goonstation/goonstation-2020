@@ -214,7 +214,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
 			if (src.audiolog_messages && src.audiolog_messages.len)
@@ -304,7 +304,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					src.explode()
 			return
 
@@ -314,7 +314,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					src.explode()
 			return
 		var/separator = findtext(speak_message,"|")
@@ -323,7 +323,7 @@
 			processing_items.Remove(src)
 			src.updateSelfDialog()
 			if(src.self_destruct)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					src.explode()
 			return
 

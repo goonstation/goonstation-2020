@@ -736,7 +736,7 @@ MATERIAL
 				return
 			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
 					src.consume_rods(2)
 					var/atom/G = new /obj/grille(usr.loc)
@@ -902,7 +902,7 @@ MATERIAL
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			user.visible_message("<span style='color:red'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
@@ -912,7 +912,7 @@ MATERIAL
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 			user.updatehealth()
 
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 

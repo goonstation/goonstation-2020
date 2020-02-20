@@ -242,7 +242,7 @@
 		for(var/obj/machinery/computer/mining_shuttle/C in machines)
 			active = 1
 			C.visible_message("<span style=\"color:red\">The Mining Shuttle has been Called and will leave shortly!</span>")
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			call_shuttle()
 
 /obj/machinery/computer/mining_shuttle/proc/call_shuttle()
@@ -301,7 +301,7 @@
 					active = 1
 					C.visible_message("<span style=\"color:red\">The Prison Shuttle has been Called and will leave shortly!</span>")
 
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
@@ -352,7 +352,7 @@
 
 /obj/machinery/computer/research_shuttle/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		src.net_id = generate_net_id(src)
 
 		if(!src.link)
@@ -403,7 +403,7 @@
 					active = 1
 					C.visible_message("<span style=\"color:red\">The Research Shuttle has been Called and will leave shortly!</span>")
 
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
 
 		else if (href_list["close"])
@@ -469,7 +469,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machines)
 					active = 1
 					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])
@@ -492,7 +492,7 @@
 		var/area/start_location = locate(/area/shuttle/icebase_elevator/upper)
 		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
 		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN_DBG(1) M.gib()
+			SPAWN_DBG(1 DECI SECOND) M.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
 
@@ -533,7 +533,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machines)
 					active = 1
 					C.visible_message("<span style=\"color:red\">The elevator begins to move!</span>")
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
 		if (href_list["close"])

@@ -67,7 +67,7 @@ CONTAINS:
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -129,7 +129,7 @@ CONTAINS:
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -189,7 +189,7 @@ CONTAINS:
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -371,7 +371,7 @@ CONTAINS:
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1)
 		src.charged = 0
 		set_icon_state("[src.icon_base]-shock")
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			set_icon_state("[src.icon_base]-off")
 		SPAWN_DBG(src.charge_time)
 			src.charged = 1
@@ -398,7 +398,7 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		if (src.defibrillate(user, user, src.emagged, src.makeshift, src.cell, 1))
-			SPAWN_DBG(500)
+			SPAWN_DBG(50 SECONDS)
 				if (user && !isdead(user))
 					user.suiciding = 0
 		else
@@ -481,7 +481,7 @@ CONTAINS:
 		user.visible_message("<span style='color:red'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
 		user.take_oxygen_deprivation(160)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -894,7 +894,7 @@ CONTAINS:
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
 			M.changeStatus("weakened", 2 SECONDS)
-			SPAWN_DBG(3)
+			SPAWN_DBG(3 DECI SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
 		src.update_icon()
@@ -1287,7 +1287,7 @@ keeping this here because I want to make something else with it eventually
 				falling.set_loc(get_turf(src))
 				src.vis_contents -= falling
 
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					if(falling)
 						falling.throw_at(target, 1, 1)
 

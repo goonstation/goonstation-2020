@@ -397,7 +397,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 							if (stuncount > 0)
 								sleep(3)
 
-						SPAWN_DBG(2)
+						SPAWN_DBG(2 DECI SECONDS)
 							src.icon_state = "secbot[src.on][(src.on && src.emagged == 2) ? "-spaz" : null]"
 						if (src.target.getStatusDuration("weakened"))
 							mode = SECBOT_PREP_ARREST
@@ -459,7 +459,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					mode = SECBOT_ARREST
 					src.visible_message("<span style=\"color:red\"><B>[src] is trying to put handcuffs on [src.target]!</B></span>")
 
-					SPAWN_DBG(60)
+					SPAWN_DBG(6 SECONDS)
 						if (get_dist(src, src.target) <= 1)
 							if (!src.target || src.target.handcuffed)
 								return
@@ -557,13 +557,13 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if(SECBOT_PATROL)		// patrol mode
 
 				patrol_step()
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if(mode == SECBOT_PATROL)
 						patrol_step()
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				patrol_step()
-				SPAWN_DBG(4)
+				SPAWN_DBG(4 DECI SECONDS)
 					if(mode == SECBOT_SUMMON)
 						patrol_step()
 						sleep(4)
@@ -603,7 +603,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					if(blockcount > 5)	// attempt 5 times before recomputing
 						// find new path excluding blocked turf
 
-						SPAWN_DBG(2)
+						SPAWN_DBG(2 DECI SECONDS)
 							calc_path(next)
 							if (!path)
 								find_patrol_target()
@@ -648,7 +648,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		new_destination = "__nearest__"
 		post_signal(beacon_freq, "findbeacon", "patrol")
 		awaiting_beacon = 1
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			awaiting_beacon = 0
 			if(nearest_beacon)
 				set_destination(nearest_beacon)

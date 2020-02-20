@@ -27,12 +27,12 @@
 				H.cure_disease(D)
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
@@ -40,24 +40,24 @@
 				H.cure_disease(D)
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())

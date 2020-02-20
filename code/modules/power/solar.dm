@@ -107,7 +107,7 @@
 
 /obj/machinery/power/solar/New()
 	..()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		updateicon()
 		update_solar_exposure()
 
@@ -257,7 +257,7 @@
 
 /obj/machinery/power/solar_control/New()
 	..()
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		if(!powernet) return
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
 			if(S.id != id) continue
@@ -373,14 +373,14 @@
 
 	if(href_list["dir"])
 		cdir = text2num(href_list["dir"])
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			set_panels(cdir)
 			updateicon()
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
 			src.cdir = CLAMP((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				set_panels(cdir)
 				updateicon()
 		if(href_list["tdir"])

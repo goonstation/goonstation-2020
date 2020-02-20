@@ -223,6 +223,6 @@
 		D.anchored = 1
 		D.layer = EFFECTS_LAYER_2
 		holder.owner.attached_objs += D
-		SPAWN_DBG(40)
+		SPAWN_DBG(4 SECONDS)
 			qdel(D)
 

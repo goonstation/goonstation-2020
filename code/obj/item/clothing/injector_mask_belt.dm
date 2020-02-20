@@ -131,13 +131,13 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 				boutput(owner, "<span style=\"color:blue\">Your Injector belt activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
-				SPAWN_DBG(15)
+				SPAWN_DBG(1.5 SECONDS)
 					if(inj_amount == -1)
 						container.reagents.trans_to(owner, container.reagents.total_volume)
 					else
 						container.reagents.trans_to(owner, inj_amount)
 
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			if (src) check()
 
 	proc/is_equipped()
@@ -279,7 +279,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 				var/turf/T = get_turf(src)
 				if(T)
 					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
 
 				boutput(owner, "<span style=\"color:blue\">Your [src] activates.</span>")

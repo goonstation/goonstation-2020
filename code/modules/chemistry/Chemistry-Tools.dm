@@ -173,7 +173,7 @@
 					src.reagents.reaction(target,TOUCH)
 				else
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if (src.splash_all_contents) src.reagents.clear_reagents()
 					else src.reagents.remove_any(src.amount_per_transfer_from_this)
 					can_mousedrop = 1
@@ -263,7 +263,7 @@
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1

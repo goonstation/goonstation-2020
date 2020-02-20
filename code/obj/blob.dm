@@ -339,7 +339,7 @@ var/image/blob_icon_cache
 			src.poison += amount
 			updatePoisonOverlay()
 			if (!overmind)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					while (poison)
 						Life()
 						sleep(10)

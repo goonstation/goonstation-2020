@@ -123,7 +123,7 @@ var/list/samostrel_warps = list()
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 				var/obj/somesparks = unpool(/obj/effects/sparks)
 				somesparks.set_loc(T)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					if (somesparks) pool(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
@@ -179,7 +179,7 @@ var/list/samostrel_warps = list()
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 2
-						SPAWN_DBG(600) maniac_active &= ~2
+						SPAWN_DBG(1 MINUTE) maniac_active &= ~2
 						SPAWN_DBG(rand(10,30))
 							var/obj/chaser/hospital/C = new /obj/chaser/hospital(src.loc)
 							C.target = AM
@@ -198,7 +198,7 @@ var/list/samostrel_warps = list()
 
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			process()
 
 	proximity_act()
@@ -237,7 +237,7 @@ var/list/samostrel_warps = list()
 		if(!targeting)
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(80)
+			SPAWN_DBG(8 SECONDS)
 				aaah.repeat = 1
 				target << aaah
 				SPAWN_DBG(rand(100,400))
@@ -711,7 +711,7 @@ var/list/samostrel_warps = list()
 		new_destination = "__nearest__"
 		master.post_status("!BEACON!", "findbeacon", "patrol")
 		awaiting_beacon = 5
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
 				return
 			if(master.task != src)

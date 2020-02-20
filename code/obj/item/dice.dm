@@ -47,7 +47,7 @@ var/list/rollList = list()
 		user.visible_message("<span style='color:red'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -246,7 +246,7 @@ var/list/rollList = list()
 			if (src.addPal(O, user))
 				user.visible_message("<b>[user]</b> gathers up some dice.",\
 				"You gather up some dice.")
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					for (var/obj/item/dice/D in range(1, user))
 						if (D == src)
 							continue
@@ -329,7 +329,7 @@ var/list/rollList = list()
 			user.u_equip(src)
 			src.layer = initial(src.layer)
 			src.set_loc(user.loc)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			user.visible_message("<span style='color:red'><b>[user] is crushed into a bloody ball by an unseen force, and vanishes into nothingness!</b></span>")
 			user.implode()
 		return 1

@@ -30,7 +30,7 @@
 	New()
 		..()
 		if (src.find_sleeper_in_range)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				our_sleeper = locate() in get_step(src,src.dir)
 				if (!our_sleeper)
 					our_sleeper = locate() in orange(src,1)
@@ -532,7 +532,7 @@
 		src.add_fingerprint(usr)
 		if (src.occupant.loc == src)
 			src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 1 SECONDS)
+		src.occupant.changeStatus("weakened", 1 SECOND)
 		src.occupant.force_laydown_standup()
 		src.occupant = null
 		src.update_icon()
@@ -643,7 +643,7 @@
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(5) //Send a reply for those curious jerks
+				SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
 			return
@@ -664,7 +664,7 @@
 				reply.data["address_1"] = signal.data["sender"]
 				reply.data["sender"] = src.net_id
 				reply.transmission_method = TRANSMISSION_WIRE
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					src.link.post_signal(src, reply)
 
 			if("inject")

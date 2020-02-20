@@ -45,7 +45,7 @@ var/telesci_modifiers_set = 0
 
 		disconnectedImage = image('icons/obj/stationobjs.dmi', "pad-noconnect")
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -110,7 +110,7 @@ var/telesci_modifiers_set = 0
 			src.host_id = null
 			//src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -140,7 +140,7 @@ var/telesci_modifiers_set = 0
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -154,7 +154,7 @@ var/telesci_modifiers_set = 0
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -168,7 +168,7 @@ var/telesci_modifiers_set = 0
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(2) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN_DBG(2 DECI SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -283,7 +283,7 @@ var/telesci_modifiers_set = 0
 						if (istype(sourceturf) && istype(endturf))
 							if (coords.can_cheat || (is_allowed(endturf) && is_allowed(sourceturf)))
 								src.receive(sourceturf)
-								SPAWN_DBG(50) //nurf
+								SPAWN_DBG(5 SECONDS) //nurf
 									src.send(endturf)
 								message_host("command=ack")
 
@@ -506,7 +506,7 @@ var/telesci_modifiers_set = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 
 		return 0
@@ -535,7 +535,7 @@ var/telesci_modifiers_set = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 
 		return 0
@@ -569,7 +569,7 @@ var/telesci_modifiers_set = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, EAST))
 			new/obj/dfissure_to(get_step(src, EAST))
@@ -868,7 +868,7 @@ var/telesci_modifiers_set = 0
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -892,7 +892,7 @@ var/telesci_modifiers_set = 0
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -906,7 +906,7 @@ var/telesci_modifiers_set = 0
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(3)
+					SPAWN_DBG(3 DECI SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -940,7 +940,7 @@ var/telesci_modifiers_set = 0
 					src.link.post_signal(src, newsignal)
 
 				src.updateUsrDialog(1)
-				//SPAWN_DBG(2) //Sign up with the driver (if a mainframe contacted us)
+				//SPAWN_DBG(2 DECI SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -1091,7 +1091,7 @@ var/telesci_modifiers_set = 0
 			newsignal.data["sender"] = src.net_id
 
 			src.link.post_signal(src, newsignal)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (!old_host_id)
 					old_host_id = old
 

@@ -1010,14 +1010,14 @@ toxic - poisons
 			if (src.CHEM != null)
 				src.CHEM.loc = T
 				src.has_det = 1
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.CHEM.explode()
 				src.has_grenade = 0
 				return
 			else if (src.OLD != null)
 				src.OLD.loc = T
 				src.has_det = 1
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.OLD.prime()
 				src.has_grenade = 0
 				return

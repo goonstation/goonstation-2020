@@ -2092,7 +2092,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H && H.organHolder && H.organHolder.head && H.organHolder.head.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		AH.UpdateMob()
 		if (H)
 			H.set_face_icon_dirty()

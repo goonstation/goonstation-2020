@@ -18,7 +18,7 @@
 
 /obj/item/brain/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		if(src.donor)
 			src.name = "[src.donor]'s brain"
 		if (icon_state == "brain2")
@@ -57,7 +57,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(src.owner && src.owner.current)
 				src.name = "[src.owner.current]'s neural net processor"
 

@@ -91,7 +91,7 @@
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'
 			flick(text("[]", t), src)
-			SPAWN_DBG(14)
+			SPAWN_DBG(1.4 SECONDS)
 				qdel(src)
 				return
 			return

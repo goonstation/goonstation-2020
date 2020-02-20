@@ -881,11 +881,11 @@
 
 	equipped(var/mob/user, var/slot)
 		boutput(user, "<span style=\"color:blue\">You better start running! It's kill or be killed now, buddy!</span>")
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				playsound(src.loc, "sound/vox/for.ogg", 100, 1)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
@@ -916,7 +916,7 @@
 				H.unequip_all()
 				H.gib()
 
-				SPAWN_DBG(500)
+				SPAWN_DBG(50 SECONDS)
 					if (user && !isdead(user))
 						user.suiciding = 0
 				//qdel(src)
@@ -947,7 +947,7 @@
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
-				SPAWN_DBG(500)
+				SPAWN_DBG(50 SECONDS)
 					if (user && !isdead(user))
 						user.suiciding = 0
 				qdel(src)

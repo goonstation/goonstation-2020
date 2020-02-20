@@ -71,7 +71,7 @@
 		if(doThumps) return
 		doThumps = 1
 		Thumper_thump(1)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			while(src.doThumps)
 				Thumper_thump(0)
 				sleep(20)
@@ -686,7 +686,7 @@
 		if (bioHolder) bioHolder.OnLife()
 
 		if (src.bomberman == 1)
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				new /obj/bomberman(get_turf(src))
 
 	proc/breathe()

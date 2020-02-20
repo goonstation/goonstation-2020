@@ -166,10 +166,10 @@
 	icon_state = "guide"
 	targeted = 1
 	target_anything = 1
-	cooldown = 1 SECONDS
+	cooldown = 1 SECOND
 	pointCost = 2
 	max_range = 2
- 	
+
 	cast(atom/tar)
 		var/turf/T = get_turf(tar)
 		if (isturf(T))
@@ -276,7 +276,7 @@
 			C.take_toxin_damage(-25)
 			C.take_oxygen_deprivation(-25)
 			C.take_brain_damage(-25)
-			C.remove_ailments()		
+			C.remove_ailments()
 			//Transfer nutrients to our brethren.
 			var/mob/living/carbon/human/H = target
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))

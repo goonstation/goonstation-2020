@@ -775,9 +775,9 @@
 					playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_spaz.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
 					if (prob(15)) src.visible_message("<span style=\"color:red\">[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
 					if (prob(25))
-						SPAWN_DBG(3)
+						SPAWN_DBG(3 DECI SECONDS)
 							playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
-						SPAWN_DBG(6)
+						SPAWN_DBG(6 DECI SECONDS)
 							if (H.gender == "female")
 								playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1)
 							else

@@ -367,7 +367,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(!src.cell)
 				src.cell = new /obj/item/cell(src)
 				src.cell.maxcharge = max_flash_power

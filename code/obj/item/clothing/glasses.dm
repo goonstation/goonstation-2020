@@ -158,7 +158,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 		return
 
@@ -215,7 +215,7 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 		return
 
@@ -325,7 +325,7 @@
 		setProperty("disorient_resist_eye", 28)
 
 	New()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).
 		..()
@@ -532,5 +532,5 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
-				SPAWN_DBG(100)
+				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")

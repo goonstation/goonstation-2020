@@ -316,7 +316,7 @@
 				ashes += 1
 			qdel(M)
 
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		if (src)
 			src.visible_message("<span style=\"color:red\">\The [src.name] finishes and shuts down.</span>")
 			src.cremating = 0
@@ -535,7 +535,7 @@
 						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses/tanning))) //Always wear protection
 							H.take_eye_damage(1, 2)
 							H.change_eye_blurry(2)
-							H.changeStatus("stunned", 1 SECONDS)
+							H.changeStatus("stunned", 1 SECOND)
 							H.change_misstep_chance(5)
 							boutput(H, "<span style=\"color:red\">Your eyes sting!</span>")
 						if (H.bioHolder.mobAppearance.s_tone)

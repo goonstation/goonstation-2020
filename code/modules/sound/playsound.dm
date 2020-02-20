@@ -260,7 +260,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	stopsound.channel = mute_channel
 	src << 	stopsound
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 		src.verbs += /client/verb/stop_the_radio
 
 /client/verb/stop_all_sounds()
@@ -272,14 +272,14 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 	src.verbs -= /client/verb/stop_all_sounds
 	for(var/sound/s in SoundQuery())
-		if (!s.channel) return //fixes a list index out of bounds from the channel stop below - possibly SoundQuery bug 
+		if (!s.channel) return //fixes a list index out of bounds from the channel stop below - possibly SoundQuery bug
 		s.status |= SOUND_UPDATE
 		s.volume = 0
 		sound_playing[ s.channel ][1] = 0
 		src << s
 
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(50)
+	SPAWN_DBG(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
 
 /proc/move_admin_sound_channel(var/opposite = 0)

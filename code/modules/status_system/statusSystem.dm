@@ -122,9 +122,9 @@ var/list/statusGroupLimits = list("Food"=4)
 					str = "[round(ownerStatus.duration / (1 MINUTES))]M"
 			else
 				if(ownerStatus.duration < 10 SECONDS)
-					str = "0[round(ownerStatus.duration / (1 SECONDS))]"
+					str = "0[round(ownerStatus.duration / (1 SECOND))]"
 				else
-					str = "[round(ownerStatus.duration / (1 SECONDS))]"
+					str = "[round(ownerStatus.duration / (1 SECOND))]"
 
 		maptext = "<text align=center><FONT FACE=Arial COLOR=white SIZE=1>[str]</FONT></text>"
 		return
@@ -378,7 +378,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 	simplehot //Simple heal over time.
 		var/tickCount = 0
-		var/tickSpacing = 1 SECONDS //Time between ticks.
+		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/heal_brute = 0
 		var/heal_tox = 0
 		var/heal_burn = 0
@@ -396,7 +396,7 @@ var/list/statusGroupLimits = list("Food"=4)
 
 	simpledot //Simple damage over time.
 		var/tickCount = 0
-		var/tickSpacing = 1 SECONDS //Time between ticks.
+		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/damage_brute = 0
 		var/damage_tox = 0
 		var/damage_burn = 0
@@ -1053,8 +1053,8 @@ var/list/statusGroupLimits = list("Food"=4)
 		name = "janktank"
 		desc = "You're \"high\" on some sorta stimulant"
 		icon_state = "janktank"
-		duration = 10 MINUTES
-		maxDuration = 20 MINUTES
+		duration = 9 MINUTES
+		maxDuration = 18 MINUTES
 		unique = 1
 		var/change = 1 //Effective change to maxHealth
 
@@ -1100,8 +1100,8 @@ var/list/statusGroupLimits = list("Food"=4)
 		name = "janktank withdrawl"
 		desc = "You're going through withrawl of Janktank"
 		icon_state = "janktank-w"
-		duration = 25 MINUTES
-		maxDuration = 25 MINUTES
+		duration = 9 MINUTES
+		maxDuration = 18 MINUTES
 		unique = 1
 		var/change = 1 //Effective change to maxHealth
 

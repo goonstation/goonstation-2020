@@ -36,7 +36,7 @@
 	user.visible_message("<span style='color:red'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
 	playsound(get_turf(user), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 	user.emote("scream")
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		user.visible_message("<span style='color:red'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
 		var/obj/skull = user.organHolder.drop_organ("skull")
 		if (skull)
@@ -62,14 +62,14 @@
 				"<span style='color:red'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (user && skull)
 				var/obj/brain = user.organHolder.drop_organ("brain")
 				if (brain)
 					brain.set_loc(skull.loc)
 					brain.visible_message("<span style='color:red'><b>[brain] falls out of the bottom of [skull].</b></span>")
 
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 				user.canmove = 1

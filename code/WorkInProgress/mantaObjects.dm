@@ -448,6 +448,9 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	attack_hand(mob/user as mob)
+		if (isAI(usr))
+			boutput(user, "<span style=\"color:red\">You'd touch the door, if only you had hands.</span>")
+			return
 		if (broken == 1)
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		if (!src.open)
@@ -697,7 +700,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		flick("englrt1", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 		teleport(user)
 		busy = 0
 

@@ -193,7 +193,7 @@
 						playsound(get_turf(src), 'sound/vox/uguu.ogg', 80, 0, 0, src.get_age_pitch())
 					else
 						playsound(get_turf(src), 'sound/voice/uguu.ogg', 80, 0, 0, src.get_age_pitch())
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						src.gib()
 						new /obj/item/clothing/mask/anime(src.loc)
 						return
@@ -254,7 +254,7 @@
 					if (istype(src.head, /obj/item/clothing/head/fedora))
 						var/obj/item/clothing/head/fedora/hat = src.head
 						message = "<B>[src]</B> tips \his [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
-						SPAWN_DBG(10)
+						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
 							src.gib()
@@ -1036,7 +1036,7 @@
 
 									// todo: add context-sensitive break dancing and some other goofy shit
 
-						SPAWN_DBG(5)
+						SPAWN_DBG(5 DECI SECONDS)
 							var/beeMax = 15
 							for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 								if (!responseBee.alive)
@@ -1058,7 +1058,7 @@
 
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
-								SPAWN_DBG(5)
+								SPAWN_DBG(5 DECI SECONDS)
 									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
 										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
 											continue
@@ -1263,7 +1263,7 @@
 								//playsound(get_turf(src), src.sound_malescream, 80, 0, 0, src.get_age_pitch())
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
-						SPAWN_DBG(5)
+						SPAWN_DBG(5 DECI SECONDS)
 							var/possumMax = 15
 							for (var/obj/critter/opossum/responsePossum in range(4, src))
 								if (!responsePossum.alive)
@@ -1451,7 +1451,7 @@
 							if (src.getStatusDuration("food_space_farts"))
 								src.inertia_dir = src.dir
 								step(src, inertia_dir)
-								SPAWN_DBG(1)
+								SPAWN_DBG(1 DECI SECOND)
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
 

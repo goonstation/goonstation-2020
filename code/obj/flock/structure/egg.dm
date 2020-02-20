@@ -28,7 +28,7 @@
 		src.visible_message("<span class='text-blue'>[src] breaks open!</span>")
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
 		src.loc = null
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(src.flock)
 				src.flock.removeDrone(src)
 			qdel(src)

@@ -317,7 +317,7 @@ todo: add more small animals!
 
 	death(var/gibbed)
 		if (!gibbed && prob(5))
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				if (src && isdead(src))
 					src.visible_message("<b>[src]</b> comes back to life, good thing [he_or_she(src)] has 9 lives!")
 					src.full_heal()
@@ -487,7 +487,7 @@ todo: add more small animals!
 			src.setStatus("weakened", 100)
 			src.visible_message("<span style='color:blue'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
 			"<span style='color:blue'>You flop on your back!</span>")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("paralysis")
 					src.changeStatus("stunned", 10 SECONDS)
@@ -745,7 +745,7 @@ todo: add more small animals!
 				if (src.emote_check(voluntary, 30))
 					if (src.icon_state_poof)
 						src.icon_state = src.icon_state_poof
-						SPAWN_DBG(30)
+						SPAWN_DBG(3 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
 					if (prob(3))
@@ -766,7 +766,7 @@ todo: add more small animals!
 						if (prob(3))
 							SPAWN_DBG(0)
 								src.create_feather()
-						SPAWN_DBG(38)
+						SPAWN_DBG(3.8 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
 						return "<span style='color:#605b59'><b>[src]</b> dances!</span>"
@@ -987,7 +987,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.drop_item()
 			W.set_loc(src)
 
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
@@ -1020,7 +1020,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.drop_item()
 			W.set_loc(src)
 
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
@@ -1778,7 +1778,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("flip","dance")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						animate_bumble(src)
 					return null
 			if ("snap","buzz")
@@ -2173,7 +2173,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = "lobsterman-screech"
-					SPAWN_DBG(15)
+					SPAWN_DBG(1.5 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1,0,0,0.8)
@@ -2182,7 +2182,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = "lobsterman-clack"
-					SPAWN_DBG(30)
+					SPAWN_DBG(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					return "<span style='color:#605b59'><b>[src]</b> clacks their claws!</span>"
@@ -2229,7 +2229,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
-					SPAWN_DBG(30)
+					SPAWN_DBG(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = initial(icon_state)
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")

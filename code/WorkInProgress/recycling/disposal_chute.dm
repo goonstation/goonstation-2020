@@ -33,7 +33,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (src)
 				trunk = locate() in src.loc
 				if(!trunk)
@@ -226,7 +226,7 @@
 	proc/go_out(mob/user)
 		user.set_loc(src.loc)
 		if (!user.hasStatus("weakened"))
-			user.changeStatus("weakened", 1 SECONDS)
+			user.changeStatus("weakened", 1 SECOND)
 			user.force_laydown_standup()
 		update()
 		return
@@ -504,7 +504,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(AM)
 					AM.throw_at(target, 5, 1)
 
@@ -526,7 +526,7 @@
 		if (user) //ZeWaka: Fix for null.loc
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -607,7 +607,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(8)
+		SPAWN_DBG(8 DECI SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if(!src.net_id)

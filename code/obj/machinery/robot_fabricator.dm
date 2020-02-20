@@ -14,7 +14,7 @@
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				while(metal_amount < 150000 && O:amount)
 
 					if(!O:amount)

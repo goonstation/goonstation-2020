@@ -406,7 +406,7 @@ var/crate_firing = 0
 			return
 
 		crate_firing = 1
-		SPAWN_DBG(80)
+		SPAWN_DBG(8 SECONDS)
 			crate_firing = 0
 
 		O.set_loc(spawnpoint)
@@ -427,7 +427,7 @@ var/crate_firing = 0
 					if (P && !P.density)
 						P.close()
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			O.throw_at(target, 100, 1)
 
 /proc/buy_from_trader(var/datum/trader/the_trader)
@@ -469,7 +469,7 @@ var/crate_firing = 0
 			return
 
 		crate_firing = 1
-		SPAWN_DBG(80)
+		SPAWN_DBG(8 SECONDS)
 			crate_firing = 0
 
 		var/atom/movable/A = new /obj/storage/crate(spawnpoint)
@@ -523,7 +523,7 @@ var/crate_firing = 0
 					if (P && !P.density)
 						P.close()
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			A.throw_at(target, 100, 1)
 
 /proc/process_supply_order(var/datum/supply_order/SO,var/mob/orderer)
@@ -558,7 +558,7 @@ var/crate_firing = 0
 			return
 
 		crate_firing = 1
-		SPAWN_DBG(80)
+		SPAWN_DBG(8 SECONDS)
 			crate_firing = 0
 
 		var/atom/movable/A = SO.create(spawnpoint, orderer)
@@ -573,7 +573,7 @@ var/crate_firing = 0
 					if (P && !P.density)
 						P.close()
 
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (A)
 				A.throw_at(target, 100, 1)
 /*

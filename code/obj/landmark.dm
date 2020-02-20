@@ -80,19 +80,19 @@ var/global/list/landmarks = list()
 			qdel(src)
 
 		if ("shitty_bill")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				new /mob/living/carbon/human/biker(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("john_bill")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				new /mob/living/carbon/human/john(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("big_yank")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				new /mob/living/carbon/human/big_yank(src.loc)
 				deleted_on_start = 1
 				qdel(src)
@@ -106,116 +106,116 @@ var/global/list/landmarks = list()
 
 
 		if ("father_jack")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				new /mob/living/carbon/human/fatherjack(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("don_glab")
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				new /mob/living/carbon/human/don_glab(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_normal")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_inside")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				var/obj/storage/S = locate() in src.loc
 				new /mob/living/carbon/human/npc/monkey(S)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_albert")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/albert(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_rathen")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/mr_rathen(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_mrmuggles")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/mr_muggles(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_mrsmuggles")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/mrs_muggles(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_syndicate")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/von_braun(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_horse")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/horse(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_krimpus")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/krimpus(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_tanhony")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/tanhony(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("monkeyspawn_stirstir")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/stirstir(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("seamonkeyspawn")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/sea(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("seamonkeyspawn_gang")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/sea/gang(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("seamonkeyspawn_gang_gun")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/sea/gang_gun(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("seamonkeyspawn_rich")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/sea/rich(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("seamonkeyspawn_lab")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/npc/monkey/sea/lab(src.loc)
 				deleted_on_start = 1
 				qdel(src)
 
 		if ("waiter")
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				new /mob/living/carbon/human/waiter(src.loc)
 				deleted_on_start = 1
 				qdel(src)
@@ -426,7 +426,7 @@ obj/landmark/interesting
 
 	New() //use initialize() later and test ok
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.setup()
 			SPAWN_DBG(10)
 				qdel(src)

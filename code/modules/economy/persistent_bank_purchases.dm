@@ -318,7 +318,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				SPAWN_DBG(60)
+				SPAWN_DBG(6 SECONDS)
 					if (H.limbs)
 						if (H.limbs.l_arm)
 							H.limbs.l_arm.delete()

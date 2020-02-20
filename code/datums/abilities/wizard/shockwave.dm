@@ -72,4 +72,4 @@
 		src.Scale(0,0)
 		animate(src, matrix(1.4, MATRIX_SCALE), time = 6, color = "#ffdddd", easing = LINEAR_EASING)
 		animate(time = 2, alpha = 0)
-		SPAWN_DBG(8) qdel(src)
+		SPAWN_DBG(8 DECI SECONDS) qdel(src)

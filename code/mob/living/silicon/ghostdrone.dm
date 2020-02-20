@@ -981,7 +981,7 @@
 					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
 
 			if (m_anim) //restart our passive animation
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					animate_bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2)
 
 		return
@@ -1067,7 +1067,7 @@
 			return src.emote(copytext(message, 2),1)
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
@@ -1164,7 +1164,7 @@
 		if (limiter.canISpawn(/obj/effects/sparks))
 			var/obj/sparks = unpool(/obj/effects/sparks)
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(20) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
@@ -1347,7 +1347,7 @@
 	if (M.mind)
 		M.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		G.show_laws_drone()
 
 	theMind.transfer_to(G)

@@ -48,7 +48,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		fxlist = meatland_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -267,7 +267,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			src.visible_message("<span style=\"color:red\"><B>[src]</B> chomps down on [M]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			random_brute_damage(M, rand(10,35))
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				src.attacking = 0
 
 	ai_think()
@@ -404,7 +404,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		src.frustration = 0
 		src.task = "thinking"
 
-		SPAWN_DBG(30)
+		SPAWN_DBG(3 SECONDS)
 			src.attacking = 0
 
 	update_meat_head_dialog(var/message)
@@ -1274,7 +1274,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				src.inserted_key = C
 				boutput(usr, "<span style=\"color:blue\">You insert the key and turn it.</span>")
 				playsound(host.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					if(src.inserted_key)
 						host.visible_message("<span style=\"color:red\">[host] emits a satisfied boop and a little green light comes on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
@@ -1293,7 +1293,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					if(!src.inserted_key)
 						host.visible_message("<span style=\"color:red\">[host] emits a dour boop and a small red light flickers on.</span>")
 						playsound(host.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
@@ -1497,7 +1497,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		set_density(0)
 		opacity = 0
 		src.name = "unsealed door"
-		SPAWN_DBG(13)
+		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
 		return
 
@@ -1528,7 +1528,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				L.gib()
 
 		src.icon_state = "fangdoor1"
-		SPAWN_DBG(13)
+		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
 		return
 
@@ -1645,7 +1645,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			var/turf/T = get_turf(src)
 			var/obj/item/reagent_containers/food/snacks/ingredient/meatpaste/theGib = new /obj/item/reagent_containers/food/snacks/ingredient/meatpaste {throwforce = 8;name="ambiguous organ";desc = "Some kind of human organ, probably.";icon = 'icons/misc/meatland.dmi'} (T)
 			theGib.icon_state = "meatproj[rand(1,3)]"
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				if (theGib)
 					theGib.throwforce = 1
 

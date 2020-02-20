@@ -80,7 +80,7 @@
 		if (istype(crate))
 			crate.close()
 		C.set_loc(src.loc)
-		SPAWN_DBG(2)
+		SPAWN_DBG(2 DECI SECONDS)
 			if (C && C.loc == src.loc)
 				C.set_loc(src)
 				load = C
@@ -99,7 +99,7 @@
 		load.layer = initial(load.layer)
 		load.set_loc(src.loc)
 		if (T)
-			SPAWN_DBG(2)
+			SPAWN_DBG(2 DECI SECONDS)
 				if (load)
 					load.set_loc(T)
 					load = null

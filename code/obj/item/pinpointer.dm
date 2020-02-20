@@ -49,7 +49,7 @@
 				icon_state = "[src.icon_type]_pinonmedium"
 			if(16 to INFINITY)
 				icon_state = "[src.icon_type]_pinonfar"
-		SPAWN_DBG(5) .()
+		SPAWN_DBG(5 DECI SECONDS) .()
 
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"
@@ -125,7 +125,7 @@
 				icon_state = "id_pinonmedium"
 			if(16 to INFINITY)
 				icon_state = "id_pinonfar"
-		SPAWN_DBG(5) .()
+		SPAWN_DBG(5 DECI SECONDS) .()
 
 /obj/item/idtracker/spy
 	attack_hand(mob/user as mob)
@@ -223,5 +223,5 @@
 				icon_state = "blood_pinonmedium"
 			if(16 to INFINITY)
 				icon_state = "blood_pinonfar"
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			.(T)
