@@ -598,6 +598,7 @@
 			//Result variables
 			var/stable = 0
 			var/transient = 0
+			var/analysisResult = ""
 			var/seqs = "\["
 			var/conf = "\["
 			var/delim = ""
@@ -614,6 +615,8 @@
 				var/acc_len = lentext(acc)
 				var/total = 0
 				var/match = 0
+				var/good = 0
+				var/bad = 0
 				for (var/dna in pathogen_controller.UID_to_symptom)
 					var/dnalen = lentext(dna)
 					if (dnalen >= acc_len)
@@ -626,6 +629,13 @@
 						else
 							if (copytext(dna, 1, acc_len + 1) == acc)
 								match++
+								// get symptom from dna, so we can check if it is good or bad
+								var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
+								message_admins("[sym]")
+								if(istype(sym, /datum/pathogeneffects/benevolent))
+									good++
+								else
+									bad++
 				var/ratio = 0
 				if (total)
 					ratio = match / total
@@ -640,17 +650,19 @@
 					//output += "Transient: <font color='#00ff00'>Yes</font><BR>"
 					transient = 1
 					db.transient_sequences[analyzed] = "Yes"
+					analysisResult = num2text(good) + " good " + "/" + num2text(bad) + " bad"
 				else if (i == bits)
 					//output += "Transient: <font color='#ff0000'>No</font><BR>"
 					transient = -1
 					db.transient_sequences[analyzed] = "No"
+					analysisResult = "-"
 			seqs += "]"
 			conf += "]"
 
 			if (!stable)
 				src.manip.analysis = null
 				stable = -1
-			var/output = {"{"valid":1,"stable":[stable],"trans":[transient],"seqs":[seqs],"conf":[conf]}"}
+			var/output = {"{"valid":1,"stable":[stable],"trans":[transient],"seqs":[seqs],"conf":[conf],"analysisResult":\"[analysisResult]\"}"}
 			src.manip.last_analysis = output
 			//gui.sendToSubscribers(output, "handleAnalysisTestCallback")
 			sendAnalysisData()

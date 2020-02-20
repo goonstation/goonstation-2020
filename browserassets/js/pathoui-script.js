@@ -311,7 +311,7 @@
 
 	/* VARS */
 	var curSeq = [], prevSeq = [],
-	iStable = 0, iTrans = 0;
+	iStable = 0, iTrans = 0, iAnalysisResult = "";
 
 	/* WORKERS */
 	function seqEntry(seq, certainty) {
@@ -433,6 +433,7 @@
 			prevSeq = [];
 			iStable = data.stable;
 			iTrans = data.trans;
+			iAnalysisResult = data.analysisResult;
 			var s = data.seqs, c = data.conf;
 
 			if(s.length === c.length) {
@@ -491,12 +492,21 @@
 		}
 	}
 
+	function updateAnalysisResult(id, newResult) {
+		$(id + " .text-field").text("");
+		if(newResult) {
+				$(id).html("<span>" + newResult + "</span>");
+			}
+	}
+
 	function updateAnalysisControlElements() {
 		setAnnunciator("#annStableYes", iStable == 1);
 		setAnnunciator("#annStableNo", iStable == -1);
 
 		setAnnunciator("#annTransYes", iTrans == 1);
 		setAnnunciator("#annTransNo", iTrans == -1);
+		
+		updateAnalysisResult("#analysisResult", iAnalysisResult);
 
 
 		var invalid = !loadedDna || loadedDna.isSplicing;
