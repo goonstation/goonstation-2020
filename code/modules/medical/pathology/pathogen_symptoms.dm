@@ -1893,6 +1893,8 @@ datum/pathogeneffects/malevolent/leprosy
 							SPAWN_DBG(rand(150, 200))
 								if (limb.remove_stage == 2)
 									limb.remove(0)
+	may_react_to()
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
 datum/pathogeneffects/malevolent/senility
 	name = "Senility"
@@ -1929,6 +1931,8 @@ datum/pathogeneffects/malevolent/senility
 					M.show_message("<span style=\"color:red\">You completely forget what you were doing.</span>")
 					M.drop_item()
 					M.take_brain_damage(4)
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
 
 datum/pathogeneffects/malevolent/beesneeze
 	name = "Projectile Bee Egg Sneezing"
