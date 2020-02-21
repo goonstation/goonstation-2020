@@ -3884,12 +3884,12 @@ datum
 			result_amount = 3
 			mix_phrase = "A strange green goopy liquid forms in the container."
 
-
-
-
-
-
-
-
-
+		sakuride
+			name = "sakuride"
+			id = "sakuride"
+			result = "sakuride"
+			required_reagents = list("love" = 1,"tea" = 1, "colors" = 1)
+			result_amount = 3
+			mix_phrase = "The substance emits the sweet scent of cherryblossoms."
+			
 #undef get_fucked_clarks
