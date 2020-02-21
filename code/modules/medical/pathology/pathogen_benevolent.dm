@@ -257,7 +257,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 	permeability_score = 15
 	spread = SPREAD_BODY | SPREAD_HANDS
 	infection_coefficient = 1.5
-	infect_message = "<span style=\"color:red\">You can't help but feel loved.</span>"
+	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
