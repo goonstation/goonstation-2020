@@ -3890,6 +3890,6 @@ datum
 			result = "sakuride"
 			required_reagents = list("love" = 1,"tea" = 1, "colors" = 1)
 			result_amount = 3
-			mix_phrase = "The substance emits the sweet scent of cherryblossoms."
+			mix_phrase = "The substance emits the sweet scent of cherryblossoms!"
 			
 #undef get_fucked_clarks
