@@ -3582,8 +3582,9 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 1)
-					T.overlays += image(icon = 'icons/obj/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
+				if (!(istype(T, /turf/space)) && (volume >= 1))
+					if (!locate(/obj/decal/cleanable/sakura) in T)
+						make_cleanable(/obj/decal/cleanable/sakura,T)
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
