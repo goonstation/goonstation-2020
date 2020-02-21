@@ -197,11 +197,13 @@ div {
 }
 
 .tf-med-long {
-	width:180px;
+	width:170px;
 	height:25px;
 	padding:3px;
-	float:right;
 	text-align:center;
+	margin:1px;
+	margin-right:10px;
+	padding:3px;
 }
 
 .tf-med {
