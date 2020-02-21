@@ -3570,20 +3570,6 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
-				
-		sakuride
-			name = "sakuride"
-			id = "sakuride"
-			description = "A big pile of sakura petals!"
-			reagent_state = SOLID
-			fluid_r = 255
-			fluid_g = 161
-			fluid_b = 203
-			transparency = 255
-
-			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 1)
-					T.overlays += image(icon = 'icons/obj/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
