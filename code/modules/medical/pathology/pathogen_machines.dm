@@ -649,7 +649,7 @@
 					//output += "Transient: <font color='#00ff00'>Yes</font><BR>"
 					transient = 1
 					db.transient_sequences[analyzed] = "Yes"
-					analysisResult = num2text(good) + " good " + "/" + num2text(bad) + " bad"
+					analysisResult = num2text(good) + " good " + "   " + num2text(bad) + " bad"
 				else if (i == bits)
 					//output += "Transient: <font color='#ff0000'>No</font><BR>"
 					transient = -1
