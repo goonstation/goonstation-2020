@@ -631,7 +631,6 @@
 								match++
 								// get symptom from dna, so we can check if it is good or bad
 								var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
-								message_admins("[sym]")
 								if(istype(sym, /datum/pathogeneffects/benevolent))
 									good++
 								else
