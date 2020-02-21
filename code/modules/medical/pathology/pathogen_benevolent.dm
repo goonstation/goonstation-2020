@@ -209,7 +209,7 @@ datum/pathogeneffects/benevolent/resurrection
 			M.take_brain_damage(70)				// and a lot of brain damage
 			setalive(M)
 			M.changeStatus("paralysis", 150) 	// paralyze the person for a while, because coming back to life is hard work
-			M.change_misstep_chance(30)			// even after getting up they still have some grogginess for a while
+			M.change_misstep_chance(40)			// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
 			M.updatehealth()
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
