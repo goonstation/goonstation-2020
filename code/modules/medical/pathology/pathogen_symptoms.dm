@@ -390,7 +390,7 @@ datum/pathogeneffects/malevolent/gasping
 	may_react_to()
 		return "The pathogen appears to create bubbles of vacuum around its affected area."
 
-datum/pathogeneffects/malevolent/moaning
+/*datum/pathogeneffects/malevolent/moaning
 	name = "Moaning"
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
@@ -452,7 +452,7 @@ datum/pathogeneffects/malevolent/hiccups
 					M:emote("hiccup")
 
 	may_react_to()
-		return "The pathogen appears to be violently... hiccuping?"
+		return "The pathogen appears to be violently... hiccuping?"*/
 
 datum/pathogeneffects/malevolent/shivering
 	name = "Shivering"
