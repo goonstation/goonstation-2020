@@ -311,7 +311,7 @@
 
 	/* VARS */
 	var curSeq = [], prevSeq = [],
-	iStable = 0, iTrans = 0, iAnalysisResult = "";
+	iStable = 0, iTrans = 0, iStableType = "", iTransGood = "", iTransBad = "";
 
 	/* WORKERS */
 	function seqEntry(seq, certainty) {
@@ -433,7 +433,9 @@
 			prevSeq = [];
 			iStable = data.stable;
 			iTrans = data.trans;
-			iAnalysisResult = data.analysisResult;
+			iStableType = data.stableType;
+			iTransGood = data.transGood;
+			iTransBad = data.transBad;
 			var s = data.seqs, c = data.conf;
 
 			if(s.length === c.length) {
@@ -494,9 +496,22 @@
 
 	function updateAnalysisResult(id, newResult) {
 		$(id + " .text-field").text("");
-		if(newResult) {
-				$(id).html("<span>" + newResult + "</span>");
-			}
+		$(id).html("<span>" + newResult + "</span>");
+		if($(id).hasClass("a-green-on"))
+		{
+			$(id).removeClass("a-green-on");
+		}
+		else if($(id).hasClass("a-green-on"))
+		{
+			$(id).removeClass("a-red-on");
+		}
+		if(newResult == "Good") {
+			safeAddClass(id, "a-green-on");
+		} else if(newResult == "Bad")
+		{
+			safeAddClass(id, "a-red-on");
+		}
+		return 0;
 	}
 
 	function updateAnalysisControlElements() {
@@ -506,7 +521,9 @@
 		setAnnunciator("#annTransYes", iTrans == 1);
 		setAnnunciator("#annTransNo", iTrans == -1);
 		
-		updateAnalysisResult("#analysisResult", iAnalysisResult);
+		updateAnalysisResult("#stableType", iStableType);
+		updateAnalysisResult("#transTypesGood", iTransGood);
+		updateAnalysisResult("#transTypesBad", iTransBad);
 
 
 		var invalid = !loadedDna || loadedDna.isSplicing;
