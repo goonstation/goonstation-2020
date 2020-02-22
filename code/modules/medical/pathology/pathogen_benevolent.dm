@@ -1,8 +1,3 @@
-#define SPREAD_FACE 1
-#define SPREAD_BODY 2
-#define SPREAD_HANDS 4
-#define SPREAD_AIR 8
-
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = RARITY_ABSTRACT
@@ -213,12 +208,12 @@ datum/pathogeneffects/benevolent/oxygenproduction
 			M.updatehealth()
 
 datum/pathogeneffects/benevolent/resurrection
-	name = "Resurrection"
+	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
 	rarity = RARITY_VERY_RARE
 
 	may_react_to()
-		return "Some dead pathogen cells appear to keep moving around."
+		return "Some of the dead pathogen cells seem to remain active."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -237,12 +232,21 @@ datum/pathogeneffects/benevolent/resurrection
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
 			var/brute = M.get_brute_damage()>45?45:M.get_brute_damage()
 			var/burn = M.get_burn_damage()>45?45:M.get_burn_damage()
-			M.full_heal()
-			M.TakeDamage("chest", brute, burn)	// this makes it so our burn and brute are between 0-45, so at worst we will have 10% hp
-			M.take_brain_damage(70)				// and a lot of brain damage
+
+			// let's heal them before we put some of the damage back
+			// but they don't get back organs/limbs/whatever, so I don't use full_heal
+			M.HealDamage("All", 100000, 100000)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M	
+				H.blood_volume = 500 					// let's not have people immediately suffocate from being exsanguinated
+				H.take_toxin_damage(-INFINITY)
+				H.take_oxygen_deprivation(-INFINITY)
+
+			M.TakeDamage("chest", brute, burn)			// this makes it so our burn and brute are between 0-45, so at worst we will have 10% hp
+			M.take_brain_damage(70)						// and a lot of brain damage
 			setalive(M)
-			M.changeStatus("paralysis", 150) 	// paralyze the person for a while, because coming back to life is hard work
-			M.change_misstep_chance(40)			// even after getting up they still have some grogginess for a while
+			M.changeStatus("paralysis", 150) 			// paralyze the person for a while, because coming back to life is hard work
+			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
 			M.updatehealth()
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
@@ -255,6 +259,10 @@ datum/pathogeneffects/benevolent/resurrection
 				H.remission(origin)			// set the pathogen into remission, so it will be gone soon. Unlikely for a person to revive twice like this!
 				H.immunity(origin)
 				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
+
+	react_to(var/R, var/zoom)
+		if (R == "Synthflesh")
+			return "Dead parts of the synthflesh seem to still be transferring blood."
 
 
 datum/pathogeneffects/benevolent/brewery

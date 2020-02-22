@@ -797,6 +797,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\genetics\bioEffects\powers.dm"
 #include "code\modules\medical\genetics\bioEffects\speech.dm"
 #include "code\modules\medical\genetics\bioEffects\useless.dm"
+#include "code\modules\medical\pathology\_pathogen_constants.dm"
 #include "code\modules\medical\pathology\pathogen.dm"
 #include "code\modules\medical\pathology\pathogen_ailments.dm"
 #include "code\modules\medical\pathology\pathogen_benevolent.dm"
