@@ -93,6 +93,7 @@
 								// this is used to calc the probability the light burns out
 
 	var/wallmounted = 1
+	var/nostick = 1 //If set to true, overrides the autopositioning.
 	var/candismantle
 	var/rigged = 0				// true if rigged to explode
 	var/mob/rigger = null // mob responsible for the explosion
@@ -121,6 +122,27 @@
 		if (light)
 			light.dispose()
 		..()
+	
+	proc/autoposition()
+		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
+		if (nostick == 0) // unless nostick is set to true in which case... dont
+			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
+				var/turf/T = null
+				for (var/dir in cardinal)
+					T = get_step(src,dir)
+					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+						src.dir = dir
+						if (dir == EAST)
+							src.pixel_x = 10
+						else if (dir == WEST)
+							src.pixel_x = -10
+						else if (dir == NORTH)
+							src.pixel_y = 21
+						break
+				T = null
+
+		..()
+
 
 //regular light bulbs
 /obj/machinery/light/small
@@ -166,6 +188,45 @@
 		very
 			name = "very harsh incandescent light bulb"
 			light_type = /obj/item/light/bulb/harsh/very
+	
+	//The only difference between these small lights and others are that these automatically stick to walls! Wow!!
+	sticky
+		nostick = 0
+
+		New()
+			..()
+			autoposition()
+
+		greenish
+			name = "greenish incandescent light bulb"
+			light_type = /obj/item/light/bulb/greenish
+		blueish
+			name = "blueish fluorescent light bulb"
+			light_type = /obj/item/light/bulb/blueish
+		purpleish
+			name = "purpleish fluorescent light bulb"
+			light_type = /obj/item/light/bulb/purpleish
+
+		warm
+			name = "fluorescent light bulb"
+			light_type = /obj/item/light/bulb/warm
+			very
+				name = "warm fluorescent light bulb"
+				light_type = /obj/item/light/bulb/warm/very
+
+		cool
+			name = "cool incandescent light bulb"
+			light_type = /obj/item/light/bulb/cool
+			very
+				name = "very cool incandescent light bulb"
+				light_type = /obj/item/light/bulb/cool/very
+
+		harsh
+			name = "harsh incandescent light bulb"
+			light_type = /obj/item/light/bulb/harsh
+			very
+				name = "very harsh incandescent light bulb"
+				light_type = /obj/item/light/bulb/harsh/very
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -337,27 +398,11 @@
 /obj/machinery/light/incandescent
 	light_type = /obj/item/light/tube
 	allowed_type = /obj/item/light/tube
-	var/nostick = 0 //If set to true, overrides the autopositioning.
+	nostick = 0
 
 	New()
-		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
-		if (!nostick) // unless nostick is set in which case... dont
-			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
-				var/turf/T = null
-				for (var/dir in cardinal)
-					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
-						src.dir = dir
-						if (dir == EAST)
-							src.pixel_x = 10
-						else if (dir == WEST)
-							src.pixel_x = -10
-						else if (dir == NORTH)
-							src.pixel_y = 21
-						break
-				T = null
-
 		..()
+		autoposition()
 
 	name = "incandescent light fixture"
 	light_type = /obj/item/light/tube/neutral
