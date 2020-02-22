@@ -1134,6 +1134,7 @@ datum/pathogen
 				src.dnasample = sample
 			else
 				src.dnasample = new/datum/pathogendna(src)
+		processing_items.Add(src)
 
 
 	proc/generate_weak_effect()
@@ -1212,8 +1213,9 @@ datum/pathogen
 		dnasample = new(src)
 
 	proc/process()
-		disease_act()
-		if (rads)
+		// disease_act()    // this is handled in the life loop instead
+		/*					// I think the radiation mutation stuff might not be quite finished, seeing as the cooldown isn't actually checked afaics
+		if (rads)			// so I'll just hold off on enabling it for now
 			if (rads < 1)
 				rads = 0
 			else
@@ -1232,13 +1234,16 @@ datum/pathogen
 				logTheThing("pathology", infected, null, "'s infection of [name] mutated due to radiation levels of [rads].")
 				mutate()
 				rad_mutate_cooldown = 26
+		*/
 		if (ticked)
 			ticked = 0
 			suppressed = 0
+		/*
 		if (rad_mutate_cooldown > 0)
 			rad_mutate_cooldown--
 		else if (rad_mutate_cooldown < 0) //??
 			rad_mutate_cooldown = 0
+		*/
 
 	// This is the real thing, wrapped by process().
 	proc/disease_act()
@@ -1273,7 +1278,7 @@ datum/pathogen
 					suppressed = result
 			if (advance_speed > 0)
 				if (prob(min(advance_speed, 4)))
-					if (suppressed < 1)
+					if (suppressed < 1)	
 						advance()
 					else if (stage > 3)
 						reduce()
@@ -1290,6 +1295,27 @@ datum/pathogen
 			ticked = 1
 		else
 			cooldown--
+
+	// it's like disease_act, but for dead people!
+	proc/disease_act_dead()
+		var/list/acted = list()
+		var/order = pick(0,1)
+		if (order)
+			for (var/datum/effect in src.effects)
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act_dead(infected, src)
+		else
+			for (var/i = src.effects.len, i > 0, i--)
+				var/datum/effect = src.effects[i]
+				if (effect.type in acted)
+					continue
+				acted += effect.type
+				if (prob(body_type.activity[stage]))
+					effect:disease_act_dead(infected, src)
+		// let's not bother doing all the suppression and curing type stuff for dead people, most symptoms won't do anything anyway
 
 	// A safe method for advancing the pathogen's stage.
 	proc/advance()

@@ -214,7 +214,7 @@ datum/pathogeneffects/benevolent/oxygenproduction
 
 datum/pathogeneffects/benevolent/resurrection
 	name = "Resurrection"
-	desc = "The pathogen resurrects you. Fuck you I don't get paid to write descriptions! Sorry for swearing, It's late. I hope we can remain friends...."
+	desc = "The pathogen will resurrect you if it procs while you are dead."
 	rarity = RARITY_VERY_RARE
 
 	may_react_to()
@@ -225,9 +225,10 @@ datum/pathogeneffects/benevolent/resurrection
 			return
 		if (origin.stage < 5)
 			return
-		M.show_message("<span style=\"color:red\">Read to die!</span>")
+		if(prob(5))
+			M.show_message("<span style=\"color:red\">You feel a sudden craving for ... brains??</span>")
 
-	ondeath(var/mob/M as mob, var/datum/pathogen/origin)
+	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
 		if (origin.stage < 5)
@@ -251,9 +252,9 @@ datum/pathogeneffects/benevolent/resurrection
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
-				H.cured(origin)			// cure the pathogen and immunize us against it, so we can't use it twice!
+				H.remission(origin)			// set the pathogen into remission, so it will be gone soon. Unlikely for a person to revive twice like this!
 				H.immunity(origin)
-				H.visible_message("<span style=\"color:red\">[H] seems to rise from the dead!</span>","<span style=\"color:red\">You feel the pathogen leaving your body as you rise from the dead.</span>")
+				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
 
 
 datum/pathogeneffects/benevolent/brewery

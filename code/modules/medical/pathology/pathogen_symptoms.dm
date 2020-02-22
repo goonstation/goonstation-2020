@@ -33,6 +33,11 @@ datum/pathogeneffects
 	// OVERRIDE: A subclass (direct or otherwise) is expected to override this.
 	proc/disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 
+	// disease_act_dead(mob, datum/pathogen) : void
+	// This functions identically to disease_act, except it is only called when the mob is dead. (disease_act is not called if that is the case.)
+	// OVERRIDE: Only override this if if it needed for the symptom.
+	proc/disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
+
 	// infect(mob, datum/pathogen) : void
 	// This is the proc that will handle infection. Infection does not occur on every single tick, as previously. Instead symptoms will independently decide when it would be appropriate to
 	// infect mobs nearby. For example, a coughing symptom shouldn't infect everyone everywhere, but as soon as the affected person coughs they should infect everyone nearby.

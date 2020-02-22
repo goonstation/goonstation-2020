@@ -675,12 +675,14 @@
 		if (isdead(src))
 			if (src.pathogens.len)
 				for (var/uid in src.pathogens)
+					var/datum/pathogen/P = src.pathogens[uid]
+					P.disease_act_dead()
 					if (prob(5))
-						src.cured(src.pathogens[uid])
-			return
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/P = src.pathogens[uid]
-			P.disease_act()
+						src.cured(P)
+		else
+			for (var/uid in src.pathogens)
+				var/datum/pathogen/P = src.pathogens[uid]
+				P.disease_act()
 
 	proc/handle_mutations_and_radiation()
 		if (bioHolder) bioHolder.OnLife()
