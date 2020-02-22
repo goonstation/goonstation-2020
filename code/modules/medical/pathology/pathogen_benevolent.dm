@@ -213,7 +213,7 @@ datum/pathogeneffects/benevolent/resurrection
 	rarity = RARITY_VERY_RARE
 
 	may_react_to()
-		return "Some of the dead pathogen cells seem to remain active."
+		return "Some of the pathogen's dead cells seem to remain active."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
