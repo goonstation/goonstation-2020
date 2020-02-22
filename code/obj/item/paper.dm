@@ -744,7 +744,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/cdc_pamphlet
 	name = "So you've contracted a pathogen!"
 	icon_state = "paper"
-	info = {"<center><h2>How to send a pathogen sample</h2></center>
+	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
 	Hello, dear customer!<hr>
 	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
 	<h3>How to send a pathogen sample</h3><hr>
