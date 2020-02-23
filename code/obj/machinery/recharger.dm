@@ -30,6 +30,12 @@ obj/machinery/recharger
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 	desc = "An anchored minature recharging device, used to recharge small, hand-held objects that don't require much electrical charge."
 	power_usage = 50
+	// So we can have rechargers with different sprites, let's use their icon states as variables!
+	// This way we won't have to make a new proc altogether just so we can have different sprites
+	var/sprite_empty = "recharger0"
+	var/sprite_charging = "recharger1"
+	var/sprite_complete = "recharger2"
+	var/sprite_error = "recharger3"
 
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
@@ -43,6 +49,33 @@ obj/machinery/recharger
 	var/obj/item/charging = null
 	var/charge_amount = 0
 	var/charge_status = 0
+
+	//wall rechargers!!
+	wall
+		icon_state = "wall_recharger0"
+		name = "wall mounted recharger"
+		desc = "A recharger, refitted to be mounted onto a wall. Handy!"
+		sprite_empty = "wall_recharger0"
+		sprite_charging = "wall_recharger1"
+		sprite_complete = "wall_recharger2"
+		sprite_error = "wall_recharger3"
+
+		//this version just autopositions itself onto walls depending what direction it's facing
+		sticky
+			New()
+				SPAWN_DBG(1 DECI SECOND) //WAIT before u position urself omg
+				switch(dir)
+					if(NORTH)
+						src.pixel_y = 28
+					if(SOUTH)
+						src.pixel_y = -22
+					if(EAST)
+						src.pixel_x = 23
+					if(WEST)
+						src.pixel_x = -23
+				..()
+				
+
 
 /obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
 	if (isrobot(user)) return
@@ -92,16 +125,16 @@ obj/machinery/recharger
 /obj/machinery/recharger/proc/update_icon()
 	if (status & NOPOWER || charge_status == STATUS_INACTIVE)
 		// No power - show blank machine
-		src.icon_state = "recharger0"
+		src.icon_state = sprite_empty
 	else if(charge_status == STATUS_COMPLETE)
 		// Charge is complete - flashing green
-		src.icon_state = "recharger2"
+		src.icon_state = sprite_complete
 	else if (charge_status == STATUS_ACTIVE)
 		// Charge NOT complete, but charger working
-		src.icon_state = "recharger1"
+		src.icon_state = sprite_charging
 	else if (charge_status == STATUS_ERRORED)
 		// Something wrong with the item we inserted. Report an error
-		src.icon_state = "recharger3"
+		src.icon_state = sprite_error
 
 
 /obj/machinery/recharger/process()
@@ -116,7 +149,7 @@ obj/machinery/recharger
 	// WHY DID YOU DO THIS
 	// die
 	if(status & NOPOWER)
-		src.icon_state = "recharger0"
+		src.icon_state = sprite_empty
 		update_icon()
 		return
 
