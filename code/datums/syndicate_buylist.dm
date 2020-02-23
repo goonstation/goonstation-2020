@@ -676,7 +676,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/shotglass
 	name = "Extra Large Shot Glasses"
-	item = /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
 	job = list("Barman")
