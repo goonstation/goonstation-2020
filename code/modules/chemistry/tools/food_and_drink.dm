@@ -1185,6 +1185,11 @@
 	gulp_size = 15
 	initial_volume = 15
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	amount_per_transfer_from_this = 50
+	gulp_size = 50
+	initial_volume = 50
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
 	icon_state = "glass-oldf"

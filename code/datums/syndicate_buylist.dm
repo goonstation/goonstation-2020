@@ -674,6 +674,14 @@ This is basically useless for anyone but miners.
 	job = list("Barman")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/shotglass
+	name = "Extra Large Shot Glasses"
+	item = /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	cost = 2
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	job = list("Barman")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/vuvuzelagun
 	name = "Vuvuzela Gun"
 	item = /obj/item/gun/energy/vuvuzela_gun
