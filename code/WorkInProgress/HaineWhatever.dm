@@ -1223,8 +1223,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	AH.customization_first = "Sailor Moon"
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
+	if(src.bioHolder.HasEffect("quiet_voice"))
+		src.bioHolder.RemoveEffect("quiet_voice")
 	AH.parentHolder = src.bioHolder
-
 	src.gender = "female"
 	src.real_name = "Sailor Moon"
 	for (var/obj/item/O in src.get_equipped_items())
@@ -1238,7 +1239,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	src.equip_if_possible(new /obj/item/clothing/gloves/sailormoon (src), slot_gloves)
 	src.equip_if_possible(new /obj/item/clothing/shoes/sailormoon (src), slot_shoes)
 	src.equip_if_possible(new /obj/item/clothing/head/sailormoon (src), slot_head)
-	src.equip_if_possible(new /obj/item/sailormoon_wand (src), slot_in_backpack)
+	src.equip_if_possible(new /obj/item/sailormoon_wand (src), slot_belt)
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
