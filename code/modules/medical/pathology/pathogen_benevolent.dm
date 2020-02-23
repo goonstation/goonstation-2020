@@ -264,7 +264,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 			return
 		var/check_amount = M.reagents.get_reagent_amount("love")
 		if (!check_amount || check_amount < 5)
-			M.reagents.add_reagent("love", origin.stage / 2)
+			M.reagents.add_reagent("love", origin.stage / 3)
 		if (prob(origin.stage * 2.5))
 			infect(M, origin)
 
@@ -272,8 +272,8 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 		return "The pathogen's cells appear to be... hugging each other?"
 
 datum/pathogeneffects/benevolent/neuralreconstruction
-	name = "Neural Reconstruction"
-	desc = "Infection slowly repairs damage done to the brain."
+	name = "Neuron Restoration"
+	desc = "Infection slowly repairs nerve cells in the brain."
 	rarity = RARITY_UNCOMMON
 	infect_type = INFECT_NONE
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
@@ -284,18 +284,18 @@ datum/pathogeneffects/benevolent/neuralreconstruction
 				if (prob(5))
 					M.take_brain_damage(-1)
 			if (3)
-				if (prob(15))
+				if (prob(10))
 					M.take_brain_damage(-1)
 			if (4)
-				if (prob(25))
+				if (prob(15))
 					M.take_brain_damage(-2)
 			if (5)
-				if (prob(35))
+				if (prob(20))
 					M.take_brain_damage(-2)
 
 	react_to(var/R, var/zoom)
 		if (!(R == "neurotoxin"))
-			return "The pathogen seems to release a chemical in an attempt to counteract the effects of the neurotoxin."
+			return "The pathogen releases a chemical in an attempt to counteract the effects of the neurotoxin."
 
 	may_react_to()
 		return "The pathogen appears to have a gland that may affect neural functions."
