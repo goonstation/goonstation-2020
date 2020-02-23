@@ -1227,16 +1227,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	src.gender = "female"
 	src.real_name = "Sailor Moon"
-
-	for (var/obj/item/clothing/O in src)
-		if(istype(O,/obj/item/clothing))
-			if(istype(O.src.head,/obj/item/clothing/head/butt))
-				continue
-			src.u_equip(O)
-			if (O)
-				O.set_loc(src.loc)
-				O.dropped(src)
-				O.layer = initial(O.layer)
+	for (var/obj/item/O in src.get_equipped_items())
+		src.u_equip(O)
+		if (O)
+			O.set_loc(src.loc)
+			O.dropped(src)
+			O.layer = initial(O.layer)
 	src.equip_if_possible(new /obj/item/clothing/under/gimmick/sailormoon (src), slot_w_uniform)
 	src.equip_if_possible(new /obj/item/clothing/glasses/sailormoon (src), slot_glasses)
 	src.equip_if_possible(new /obj/item/clothing/gloves/sailormoon (src), slot_gloves)
