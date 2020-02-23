@@ -299,7 +299,7 @@
 			return list(access_bar, access_kitchen)
 		if("Clown", "Boxer", "Barber", "Mime")
 			return list(access_maint_tunnels)
-		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host" || "Student")
+		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host", "Student")
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mailman")
 			return list(access_maint_tunnels, access_mail, access_heads, access_cargo, access_hangar)
