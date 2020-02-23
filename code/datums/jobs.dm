@@ -866,6 +866,42 @@
 		src.access = get_access("Staff Assistant")
 		return
 
+/datum/job/civilian/student
+	name = "Student"
+	wages = 2
+	limit = 1
+	allow_traitors = 0
+	allow_spy_theft = 0
+	objective = "Learn a job skill!"
+	slot_rhan = /obj/item/pen/pencil
+	slot_jump = /obj/item/clothing/under/color/pink
+	slot_foot = /obj/item/clothing/shoes/pink
+	slot_lhan = /obj/item/paper
+	// Ass Day Thing - NYI
+	// slot_glov = /obj/item/clothing/gloves/water_wings
+	// slot_jump = /obj/item/clothing/under/gimmick/wedding_dress
+
+	New()
+		..()
+		src.access = get_access("Student")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		// Let's give them quiet voice since they should be learning not talking :P
+		M.bioHolder.AddEffect("quiet_voice")
+		/*
+		 33% Chance of One Being Sailor Moon - seems a bit high but at the same time we don't want this to be
+		 /every/ stundent that signs on.Brooch Spawns on Ground, ideally it would spawn in their pocket but
+		 I'm not sure how to code that in such a way that it would be an acceptable PR For Goonstation.
+		 ~rain2025 (myst.leissa#0800)
+		*/
+		if(prob(33))
+			new /obj/item/sailormoon_brooch(M.loc)
+		return
+
 /datum/job/civilian/clown
 	name = "Clown"
 	wages = 1
