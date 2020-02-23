@@ -271,7 +271,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 	may_react_to()
 		return "The pathogen's cells appear to be... hugging each other?"
 
-datum/pathogeneffects/benevolent/neuralreconstruction
+datum/pathogeneffects/benevolent/neuronrestoration
 	name = "Neuron Restoration"
 	desc = "Infection slowly repairs nerve cells in the brain."
 	rarity = RARITY_UNCOMMON
