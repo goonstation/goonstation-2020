@@ -185,3 +185,20 @@
 	assoc_reagents = list("nicotine")
 	mutations = list(/datum/plantmutation/tobacco/twobacco)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted) 
+
+/datum/plant/grass
+	name = "Grass"
+	category = "Miscellaneous"
+	seedcolor = "#00CC00"
+	crop = /obj/item/plant/herb/grass
+	isgrass = 1
+	starthealth = 10
+	growtime = 15
+	harvtime = 50
+	harvests = 1
+	cropsize = 8
+	endurance = 10
+	vending = 2
+	genome = 4
+	assoc_reagents = list("grassgro")
+	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
