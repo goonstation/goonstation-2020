@@ -3586,6 +3586,12 @@ datum
 				var/turf/simulated/floor/T = target
 
 				if (istype(T))
+					if (T.broken || T.burnt) 
+						return
+					else if (T.icon_state in list("grass", "grass_eh"))
+						return
+					if (!T.icon_old)
+						T.icon_old = T.icon_state
 					SPAWN_DBG(rand(5,12) * 10)
 						T.icon = 'icons/turf/outdoors.dmi'
 						T.icon_state = "grass"
