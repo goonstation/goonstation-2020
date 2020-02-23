@@ -1100,25 +1100,26 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throw_speed = 1
 	throw_return = 1
 	throw_spin = 0
+	var/mob/living/carbon/human/usagi = null
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
 		playsound(src.loc, "swoosh", 50, 1)
-		if (usr)
-			usr.say("MOON TIARA ACTION!")
+		if(!ishuman(usagi))
+			return ..()
+		if (usagi.loc==src.loc)
+			usr.say("MOON TIARA ACTION!") // The SOURCE of all the global futz'ing was to keep this ONE line of chat :facepalm:
 		return ..(target)
 
 	throw_impact(atom/hit_atom)
 		icon_state = "sailormoon"
-		if (hit_atom == usr)
-			if (ishuman(usr))
-				var/mob/living/carbon/human/usagi = usr
-				if (!usagi.equip_if_possible(src, usagi.slot_glasses))
-					usagi.put_in_hand_or_drop(src)
-			else
-				src.attack_hand(usr)
+		if (hit_atom == usagi)
+			if (!usagi.equip_if_possible(src, usagi.slot_glasses))
+				usagi.put_in_hand_or_drop(src)
+				//usagi.attack_hand(src) - is this even required by the original; it drops if it gets this far?
 			return
-		return ..(hit_atom)
+		else
+			return ..(hit_atom)
 
 /obj/item/clothing/gloves/sailormoon
 	name = "gloves"
@@ -1147,6 +1148,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		if (ishuman(usr))
 			var/mob/living/carbon/human/usagi = usr
+			if(usagi.bioHolder.HasEffect("quiet_voice"))
+				usagi.bioHolder.RemoveEffect("quiet_voice")
 			usagi.say("MOON PRISM POWER, MAKE UP!")
 			src.activated = 1
 			for (var/i = 0, i < 4, i++)
@@ -1223,8 +1226,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	AH.customization_first = "Sailor Moon"
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
-	if(src.bioHolder.HasEffect("quiet_voice"))
-		src.bioHolder.RemoveEffect("quiet_voice")
 	AH.parentHolder = src.bioHolder
 	src.gender = "female"
 	src.real_name = "Sailor Moon"
@@ -1234,13 +1235,16 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			O.set_loc(src.loc)
 			O.dropped(src)
 			O.layer = initial(O.layer)
+	//The Reason for the seperate set is seen in the earlier tiara...i can't rightly set it's persistant owner if i don't use a global...
+	var/object/item/clothing/sailormoon/glasses/sailormoon/tiara = new /obj/item/clothing/glasses/sailormoon (src) // So Sue Me I do things my way :>P
+	tiara.usagi = src
 	src.equip_if_possible(new /obj/item/clothing/under/gimmick/sailormoon (src), slot_w_uniform)
-	src.equip_if_possible(new /obj/item/clothing/glasses/sailormoon (src), slot_glasses)
+	src.equip_if_possible(tiara, slot_glasses)
 	src.equip_if_possible(new /obj/item/clothing/gloves/sailormoon (src), slot_gloves)
 	src.equip_if_possible(new /obj/item/clothing/shoes/sailormoon (src), slot_shoes)
 	src.equip_if_possible(new /obj/item/clothing/head/sailormoon (src), slot_head)
 	src.equip_if_possible(new /obj/item/sailormoon_wand (src), slot_belt)
-
+	tiara = null // Supposedly for GC
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
 	SPAWN_DBG(1 SECOND)
