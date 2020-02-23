@@ -310,7 +310,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 	permeability_score = 15
 	spread = SPREAD_BODY | SPREAD_HANDS
 	infection_coefficient = 1.5
-	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
+	infect_message = "<span style=\"color:red\">You can't help but feel loved.</span>"
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -323,32 +323,3 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 
 	may_react_to()
 		return "The pathogen's cells appear to be... hugging each other?"
-
-datum/pathogeneffects/benevolent/neuralreconstruction
-	name = "Neural Reconstruction"
-	desc = "Infection slowly repairs damage done to the brain."
-	rarity = RARITY_UNCOMMON
-	infect_type = INFECT_NONE
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		switch (origin.stage)
-			if (2)
-				if (prob(5))
-					M.take_brain_damage(-1)
-			if (3)
-				if (prob(15))
-					M.take_brain_damage(-1)
-			if (4)
-				if (prob(25))
-					M.take_brain_damage(-2)
-			if (5)
-				if (prob(35))
-					M.take_brain_damage(-2)
-
-	react_to(var/R, var/zoom)
-		if (!(R == "neurotoxin"))
-			return "The pathogen seems to release a chemical in an attempt to counteract the effects of the neurotoxin."
-
-	may_react_to()
-		return "The pathogen appears to have a gland that may affect neural functions."
