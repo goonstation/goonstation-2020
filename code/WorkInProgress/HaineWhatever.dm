@@ -1142,7 +1142,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		set category = "Local"
 		set src in usr
 
-		usr.show_text("WIP feature!")
+		//usr.show_text("WIP feature!")
 		if (src.activated)
 			return
 		if (ishuman(usr))
