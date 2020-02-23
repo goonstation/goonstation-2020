@@ -3570,6 +3570,28 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+		grassgro
+			name = "Grass Gro"
+			id = "grassgro"
+			description = "Concentrated liquid Spacegrass. Guaranteed to grow Spacegrass anywhere. "
+			reagent_state = LIQUID
+			fluid_r = 0
+			fluid_b = 0
+			fluid_g = 255
+			value = 1 // Literally grass
+			hygiene_value = 0.25
+
+			reaction_turf(var/turf/target, var/volume)
+				src = null
+				var/turf/simulated/floor/T = target
+
+				if (istype(T))
+					SPAWN_DBG(rand(5,12) * 10)
+						T.icon = 'icons/turf/outdoors.dmi'
+						T.icon_state = "grass"
+						T.dir = pick(cardinal)
+				return
+
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

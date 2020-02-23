@@ -234,6 +234,11 @@
 	icon_state = "sugarcane"
 	brewable = 1
 	brew_result = "rum"
+	
+/obj/item/plant/herb/grass
+	name = "grass"
+	desc = "Fresh free-range spacegrass."
+	icon_state = "grass"
 
 /obj/item/plant/herb/contusine
 	name = "contusine leaves"
