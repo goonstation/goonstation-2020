@@ -279,3 +279,77 @@ datum/pathogeneffects/benevolent/brewery
 
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
+
+
+datum/pathogeneffects/benevolent/bioluminescence
+	name = "Bioluminescence"
+	desc = "The pathogen makes the afflicted emit light and sometimes flash the area when attacked."
+	rarity = RARITY_RARE
+	var/rgb = null
+	
+	proc/getColor(var/datum/pathogen/origin)
+		if(origin.suppressant != null)
+			switch(origin.suppressant.color)
+				if("blue")
+					return list(0, 0, 255)
+				if("red")
+					return list(255, 0, 0)
+				if("green")
+					return list(0, 255, 2505)
+				if("black") // fuck
+					return list(0, 0, 0)
+				if("cyan")
+					return list(0, 255, 255)
+				if("white")
+					return list(255, 255, 255)
+				if("orange")
+					return list(255, 165, 0)
+				if("pink")
+					return list(255, 192, 203)
+				if("viridian")
+					return list(64, 130, 109)
+				if("olive drab")
+					return list(107, 142, 35)
+				else
+					return list(255, 215, 0) // probably admin created, so let's make it gold!
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if(rgb == null)
+			rgb = getColor(origin)
+		var/brightness = 255 * origin.stage * 0.2
+		M.add_simple_light("bioluminescence", rgb + brightness)
+
+	oncured(mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		message_admins("We are cured! It's a miracle!")
+		M.remove_simple_light("bioluminescence")
+
+	onpunched(var/mob/M as mob, var/mob/A as mob, zone, var/datum/pathogen/origin)
+		if(origin.stage < 3) // stages 3 and over
+			return 1
+		if(prob(origin.stage*6))
+			M.visible_message("<span style=\"color:red\">[M] emits a bright flash of light!</span>", "<span style=\"color:blue\">You flinch and emit a large amount of light.</span>", "<span style=\"color:red\">You can feel warmth on your skin.</span>")
+			if(origin.stage >= 5 && prob(25))
+				A.show_message("<span style=\"color:red\">YOUR EYES!</span>")
+				A.apply_flash(60, weak = 0, eye_tempblind = 10)
+			var/strength = origin.stage-2
+			var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+			E.color = "#FFFFFF"
+			E.setup(M.loc)
+			playsound(M, "sound/weapons/singsuck.ogg", 25, 1)
+			for (var/mob/living/B in oviewers(5, M))
+				if (issilicon(B) || isintangible(B))
+					continue
+				var/dist = get_dist(B, M)
+				var/weakened = max(0, 0.5 * strength * (3 - dist))
+				var/eye_damage = max(0, 0.5 * strength * (2 - dist))
+				var/eye_blurry = max(0, 1 * strength * (5 - dist))
+				B.apply_flash(60, max(0, weakened), 0, 10, max(0, eye_blurry), max(0, eye_damage))
+		return 1
+
+	may_react_to()
+		return "The pathogen seems to be faintly glowing."
+
