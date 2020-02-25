@@ -501,7 +501,7 @@
 		{
 			$(id).removeClass("a-green-on");
 		}
-		else if($(id).hasClass("a-green-on"))
+		else if($(id).hasClass("a-red-on"))
 		{
 			$(id).removeClass("a-red-on");
 		}
