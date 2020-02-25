@@ -2284,7 +2284,10 @@ datum/pathogeneffects/malevolent/detonation
 			return
 		explosion_new(M, get_turf(M), origin.stage*5, origin.stage/2.5)
 
+
 	react_to(var/R, var/zoom)
-		if (R == "Synthflesh")
+		if (R == "synthflesh")
+			if (zoom)
 			return "There are stray synthflesh pieces all over the dish."
+		else return null
 
