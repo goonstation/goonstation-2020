@@ -83,6 +83,8 @@
 				var data = listing[k]
 				if (k != "seq")
 					data = prettifyYesNo(data);
+				else
+					data = insertSpaces(data);
 				html += "<td>" + data + "</td>";
 			}
 			html +="</tr>"
@@ -99,6 +101,17 @@
 			text = "<span style='font-weight:bold;color:#D00;'>" + text + "</span>";
 		}
 		return text
+	}
+	
+	// This inserts spaces between the individual segments of a sequence, so the list is less of an eyesore
+	function insertSpaces(text) {
+		var text2 = "";
+		for(i = 0; i < text.length; i++)
+		{
+			text2 += text.substring(i*3, (i+1)*3);
+			text2 += " ";
+		}
+		return text2;
 	}
 	
 	function getTableHeader() {
