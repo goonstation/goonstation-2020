@@ -1191,6 +1191,12 @@
 	glass_style = "oldf"
 	initial_volume = 20
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/round
+	name = "round glass"
+	icon_state = "glass-round"
+	glass_style = "round"
+	initial_volume = 100
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine
 	name = "wine glass"
 	icon_state = "glass-wine"
@@ -1216,6 +1222,31 @@
 	glass_style = "pitcher"
 	initial_volume = 120
 	shard_amt = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing //icing tube path and usage update
+	name = "icing tube"
+	desc = "Used to put icing on cakes."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "icing_tube"
+	initial_volume = 50
+	amount_per_transfer_from_this = 5
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+
+	on_reagent_change()
+		src.underlays = null
+		if (reagents.total_volume >= 0)
+			if(reagents.total_volume == 0)
+				src.icon_state = "icing_tube"
+			else
+				src.icon_state = "icing_tube_2"
+			var/datum/color/average = reagents.get_average_color()
+			var/image/chem = new /image('icons/obj/food.dmi',"icing_tube_chem")
+			chem.color = average.to_rgba()
+			src.underlays += chem
+		signal_event("icon_updated")
+
+	throw_impact(var/turf/T)
+		return
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
