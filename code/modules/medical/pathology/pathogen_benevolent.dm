@@ -191,20 +191,23 @@ datum/pathogeneffects/benevolent/resurrection
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (origin.stage < 5)
+		if (origin.stage < 3)
 			return
-		if(prob(5))
+		if(prob(10 + origin.stage))
+			M.emote("moan")
+		if(prob(2 + origin.stage))
 			M.show_message("<span style=\"color:red\">You feel a sudden craving for ... brains??</span>")
 
 	disease_act_dead(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (origin.stage < 5)
+		if (origin.stage < 3)
 			return
 		// Shamelessly stolen from Strange Reagent
 		if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-			var/brute = M.get_brute_damage()>45?45:M.get_brute_damage()
-			var/burn = M.get_burn_damage()>45?45:M.get_burn_damage()
+			var/cap = 75 - origin.stage*6
+			var/brute = (M.get_brute_damage()>cap)?(cap):M.get_brute_damage()
+			var/burn = (M.get_burn_damage()>cap)?(cap):M.get_burn_damage()
 
 			// let's heal them before we put some of the damage back
 			// but they don't get back organs/limbs/whatever, so I don't use full_heal
@@ -216,7 +219,7 @@ datum/pathogeneffects/benevolent/resurrection
 				H.take_oxygen_deprivation(-INFINITY)
 
 			M.TakeDamage("chest", brute, burn)			// this makes it so our burn and brute are between 0-45, so at worst we will have 10% hp
-			M.take_brain_damage(70)						// and a lot of brain damage
+			M.take_brain_damage(cap)				// and a lot of brain damage
 			setalive(M)
 			M.changeStatus("paralysis", 150) 			// paralyze the person for a while, because coming back to life is hard work
 			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
@@ -234,8 +237,10 @@ datum/pathogeneffects/benevolent/resurrection
 				H.visible_message("<span style=\"color:red\">[H] suddenly starts moving again!</span>","<span style=\"color:red\">You feel the pathogen weakening as you rise from the dead.</span>")
 
 	react_to(var/R, var/zoom)
-		if (R == "Synthflesh")
+		if (R == "synthflesh")
+			if (zoom)
 			return "Dead parts of the synthflesh seem to still be transferring blood."
+		else return null
 
 
 datum/pathogeneffects/benevolent/brewery
