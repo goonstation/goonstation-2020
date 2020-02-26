@@ -201,10 +201,6 @@
 				schild.amount = 1
 
 				schild.set_loc(get_turf(src.loc))
-				/*if(src in user.contents) //spawning
-					schild.set_loc(get_turf(user))
-				else
-					schild.set_loc(get_turf(src))*/
 			qdel(s) //cleaning up the template slice
 			if(src.clayer == 1) //qdel(src) if there was only one layer to the cake, otherwise, decrement the layer
 				qdel(src)
