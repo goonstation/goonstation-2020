@@ -539,4 +539,4 @@
 	name = "FTX-480 Scanner Plate"
 	icon_state = "ftscanplate"
 	item_state = "ftscanplate"
-	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. It doesn't appear to do anything other than blink, though."
+	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
