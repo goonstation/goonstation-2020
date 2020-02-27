@@ -1000,7 +1000,7 @@
 		if (A.material)
 			A.material.triggerOnAttacked(A, user, M, src)
 
-	M.violate_hippocratic_oath()
+	user.violate_hippocratic_oath()
 
 	for (var/mob/V in nervous_mobs)
 		if (get_dist(user,V) > 6)
