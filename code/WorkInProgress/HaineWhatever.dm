@@ -1125,6 +1125,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	material_prints = "polyester fibres"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
@@ -1236,15 +1237,15 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			O.dropped(src)
 			O.layer = initial(O.layer)
 	//The Reason for the seperate set is seen in the earlier tiara...i can't rightly set it's persistant owner if i don't use a global...
-	var/object/item/clothing/sailormoon/glasses/sailormoon/tiara = new /obj/item/clothing/glasses/sailormoon (src) // So Sue Me I do things my way :>P
-	tiara.usagi = src
+	var/obj/item/clothing/glasses/sailormoon/T = new /obj/item/clothing/glasses/sailormoon(src) // So Sue Me I do things my way :>P
+	T.usagi = src
 	src.equip_if_possible(new /obj/item/clothing/under/gimmick/sailormoon (src), slot_w_uniform)
-	src.equip_if_possible(tiara, slot_glasses)
+	src.equip_if_possible(T, slot_glasses)
 	src.equip_if_possible(new /obj/item/clothing/gloves/sailormoon (src), slot_gloves)
 	src.equip_if_possible(new /obj/item/clothing/shoes/sailormoon (src), slot_shoes)
 	src.equip_if_possible(new /obj/item/clothing/head/sailormoon (src), slot_head)
 	src.equip_if_possible(new /obj/item/sailormoon_wand (src), slot_belt)
-	tiara = null // Supposedly for GC
+	T = null // Supposedly for GC
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
 	SPAWN_DBG(1 SECOND)
