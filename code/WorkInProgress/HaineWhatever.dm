@@ -1086,6 +1086,10 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "sailormoon"
 	item_state = "sailormoon"
 
+	attackby(obj/item/clothing/glasses/sailormoon/W as obj, mob/user as mob)
+		W.usagi = user
+		user.show_text("Tiara Sync'd")
+
 /obj/item/clothing/head/sailormoon
 	name = "hair clips"
 	desc = "Shiny red hair clips to keep your hair in a very specific style and are about useless for anything else."
@@ -1130,6 +1134,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
 	desc = "Nice red high-heeled boots."
+	laces = LACES_NONE
 	icon_state = "sailormoon"
 
 /obj/item/sailormoon_brooch
