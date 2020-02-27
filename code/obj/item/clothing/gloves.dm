@@ -547,7 +547,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			boutput(user, "<span style=\"color:red\"><B>The [src] reacts but the core is too big for the slots.</B></span>")
 
 /obj/item/clothing/gloves/handcomp
-	desc = "This is some sort of hand-mounted computer. Unfortunately, it doesn't respond to your inputs."
+	desc = "This is some sort of hand-mounted computer. Or it would be if it wasn't made out of cheap plastic and leds."
 	name = "Compudyne 0451 Handcomp"
 	icon_state = "handcomp"
 	item_state = "handcomp"
