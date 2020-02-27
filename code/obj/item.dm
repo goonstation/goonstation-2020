@@ -1097,7 +1097,7 @@
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
 
-	if(M.is_hulk())
+	if(user.is_hulk())
 		power *= 1.5
 
 	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
