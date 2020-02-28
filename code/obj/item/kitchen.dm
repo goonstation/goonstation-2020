@@ -35,7 +35,7 @@ TRAYS
 	stamina_damage = 10
 	stamina_cost = 10
 
-/obj/item/kitchen/utensil
+/obj/item/kitchen/utensil //Merger - this object is the only change this patch made. everything else can be ignored <3
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
 	w_class = 1.0
@@ -59,10 +59,10 @@ TRAYS
 		if (rotatable)
 			set src in oview(1)
 
-			src.dir = turn(src.dir, -90)
+			src.dir = turn(src.dir, -90) //Merger - rotates silverware clockwise instead of counterclockwise
 		return
 
-	attack_self(mob/user as mob) //this proc is the only change this patch made. everything else can be ignored <3
+	attack_self(mob/user as mob)
 		src.rotate()
 
 /obj/item/kitchen/utensil/fork
