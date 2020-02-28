@@ -35,7 +35,7 @@ TRAYS
 	stamina_damage = 10
 	stamina_cost = 10
 
-/obj/item/kitchen/utensil //Merger - the changes made to this object are the only changes this patch makes. everything else can be ignored <3
+/obj/item/kitchen/utensil
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
 	w_class = 1.0
@@ -59,7 +59,7 @@ TRAYS
 		if (rotatable)
 			set src in oview(1)
 
-			src.dir = turn(src.dir, -90) //Merger - rotates silverware clockwise instead of counterclockwise
+			src.dir = turn(src.dir, -90)
 		return
 
 	attack_self(mob/user as mob)
@@ -94,10 +94,14 @@ TRAYS
 
 /obj/item/kitchen/utensil/fork/plastic
 	name = "plastic fork"
-	icon_state = "fork_plastic"
+	icon_state = "fork_plastic_pink"
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
 	force = 1.0
 	throwforce = 1.0
+	dir = NORTH
+	
+	New()
+		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -113,6 +117,17 @@ TRAYS
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
 		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
 		user.u_equip(src)
+		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+		switch(src.icon_state)
+			if("fork_plastic_pink")
+				k.icon_state = "snapped_pink"
+			if("fork_plastic_yellow")
+				k.icon_state = "snapped_yellow"
+			if("fork_plastic_green")
+				k.icon_state = "snapped_green"
+			if("fork_plastic_blue")
+				k.icon_state = "snapped_blue"
+		user.put_in_hand_or_drop(k)
 		qdel(src)
 		return
 
@@ -166,6 +181,10 @@ TRAYS
 	force = 1.0
 	throwforce = 1.0
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	dir = NORTH
+
+	New()
+		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -189,6 +208,20 @@ TRAYS
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
 		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
 		user.u_equip(src)
+		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+		switch(src.icon_state)
+			if("spoon_plastic_pink")
+				k.icon_state = "snapped_pink"
+				user.put_in_hand_or_drop(k)
+			if("spoon_plastic_yellow")
+				k.icon_state = "snapped_yellow"
+				user.put_in_hand_or_drop(k)
+			if("spoon_plastic_green")
+				k.icon_state = "snapped_green"
+				user.put_in_hand_or_drop(k)
+			if("spoon_plastic_blue")
+				k.icon_state = "snapped_blue"
+				user.put_in_hand_or_drop(k)
 		qdel(src)
 		return
 
@@ -297,6 +330,10 @@ TRAYS
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
 	force = 1.0
 	throwforce = 1.0
+	dir = NORTH
+	
+	New()
+		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -312,6 +349,17 @@ TRAYS
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
 		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
 		user.u_equip(src)
+		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+		switch(src.icon_state)
+			if("spoon_plastic_pink")
+				k.icon_state = "snapped_pink"
+			if("spoon_plastic_yellow")
+				k.icon_state = "snapped_yellow"
+			if("spoon_plastic_green")
+				k.icon_state = "snapped_green"
+			if("spoon_plastic_blue")
+				k.icon_state = "snapped_blue"
+		user.put_in_hand_or_drop(k)
 		qdel(src)
 		return
 
