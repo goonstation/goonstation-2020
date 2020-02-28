@@ -62,7 +62,7 @@ TRAYS
 			src.dir = turn(src.dir, -90)
 		return
 
-	attack_self(mob/user as mob) //this proc is the only change this patch made <3
+	attack_self(mob/user as mob) //this proc is the only change this patch made. everything else can be ignored <3
 		src.rotate()
 
 /obj/item/kitchen/utensil/fork
