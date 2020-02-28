@@ -35,7 +35,7 @@ TRAYS
 	stamina_damage = 10
 	stamina_cost = 10
 
-/obj/item/kitchen/utensil //Merger - this object is the only change this patch made. everything else can be ignored <3
+/obj/item/kitchen/utensil //Merger - the changes made to this object are the only changes this patch makes. everything else can be ignored <3
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
 	w_class = 1.0
