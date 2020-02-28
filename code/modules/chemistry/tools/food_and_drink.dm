@@ -145,7 +145,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || istype(W,/obj/item/kitchen/utensil/spoon))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
-				if(istype(W,/obj/item/kitchen/utensil/fork/plastic))
+				if(istype(W,/obj/item/kitchen/utensil/fork/plastic)) //Merger - Fixed runtime error
 					var/obj/item/kitchen/utensil/fork/plastic/S = W
 					S.break_fork(user)
 				else if(istype(W,/obj/item/kitchen/utensil/spoon/plastic))
