@@ -763,10 +763,3 @@ TRAYS
 			return
 	..()
 	return
-
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with WHEELS!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
