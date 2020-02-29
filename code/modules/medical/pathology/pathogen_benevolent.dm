@@ -1,6 +1,7 @@
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = RARITY_ABSTRACT
+	beneficial = 1
 
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
@@ -247,6 +248,7 @@ datum/pathogeneffects/benevolent/brewery
 	name = "Auto-Brewery"
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
 	rarity = RARITY_RARE
+	beneficial = 0 // fuck this liver disease isn't beneficial
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -297,7 +299,7 @@ datum/pathogeneffects/benevolent/bioluminescence
 				if("green")
 					return list(0, 255, 2505)
 				if("black") // fuck
-					return list(0, 0, 0)
+					return list(100, 100, 100)
 				if("cyan")
 					return list(0, 255, 255)
 				if("white")
@@ -311,7 +313,7 @@ datum/pathogeneffects/benevolent/bioluminescence
 				if("olive drab")
 					return list(107, 142, 35)
 				else
-					return list(255, 215, 0) // probably admin created, so let's make it gold!
+					return list(255, 215, 0) // probably admin created, so let's make it golden! Also, how is there even no yellow suppressant?
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)

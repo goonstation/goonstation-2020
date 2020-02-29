@@ -627,7 +627,7 @@
 								if (i == bits)
 									// get symptom from dna, so we can check if it is good or bad
 									var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
-									if(istype(sym, /datum/pathogeneffects/benevolent))
+									if (sym:beneficial)
 										stableType = "Good"
 									else
 										stableType = "Bad"
@@ -639,7 +639,7 @@
 								if (i == bits)
 									// get symptom from dna, so we can check if it is good or bad
 									var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
-									if(istype(sym, /datum/pathogeneffects/benevolent))
+									if(sym:beneficial)
 										transGood++
 									else
 										transBad++
