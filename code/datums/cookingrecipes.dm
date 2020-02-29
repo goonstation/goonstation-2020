@@ -1194,7 +1194,7 @@
 		var/obj/item/reagent_containers/food/snacks/S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
-		B.food_color = S.food_color
+		B.food_color = S ? S.food_color : "#F0F0F0"
 		overlay.color = S.food_color
 		overlay.alpha = 255
 		B.UpdateOverlays(image(overlay),"base")
