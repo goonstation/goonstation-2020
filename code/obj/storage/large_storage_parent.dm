@@ -161,7 +161,7 @@
 		if (src.welded)
 			user.show_text("It won't open!", "red")
 			return
-		else if (!src.toggle())
+		else if (!src.toggle(user))
 			return src.attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -483,7 +483,7 @@
 		return 1
 
 	var/obj/storage/entangled
-	proc/open(var/entangleLogic)
+	proc/open(var/entangleLogic, var/mob/user)
 		if (src.open)
 			return 0
 		if (!src.can_open())
@@ -501,7 +501,10 @@
 			contents = entangled.contents
 
 
-		src.dump_contents()
+		if (user)
+			src.dump_contents(user)
+		else
+			src.dump_contents()
 		src.open = 1
 		src.update_icon()
 		p_class = initial(p_class)
@@ -583,20 +586,26 @@
 				return 0
 		return 1
 
-	proc/dump_contents()
+	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
 
 		var/newloc = get_turf(src)
 		for (var/obj/O in src)
 			O.set_loc(newloc)
+			if(istype(O,/obj/item/mousetrap))
+				var/obj/item/mousetrap/m = O
+				if(m.armed && user)
+					m.triggered(user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
 
-	proc/toggle()
+	proc/toggle(var/mob/user)
 		if (src.open)
 			return src.close()
+		if (user)
+			return src.open(null,user)
 		return src.open()
 
 	proc/bust_out()
