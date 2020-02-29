@@ -93,8 +93,7 @@
 	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
 		var/topping //the topping the player is adding (stored as a string reference to an icon_state)
 		var/pendinglight //a variable referenced later to check if the light source on a cake needs to be updated
-		if(istype(W,/obj/item/axe) || istype(W,/obj/item/circular_saw) || istype(W,/obj/item/kitchen/utensil/knife) || istype(W,/obj/item/scalpel) || \
-		istype(W,/obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife_butcher)) //yay escaping new lines, but basically cake slicing
+		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if (src.sliced == 1)
 				boutput(user, "<span style=\"color:red\">This has already been sliced.</span>")
 				return
