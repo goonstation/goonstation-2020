@@ -99,35 +99,35 @@
 				return
 			boutput(user, "<span style=\"color:blue\">You cut the cake into slices.</span>")
 
-			var/thing
+			var/layer_tag
 			var/replacetext
 			var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
 			var/slices
 			var/candle //cute little wax stick that people light on fire for their own enjoyment <3
 			switch(src.clayer) //checking the current layer of the cake
 				if(1)
-					thing = "base" //the tag of the future overlay
+					layer_tag = "base" //the tag of the future overlay
 					replacetext = "cake1" //used in replacetext below to assign overlays
 					slices = src.amount //defaults to the amount of the base cake because no additional cakes are present
 				if(2)
-					thing = "second"
+					layer_tag = "second"
 					replacetext = "cake2"
 					slices = src.amount2 //one of the cases amount2 and amount3 are used
 				if(3)
-					thing = "third"
+					layer_tag = "third"
 					replacetext = "cake3"
 					slices = src.amount3
 			var/staticiterator = src.overlays.len //declaring the length of the for loop outside the loop as a variable for removing elements from a list while iterating through it
-			var/toggleswitch //a trigger variabe that tells the for loop when to start doing the overlay thing when it reaches the current cake layer
+			var/toggleswitch //a trigger variabe that tells the for loop when to start doing the overlay layer_tag when it reaches the current cake layer
 			for(var/i=1,i<=staticiterator,i++)
-				if("[src.overlay_refs[i]]" == thing) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
+				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
 					toggleswitch = 1
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
 					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
 					if(buffer.color)
 						slicecolor.color = buffer.color
 					s.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
-					src.ClearSpecificOverlays(thing)
+					src.ClearSpecificOverlays(layer_tag)
 					staticiterator--
 					i--
 					continue
