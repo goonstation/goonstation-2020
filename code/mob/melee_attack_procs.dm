@@ -387,7 +387,7 @@
 	return 0
 
 /mob/living/carbon/human/check_block()
-	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && a_intent == "disarm" && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+(src.gloves&&src.gloves.getProperty("disarmblock"))?src.gloves.getProperty("disarmblock"):0) && !equipped())
+	if (!stat && !getStatusDuration("weakened") && !getStatusDuration("stunned") && !getStatusDuration("paralysis") && a_intent == "disarm" && stamina > STAMINA_DEFAULT_BLOCK_COST && prob(STAMINA_BLOCK_CHANCE+get_deflection())&& !equipped())
 		return 1
 	return 0
 

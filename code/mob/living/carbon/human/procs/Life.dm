@@ -1180,6 +1180,20 @@
 				protection = max(curr, protection)
 		return protection
 	
+	proc/get_deflection()
+		if (!src)
+			return 0
+
+		var/protection = 0
+
+		// Resistance from Clothing
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
+			if(C.hasProperty("disarmblock"))
+				var/curr = C.getProperty("disarmblock")
+				protection += curr
+
+		return min(protection, 90-STAMINA_BLOCK_CHANCE)	
 
 	proc/get_heat_protection()
 		// calculate 0-100% insulation from cold environments
