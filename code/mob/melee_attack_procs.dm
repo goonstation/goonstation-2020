@@ -295,10 +295,7 @@
 		def_zone = target.check_target_zone(def_zone)
 
 		var/armor_mod = 0
-		if (def_zone == "head")
-			armor_mod = target.get_head_armor_modifier()
-		else if (def_zone == "chest")
-			armor_mod = target.get_chest_armor_modifier()
+		armor_mod = target.get_melee_protection(def_zone)
 		damage -= armor_mod
 		msgs.stamina_target -= max((STAMINA_DISARM_COST * 2.5) - armor_mod, 0)
 
@@ -568,10 +565,7 @@
 		var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 
 		var/armor_mod = 0
-		if (def_zone == "head")
-			armor_mod = target.get_head_armor_modifier()
-		else if (def_zone == "chest")
-			armor_mod = target.get_chest_armor_modifier()
+		armor_mod = target.get_melee_protection(def_zone)
 
 		damage -= armor_mod
 
@@ -1047,40 +1041,7 @@
 		return "<span style=\"color:red\">You drunkenly shrug off the blow!</span>"
 	return null
 
-/mob/proc/get_hands_armor_modifier()
-	var/obj/item/I = equipped()
-	if (I)
-		return max(0, I.getProperty("meleeprot"))
-	return 0
-
-/mob/proc/get_head_armor_modifier()
-	return 0
-
-/mob/living/carbon/human/get_head_armor_modifier()
-	if (client && client.hellbanned)
-		return 0
-	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
-		if (head && !wear_mask)
-			return max(0, head.getProperty("meleeprot"))
-		else if (!head && wear_mask)
-			return max(0, wear_mask.getProperty("meleeprot"))
-		else if (head && wear_mask)
-			return max(0, max(head.getProperty("meleeprot"), wear_mask.getProperty("meleeprot")))
-	return 0
-
-/mob/proc/get_chest_armor_modifier()
-	return 0
-
-/mob/living/carbon/human/get_chest_armor_modifier()
-	if (client && client.hellbanned)
-		return 0
-	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
-		if (wear_suit && !w_uniform)
-			return max(0, wear_suit.getProperty("meleeprot"))
-		else if (!wear_suit && w_uniform)
-			return max(0, w_uniform.getProperty("meleeprot"))
-		else if (wear_suit && w_uniform)
-			return max(0, max(w_uniform.getProperty("meleeprot"), wear_suit.getProperty("meleeprot")))
+/mob/proc/get_melee_protection(zone)
 	return 0
 ///////////////////
 /mob/proc/get_head_pierce_prot()

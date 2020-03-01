@@ -115,7 +115,7 @@
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		power = max(9, power - M.get_chest_armor_modifier())
+		power = max(9, power - M.get_melee_protection("chest"))
 		M.TakeDamage("chest", power, 0, 0, DAMAGE_BLUNT)
 		M.remove_stamina(80 + power) //lotsa stamina damage whoa!!
 

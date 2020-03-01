@@ -1052,10 +1052,7 @@
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	if (d_zone == "head")
-		armor_mod = M.get_head_armor_modifier()
-	else
-		armor_mod = M.get_chest_armor_modifier()
+	armor_mod=M.get_melee_protection(d_zone)
 
 	var/pierce_prot = 0
 	if (d_zone == "head")

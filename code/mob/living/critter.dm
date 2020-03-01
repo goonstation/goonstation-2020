@@ -1108,7 +1108,7 @@
 				if (dizzyStars)
 					src.UpdateOverlays(dizzyStars, "dizzy")
 
-	get_head_armor_modifier()
+	proc/get_head_armor_modifier()
 		var/armor_mod = 0
 		for (var/datum/equipmentHolder/EH in equipment)
 			if ((EH.armor_coverage & HEAD) && istype(EH.item, /obj/item/clothing))
@@ -1116,13 +1116,19 @@
 				armor_mod = max(C.getProperty("meleeprot"), armor_mod)
 		return armor_mod
 
-	get_chest_armor_modifier()
+	proc/get_chest_armor_modifier()
 		var/armor_mod = 0
 		for (var/datum/equipmentHolder/EH in equipment)
 			if ((EH.armor_coverage & TORSO) && istype(EH.item, /obj/item/clothing))
 				var/obj/item/clothing/C = EH.item
 				armor_mod = max(C.getProperty("meleeprot"), armor_mod)
 		return armor_mod
+
+	get_melee_protection(zone)//critters and stuff, I suppose
+		if(zone=="head")
+			return get_head_armor_modifier()
+		else
+			return get_chest_armor_modifier()
 
 	full_heal()
 		..()

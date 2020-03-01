@@ -1162,6 +1162,25 @@
 
 		return protection
 
+	get_melee_protection(zone)
+		if (!src)
+			return 0
+		var/protection = 0
+		var/a_zone = zone
+		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
+			a_zone = "chest"
+		// Resistance from Clothing
+		for(var/atom in src.get_equipped_items())
+			var/obj/item/C = atom
+			if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
+			istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
+				a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
+				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
+				var/curr = C.getProperty("meleeprot")
+				protection = max(curr, protection)
+		return protection
+	
+
 	proc/get_heat_protection()
 		// calculate 0-100% insulation from cold environments
 		if (!src)

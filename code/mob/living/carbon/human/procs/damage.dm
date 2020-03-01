@@ -588,14 +588,7 @@
 	if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 		a_zone = "chest"
 
-	armor_mod = get_hands_armor_modifier()
-
-	switch (a_zone)
-		if ("head")
-			armor_mod = max(armor_mod, get_head_armor_modifier())
-		if ("chest")
-			armor_mod = max(armor_mod, get_chest_armor_modifier())
-
+	armor_mod = get_melee_protection(zone)
 	switch (zone)
 		if ("l_arm")
 			z_name = "left arm"
