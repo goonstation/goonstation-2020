@@ -261,13 +261,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
-				if(src.material.hasProperty("density"))
-					src.setProperty("meleeprot", round((src.material.getProperty("density") ** 0.5) + (src.material.getProperty("density") > 70 ? 3 : 0)))
+				if(src.material.hasProperty("density"))//linear function, 10 points of disarm-block for every 25 density, starting from density==10
+					src.setProperty("disarmblock", round(max(src.material.getProperty("density")**0.5+0.2*(src.material.getProperty("density")-20),0)))
 				else
-					src.setProperty("meleeprot", 0)
-
-				if(src.material.hasProperty("hard"))
-					src.setProperty("rangedprot", (src.material.getProperty("hard") ** 0.1) + 0.25)
+					src.setProperty("disarmblock", 0)
+				if(src.material.hasProperty("hard"))//Curve hits 0.5 at 30 (fibrilith), 1 at 60 (carbon fibre), 1.2 at 85 (starstone, aka maximum)
+					src.setProperty("rangedprot", round(max(0,-0.5034652-(-0.04859378/0.02534389)*(1-eulers**(-0.02534398*src.material.getProperty("hard")))),0.1)) //holy best-fit curve batman!
 				else
 					src.setProperty("rangedprot", 0)
 			return
