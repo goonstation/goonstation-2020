@@ -177,9 +177,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/noodlecup, 10, cost=8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/burrito, 10, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/popsicle, 5, cost=5)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=1)
-		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/plasticpackage, 10, cost=1)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/fork/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/spoon/plastic, 10, cost=10)
+		product_list += new/datum/data/vending_product(/obj/item/kitchen/utensil/knife/plastic, 10, cost=10)
 		product_list += new/datum/data/vending_product(/obj/item/tvdinner, 10, cost=20)
 
 
