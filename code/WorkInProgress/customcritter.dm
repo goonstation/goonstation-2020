@@ -162,7 +162,7 @@
 	proc/dodamage(var/mob/M, var/atype, var/damage)
 		switch (atype)
 			if ("brute")
-				random_brute_damage(src.target, damage)
+				random_brute_damage(src.target, damage,1)
 			if ("burn")
 				random_burn_damage(src.target, damage)
 			if ("toxin")

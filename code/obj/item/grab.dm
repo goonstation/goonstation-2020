@@ -497,7 +497,7 @@
 	user.visible_message("<span style=\"color:red\"><B>[M] has been smashed against [src] by [user]!</B></span>")
 	logTheThing("combat", user, M, "smashes %target% against [src]")
 
-	random_brute_damage(G.affecting, rand(2,3))
+	random_brute_damage(G.affecting, rand(2,3),1)
 	G.affecting.TakeDamage("chest", 0, rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 

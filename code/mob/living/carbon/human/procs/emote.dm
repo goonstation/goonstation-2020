@@ -1202,12 +1202,12 @@
 														g_tabl.smash()
 														src.changeStatus("stunned", 7 SECONDS)
 														src.changeStatus("weakened", 6 SECONDS)
-														random_brute_damage(src, rand(20,40))
+														random_brute_damage(src, rand(20,40),1)
 														take_bleeding_damage(src, src, rand(20,40))
 
 														G.affecting.changeStatus("stunned", 2 SECONDS)
 														G.affecting.changeStatus("weakened", 4 SECONDS)
-														random_brute_damage(G.affecting, rand(20,40))
+														random_brute_damage(G.affecting, rand(20,40),1)
 														take_bleeding_damage(G.affecting, src, rand(20,40))
 
 

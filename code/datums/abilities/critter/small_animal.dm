@@ -84,7 +84,7 @@
 		else
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [MT]!</span>")
 			playsound(target, "swing_hit", 30, 0)
-			random_brute_damage(MT, 3)
+			random_brute_damage(MT, 3,1)
 			return 0
 
 /datum/targetable/critter/peck/crow

@@ -318,7 +318,7 @@
 					if(ismob(A))
 						var/mob/M = A
 						M.changeStatus("weakened", 80)
-						random_brute_damage(M, 20)
+						random_brute_damage(M, 20)//armor won't save you from the pressure wave or something
 						var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 						M.throw_at(targetTurf, 200, 4)
 					else if (prob(50)) // cut down the number of things that get blown around

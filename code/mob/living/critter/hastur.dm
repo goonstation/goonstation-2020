@@ -324,7 +324,7 @@ var/HasturPresent = 0
 						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						take_bleeding_damage(M, M, 15)
 						M.visible_message("<span style=\"color:red\">[M] gets stabbed by a sharp, spiked tentacle!</span>")
-						random_brute_damage(M, rand(10,20))
+						random_brute_damage(M, rand(10,20),1)
 					else
 						M.meteorhit(O)
 				for(var/turf/T in src_turf)

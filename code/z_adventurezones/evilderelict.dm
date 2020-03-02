@@ -307,7 +307,7 @@ var/maniac_previous_victim = "Unknown"
 				var/mob/living/carbon/human/H = target
 				the_limb = pick("l_arm","r_arm","l_leg","r_leg")
 				H.sever_limb(the_limb)
-				random_brute_damage(target, rand(40,70))
+				random_brute_damage(target, rand(40,70),1)
 				qdel(src)
 				maniac_active &= ~1
 		else

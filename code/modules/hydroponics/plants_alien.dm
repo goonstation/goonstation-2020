@@ -206,7 +206,7 @@
 		for(var/mob/O in hearers(POT, null))
 			O.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"", 1)
 		boutput(user, "<span style=\"color:red\">The plant angrily bites you!</span>")
-		random_brute_damage(user, 9)
+		random_brute_damage(user, 9,1)
 		return 1
 
 /datum/plant/crystal

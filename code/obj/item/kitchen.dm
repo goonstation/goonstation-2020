@@ -220,7 +220,7 @@ TRAYS
 				A:lastattackertime = world.time
 			C.changeStatus("weakened", 2 SECONDS)
 			C.force_laydown_standup()
-			random_brute_damage(C, 15)
+			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
@@ -465,7 +465,7 @@ TRAYS
 
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		sleep(3)
-		random_brute_damage(M, force)
+		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
 		M.updatehealth()
@@ -685,7 +685,7 @@ TRAYS
 		return "[health_desc] [food_desc]" //heres yr desc you *bastard*
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
-		random_brute_damage(M, force)
+		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		user.changeStatus("weakened", rand(1,2) SECONDS)
 		M.updatehealth()
 		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)

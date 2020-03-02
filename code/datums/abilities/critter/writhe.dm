@@ -25,7 +25,7 @@
 				if (M != ow && prob(80))
 					found_target = 1
 
-					random_brute_damage(M, 2)
+					random_brute_damage(M, 2,1)
 					M.changeStatus("weakened", 2 SECONDS)
 					M.changeStatus("stunned", 2 SECONDS)
 					playsound(ow.loc, "swing_hit", 60, 1)

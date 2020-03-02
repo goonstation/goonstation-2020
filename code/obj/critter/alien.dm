@@ -95,7 +95,7 @@
 			return
 
 		src.visible_message("<span class='combat'><B>[src]</B> claws at [src.target]!</span>")
-		random_brute_damage(src.target, rand(5,10))
+		random_brute_damage(src.target, rand(5,10),1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
@@ -103,4 +103,4 @@
 		src.visible_message("<span class='combat'><B>[src]</B> jumps at [M]!</span>")
 		if(iscarbon(M))
 			if (prob(60)) M.changeStatus("stunned", rand(10, 50))
-			random_brute_damage(M, rand(2,5))
+			random_brute_damage(M, rand(2,5),1)

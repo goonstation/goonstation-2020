@@ -364,7 +364,7 @@
 		else
 			M.visible_message("<span style=\"color:red\"><B>[user] smashes [src] over [M]'s head!</B></span>")
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
-		random_brute_damage(M, force)
+		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.updatehealth()
 		playsound(src, "shatter", 70, 1)

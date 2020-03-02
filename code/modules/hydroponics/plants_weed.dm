@@ -46,7 +46,7 @@
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(33))
 			for (var/mob/living/M in range(1,POT))
 				if (POT.health > P.starthealth / 2)
-					random_brute_damage(M, 2)
+					random_brute_damage(M, 3, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit
 					if (prob(20)) M.changeStatus("weakened", 3 SECONDS)
 
 				if (POT.health <= P.starthealth / 2) POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> weakly slaps [M] with a vine!</span>")
@@ -62,7 +62,7 @@
 		// It's not big enough to be violent yet, so nothing happens
 
 		POT.visible_message("<span style=\"color:red\"><b>[POT.name]</b> violently retaliates against [user.name]!</span>")
-		random_brute_damage(user, 3)
+		random_brute_damage(user, 4, 1)//see above
 		if (W && prob(50))
 			boutput(user, "<span style=\"color:red\">The lasher grabs and smashes your [W]!</span>")
 			W.dropped()

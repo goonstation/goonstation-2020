@@ -1169,15 +1169,18 @@
 		var/a_zone = zone
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
-		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
-			if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-			istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
-				a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
-				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
-				var/curr = C.getProperty("meleeprot")
-				protection = max(curr, protection)
+		if(a_zone=="All")
+			protection=(5*get_melee_protection("chest")+get_melee_protection("head"))/6
+		else
+			// Resistance from Clothing
+			for(var/atom in src.get_equipped_items())
+				var/obj/item/C = atom
+				if(C.hasProperty("meleeprot")&&(C==src.l_hand||C==src.r_hand||(a_zone=="head" && (istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
+				istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears))||\
+					a_zone=="chest"&&!(istype(C, /obj/item/clothing/head)||istype(C, /obj/item/clothing/mask)||\
+					istype(C, /obj/item/clothing/glasses)||istype(C, /obj/item/clothing/ears)))))//why the fuck god there has to be a better way
+					var/curr = C.getProperty("meleeprot")
+					protection = max(curr, protection)
 		return protection
 	
 	proc/get_deflection()

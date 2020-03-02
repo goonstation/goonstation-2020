@@ -1222,7 +1222,7 @@
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
-		random_brute_damage(src.target, rand(3,5))
+		random_brute_damage(src.target, rand(3,5),1)
 		random_burn_damage(src.target, rand(2,3))
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0

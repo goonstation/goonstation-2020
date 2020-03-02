@@ -433,7 +433,7 @@
 			var/mob/M = hit_atom
 			hit_atom.visible_message("<span style=\"color:red\">[src] explodes from the sheer force of the blow!</span>")
 			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
-			random_brute_damage(M, 10)
+			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
 				M.changeStatus("paralysis", 30)
 				M.changeStatus("stunned", 6 SECONDS)

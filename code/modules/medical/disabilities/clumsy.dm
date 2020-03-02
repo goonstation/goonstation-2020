@@ -27,7 +27,7 @@
 			var/mob/living/carbon/human/H = M
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				boutput(H, "<span style=\"color:red\">You bash your head on the ground.</span>")
-				random_brute_damage(H, 5)
+				H.TakeDamageAccountArmor("head", 5, 0, 0, DAMAGE_BLUNT)
 				H.take_brain_damage(2)
 				H.changeStatus("paralysis", 100)
 				H.make_jittery(1000)

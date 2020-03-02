@@ -104,7 +104,7 @@
 				return
 			src.visible_message("<span style='color:red'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
 			logTheThing("combat", src.name, M, "stings %target%")
-			random_brute_damage(src.target, 10)
+			random_brute_damage(src.target, 10)//armor-piercing stingers
 
 			if(M.reagents)
 				M.reagents.add_reagent("neurotoxin", 20)
@@ -153,7 +153,7 @@
 
 			src.visible_message("<span style='color:red'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
 			logTheThing("combat", src.name, M, "bites %target%")
-			random_brute_damage(M, 10)
+			random_brute_damage(M, 10,1)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.was_harmed(src)
@@ -357,7 +357,7 @@
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
 			src.visible_message("<span style='color:red'><B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>")
-			random_brute_damage(M, 20)
+			random_brute_damage(M, 20)//get shivved - no armor for this
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.was_harmed(src)
@@ -894,7 +894,7 @@
 
 		src.visible_message("<span style='color:red'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
 		logTheThing("combat", src.name, M, "bites %target%")
-		random_brute_damage(M, 2)
+		random_brute_damage(M, 2, 1)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.was_harmed(src)
@@ -1727,7 +1727,7 @@
 
 		src.visible_message("<span style='color:red'><B>[src]</B> bites [M]!</span>")
 		logTheThing("combat", src.name, M, "bites %target%")
-		random_brute_damage(M, 2)
+		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
 			src.attacking = 0

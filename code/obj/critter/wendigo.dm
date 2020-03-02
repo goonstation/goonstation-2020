@@ -277,7 +277,7 @@
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> [pick("bites", "nibbles", "chews on", "gnaws on")] [src.target]!</span>")
 					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 					playsound(src.loc, "sound/items/eatfood.ogg", 50, 1)
-					random_brute_damage(target, 10)
+					random_brute_damage(target, 10,1)
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
 						playsound(src.loc, "sound/voice/animal/wendigo_laugh.ogg", 70, 1)
@@ -285,7 +285,7 @@
 				else
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> [pick("slashes", "swipes", "claws", "tears")] a chunk out of [src.target]!</span>")
 					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
-					random_brute_damage(target, 20)
+					random_brute_damage(target, 20,1)
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
 					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					playsound(src.loc, "sound/voice/animal/wendigo_scream.ogg", 75, 1)
@@ -375,7 +375,7 @@
 			src.frenzied = 20
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span style=\"color:red\"><b>[src] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
-				random_brute_damage(target, 10)
+				random_brute_damage(target, 10,1)
 				take_bleeding_damage(target, null, 5, DAMAGE_CUT, 0, get_turf(target))
 				if(prob(33)) // don't make quite so much mess
 					bleed(target, 5, 5, get_step(src.loc, pick(alldirs)), 1)

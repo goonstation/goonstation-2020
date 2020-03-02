@@ -183,7 +183,7 @@
 /obj/item/knife/welder/attack(target as mob, mob/user as mob)
 	var/welder_check = (istype(user:head, /obj/item/clothing/head/helmet/welding)  && istype(user:wear_suit, /obj/item/clothing/suit/armor/vest))
 	if(!welder_check)
-		random_brute_damage(user, 30*src.level)
+		random_brute_damage(user, 30*src.damage_level)
 		boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
 		user.changeStatus("weakened", 80)
 		return

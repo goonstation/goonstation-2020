@@ -816,7 +816,7 @@
 				logTheThing("combat", user, target, "attacks %target% with a broken [src] at [log_loc(user)].")
 				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 				var/damage = rand(1,10)
-				random_brute_damage(target, damage)
+				random_brute_damage(target, damage)//shiv that nukie/secHoP
 				take_bleeding_damage(target, damage)
 		..()
 
@@ -1458,7 +1458,7 @@
 		else
 			M.visible_message("<span style='color:red'><B>[user] smashes [src] over [M]'s head!</B></span>")
 			logTheThing("combat", user, M, "smashes [src] over %target%'s head! ")
-		random_brute_damage(M, force)
+		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.updatehealth()
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)

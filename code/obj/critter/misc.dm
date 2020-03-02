@@ -520,7 +520,7 @@
 		if (!src.alive) return
 		..()
 		playsound(M.loc, "punch", 25, 1, -1)
-		random_brute_damage(M, rand(5,10))
+		random_brute_damage(M, rand(5,10),1)
 		if(prob(15)) // too mean before
 			M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 			M.changeStatus("stunned", 2 SECONDS)
@@ -539,11 +539,11 @@
 				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 				M.changeStatus("stunned", 2 SECONDS)
 				M.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, rand(5,10))
+			random_brute_damage(M, rand(5,10),1)
 		else
 			M.visible_message("<span class='combat'><B>[src]</B> hits [src.target] with a bone!</span>")
 			playsound(src.loc, "punch", 30, 1, -2)
-			random_brute_damage(M, rand(10,15))
+			random_brute_damage(M, rand(10,15),1)
 
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
@@ -742,7 +742,7 @@
 		if(iscarbon(M) && prob(15))
 			..()
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
-			random_brute_damage(M, rand(0,3))
+			random_brute_damage(M, rand(0,3))//this is weak enough as it is without being nerfed by armor - Tarm
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 		else
@@ -770,7 +770,7 @@
 			playsound(M.loc, "swing_hit", 50, 1, -1)
 
 			var/to_deal = rand(sword_damage_min,sword_damage_max)
-			random_brute_damage(M, to_deal)
+			random_brute_damage(M, to_deal,1)
 			if(iscarbon(M))
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
@@ -780,7 +780,7 @@
 		else
 			src.visible_message("<span class='combat'><B>[src]</B> kicks [src.target]!</span>")
 			playsound(src.loc, "swing_hit", 50, 1, -1)
-			random_brute_damage(src.target, rand(4,8))
+			random_brute_damage(src.target, rand(4,8),1)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		if (ishuman(M))
@@ -927,7 +927,7 @@
 		..()
 		if(iscarbon(M))
 			if (prob(5)) M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, rand(2,5))
+			random_brute_damage(M, rand(2,5),1)
 
 //A terrible post-human cloud of murder.
 /obj/critter/aberration

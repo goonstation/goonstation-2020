@@ -625,11 +625,11 @@
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))) || (G.affecting.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80))))
 					src.smash()
-					random_brute_damage(G.affecting, rand(20,40))
+					random_brute_damage(G.affecting, rand(20,40),1)
 					take_bleeding_damage(G.affecting, G.assailant, rand(20,40))
 					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy") || G.affecting.bioHolder.HasEffect("fat"))
 						boutput(user, "<span style='color:red'>You cut yourself on \the [src] as [G.affecting] slams through the glass!</span>")
-						random_brute_damage(G.assailant, rand(10,30))
+						random_brute_damage(G.assailant, rand(10,30),1)
 						take_bleeding_damage(G.assailant, G.assailant, rand(10,30))
 					qdel(W)
 					return
@@ -696,7 +696,7 @@
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
 				if (ishuman(M))
-					random_brute_damage(M, rand(30,50))
+					random_brute_damage(M, rand(30,50),1)
 					take_bleeding_damage(M, M, rand(20,40))
 		return
 

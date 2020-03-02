@@ -288,7 +288,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			while (attackCount-- > 0)
 				src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 				if (ismob(M))
-					random_brute_damage(src.target, 2)
+					random_brute_damage(src.target, 3,1)
 				else if (istype(M, /obj/critter)) //robust cat simulation.
 					var/obj/critter/C = src.target
 					C.health -= 2
@@ -417,7 +417,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			var/attackCount = (src.catnip ? rand(4,8) : 1)
 			while(attackCount-- > 0)
 				src.visible_message("<span class='combat'><B>[src]</B> claws at [src.target]!</span>")
-				random_brute_damage(src.target, 6)
+				random_brute_damage(src.target, 6,1)
 				sleep(2)
 
 			SPAWN_DBG(1 SECOND)
@@ -703,7 +703,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	ChaseAttack(mob/M)
 		..()
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-		random_brute_damage(src.target, 1)
+		random_brute_damage(src.target, 1)//peck peck
 
 		return
 
@@ -1097,7 +1097,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
 				playsound(src.loc, "swing_hit", 30, 0)
-				random_brute_damage(M, 3)
+				random_brute_damage(M, 3,1)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.was_harmed(src)
@@ -1207,7 +1207,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 300) // reinforced glass tables
 				FP = /obj/item/furniture_parts/table/glass/reinforced
-				FP_name = "Sköld"
+				FP_name = "Skï¿½ld"
 				C.amount -= 300
 
 			else if (C.amount >= 280) // armchairs
@@ -1222,7 +1222,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 230) // roller beds
 				FP = /obj/item/furniture_parts/bed/roller
-				FP_name = "Återhämtning"
+				FP_name = "ï¿½terhï¿½mtning"
 				C.amount -= 230
 
 			else if (C.amount >= 220) // glass tables
@@ -1237,7 +1237,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 130) // round tables
 				FP = pick(/obj/item/furniture_parts/table/round, /obj/item/furniture_parts/table/wood/round)
-				FP_name = "Samkväm"
+				FP_name = "Samkvï¿½m"
 				C.amount -= 130
 
 			else if (C.amount >= 100) // regular tables
@@ -1257,12 +1257,12 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 50) // wooden chairs
 				FP = /obj/item/furniture_parts/wood_chair
-				FP_name = "Bredsjö"
+				FP_name = "Bredsjï¿½"
 				C.amount -= 50
 
 			else if (C.amount >= 40) // bar stools
 				FP = /obj/item/furniture_parts/stool/bar
-				FP_name = "Kröka"
+				FP_name = "Krï¿½ka"
 				C.amount -= 40
 
 			else if (C.amount >= 35) // stools
@@ -1519,8 +1519,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = "ikea"
 	icon_state = "ikea"
 	dead_state = "ikea-dead"
-	learned_words = list("Välkommen","Hej","Hejsan","Hallå","Hej då","Varsågod","Hur mår du","Tack så mycket","Kom igen","Ha en bra dag")
-	learned_phrases = list("Välkommen!","Hej!","Hejsan!","Hallå!","Hej då!","Varsågod!","Hur mår du?","Tack så mycket!","Kom igen!","Ha en bra dag!")
+	learned_words = list("Vï¿½lkommen","Hej","Hejsan","Hallï¿½","Hej dï¿½","Varsï¿½god","Hur mï¿½r du","Tack sï¿½ mycket","Kom igen","Ha en bra dag")
+	learned_phrases = list("Vï¿½lkommen!","Hej!","Hejsan!","Hallï¿½!","Hej dï¿½!","Varsï¿½god!","Hur mï¿½r du?","Tack sï¿½ mycket!","Kom igen!","Ha en bra dag!")
 	learn_words_chance = 0
 	learn_phrase_chance = 0
 	chatter_chance = 10
@@ -1574,20 +1574,20 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 <b>Fart</b> - 1700<small>SSEK</small><br>
 <b>Arbetsplatsolycka</b> - 330<small>SSEK</small><br>
 <b>Fyllehund</b> - 320<small>SSEK</small><br>
-<b>Sköld</b> - 300<small>SSEK</small><br>
-<b>Avkoppling</b> - 280<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
+<b>Skï¿½ld</b> - 300<small>SSEK</small><br>
+<b>Avkoppling</b> - 280<small>SSEK</small> - <small><i>Tillgï¿½ngliga i flera fï¿½rger</i></small><br>
 <b>Stark</b> - 250<small>SSEK</small><br>
-<b>Återhämtning</b> - 230<small>SSEK</small><br>
+<b>ï¿½terhï¿½mtning</b> - 230<small>SSEK</small><br>
 <b>Transparens</b> - 200<small>SSEK</small><br>
 <b>Vilostund</b> - 200<small>SSEK</small><br>
-<b>Samkväm</b> - 130<small>SSEK</small><br>
+<b>Samkvï¿½m</b> - 130<small>SSEK</small><br>
 <b>Bruksvallarna</b> - 100<small>SSEK</small><br>
 <b>Stapla</b> - 80<small>SSEK</small><br>
-<b>Kontorist</b> - 70<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
-<b>Bredsjö</b> - 50<small>SSEK</small><br>
-<b>Kröka</b> - 40<small>SSEK</small><br>
+<b>Kontorist</b> - 70<small>SSEK</small> - <small><i>Tillgï¿½ngliga i flera fï¿½rger</i></small><br>
+<b>Bredsjï¿½</b> - 50<small>SSEK</small><br>
+<b>Krï¿½ka</b> - 40<small>SSEK</small><br>
 <b>Avlastning</b> - 35<small>SSEK</small><br>
-<b>Benke</b> - 30<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
+<b>Benke</b> - 30<small>SSEK</small> - <small><i>Tillgï¿½ngliga i flera fï¿½rger</i></small><br>
 <b>Sittplats</b> - 25<small>SSEK</small>"}
 
 /obj/critter/seagull
@@ -1707,7 +1707,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> bites [M]!</span>")
 				playsound(src.loc, "swing_hit", 30, 0)
-				random_brute_damage(M, 3)
+				random_brute_damage(M, 3,1)
 
 		else if (isrobot(M))
 			if (prob(10))

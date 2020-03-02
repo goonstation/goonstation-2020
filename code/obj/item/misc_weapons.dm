@@ -305,7 +305,7 @@
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-			random_brute_damage(C, throwforce)
+			random_brute_damage(C, throwforce, 1)
 
 			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
@@ -341,7 +341,7 @@
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
 			src.implanted = 1
-		random_brute_damage(M, 11)
+		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
 /obj/item/nunchucks
@@ -451,7 +451,7 @@
 			A:lastattackertime = world.time
 		C.changeStatus("weakened", 6 SECONDS)
 		C.force_laydown_standup()
-		random_brute_damage(C, 20)
+		random_brute_damage(C, 20,1)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
@@ -466,7 +466,7 @@
 	if (iscarbon(target))
 		var/mob/living/carbon/C = target
 		if (!isdead(C))
-			random_brute_damage(C, 20)
+			random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)

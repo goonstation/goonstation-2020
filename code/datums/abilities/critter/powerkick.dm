@@ -77,7 +77,7 @@
 			var/kicktype = pick("kick", "roundhouse", "thrust")
 			M.visible_message("<span style=\"color:red\"><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
-			random_brute_damage(target, 10)
+			random_brute_damage(target, 10,1)
 			playsound(M.loc, "swing_hit", 60, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)

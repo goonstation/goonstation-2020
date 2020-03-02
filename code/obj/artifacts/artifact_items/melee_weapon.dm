@@ -62,7 +62,7 @@
 		else
 			switch(damtype)
 				if ("brute")
-					random_brute_damage(target, dmg_amount)
+					random_brute_damage(target, dmg_amount,1)
 				if ("fire")
 					random_burn_damage(target, dmg_amount)
 				if ("toxin")

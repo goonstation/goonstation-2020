@@ -152,11 +152,11 @@
 
 				switch (G.state)
 					if (2)
-						random_brute_damage(HH, 25)
+						random_brute_damage(HH, 25, 1)
 					if (3)
 						HH.ex_act(3)
 					else
-						random_brute_damage(HH, 15)
+						random_brute_damage(HH, 15, 1)
 			else
 				HH.ex_act(3)
 

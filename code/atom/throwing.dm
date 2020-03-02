@@ -99,7 +99,7 @@
 				// Added log_reagents() calls for drinking glasses. Also the location (Convair880).
 				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 				if(src.vars.Find("throwforce"))
-					random_brute_damage(C, src:throwforce)
+					random_brute_damage(C, src:throwforce,1)
 
 			#ifdef DATALOGGER
 				game_stats.Increment("violence")
@@ -126,7 +126,7 @@
 			else
 				C.visible_message("<span style=\"color:red\">[C] has been hit by [src].</span>")
 				if(src.vars.Find("throwforce"))
-					random_brute_damage(C, src:throwforce)
+					random_brute_damage(C, src:throwforce,1)
 
 				logTheThing("combat", C, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(C)].")
 
@@ -153,7 +153,7 @@
 		S.visible_message("<span style=\"color:red\">[S] has been hit by [src].</span>")
 		logTheThing("combat", S, null, "is struck by [src] [src.is_open_container() ? "[log_reagents(src)]" : ""] at [log_loc(S)].")
 		if(src.vars.Find("throwforce"))
-			random_brute_damage(S, src:throwforce)
+			random_brute_damage(S, src:throwforce,1)
 
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")

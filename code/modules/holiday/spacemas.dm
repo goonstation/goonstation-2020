@@ -422,7 +422,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 	CritterAttack(mob/M)
 		src.attacking = 1
 		M.visible_message("<span class='combat'><b>[src]</b> drives its tusks through [src.target]!</span>")
-		random_brute_damage(M, rand(8,16))
+		random_brute_damage(M, rand(8,16),1)
 		SPAWN_DBG(2 SECONDS) src.attacking = 0
 
 
@@ -430,7 +430,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 		src.visible_message("<span class='combat'><b>[src]</b> lunges upon [M]!</span>")
 		if(iscarbon(M))
 			if(prob(50)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(4,8))
+		random_brute_damage(M, rand(4,8),1)
 
 
 // Throughout December the icon will change!
@@ -906,7 +906,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 					C.show_message("<span style=\"color:red\"><B>[src] tramples right over [M]!</B></span>", 1)
 				M.changeStatus("stunned", 80)
 				M.changeStatus("weakened", 5 SECONDS)
-				random_brute_damage(M, 10)
+				random_brute_damage(M, 10,1)
 				M.take_brain_damage(rand(5,10))
 				playsound(M.loc, "fleshbr1.ogg", attack_volume, 1, -1)
 				playsound(M.loc, "loudcrunch2.ogg", attack_volume, 1, -1)
@@ -1111,7 +1111,7 @@ var/list/seal_names = list("Fluffles","Ronan","Selena","Selkie","Ukog","Ategev",
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
-						random_brute_damage(H, 10)
+						random_brute_damage(H, 10,1)
 						H.changeStatus("stunned", 80)
 						H.changeStatus("weakened", 5 SECONDS)
 						if (H.health < 0)

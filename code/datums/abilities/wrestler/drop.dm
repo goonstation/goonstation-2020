@@ -71,7 +71,7 @@
 				M.pixel_y = 0
 				if (falling == 1)
 					M.visible_message("<span style=\"color:red\"><B>...and dives head-first into the ground, ouch!</b></span>")
-					random_brute_damage(M, 15)
+					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
 					M.changeStatus("weakened", 3 SECONDS)
 					M.force_laydown_standup()
 				boutput(M, __red("[target] is too far away!"))
@@ -99,9 +99,9 @@
 				if (prob(33) || isdead(target))
 					target.ex_act(3)
 				else
-					random_brute_damage(target, 25)
+					random_brute_damage(target, 25, 1)
 			else
-				random_brute_damage(target, 15)
+				random_brute_damage(target, 15, 1)
 
 			target.changeStatus("weakened", 1 SECOND)
 			target.changeStatus("stunned", 2 SECONDS)

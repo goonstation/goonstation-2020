@@ -858,7 +858,7 @@ obj/critter/madnessowl
 		playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
 		if(ismob(M))
 			src.visible_message("<span class='combat'><B>[src]</B> swoops at [src.target] and bites a chunk off off them!</span>")
-			random_brute_damage(src.target, 10)
+			random_brute_damage(src.target, 10,1)
 			playsound(src.loc, "sound/impact_sounds/Flesh_tear_1.ogg", 35, 1, -1)
 			src.pixel_x = -5
 			src.pixel_y = -5
@@ -866,7 +866,7 @@ obj/critter/madnessowl
 			turftarget = get_turf(target)
 			src.set_loc(turftarget)
 			playsound(src.loc, "sound/impact_sounds/Flesh_tear_3.ogg", 35, 1, -1)
-			random_brute_damage(src.target, 2)
+			random_brute_damage(src.target, 2,1)
 			SPAWN_DBG(rand(1,10))
 				src.attacking = 0
 
@@ -877,7 +877,7 @@ obj/critter/madnessowl
 			playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
 		if(ismob(M))
 			src.visible_message("<span class='combat'><B>[src]</B> swoops around and circles [src.target] before biting a chunk off off them!</span>")
-			random_brute_damage(src.target, 10)
+			random_brute_damage(src.target, 10,1)
 			playsound(src.loc, "sound/impact_sounds/Flesh_tear_1.ogg", 35, 1, -1)
 			src.pixel_x = -5
 			src.pixel_y = -5
@@ -929,10 +929,10 @@ obj/critter/madnessowl/switchblade
 			src.attacking = 1
 			src.visible_message("<span class='combat'><B>[src]</B> shanks [src.target]!</span>")
 			playsound(src.loc, "sound/impact_sounds/blade_small.ogg", 40, 1, -1)
-			random_brute_damage(src.target, 5)
+			random_brute_damage(src.target, 5)//shivved
 			sleep(rand(4,7))
 			playsound(src.loc, "sound/impact_sounds/blade_small.ogg", 40, 1, -1)
-			random_brute_damage(src.target, 5)
+			random_brute_damage(src.target, 5)//shivved
 			take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 			SPAWN_DBG(rand(1,10))
 				src.attacking = 0
@@ -951,7 +951,7 @@ obj/critter/madnessowl/switchblade
 			if(prob(20))
 				src.visible_message("<span class='combat'><B>[src]</B> swoops down upon [M] and plunges a blade deep into their back!</span>")
 				playsound(src.loc, "sound/impact_sounds/blade_small.ogg", 40, 1, -1)
-				random_brute_damage(src.target, 10)
+				random_brute_damage(src.target, 10)//shivved
 				take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 				M.changeStatus("stunned", 2 SECONDS)
 				M.changeStatus("weakened", 2 SECONDS)
@@ -960,7 +960,7 @@ obj/critter/madnessowl/switchblade
 			else
 				src.visible_message("<span class='combat'><B>[src]</B> swoops down and slashes [M]!</span>")
 				playsound(src.loc, "sound/impact_sounds/blade_small.ogg", 40, 1, -1)
-				random_brute_damage(src.target, 3)
+				random_brute_damage(src.target, 3,1)
 				take_bleeding_damage(target, null, 2, DAMAGE_STAB, 1, get_turf(target))
 			SPAWN_DBG(rand(1,10))
 				src.attacking = 0
@@ -1103,7 +1103,7 @@ obj/critter/madnessowl/switchblade
 		if(prob(10) && alive)
 			src.target = user
 			src.oldtarget_name = user.name
-			random_brute_damage(user, 15)
+			user.TakeDamageAccountArmor("chest", 15, 0, 0, DAMAGE_BLUNT)
 			playsound(user.loc, "swing_hit", 60, 1)
 			src.visible_message("<span style=\"color:red\"><b>[src]</b> preforms a counterattack and dragonkicks [user.name] square in the chest!</span>")
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
@@ -1203,7 +1203,7 @@ obj/critter/madnessowl/switchblade
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> [pick("bites", "nibbles", "chews on", "gnaws on")] [src.target]!</span>")
 					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 					playsound(src.loc, "sound/items/eatfood.ogg", 50, 1)
-					random_brute_damage(target, 10)
+					random_brute_damage(target, 10,1)
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
 						playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
@@ -1211,7 +1211,7 @@ obj/critter/madnessowl/switchblade
 				else
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> [pick("slashes", "swipes", "rips", "tears")] a chunk out of [src.target] with its talons!</span>")
 					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
-					random_brute_damage(target, 20)
+					random_brute_damage(target, 20,1)
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
 					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 					playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
@@ -1268,7 +1268,7 @@ obj/critter/madnessowl/switchblade
 			src.frenzied = 20
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span style=\"color:red\"><b>[src] [pick("pecks", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
-				random_brute_damage(target, 10)
+				random_brute_damage(target, 10,1)
 				take_bleeding_damage(target, null, 5, DAMAGE_CUT, 0, get_turf(target))
 				if(prob(33)) // don't make quite so much mess
 					bleed(target, 5, 5, get_step(src.loc, pick(alldirs)), 1)

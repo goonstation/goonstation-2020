@@ -266,7 +266,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			src.attacking = 1
 			src.visible_message("<span style=\"color:red\"><B>[src]</B> chomps down on [M]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-			random_brute_damage(M, rand(10,35))
+			random_brute_damage(M, rand(10,35), 1)
 			SPAWN_DBG(1 SECOND)
 				src.attacking = 0
 
@@ -396,7 +396,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 		src.visible_message("<span style=\"color:red\">[src] slaps [M] with a meaty tendril!</span>")
 		playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
-		random_brute_damage(M, 10)
+		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
 
 		src.target = null
@@ -529,7 +529,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 			if(iscarbon(M))
 				if (prob(25))
 					M.changeStatus("weakened", 1 SECONDS)
-				random_brute_damage(M, rand(2,5))
+				random_brute_damage(M, rand(2,5), 1)
 
 	CritterDeath()
 		if (!src.alive) return
@@ -1521,7 +1521,7 @@ var/global/list/default_meat_head_dialog = list("hello hello", "... it's not vir
 				if (ishuman(L))
 					L:sever_limb(pick("l_arm", "r_arm", "L_leg", "r_leg"))
 				else
-					random_brute_damage(L, 25)
+					random_brute_damage(L, 25, 1)
 			else
 				L.visible_message("<span style=\"color:red\"><b>[L] is gored by [src]!</b></span>", "<span style=\"color:red\"><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)

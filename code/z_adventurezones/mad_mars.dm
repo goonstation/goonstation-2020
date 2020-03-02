@@ -347,7 +347,7 @@
 						startup = 0
 						wanderer = 1
 					src.visible_message("<span style=\"color:red\">The <b>[src]</b> charges at [C:name]!</span>")
-					src.speak(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&£%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
+					src.speak(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&ï¿½%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
 					playsound(src.loc, 'sound/machines/glitch3.ogg', 50, 1)
 					icon_state = "mars_bot"
 					src.task = "chasing"
@@ -358,12 +358,12 @@
 	ChaseAttack(mob/M)
 		src.visible_message("<span class='combat'>The <B>[src]</B> launches itself towards [M]!</span>")
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5))
+		random_brute_damage(M, rand(2,5),1)
 
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span class='combat'>The <B>[src]</B> slams itself against [src.target]!</span>")
-		random_brute_damage(src.target, rand(7,17))
+		random_brute_damage(src.target, rand(7,17), 1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 

@@ -47,7 +47,7 @@
 						M.set_loc(T)
 
 			M.visible_message("<span style=\"color:red\"><b>[M] [pick_string("wrestling_belt.txt", "strike")] [target]!</b></span>")
-			random_brute_damage(target, 15)
+			random_brute_damage(target, 15, 1)
 			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 
 			target.changeStatus("paralysis", 2 SECONDS)

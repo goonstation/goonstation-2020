@@ -941,7 +941,7 @@
 		src.health -= max(0, burn)
 
 /mob/proc/TakeDamageAccountArmor(zone, brute, burn, tox, damage_type)
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute-get_melee_protection(zone), burn-get_melee_protection(zone))
 
 /mob/proc/HealDamage(zone, brute, burn, tox)
 	health += max(0, brute)
@@ -2187,7 +2187,7 @@
 
 	if (throw_count <= 410)
 		if (!((src.throwing & THROW_CHAIRFLIP) && ismob(hit)))
-			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
+			random_brute_damage(src, min((6 + (throw_count / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)),1)
 			if (!src.hasStatus("weakened"))
 				src.changeStatus("weakened", 2 SECONDS)
 				src.force_laydown_standup()

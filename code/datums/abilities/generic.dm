@@ -127,7 +127,7 @@
 				if (prob(33))
 					M.ex_act(3)
 				else
-					random_brute_damage(M, 20 * effect_mult)
+					random_brute_damage(M, 20 * effect_mult,1)
 					M.changeStatus("weakened", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
 			else if (M.traitHolder.hasTrait("training_security")) //consider rremoving this, prrobably not necessarry any more
@@ -137,7 +137,7 @@
 				src.throw_at(target, 3, 10)
 				src.force_laydown_standup()
 			else
-				random_brute_damage(M, 10 * effect_mult)
+				random_brute_damage(M, 10 * effect_mult,1)
 				if (!M.hasStatus("weakened"))
 					M.changeStatus("weakened", 4 SECONDS * effect_mult)
 					M.force_laydown_standup()

@@ -42,7 +42,7 @@
 			shake_camera(C, 8, 3)
 
 		M.visible_message("<span style=\"color:red\"><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
-		random_brute_damage(target, 15)
+		random_brute_damage(target, 15, 1)
 		playsound(M.loc, "swing_hit", 60, 1)
 
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))

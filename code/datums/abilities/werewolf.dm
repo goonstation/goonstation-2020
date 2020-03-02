@@ -274,7 +274,7 @@
 			wrestler_backfist(M, target)
 
 	if (damage > 0)
-		random_brute_damage(target, damage)
+		random_brute_damage(target, damage,1)
 		target.updatehealth()
 		target.UpdateDamageIcon()
 		target.set_clothing_icon_dirty()

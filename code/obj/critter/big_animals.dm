@@ -114,7 +114,7 @@
 		playsound(src.loc, pick("sound/voice/MEraaargh.ogg"), 40, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5))
+		random_brute_damage(M, rand(2,5),1)
 
 obj/critter/bear/care
 	name = "space carebear"
@@ -131,7 +131,7 @@ obj/critter/bear/care
 		playsound(src.loc, pick("sound/voice/babynoise.ogg"), 50, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5))
+		random_brute_damage(M, rand(2,5),1)
 
 /obj/critter/yeti
 	name = "space yeti"
@@ -581,4 +581,4 @@ obj/critter/bear/care
 		..()
 		if(iscarbon(M))
 			if(prob(50)) M.changeStatus("stunned", 3 SECONDS)
-		random_brute_damage(M, rand(4,8))
+		random_brute_damage(M, rand(4,8),1)

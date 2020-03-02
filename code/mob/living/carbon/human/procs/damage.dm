@@ -601,10 +601,12 @@
 
 	brute = max(0, brute - armor_mod)
 	burn = max(0, burn - armor_mod)
+	/*
 	if (brute + burn == 0)
 		show_message("<span style='color:blue'>You have been completely protected from damage on your [z_name]!</span>")
 	else if (armor_mod != 0)
 		show_message("<span style='color:blue'>You have been partly protected from damage on your [z_name]!</span>")
+	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
 /mob/living/carbon/human/HealDamage(zone, brute, burn, tox)
@@ -816,17 +818,18 @@
 			ret += organName
 	return ret
 
-/proc/random_brute_damage(var/mob/themob, var/damage, var/disallow_limb_loss) // do brute damage to a random organ
+/proc/random_brute_damage(var/mob/themob, var/damage, checkarmor=0) // do brute damage to a random organ
 	if (!themob || !ismob(themob))
 		return //???
 	var/list/zones = themob.get_valid_target_zones()
 	if (!zones || !zones.len)
-		themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+		themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 	else
 		if (prob(100 / zones.len + 1))
-			themob.TakeDamage("All", damage, 0, 0, DAMAGE_BLUNT)
+			themob.TakeDamageAccountArmor("All", damage, 0, 0, DAMAGE_BLUNT)
 		else
-			themob.TakeDamage(pick(zones), damage, 0, 0, DAMAGE_BLUNT)
+			var/zone=pick(zones)
+			themob.TakeDamageAccountArmor(zone, damage, 0, 0, DAMAGE_BLUNT)
 
 /proc/random_burn_damage(var/mob/themob, var/damage) // do burn damage to a random organ
 	if (!themob || !ismob(themob))

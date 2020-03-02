@@ -56,7 +56,7 @@
 				if(prob(30))
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, "rustle", 50, 1)
-					random_brute_damage(src.target, rand(1,2))
+					random_brute_damage(src.target, rand(1,2))//it's all over you
 					M.reagents.add_reagent("[venom1]", 2)
 				sleep(4)
 			src.pixel_x = 0
@@ -149,14 +149,14 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
 				M.changeStatus("weakened", 2 SECONDS)
 				M.changeStatus("stunned", 2 SECONDS)
-				random_brute_damage(M, rand(2,5))
+				random_brute_damage(M, rand(2,5),1)
 				src.spiderspaz(src.target)
 				if(!M.stat) M.emote("scream") // don't scream while dead/asleep // why?
 			else
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
 				playsound(src.loc, src.bitesound, 50, 1)
 				if(ishuman(M))
-					random_brute_damage(src.target, rand(1,2))
+					random_brute_damage(src.target, rand(1,2),1)
 					src.reagents.add_reagent("[venom1]", 2) // doing this instead of directly adding reagents to M should give people the correct messages
 					src.reagents.add_reagent("[venom2]", 2)
 					if (src.reacting)
@@ -188,7 +188,7 @@
 						src.reagents.reaction(M, INGEST)
 					else
 						src.reagents.trans_to(M, 10)
-					random_brute_damage(M, rand(2,5))
+					random_brute_damage(M, rand(2,5),1)
 
 				if(isdead(M) && !feeding) // drain corpses into husks
 					if(ishuman(M))
@@ -249,7 +249,7 @@
 			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, rand(2,5))
+			random_brute_damage(M, rand(2,5),1)
 			src.spiderspaz(src.target)
 			if(!M.stat) M.emote("scream") // don't scream while dead or KOd
 		else src.visible_message("<span style=\"color:red\"><B>[src]</B> dives at [M], but misses!</span>")
@@ -275,7 +275,7 @@
 					src.visible_message("<span style=\"color:red\"><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, src.bitesound, 50, 1)
 					if(ishuman(M))
-						random_brute_damage(src.target, rand(1,2))
+						random_brute_damage(src.target, rand(1,2),1)
 						src.reagents.add_reagent("[venom1]", 2) // doing this instead of directly adding reagents to M should give people the correct messages
 						src.reagents.add_reagent("[venom2]", 2)
 						if (src.reacting)

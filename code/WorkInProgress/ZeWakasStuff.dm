@@ -160,12 +160,12 @@
 	ChaseAttack(mob/M)
 		src.visible_message("<span class='combat'><B>[src]</B> viciously lunges at [M]!</span>")
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(5,20))
+		random_brute_damage(M, rand(5,20),1)
 
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target] viciously!</span>")
-		random_brute_damage(src.target, rand(5,15))
+		random_brute_damage(src.target, rand(5,15),1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 

@@ -267,7 +267,7 @@
 		if (type == "harm_classic")
 			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened * 10)
 			dude_to_stun.force_laydown_standup()
-			random_brute_damage(dude_to_stun, src.force) // Necessary since the item/attack() parent wasn't called.
+			random_brute_damage(dude_to_stun, src.force,1) // Necessary since the item/attack() parent wasn't called. Wait, was this armor-piercing? -Tarm
 			dude_to_stun.remove_stamina(src.stamina_damage)
 			if (user && ismob(user))
 				user.remove_stamina(src.stamina_cost)

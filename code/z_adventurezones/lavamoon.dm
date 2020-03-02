@@ -575,7 +575,7 @@ var/sound/iomoon_alarm_sound = null
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span style=\"color:red\"><B>[src]</B> pinches [M] with its claws!</span>")
-		random_brute_damage(M, 3)
+		random_brute_damage(M, 3,1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
 			src.attacking = 0

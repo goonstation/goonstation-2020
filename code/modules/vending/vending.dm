@@ -1708,7 +1708,7 @@
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(30,50))
+		random_brute_damage(victim, rand(30,50),1)
 	else
 		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
 

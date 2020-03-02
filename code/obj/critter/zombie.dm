@@ -77,7 +77,7 @@
 		if(iscarbon(M) && prob(15))
 			..()
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-			random_brute_damage(M, rand(0,3))
+			random_brute_damage(M, rand(0,3),1)
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 		else
@@ -104,7 +104,7 @@
 			playsound(M.loc, "punch", 25, 1, -1)
 
 			var/to_deal = rand(punch_damage_min,punch_damage_max)
-			random_brute_damage(M, to_deal)
+			random_brute_damage(M, to_deal,1)
 			after_attack_special(src.target)
 			if(iscarbon(M))
 				if(to_deal > (((punch_damage_max-punch_damage_min)/2)+punch_damage_min) && prob(50))
@@ -125,7 +125,7 @@
 			else
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> attacks [src.target]!</span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-				random_brute_damage(src.target, rand(punch_damage_min,punch_damage_max))
+				random_brute_damage(src.target, rand(punch_damage_min,punch_damage_max),1)
 				after_attack_special(src.target)
 				SPAWN_DBG(25)
 					src.attacking = 0

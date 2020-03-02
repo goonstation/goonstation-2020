@@ -876,7 +876,7 @@
 			CritAttack(M)
 		else
 			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
-			random_brute_damage(src.target, src.atk_brute_amt)
+			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -892,7 +892,7 @@
 
 	proc/CritAttack(mob/M)
 		src.visible_message("<span class='combat'><B>[src]</B> [src.crit_text] [src.target]!</span>")
-		random_brute_damage(src.target, src.crit_brute_amt)
+		random_brute_damage(src.target, src.crit_brute_amt,1)
 		random_burn_damage(src.target, src.crit_burn_amt)
 
 	proc/getCritterQuality(var/quality)

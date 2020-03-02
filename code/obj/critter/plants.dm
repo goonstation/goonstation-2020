@@ -131,7 +131,7 @@
 	ChaseAttack(mob/M)
 		..()
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5))
+		random_brute_damage(M, rand(2,5),1)
 
 	CritterAttack(mob/M)
 		..()

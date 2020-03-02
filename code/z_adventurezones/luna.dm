@@ -1080,7 +1080,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span style=\"color:red\"><B>[src]</B> awkwardly bashes [src.target]!</span>")
-		random_brute_damage(src.target, rand(5,15))
+		random_brute_damage(src.target, rand(5,15),1)
 		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
@@ -1135,7 +1135,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	CritterAttack(mob/M)
 		src.attacking = 1
 		src.visible_message("<span style=\"color:red\">The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
-		random_brute_damage(src.target, rand(2,4))
+		random_brute_damage(src.target, rand(2,4),1)
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 

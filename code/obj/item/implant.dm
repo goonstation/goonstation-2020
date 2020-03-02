@@ -1615,7 +1615,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			src.visible_message("<span style=\"color:red\">[src] gets embedded in [M]!</span>")
 			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, 20)
+			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 			src.set_loc(M)
 			src.implanted = 1
