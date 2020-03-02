@@ -179,7 +179,6 @@ TRAYS
 		user.updatehealth()
 		return 1
 
-
 /obj/item/kitchen/utensil/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "spoon_plastic"
