@@ -49,9 +49,6 @@ TRAYS
 	dir = NORTH
 	var/rotatable = 1 //just in case future utensils are added that dont wanna be rotated
 	var/snapped
-	var/is_fork = 0 //obsolete?
-	var/is_spoon = 0 //obsolete?
-	var/is_knife = 0 //obsolete?
 
 	New()
 		if (prob(60))
@@ -102,7 +99,6 @@ TRAYS
 	name = "spoon"
 	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
 	icon_state = "spoon"
-	is_spoon = 1
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -130,7 +126,6 @@ TRAYS
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
-	is_fork = 1
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -162,7 +157,7 @@ TRAYS
 	force = 7.0
 	throwforce = 5
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
-	is_knife = 1
+
 
 	New()
 		..()
@@ -192,7 +187,6 @@ TRAYS
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
 	force = 1.0
 	throwforce = 1.0
-	is_spoon = 1
 
 	New()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
@@ -221,7 +215,6 @@ TRAYS
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
 	force = 1.0
 	throwforce = 1.0
-	is_fork = 1
 
 	New()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
@@ -250,7 +243,6 @@ TRAYS
 	force = 1.0
 	throwforce = 1.0
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
-	is_knife = 1
 
 	New()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
