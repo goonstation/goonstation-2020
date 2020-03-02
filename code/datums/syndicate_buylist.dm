@@ -439,6 +439,15 @@ This is basically useless for anyone but miners.
 	job = list("Clown")
 	blockedmode = list(/datum/game_mode/spy)
 
+/datum/syndicate_buylist/traitor/clown_mask
+	name = "Clown Mask"
+	item = /obj/item/clothing/mask/gas/syndie_clown
+	cost = 5
+	vr_allowed = 0
+	desc = "A clown mask haunted by the souls of those who honked before. Only true clowns should attempt to wear this. It also functions like a gas mask."
+	job = list("Clown")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/fake_revolver
 	name = "Funny-looking Revolver"
 	item = /obj/item/storage/box/fakerevolver

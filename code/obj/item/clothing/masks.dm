@@ -10,6 +10,7 @@
 	compatible_species = list("human", "monkey", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
+	var/acid_proof = 0	//Is this mask immune to flouroacid?
 
 	New()
 		..()
@@ -187,6 +188,73 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = 0.0
+
+/obj/item/clothing/mask/gas/syndie_clown
+	name = "clown wig and mask"
+	desc = "I AM THE ONE WHO HONKS."
+	icon_state = "clown"
+	item_state = "clown_hat"
+	acid_proof = 1
+	burn_possible = 0
+	color_r = 1.0
+	color_g = 1.0
+	color_b = 1.0
+	w_class = 2.0
+	var/mob/living/carbon/human/victim
+	
+	equipped(var/mob/user, var/slot)
+		. = ..()
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && slot == "mask")
+			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
+				src.cant_other_remove = 1.0
+				src.cant_self_remove = 0.0
+			else
+				boutput (user, __red("[src] latches onto your face! It burns!"))
+				src.victim = H
+				src.cant_other_remove = 0.0
+				src.cant_self_remove = 1.0
+				src.victim.change_misstep_chance(25)
+				src.victim.emote("scream")
+				src.victim.TakeDamage("head",0,15,0,DAMAGE_BURN)
+				src.victim.changeStatus("stunned", 2.5 SECONDS)
+				processing_items.Add(src)
+
+	unequipped(mob/user)
+		. = ..()
+		if ( src.victim )
+			src.victim.change_misstep_chance(-25)
+			src.victim = null
+			if ( src in processing_items )
+				processing_items.Remove(src)
+
+	process()
+		if ( src.victim )
+			if ( src.victim.health <= 0 )
+				return
+			if ( prob(45) )
+				boutput (src.victim, __red("[src] burns your face!"))
+				if ( prob(25) )
+					src.victim.emote("scream")
+				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
+			if ( prob(20) )
+				src.victim.take_brain_damage(3)
+			if ( prob(10) )
+				src.victim.changeStatus("stunned", 2 SECONDS)
+			if ( prob(10) )
+				src.victim.changeStatus("slowed", 4 SECONDS)
+			if ( prob(60) )
+				src.victim.emote("laugh")
+	
+	afterattack(atom/target, mob/user, reach, params)
+		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+			var/mob/living/carbon/human/U = user
+			var/mob/living/carbon/human/T = target
+			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
+				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
+				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
+				U.u_equip(src)
+				T.equip_if_possible(src,T.slot_wear_mask)
 
 /obj/item/clothing/mask/medical
 	name = "medical mask"
