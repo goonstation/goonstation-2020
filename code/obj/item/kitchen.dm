@@ -158,7 +158,6 @@ TRAYS
 	throwforce = 5
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 
-
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
