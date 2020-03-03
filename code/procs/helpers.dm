@@ -908,45 +908,31 @@ proc/get_angle(atom/a, atom/b)
 					return "chest"
 
 		if("head")
-			if (prob(probability * 0.75))
+			if (prob(probability * 0.85))
 				return "head"
 			else
-				if (prob(60))
-					return "chest"
-				else
-					return "head"
+				return "chest"
 		if("l_arm")
-			if (prob(probability * 0.75))
+			if (prob(probability * 0.85))
 				return "l_arm"
 			else
-				if (prob(60))
-					return "chest"
-				else
-					return "l_arm"
+				return "chest"
 		if("r_arm")
-			if (prob(probability * 0.75))
+			if (prob(probability * 0.85))
 				return "r_arm"
 			else
-				if (prob(60))
-					return "chest"
-				else
-					return "r_arm"
+				return "chest"
 		if("r_leg")
-			if (prob(probability * 0.75))
+			if (prob(probability * 0.85))
 				return "r_leg"
 			else
-				if (prob(60))
-					return "chest"
-				else
-					return "r_leg"
+				return "chest"
 		if("l_leg")
-			if (prob(probability * 0.75))
+			if (prob(probability * 0.85))
 				return "l_leg"
 			else
-				if (prob(60))
-					return "chest"
-				else
-					return "l_leg"
+				return "chest"
+
 	return
 
 
