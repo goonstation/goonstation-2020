@@ -912,6 +912,8 @@
 		src.update_icon()
 
 	proc/update_icon()
+		if(istype(src, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
+			return
 		if (src.reagents.total_volume <= 0)
 			icon_state = "glass-[glass_style]"
 			src.UpdateOverlays(null, "fluid")
@@ -968,6 +970,8 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(src, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
+			return
 		if (istype(W, /obj/item/raw_material/ice))
 			if (src.reagents.total_volume >= (src.reagents.maximum_volume - 5))
 				if (user.bioHolder.HasEffect("clumsy") && prob(50))
