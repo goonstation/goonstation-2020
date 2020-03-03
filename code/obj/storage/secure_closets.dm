@@ -638,18 +638,35 @@
 	icon_sparks = "fridge-sparks"
 
 /obj/storage/secure/closet/fridge/kitchen
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola,
-	/obj/item/reagent_containers/food/drinks/cola,
-	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 6,
-	/obj/item/reagent_containers/food/drinks/milk = 5,
-	/obj/item/kitchen/food_box/egg_box = 2,
-	/obj/item/storage/box/donkpocket_kit,
-	/obj/item/reagent_containers/food/snacks/ingredient/butter = 5,
-	/obj/item/storage/box/cookie_tin,
-	/obj/item/storage/box/bacon_kit = 2,
-	/obj/item/storage/box/popsicles)
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			var/obj/item/storage/box/donkpocket_kit/dp = new(src)
+			var/obj/item/storage/box/bacon_kit/bc1 = new(src)
+			var/obj/item/storage/box/bacon_kit/bc2 = new(src)
+			var/obj/item/storage/box/popsicles/p = new(src)
+			dp.pixel_x = 3
+			bc1.pixel_x = 3
+			bc2.pixel_x = 3
+			p.pixel_x = 3
+		
+			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
+			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
+			e1.pixel_y = -4
+			e2.pixel_y = -4
+			
+			var/obj/item/reagent_containers/food/drinks/cola/c1 = new(src)
+			var/obj/item/reagent_containers/food/drinks/cola/c2 = new(src)
+			c1.pixel_x = -8
+			c2.pixel_x = -8
+			
+			var/obj/item/storage/box/cheese/cheese = new(src)
+			cheese.pixel_x = 3
+			
+			var/obj/item/storage/box/butter/butter = new(src)
+			butter.pixel_x = 2
+			butter.pixel_y = 4
+			
 			if (prob(25))
 				for (var/i = rand(2,10), i > 0, i--)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget(src)
