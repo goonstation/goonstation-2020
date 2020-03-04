@@ -332,6 +332,7 @@
 				var/datum/plant/p = pot.current
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
+					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
 				else
 					return
