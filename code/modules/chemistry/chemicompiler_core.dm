@@ -321,7 +321,7 @@
 								count--
 							ip++
 				if("]") //end loop
-					loop -= 49
+					loop -= 9
 					if(data[dp + 1] != 0)
 						count = 1
 						ip--
