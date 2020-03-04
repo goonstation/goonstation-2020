@@ -1061,6 +1061,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\coin.dm"
 #include "code\obj\item\dartboard.dm"
 #include "code\obj\item\decoration.dm"
+#include "code\obj\item\decorative_pot.dm"
 #include "code\obj\item\deployable_turret.dm"
 #include "code\obj\item\dice.dm"
 #include "code\obj\item\fitness.dm"

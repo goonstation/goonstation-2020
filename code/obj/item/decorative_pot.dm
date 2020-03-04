@@ -16,9 +16,9 @@
                 src.anchored = 0
             return
         else if(istype(weapon,/obj/item/gardentrowel))
-            if(!plantyboi)
-                return
             var/obj/item/gardentrowel/t = weapon
+            if(!t.plantyboi)
+                return
             src.UpdateOverlays(t.plantyboi,"plant")
             t.plantyboi = null
             t.icon_state = "trowel"
