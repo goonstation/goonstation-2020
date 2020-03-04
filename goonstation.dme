@@ -1522,5 +1522,5 @@ var/datum/preMapLoad/preMapLoad = new
 #ifdef SEKRIT_CODE_MODE
 #warn SECRET MODE ACTIVATED
 #include "+secret\_defines.dm"
-#include "+secret\code\z_adventurezones\icemoon.dm"
+#include "+secret\modules\z_adventure\icemoon.dm"
 #endif
