@@ -10,11 +10,12 @@
 	"Ancient wall" = /turf/unsimulated/iomoon/ancient_wall, "Cave floor" = /turf/unsimulated/floor/cave, \
 	"Cave wall" = /turf/unsimulated/wall/cave, "Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
 	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/setpieces/hive, \
-	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/martian/floor, \
+	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Snow" = /turf/unsimulated/floor/arctic/snow, \
+	"Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/martian/floor, \
 	"Martian wall" = /turf/simulated/martian/wall, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \
 	"Reinforced floor" = /turf/simulated/floor/engine, "Reinforced wall" = /turf/simulated/wall/r_wall, "Shielded floor" = /turf/simulated/floor/engine, \
 	"Shielded wall" = /turf/unsimulated/wall/setpieces/leadwall, "Shielded window" = /turf/unsimulated/wall/setpieces/leadwindow, "Showcase" = /turf/unsimulated/floor/wizard/showcase, \
-	"Shuttle floor" = /turf/simulated/floor/shuttle, "Shuttle wall" = /turf/simulated/shuttle/wall, "Snow" = /turf/unsimulated/floor/arctic/snow, \
+	"Shuttle floor" = /turf/simulated/floor/shuttle, "Shuttle wall" = /turf/simulated/shuttle/wall,
 	"Void floor" = /turf/unsimulated/floor/void, "Void wall" = /turf/unsimulated/wall/void, "Wizard carpet: Cross" = /turf/unsimulated/floor/wizard/carpet/cross, "Wizard carpet: Edge" = /turf/unsimulated/floor/wizard/carpet/edge, \
 	"Wizard carpet: Inner corners (1-2)" = /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo, "Wizard carpet: Inner Corners (3-4)" = /turf/unsimulated/floor/wizard/carpet/inner_corner_threefour, \
 	"Wizard carpet: Narrow" = /turf/unsimulated/floor/wizard/carpet/narrow, "Wizard carpet: Narrow crossing" = /turf/unsimulated/floor/wizard/carpet/narrow/crossing, "Wizard carpet: Plain" = /turf/unsimulated/floor/wizard/carpet, \

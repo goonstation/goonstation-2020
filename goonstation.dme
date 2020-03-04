@@ -1519,9 +1519,11 @@ var/datum/preMapLoad/preMapLoad = new
 // END_INCLUDE
 
 //Secret Code Handling
-#include "+secret\__setup.dm"
-#ifdef SEKRIT_CODE_MODE
-#warn SECRET MODE ACTIVATED
+#include "+secret\__secret.dm"
+#include "+secret\_placeholder.dm"
+
+#if COOL_KID_MODE
+#warn COOL_KID_MODE ACTIVATED 
 #include "+secret\_defines.dm"
 #include "+secret\modules\z_adventure\icemoon.dm"
 #endif
