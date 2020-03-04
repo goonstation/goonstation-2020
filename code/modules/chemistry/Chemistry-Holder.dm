@@ -258,7 +258,7 @@ datum
 
 			return opacity_to_return
 
-		proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1)
+		proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1,index = 0)
 			if(amount > total_volume) amount = total_volume
 			if(amount <= 0) return
 			if(!target) return
@@ -272,32 +272,46 @@ datum
 				var/turf/simulated/T = target
 				T.fluid_react(src, amount)
 
-			return trans_to_direct(target_reagents, amount, multiplier)
+			return trans_to_direct(target_reagents, amount, multiplier, 1, 1, index)
 
 		//MBC note : I added update_target_reagents and update_self_reagents vars for fluid handling. y'see, there are a ton of transfer operations involving fluids that don't need to update reagents immediately as they happen.
 		// we would rather perform all the transfers, and then batch update the reagents when necessary. Saves us from some lag, and avoids some *buggy shit*!
-		proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1)
+		proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, index = 0)
 			if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 				return
 			var/transfer_ratio = amount/total_volume
 
-			for(var/reagent_id in reagent_list)
-				var/datum/reagent/current_reagent = reagent_list[reagent_id]
+			if ( !index )
+				for(var/reagent_id in reagent_list)
+					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 
-				if (isnull(current_reagent) || current_reagent.volume == 0)
-					continue
+					if (isnull(current_reagent) || current_reagent.volume == 0)
+						continue
 
-				var/transfer_amt = current_reagent.volume*transfer_ratio
-				var/receive_amt = transfer_amt * multiplier
+					var/transfer_amt = current_reagent.volume*transfer_ratio
+					var/receive_amt = transfer_amt * multiplier
 
-				//if(istype(current_reagent, /datum/reagent/disease))
-				//	target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
-				//else
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+					//if(istype(current_reagent, /datum/reagent/disease))
+					//	target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
+					//else
+					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
 
-				current_reagent.on_transfer(src, target_reagents, receive_amt)
+					current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+					src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+			else //Only transfer one reagent
+				var/CI = 1
+				for(var/reagent_id in reagent_list)
+					if ( CI++ == index )
+						var/datum/reagent/current_reagent = reagent_list[reagent_id]
+						if (isnull(current_reagent) || current_reagent.volume == 0)
+							return 0
+						var/transfer_amt = min(current_reagent.volume,amount)
+						var/receive_amt = transfer_amt * multiplier
+						target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+						current_reagent.on_transfer(src, target_reagents, receive_amt)
+						src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+						return 0
 
 
 			if (update_self_reagents)
