@@ -972,7 +972,7 @@ var/image/blob_icon_cache
 
 		if (ismob(hit))
 			var/mob/asshole = hit
-			asshole.TakeDamage("All", 8, 0)
+			asshole.TakeDamage("All", 8, 0) //haha fuck armor amiright? blobs don't need a nerf in this department
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)

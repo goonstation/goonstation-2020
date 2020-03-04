@@ -398,7 +398,7 @@
 				src.visible_message("<span style=\"color:red\"><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
 				logTheThing("combat", user, G.affecting, "slams %target%'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
-				G.affecting:TakeDamage("head", 0, 5)
+				G.affecting.TakeDamageAccountArmor("head", 5, 0)
 				qdel(W)
 				src.damage_blunt(G.affecting.throwforce)
 		else

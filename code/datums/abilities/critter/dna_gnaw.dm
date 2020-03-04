@@ -55,5 +55,5 @@
 				boutput(holder.owner, __blue("We cannot gain any DNA from [MT] in their current state."))
 
 		holder.owner.TakeDamage("All", -5, -5)
-		M.TakeDamage("All", 5, 0, 0, DAMAGE_CRUSH)
+		M.TakeDamageAccountArmor("All", 5, 0, 0, DAMAGE_CRUSH)
 		return 0

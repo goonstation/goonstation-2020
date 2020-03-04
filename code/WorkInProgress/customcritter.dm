@@ -1051,7 +1051,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				return 0
 			C.tokenized_message(critical_text, M)
 			C.play_optional_sound(critical_sound)
-			M.TakeDamage("chest", bonus_damage, 0)
+			M.TakeDamageAccountArmor("chest", bonus_damage, 0)
 			return 1
 		else
 			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")

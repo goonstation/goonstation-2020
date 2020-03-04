@@ -332,7 +332,7 @@
 		if (istype(from_t) && istype(dest_t))
 			var/knock_dir = get_dir(from_t, dest_t)
 			for (var/mob/living/M in dest_t)
-				M.TakeDamage("chest", src.road_rage_force, 0)
+				M.TakeDamageAccountArmor("chest", src.road_rage_force, 0)
 				M.visible_message("<span style=\"color:red\"><b>[M] was hit by [src]!</b></span>", "<span style=\"color:red\"><b>You were hit by [src]!</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				SPAWN_DBG(0)

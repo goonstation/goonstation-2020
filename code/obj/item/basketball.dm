@@ -267,7 +267,7 @@
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
 							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
 					T.changeStatus("stunned", 50)
-					T.TakeDamage("chest", 30, 0)
+					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return
 				else if (prob(50))

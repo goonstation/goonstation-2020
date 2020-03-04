@@ -557,7 +557,7 @@
 					visible_message("<b><span style='color:red'>[M]'s attack bounces off [src] uselessly!</span></b>")
 					return
 				actions.interrupt(src, INTERRUPT_ATTACKED)
-				src.TakeDamage(M.zone_sel.selecting, rand(1,3), 0)
+				src.TakeDamageAccountArmor(M.zone_sel.selecting, rand(1,3), 0)
 				playsound_local(src, "punch", 50, 0)
 				visible_message("<b><span style='color:red'>[M] punches [src]!</span></b>")
 			if (INTENT_GRAB)

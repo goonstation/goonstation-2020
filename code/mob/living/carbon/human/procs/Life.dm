@@ -1147,7 +1147,7 @@
 		rad_protection = max(0,min(rad_protection,100))
 		return rad_protection
 
-	proc/get_ranged_protection()
+	get_ranged_protection()
 		if (!src)
 			return 0
 

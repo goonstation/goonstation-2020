@@ -678,7 +678,7 @@
 		if (isliving(hit))
 			var/mob/living/L = hit
 			L.bodytemperature -= temp_reduc
-			L.TakeDamage("All", 3, 1, 0, 0)
+			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
 			var/atom/targetTurf = 0
 			if (P.shooter)

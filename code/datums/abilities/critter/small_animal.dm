@@ -13,7 +13,7 @@
 			return 1
 		playsound(target, src.sound_bite, 100, 1, -1)
 		var/mob/MT = target
-		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
+		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>", "<span class='combat'>You bite [MT]!</span>")
 		return 0
 
@@ -198,7 +198,7 @@
 			MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
 		else // um idk??  do some damage w/e
-			MT.TakeDamage("All", rand(2,8), 0, 0, DAMAGE_STAB)
+			MT.TakeDamageAccountArmor("All", rand(2,8), 0, 0, DAMAGE_STAB)
 		return 0
 
 /datum/targetable/critter/hootat

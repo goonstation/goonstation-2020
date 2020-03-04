@@ -470,10 +470,10 @@
 	proc/damage(var/mob/hitMob, damMin, damMax, var/mob/living/carbon/human/user)
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 			hitMob.do_disorient(stamina_damage = 35, weakened = 10, stunned = 0, disorient = 50, remove_stamina_below_zero = 0)
-			hitMob.TakeDamage("chest", rand(damMin, damMax), 0)
+			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
 			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
-			hitMob.TakeDamage("chest", rand(damMin, damMax), 0)
+			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed)
 		throw_unlimited = 1

@@ -33,10 +33,10 @@
 				hitMob.changeStatus("stunned", 4 SECONDS)
 				hitMob.changeStatus("weakened", 4 SECONDS)
 				hitMob.force_laydown_standup()
-			hitMob.TakeDamage("chest", rand(damMin, damMax), 0)
+			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
-			hitMob.TakeDamage("chest", rand(damMin, damMax), 0)
+			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed)
 		throw_unlimited = 1

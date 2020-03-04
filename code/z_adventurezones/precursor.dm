@@ -1035,14 +1035,14 @@
 		src.attacking = 1
 
 		if (M.lying)
-			src.speak( pick("me-àm ina men-an-uras-a?", "e-zé ina gu-sum... e-zé ina gú-ri-ta!", "e-zé ní-gig, e-zé ní-dím-dím-ma, e-zé šu...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-búr-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri érim, ri e-zé!", "e-zé, érim diir-da...nu-me-a.") )
+			src.speak( pick("me-ï¿½m ina men-an-uras-a?", "e-zï¿½ ina gu-sum... e-zï¿½ ina gï¿½-ri-ta!", "e-zï¿½ nï¿½-gig, e-zï¿½ nï¿½-dï¿½m-dï¿½m-ma, e-zï¿½ ï¿½u...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-bï¿½r-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri ï¿½rim, ri e-zï¿½!", "e-zï¿½, ï¿½rim diir-da...nu-me-a.") )
 			// where is the crown of heaven and earth // you are from the writing... you are from the other side // you abominations, created creatures, you let loose the ancient king
 			// mankind's hubris, mankind's breach of treaty extinguished the heavens // banish the taboo, banish the taboo, banish you // you, enemy, without a god
 			src.visible_message("<span style=\"color:red\"><B>[src]</B> takes hold of [M]!</span>")
 			boutput(M, "<span style=\"color:red\"><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 		else
-			src.speak( pick("an-zà, bar ina ká, ina ká! ina ká-bar-ra!", "hul-ál. lúír-lá-ene ina im-dugud-ene. n-ene. e-zé.", "ki-lul-la, ki-in-dar, é-a-nir-ra: urudu e-re-sì-ki-in ina úmun, en-nu-ùa-ak ina lúír-lá-ene", "lú-kúr-ra! lú-ní-zuh! lú-ru-gú!", "nu-me-en-na-ta, na!") )
+			src.speak( pick("an-zï¿½, bar ina kï¿½, ina kï¿½! ina kï¿½-bar-ra!", "hul-ï¿½l. lï¿½ï¿½r-lï¿½-ene ina im-dugud-ene. n-ene. e-zï¿½.", "ki-lul-la, ki-in-dar, ï¿½-a-nir-ra: urudu e-re-sï¿½-ki-in ina ï¿½mun, en-nu-ï¿½a-ak ina lï¿½ï¿½r-lï¿½-ene", "lï¿½-kï¿½r-ra! lï¿½-nï¿½-zuh! lï¿½-ru-gï¿½!", "nu-me-en-na-ta, na!") )
 			// where heaven ends, the gate, the gate! the outer door! // the evil ones, the butchers on the lumps of stone. humans. you. // in the place of murder, in the crevice, in the house of mourning: the copper servant formed of thought guards against the butchers //
 			// stranger! thief! recalcitrant one! // you don't exist, human!
 			src.visible_message("<span style=\"color:red\"><B>[src]</B> reaches for [M]!</span>")
@@ -1055,11 +1055,11 @@
 	ai_think()
 		if(task == "thinking" || task == "wandering")
 			if (prob(5))
-				src.speak( pick("namlugallu ha-lam ina lugal-šaà-lá-sù...","ù da-rí-sè šeš...","á-e-me-en ìri-zé-er igi-bad!","inim...kí ina ki-dul, ina e-ùr, ina ki-bad-rá, hé-àm-me-àm...", "ìri-kúr...díb, ìri...ar, e-zé...", "galam, gamar ganzer, gíbil píri! ul, ul! súkud...") )
+				src.speak( pick("namlugallu ha-lam ina lugal-ï¿½aï¿½-lï¿½-sï¿½...","ï¿½ da-rï¿½-sï¿½ ï¿½eï¿½...","ï¿½-e-me-en ï¿½ri-zï¿½-er igi-bad!","inim...kï¿½ ina ki-dul, ina e-ï¿½r, ina ki-bad-rï¿½, hï¿½-ï¿½m-me-ï¿½m...", "ï¿½ri-kï¿½r...dï¿½b, ï¿½ri...ar, e-zï¿½...", "galam, gamar ganzer, gï¿½bil pï¿½ri! ul, ul! sï¿½kud...") )
 				// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
 		else
 			if (prob(5))
-				src.speak( pick("ina urudu e-re-sì-ki-in kala libir arza ina SÚKUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lúní-áa...","bar...gub ina bàd-šul-hi...","šidim ak ina libir išgal, diir ak ina agrun, ul-šár-ra, zà-mí!", "ùru pàd gíg, ina gidim niin!") )
+				src.speak( pick("ina urudu e-re-sï¿½-ki-in kala libir arza ina Sï¿½KUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lï¿½nï¿½-ï¿½a...","bar...gub ina bï¿½d-ï¿½ul-hi...","ï¿½idim ak ina libir iï¿½gal, diir ak ina agrun, ul-ï¿½ï¿½r-ra, zï¿½-mï¿½!", "ï¿½ru pï¿½d gï¿½g, ina gidim niin!") )
 				// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants...// step outside the outer wall
 				// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
 				//
@@ -1067,7 +1067,7 @@
 		return ..()
 
 	CritterDeath()
-		speak( pick("šìr...áa ina šìr-kug záh-bi!", "éd, èd, šu...bar...", "ní-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
+		speak( pick("ï¿½ï¿½r...ï¿½a ina ï¿½ï¿½r-kug zï¿½h-bi!", "ï¿½d, ï¿½d, ï¿½u...bar...", "nï¿½-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
 		src.alive = 0
 		SPAWN_DBG(15)
@@ -1086,7 +1086,7 @@
 			src.target = C
 			src.oldtarget_name = C.name
 			src.task = "chasing"
-			src.speak( pick("siskur, siskur ina na sukkal...","ára ina gíg, úš ina ur zal...","lú-érim! lú-érim!","áš á-zi-ga...bal, na, e-zé ha-lam ina é si-ga...") )
+			src.speak( pick("siskur, siskur ina na sukkal...","ï¿½ra ina gï¿½g, ï¿½ï¿½ ina ur zal...","lï¿½-ï¿½rim! lï¿½-ï¿½rim!","ï¿½ ï¿½-zi-ga...bal, na, e-zï¿½ ha-lam ina ï¿½ si-ga...") )
 			// sacrifice, sacrifice the human envoy! // praise the night, kill the servant of light // enemy! enemy! // cursed with violence, human, you ruin the quiet house
 			break
 

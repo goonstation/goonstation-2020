@@ -498,7 +498,7 @@
 	logTheThing("combat", user, M, "smashes %target% against [src]")
 
 	random_brute_damage(G.affecting, rand(2,3),1)
-	G.affecting.TakeDamage("chest", 0, rand(4,5))
+	G.affecting.TakeDamageAccountArmor("chest", rand(4,5), 0)
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
 	user.u_equip(G)

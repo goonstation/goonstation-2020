@@ -594,7 +594,7 @@
 				var/mob/M = target
 				//M.changeStatus("stunned", 1 SECOND)
 				//M.changeStatus("weakened", 1 SECOND)
-				M.TakeDamage("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
+				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				SPAWN_DBG(0)

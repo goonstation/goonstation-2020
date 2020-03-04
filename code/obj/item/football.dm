@@ -115,8 +115,8 @@
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 		M.force_laydown_standup()
-		power = max(9, power - M.get_melee_protection("chest"))
-		M.TakeDamage("chest", power, 0, 0, DAMAGE_BLUNT)
+		power = max(9, power)
+		M.TakeDamageAccountArmor("chest", power, 0, 0, DAMAGE_BLUNT)
 		M.remove_stamina(80 + power) //lotsa stamina damage whoa!!
 
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)

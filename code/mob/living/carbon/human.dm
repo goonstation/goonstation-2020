@@ -2329,7 +2329,7 @@
 				usr.reagents.add_reagent("prions", 10)
 				SPAWN_DBG(rand(20,50)) boutput(usr, "<span style=\"color:red\">You don't feel so good.</span>")
 
-			H.TakeDamage("chest", rand(30,50), 0, 0, DAMAGE_STAB)
+			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
 			if (!isdead(H) && prob(50))
 				H.emote("scream")
 			H.bioHolder.AddEffect("consumed")

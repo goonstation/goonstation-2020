@@ -10,11 +10,10 @@
 		var/turf/T = get_turf(src)
 		if (T)
 			for (var/mob/living/carbon/human/M in view(src, 2))
-				if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
-					M.TakeDamage("chest", 5, 0)
 				else
-					M.TakeDamage("chest", 15, 0)
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 					implanted.owner = M
 					M.implant += implanted

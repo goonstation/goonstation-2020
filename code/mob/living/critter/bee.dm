@@ -451,7 +451,7 @@
 			if (istype(plague))
 				//That bee venom plague treatment does not work at all in this manner. However, future.
 				MT.cure_disease(plague)
-		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)
+		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)//armor piercing stingers
 		return 0
 
 /datum/targetable/critter/bee_sting/queen
@@ -478,7 +478,7 @@
 			return 1
 		var/mob/MT = target
 		playsound(target, src.sound_bite, 100, 1, -1)
-		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
+		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT] with [his_or_her(holder.owner)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b></span>")
 		return 0
 

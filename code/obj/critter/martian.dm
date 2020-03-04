@@ -97,7 +97,7 @@
 				src.visible_message("<span style=\"color:red\"><b>[src]</b> shoots at [C.name]!</span>")
 				playsound(src.loc, "sound/weapons/lasermed.ogg", 100, 1)
 				if (prob(66))
-					C.TakeDamage("chest", 0, rand(3,5))
+					C.TakeDamage("chest", 0, rand(3,5)/C.get_ranged_protection())
 					SPAWN_DBG(0)
 						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 						s.set_up(3, 1, C)

@@ -43,7 +43,7 @@
 				if (ismob(M))
 					var/mob/some_idiot = M
 					some_idiot.changeStatus("weakened", 3 SECONDS)
-					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)
+					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)//it's magic. no armor 4 u
 			sleep(1)
 
 		qdel(B)

@@ -112,7 +112,7 @@
 				var/mob/living/silicon/robot/R = M
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
 			else
-				M.TakeDamage("All", rand(1,3), 0, 0, DAMAGE_STAB)
+				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			// now spiders won't poison themselves - cirr
 			M.reagents.add_reagent(src.venom1, 2)
 			M.reagents.add_reagent(src.venom2, 2)

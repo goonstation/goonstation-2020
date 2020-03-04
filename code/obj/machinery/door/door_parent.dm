@@ -543,7 +543,7 @@
 				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
 				L.emote("scream")
 
-				L.TakeDamage("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
 				L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10

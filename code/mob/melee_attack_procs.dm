@@ -1044,6 +1044,8 @@
 
 /mob/proc/get_melee_protection(zone)
 	return 0
+/mob/proc/get_ranged_protection()
+	return 1
 ///////////////////
 /mob/proc/get_head_pierce_prot()
 	return 0

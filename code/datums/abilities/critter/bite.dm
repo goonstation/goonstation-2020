@@ -29,7 +29,7 @@
 			return 1
 		playsound(target, src.sound_bite, 50, 1, -1)
 		var/mob/MT = target
-		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
+		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
 		MT.changeStatus("stunned", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>", "<span class='combat'>You bite [MT]!</span>")
 		return 0
@@ -46,6 +46,6 @@
 			return 1
 		playsound(target, src.sound_bite, 100, 1, -1)
 		var/mob/MT = target
-		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
+		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] savagely bites [MT]!</b></span>", "<span class='combat'>You savagely bite [MT]!</span>")
 		return 0

@@ -732,11 +732,10 @@ toxic - poisons
 		var/turf/T = get_turf(hit)
 		if (T)
 			for (var/mob/living/carbon/human/M in view(hit, 2))
-				if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
-					M.TakeDamage("chest", 5, 0)
 				else
-					M.TakeDamage("chest", 15, 0)
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 					implanted.owner = M
 					M.implant += implanted
@@ -1098,7 +1097,7 @@ toxic - poisons
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				M.TakeDamage("chest", 15, 0)
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				boutput(M, "<span style=\"color:red\">You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
 				M.do_disorient(stunned = 40)
 				if (!M.stat)

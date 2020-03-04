@@ -42,7 +42,7 @@
 			playsound(get_turf(ownerMob), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 0)
 			ownerMob.health = ownerMob.max_health
 
-			target.TakeDamage("head", 30, 0, 0, DAMAGE_CRUSH)
+			target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)
 			target.changeStatus("stunned", 4 SECONDS)
 			target.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
 

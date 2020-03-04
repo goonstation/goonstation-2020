@@ -104,7 +104,7 @@
 			zone = usr.zone_sel.selecting
 		if ((zone in list( "eyes", "mouth" )))
 			zone = "head"
-		T.TakeDamage(zone, 4, 0)
+		T.TakeDamageAccountArmor(zone, 4, 0)
 		T.stunned += 1
 		var/image/I = image('icons/effects/effects.dmi',prob(50) ? "batpow" : "batwham")
 		T.overlays += I
@@ -134,7 +134,7 @@
 			O.show_message(text("<span style=\"color:red\"><B>[] begins kicking [] in the face rapidly!</B></span>", usr, T), 1)
 		for(var/i = 0, i < 5, i++)
 			usr.dir = NORTH
-			T.TakeDamage("head", 4, 0)
+			T.TakeDamageAccountArmor("head", 4, 0)
 			T.updatehealth()
 			T.overlays -= R
 			T.overlays += I
@@ -143,7 +143,7 @@
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(1)
 			usr.dir = EAST
-			T.TakeDamage("head", 4, 0)
+			T.TakeDamageAccountArmor("head", 4, 0)
 			T.updatehealth()
 			T.overlays -= I
 			T.overlays += R
@@ -152,7 +152,7 @@
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(1)
 			usr.dir = SOUTH
-			T.TakeDamage("head", 4, 0)
+			T.TakeDamageAccountArmor("head", 4, 0)
 			T.updatehealth()
 			T.overlays -= R
 			T.overlays += I
@@ -161,7 +161,7 @@
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(1)
 			usr.dir = WEST
-			T.TakeDamage("head", 4, 0)
+			T.TakeDamageAccountArmor("head", 4, 0)
 			T.updatehealth()
 			T.overlays -= I
 			T.overlays += R
@@ -187,7 +187,7 @@
 		step_away(T,usr,15)
 		sleep(1)
 		step_away(T,usr,15)
-		T.TakeDamage("head", 70, 0)
+		T.TakeDamageAccountArmor("head", 70, 0)
 		T.updatehealth()
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y += 10

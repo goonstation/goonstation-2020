@@ -235,7 +235,7 @@
 		rider.changeStatus("weakened", 2 SECONDS)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.TakeDamage("All", round(sickness / 4), round(sickness / 4), 0, DAMAGE_BLUNT)
+		rider.TakeDamageAccountArmor("All", round(sickness / 4), round(sickness / 4), 0, DAMAGE_BLUNT)
 	else
 		if(selfdismount)
 			src.messageNearby("<span style=\"color:blue\">You dismount from the [src].</span>", "<B>[rider]</B> dismounts from the [src].")

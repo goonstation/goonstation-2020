@@ -1419,11 +1419,10 @@ PIPE BOMBS + CONSTRUCTION
 /obj/proc/throw_shrapnel(var/T, var/sqstrength, var/shrapnel_range)
 	for (var/mob/living/carbon/human/M in view(T, shrapnel_range))
 		if(check_target_immunity(M)) continue
-		if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
+		M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span style=\"color:red\"><b>Your armor blocks the shrapnel!</b></span>")
-			M.TakeDamage("chest", 10, 0)
 		else
-			M.TakeDamage("chest", 15, 0)
 			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
 			implanted.owner = M
 			M.implant += implanted
@@ -1452,18 +1451,18 @@ PIPE BOMBS + CONSTRUCTION
 	var/shrapnel_range = 3 + sqstrength
 	for (var/mob/living/carbon/human/M in view(T, shrapnel_range))
 		if(check_target_immunity(M)) continue
-		if (M != src && istype(M.wear_suit, /obj/item/clothing/suit/armor))
-			boutput(M, "<span style=\"color:red\"><b>Your armor blocks the chunks of [src.name]!</b></span>")
-			M.TakeDamage("chest", 10, 0)
-		else if(M != src)
-			M.TakeDamage("chest", 15, 0)
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.owner = M
-			M.implant += implanted
-			implanted.implanted(M, null, 25 * sqstrength)
-			boutput(M, "<span style=\"color:red\"><b>You are struck by chunks of [src.name]!</b></span>")
-			if (!M.stat)
-				M.emote("scream")
+		if (M != src)
+			M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+			if (M.get_ranged_protection()>=1.5)
+				boutput(M, "<span style=\"color:red\"><b>Your armor blocks the chunks of [src.name]!</b></span>")
+			else
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+				implanted.owner = M
+				M.implant += implanted
+				implanted.implanted(M, null, 25 * sqstrength)
+				boutput(M, "<span style=\"color:red\"><b>You are struck by chunks of [src.name]!</b></span>")
+				if (!M.stat)
+					M.emote("scream")
 
 	explosion_new(src, T, strength, 1)
 	src.gib()

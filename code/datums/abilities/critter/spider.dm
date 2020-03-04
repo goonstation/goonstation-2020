@@ -27,7 +27,7 @@
 			return 1
 		var/mob/MT = target
 		var/mob/living/critter/spider/S = holder.owner
-		MT.TakeDamage("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
+		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
 		MT.changeStatus("stunned", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 		"<span class='combat'><b>You bite [MT]!</b></span>")
@@ -39,7 +39,7 @@
 				var/mob/living/silicon/robot/R = MT
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
 			else
-				MT.TakeDamage("All", rand(1,3), 0, 0, DAMAGE_STAB)
+				MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 		return 0
 
 // -----------------
@@ -81,7 +81,7 @@
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
 		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
-		MT.TakeDamage("All", rand(4,10), 0, 0, DAMAGE_STAB)
+		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")
 		disabled = 1
@@ -104,7 +104,7 @@
 						var/mob/living/silicon/robot/R = MT
 						R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
 					else
-						MT.TakeDamage("All", rand(1,3), 0, 0, DAMAGE_STAB)
+						MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 				if (prob(30))
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 					"<span class='combat'><b>You bite [MT]!</b></span>")
@@ -247,7 +247,7 @@
 			boutput(holder.owner, __red("That is too far away to kick."))
 			return 1
 		var/mob/MT = target
-		MT.TakeDamage("All", rand(1,5), 0, 0, DAMAGE_BLUNT)
+		MT.TakeDamageAccountArmor("All", rand(1,5), 0, 0, DAMAGE_BLUNT)
 		MT.changeStatus("stunned", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] kicks [MT]!</b></span>", "<span class='combat'>You kick [MT]!</span>")
 		playsound(get_turf(holder.owner), "swing_hit", 30, 0)
@@ -299,7 +299,7 @@
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pounces on top of [MT]!</b></span>",\
 		"<span class='combat'><b>You pounce onto [MT]!</b></span>")
 		playsound(get_turf(holder.owner), "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
-		MT.TakeDamage("All", rand(4,10), 0, 0, DAMAGE_STAB)
+		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")
 		disabled = 1
@@ -320,7 +320,7 @@
 					var/mob/living/silicon/robot/R = MT
 					R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(4,7))
 				else
-					MT.TakeDamage("All", rand(5,8), 0, 0, DAMAGE_STAB)
+					MT.TakeDamageAccountArmor("All", rand(5,8), 0, 0, DAMAGE_STAB)
 				holder.owner.visible_message("<span class='combat'><b>[holder.owner] stomps on [MT]!</b></span>",\
 				"<span class='combat'><b>You stomp on [MT]!</b></span>")
 				holder.owner.dir = pick(cardinal)

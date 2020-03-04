@@ -740,7 +740,7 @@
 							the_head.streak(the_dir, the_head.created_decal)
 							src.throw_source = null
 					else
-						M.TakeDamage("chest", 10, 0)
+						M.TakeDamageAccountArmor("chest", 10, 0)
 						take_bleeding_damage(M, null, 15, src.hit_type)
 			src.toggle_active()
 

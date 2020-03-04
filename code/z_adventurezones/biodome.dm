@@ -488,7 +488,7 @@ SYNDICATE DRONE FACTORY AREAS
 			else
 				src.set_loc(next)
 				for(var/mob/living/carbon/C in next)
-					C.TakeDamage("chest", 33, 0)
+					C.TakeDamageAccountArmor("chest", 33, 0)
 					if(hasvar(C, "weakened"))
 						C:changeStatus("weakened", 5 SECONDS)
 

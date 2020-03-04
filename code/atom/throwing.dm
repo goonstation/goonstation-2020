@@ -85,7 +85,7 @@
 				if (prob(40))
 					C.visible_message("<span style=\"color:red\"><b>[C]<b> gets hit in the face by [src]!</span>")
 					if (hasvar(src, "throwforce"))
-						C.TakeDamage("head", src:throwforce, 0)
+						C.TakeDamageAccountArmor("head", src:throwforce, 0)
 				else
 					if (prob(C.juggling.len * 5)) // might drop stuff while already juggling things
 						C.drop_juggle()

@@ -1114,11 +1114,11 @@
 							if ((src.restrained()) || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 30) || (src.bioHolder.HasEffect("clumsy")))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
 								src.changeStatus("weakened", 4 SECONDS)
-								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
+								src.TakeDamageAccountArmor("head", 8, 0, 0, DAMAGE_BLUNT)
 							if (src.bioHolder.HasEffect("fat"))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under their own weight!")
 								src.changeStatus("weakened", 2 SECONDS)
-								src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
+								src.TakeDamageAccountArmor("head", 4, 0, 0, DAMAGE_BLUNT)
 							else
 								message = "<B>[src]</B> does a flip!"
 							if (!src.reagents.has_reagent("fliptonium"))
@@ -1176,7 +1176,7 @@
 											G.affecting.changeStatus("stunned", 50)
 											G.affecting.changeStatus("weakened", 5 SECONDS)
 											G.affecting.force_laydown_standup()
-											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
+											G.affecting.TakeDamageAccountArmor("head", 10, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									else
 										src.changeStatus("weakened", 3.5 SECONDS)
@@ -1191,7 +1191,7 @@
 										SPAWN_DBG(1 SECONDS) //let us do that combo shit people like with throwing
 											src.force_laydown_standup()
 
-										G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
+										G.affecting.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 									if (tabl)
 										if (istype(tabl, /obj/table/glass))
@@ -1233,9 +1233,9 @@
 										message = "<span style=\"color:red\"><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into %target%")
 										src.changeStatus("weakened", 6 SECONDS)
-										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
+										src.TakeDamageAccountArmor("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
-										M.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
+										M.TakeDamageAccountArmor("head", 2, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, pick(sounds_punch), 100, 1)
 										var/turf/newloc = M.loc
 										src.set_loc(newloc)
