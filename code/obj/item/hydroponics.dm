@@ -6,6 +6,7 @@
 // - Watering can
 // - Compost bag
 // - Plant formulas
+// - Garden Trowel
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
@@ -297,6 +298,48 @@
 /obj/item/seedplanter/hidden
 	desc = "This is supposed to be a cyborg part. You're not quite sure what it's doing here."
 
+
+///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////	
+
+/obj/item/gardentrowel
+	name = "Garden Trowel"
+	desc = "A tool to uproot plants and transfer them to decorative pots"
+	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
+	icon_state = "trowel_empty"
+
+	flags = FPRINT | TABLEPASS | ONBELT
+	w_class = 1.0
+
+	force = 5.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	stamina_damage = 10
+	stamina_cost = 10
+	stamina_crit_chance = 30
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+
+	module_research = list("tools" = 4, "metals" = 1)
+	rand_pos = 1
+	var/icon/plantyboi
+
+	afterattack(obj/target as obj, mob/user as mob)
+		if(istype(target, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/pot = target
+			if(pot.current)
+				var/datum/plant/p = pot.current
+				if(pot.GetOverlayImage("plant"))
+					plantyboi = pot.GetOverlayImage("plant")
+				else
+					return
+				if(p.growthmode == "weed")
+					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span style=\"color:red\">The [p.name] is too strong for you traveller...</span>")
+					return
+				pot.HYPdestroyplant()
+
+		//check if target is a plant pot to paste in the cosmetic plant overlay
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
 /obj/item/reagent_containers/glass/wateringcan/
