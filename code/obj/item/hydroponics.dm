@@ -323,7 +323,7 @@
 
 	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
-	var/image/plantyboi
+	var/icon/plantyboi
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
