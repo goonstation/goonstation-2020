@@ -1523,7 +1523,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "+secret\_placeholder.dm"
 
 #if COOL_KID_MODE
-#warn COOL_KID_MODE ACTIVATED 
 #include "+secret\_defines.dm"
 #include "+secret\modules\z_adventure\icemoon.dm"
 #endif
