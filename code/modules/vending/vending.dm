@@ -878,6 +878,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/compostbag, 5)
 		product_list += new/datum/data/vending_product(/obj/item/saw, 3)
+		product_list += new/datum/data/vending_product(/obj/item/gardentrowel, 5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/hydro, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/weedkiller, 10)
@@ -886,6 +887,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/topcrop, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/powerplant, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/fruitful, 5)
+		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
 
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)

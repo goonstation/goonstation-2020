@@ -302,7 +302,7 @@
 ///////////////////////////////////// Garden Trowel ///////////////////////////////////////////////	
 
 /obj/item/gardentrowel
-	name = "Garden Trowel"
+	name = "garden trowel"
 	desc = "A tool to uproot plants and transfer them to decorative pots"
 	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
@@ -323,7 +323,7 @@
 
 	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
-	var/icon/plantyboi
+	var/image/plantyboi
 
 	afterattack(obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/machinery/plantpot))
