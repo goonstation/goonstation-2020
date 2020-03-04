@@ -306,7 +306,7 @@
 	desc = "A tool to uproot plants and transfer them to decorative pots"
 	icon = 'icons/obj/hydroponics/hydromisc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
-	icon_state = "trowel_empty"
+	icon_state = "trowel"
 
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = 1.0
@@ -332,6 +332,7 @@
 				var/datum/plant/p = pot.current
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
+					src.icon_state = "trowel_full"
 				else
 					return
 				if(p.growthmode == "weed")
