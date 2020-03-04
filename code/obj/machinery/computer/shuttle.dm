@@ -480,7 +480,6 @@
 	src.updateUsrDialog()
 	return
 
-#if COOL_KID_MODE
 /obj/machinery/computer/icebase_elevator/proc/call_shuttle()
 
 	if(location == 0) // at bottom
@@ -502,7 +501,6 @@
 		C.location = src.location
 
 	return
-#endif
 
 
 /obj/machinery/computer/biodome_elevator/attack_hand(mob/user as mob)
