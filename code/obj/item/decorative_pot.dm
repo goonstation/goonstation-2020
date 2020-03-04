@@ -1,6 +1,8 @@
 /obj/decorative_pot
+    name = "plant pot"
+    desc = "A decorative plant pot, sans the Hydroponic Tray's fancy hypergrowth tech."
     icon = 'icons/obj/hydroponics/hydromisc.dmi'
-    icon_state = 'plantpot'
+    icon_state = "plantpot"
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		return 0
