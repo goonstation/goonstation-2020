@@ -3888,7 +3888,7 @@ datum
 			name = "Anime Smoke"
 			id = "anime_smoke"
 			inhibitors = list("catdrugs") // Neko's Are intrinsically linked to Anime.therefore they are imunine to the effect and inhibit the reaction
-			required_reagents = list("sugar" = 5,"ash" = 3,"soda" = 2)
+			required_reagents = list("sugar" = 5,"ash" = 3,"cola" = 2)
 			mix_phrase = "Art forms inside the container, and boils away.." // Replace if you think you can do better.
 			instant = 1
 			result_amount = 10
