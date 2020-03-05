@@ -42,13 +42,6 @@ var/datum/preMapLoad/preMapLoad = new
 
 //Secret Code Handling
 #include "+secret\__secret.dm"
-#include "+secret\_placeholder.dm"
-
-#if COOL_KID_MODE
-#warn "You're in the cool kids club!"
-#include "+secret\_defines.dm"
-#include "+secret\modules\z_adventure\icemoon.dm"
-#endif
 
 // BEGIN_INCLUDE
 #include "code\area.dm"
