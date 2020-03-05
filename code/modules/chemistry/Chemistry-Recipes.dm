@@ -3884,12 +3884,15 @@ datum
 			result_amount = 3
 			mix_phrase = "A strange green goopy liquid forms in the container."
 
-
-
-
-
-
-
-
+		anime_smoke // Chemical Removal Reaction - Fun Recipe
+			name = "Anime Smoke"
+			id = "anime_smoke"
+			inhibitors = list("catdrugs") // Neko's Are intrinsically linked to Anime.therefore they are imunine to the effect and inhibit the reaction
+			required_reagents = list("sugar" = 5,"ash" = 3,"soda" = 2)
+			mix_phrase = "Art forms inside the container, and boils away.." // Replace if you think you can do better.
+			instant = 1
+			result_amount = 10
+			special_log_handling = 1
+			consume_all = 1
 
 #undef get_fucked_clarks
