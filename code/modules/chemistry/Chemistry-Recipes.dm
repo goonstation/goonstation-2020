@@ -2,7 +2,23 @@
 #define get_fucked_clarks if (istype(my_atom, /obj/critter/domestic_bee)) return my_atom.visible_message("<span style=\"color:red\">[my_atom] burps.</span>"); if (istype(my_atom, /obj/item/reagent_containers/food/snacks/ingredient/honey)) return
 #define CRITTER_REACTION_LIMIT 50
 #define fucking_critter_bullshit_fuckcrap_limiter(x) if (x > CRITTER_REACTION_LIMIT) return; else x += 1
+/*
+We should really sort these datums into a more organized form e.g.group* by
+		#defines
+		//Headnotes
+		+Chemical Type
+			//Types
+			++Main Recipes
+				+++Alphanumeric Names/IDs
+			//Alternatives:
+			++Alternative Recipes
+				+++Alphanumeric Names/IDs
+		// Foot Notes/End_Of_File
 
+*minor deviations for priority allowed
+
+~Rain2025 (myst.leissa#0800)
+*/
 datum
 	chemical_reaction
 		var/name = null
@@ -3883,16 +3899,25 @@ datum
 			required_reagents = list("ash" = 1, "ectoplasm" = 1, "salt" = 1)
 			result_amount = 3
 			mix_phrase = "A strange green goopy liquid forms in the container."
-
-		anime_smoke // Chemical Removal Reaction - Fun Recipe
-			name = "Anime Smoke"
-			id = "anime_smoke"
+		/*
+		Alternative Reactions
+		*/
+		anime_smoke // Alternative Smoke Recipe - Ghetto Chem Style
+			name = "Anime Smoke" // Change if you feel it's bad
+			id = "anime_smoke" // Change if you feel it's bad
 			inhibitors = list("catdrugs") // Neko's Are intrinsically linked to Anime.therefore they are imunine to the effect and inhibit the reaction
-			required_reagents = list("sugar" = 5,"ash" = 3,"cola" = 2)
+			required_reagents = list("sugar" = 5,"ash" = 3,"cola" = 2) // Ghetto Chem Materials
 			mix_phrase = "Art forms inside the container, and boils away.." // Replace if you think you can do better.
+			required_temperature = T0C + 100 // Heat Required (Hopefully within lighter range)
+			//Copied from Smoke
 			instant = 1
 			result_amount = 10
 			special_log_handling = 1
-			consume_all = 1
+			consume_all = 1 // Note to self: Consume All DOES NOT consume the other chemicals.in the holder
+			priority = 9 // No Idea what Priority is - better leave it
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if (holder)
+					holder.smoke_start(created_volume)
 
 #undef get_fucked_clarks
