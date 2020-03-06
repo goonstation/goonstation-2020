@@ -90,11 +90,15 @@
 
 	make_my_stuff()
 		..()
-		for (var/i=7,i>0,i--)
-			if (prob(20))
-				new /obj/item/sponge/cheese(src)
-			else
-				new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
+		for (var/i=6,i>0,i--)
+			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
+
+		if (prob(10))
+			new /obj/item/sponge/cheese(src)
+		else
+			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
+
+		shuffle(src.contents)
 
 /obj/item/storage/goodybag
 	name = "goodybag"
