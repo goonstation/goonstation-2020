@@ -1060,3 +1060,9 @@
 	icon_state = "birthday-blue"
 	item_state = "birthday-blue"
 	desc = "Happy birthday to you, happy birthday to you, in 200 years nobody will remember you."
+
+/obj/item/clothing/head/party/birthday/green
+	name = "birthday hat"
+	icon_state = "birthday-green"
+	item_state = "birthday-pink"
+	desc = "Happy birthday to you, happy birthday to you, you look like a monkey and you smell like one too."
