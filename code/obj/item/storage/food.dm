@@ -77,6 +77,25 @@
 	desc = "Ice cream cones stored in a handy box."
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ice_cream_cone = 7)
 
+/obj/item/storage/box/butter
+	name = "butter tray"
+	icon_state = "buttertray"
+	desc = "A homely little tray for keeping butter fresh."
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ingredient/butter = 5)
+
+/obj/item/storage/box/cheese
+	name = "cheese box"
+	icon_state = "cheesebox"
+	desc = "A cheap box for storing cheese."
+
+	make_my_stuff()
+		..()
+		for (var/i=7,i>0,i--)
+			if (prob(20))
+				new /obj/item/sponge/cheese(src)
+			else
+				new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
+
 /obj/item/storage/goodybag
 	name = "goodybag"
 	desc = "A bag designed to store Halloween candy."

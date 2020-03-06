@@ -286,7 +286,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese
 	name = "weird cheese"
 	desc = "Some kind of... gooey, messy, gloopy thing. Similar to cheese, but only in the looser sense of the word."
-	icon_state = "gcheese"
+	icon_state = "cheese-green"
 	amount = 2
 	heal_amt = 1
 	food_color = "#669966"
