@@ -990,6 +990,10 @@
 	desc = "It's good to hide away from the sun. With this hat."
 	icon_state = "sunhatb"
 	item_state = "sunhatb"
+	var/uses = 0 //this is stupid but I love it
+	var/max_uses = 1 // If can_be_charged == 1, how many charges can this stupid hat store?
+	var/stunready = 0
+
 
 	sunhatr
 		icon_state = "sunhatr"
@@ -998,6 +1002,51 @@
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+	
+	examine()
+		..()
+		if (src.stunready)
+			boutput(usr, "It appears to be been modified into a... stunhat? [src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]")
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			if (src.stunready)
+				user.show_text("You don't need to add more wiring to the [src.name].", "red")
+				return
+
+			boutput(user, "<span style=\"color:blue\">You attach the wires to the [src.name].</span>")
+			src.stunready = 1
+			W:amount--
+			return
+
+		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
+			var/obj/item/cell/C = W
+
+			if (C.charge < 2500)
+				user.show_text("[C] needs more charge before you can do that.", "red")
+				return
+			if (!src.stunready)
+				user.visible_message("<span style=\"color:red\"><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span style=\"color:red\">You shock yourself while fumbling around with [C]!</span>")
+				C.zap(user)
+				return
+
+			if (src.uses == src.max_uses)
+				user.show_text("The hat is already fully charged.", "red")
+				return
+			if (src.uses < 0)
+				src.uses = 0
+			src.uses = min(src.uses + 1, src.max_uses)
+			C.use(2500)
+			src.icon_state = /*text("[]-stun",src.icon_state)*/"stunhat"
+			src.item_state = /*text("[]-stun",src.item_state)*/"stunhat"
+			C.updateicon()
+			user.update_clothing() // Required to update the worn sprite (Convair880).
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			return
+
+		..()
+
 
 /obj/item/clothing/head/headmirror
 	name = "head mirror"
