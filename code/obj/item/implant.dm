@@ -61,25 +61,26 @@ THROWING DARTS
 		online = 0
 
 	proc/on_life(var/mult = 1)
-		if(online)
-			if(ishuman(src.owner))
-				var/mob/living/carbon/human/H = owner
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/H = owner
+			if(online)
 				H.nutrition -= life_tick_energy
 				do_process(mult)
 				if(H.health < 0 && !crit_triggered)
 					on_crit()
 				else if(H.health >= 0 && crit_triggered)
 					crit_triggered = 0
-				if(death_triggered && isalive(H))
-					death_triggered = 0
-			else if (iscritter(src.owner))
-				var/mob/living/critter/C = owner
+			if(death_triggered && isalive(H))
+				death_triggered = 0
+		else if (iscritter(src.owner))
+			var/mob/living/critter/C = owner
+			if(online)
 				if (C.health < 0 && !crit_triggered)
 					on_crit()
 				else if (C.health >= 0 && crit_triggered)
 					crit_triggered = 0
-				if (death_triggered && isalive(C))
-					death_triggered = 0
+			if (death_triggered && isalive(C))
+				death_triggered = 0
 
 	proc/do_process(var/mult = 1)
 		return
