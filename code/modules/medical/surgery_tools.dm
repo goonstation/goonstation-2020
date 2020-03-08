@@ -51,12 +51,15 @@ CONTAINS:
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5)
+			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!scalpel_surgery(M, user))
 			return ..()
-		else return
+		else
+			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -113,13 +116,15 @@ CONTAINS:
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5)
+			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!saw_surgery(M, user))
 			return ..()
-		else return
-
+		else
+			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			return
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -172,12 +177,15 @@ CONTAINS:
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (src.reagents && src.reagents.total_volume)
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-			src.reagents.trans_to(M,5)
+			src.reagents.trans_to(M,5-(5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1))))
 		else
 			logTheThing("combat", user, M, "used [src] on %target% (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
 		if (!spoon_surgery(M, user))
 			return ..()
-		else return
+		else
+			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+				src.reagents.trans_to(M,5*0.75*(min(M.get_melee_protection(user.zone_sel.selecting)/min(src.force,1),1)))
+			return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
