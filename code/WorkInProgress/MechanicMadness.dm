@@ -2528,6 +2528,92 @@ var/list/mechanics_telepads = new/list()
 		icon_state = icon_up
 		return
 
+/obj/item/mechanics/trigger/buttonPanel
+	name = "Button Panel"
+	desc = ""
+	icon_state = "comp_buttpanel"
+	var/icon_pressed = "comp_buttpanel1"
+	var/list/active_buttons = list()
+
+	New()
+		..()
+		verbs -= /obj/item/mechanics/verb/setvalue
+
+	get_desc()
+		. += "<br><span style=\"color:blue\">Buttons:</span>"
+		for (var/button in src.active_buttons)
+			. += "<br><span style=\"color:blue\">Label: [button], Value: [src.active_buttons[button]]</span>"
+
+	attack_hand(mob/user as mob)
+		if (level == 1)
+			if (src.active_buttons.len)
+				var/selected_button = input(usr, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
+				if (!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
+				flick(icon_pressed, src)
+				mechanics.fireOutgoing(mechanics.newSignal(src.active_buttons[selected_button]))
+			else
+				boutput(usr, "<span style=\"color:red\">[src] has no active buttons - there's nothing to press!</span>")
+		else return ..(user)
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if(level == 2 && get_dist(src, target) == 1)
+			if(isturf(target))
+				user.drop_item()
+				src.loc = target
+		return
+
+	verb/add_button()
+		set src in view(1)
+		set name = "\[Add Button\]"
+		set desc = "Adds a button"
+
+		if (!isliving(usr))
+			return
+		if (usr.stat)
+			return
+		if (!mechanics.allowChange(usr))
+			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			return
+
+		if (src.active_buttons.len >= 10)
+			boutput(usr, "<span style=\"color:red\">There's no room to add another button - the panel is full</span>")
+			return
+
+		var/new_label = input(usr, "Button label", "Button Panel") as text
+		var/new_signal = input(usr, "Button signal", "Button Panel") as text
+		if (length(new_label) && length(new_signal))
+			new_label = adminscrub(new_label)
+			new_signal = adminscrub(new_signal)
+			if (src.active_buttons.Find(new_label))
+				boutput(usr, "There's already a button with that label.")
+				return
+			src.active_buttons.Add(new_label)
+			src.active_buttons[new_label] = new_signal
+			boutput(usr, "Added button with label: [new_label] and value: [new_signal]")
+		return
+
+	verb/remove_button()
+		set src in view(1)
+		set name = "\[Remove Button\]"
+		set desc = "Removes a button"
+
+		if (!isliving(usr))
+			return
+		if (usr.stat)
+			return
+		if (!mechanics.allowChange(usr))
+			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			return
+
+		if (!src.active_buttons.len)
+			boutput(usr, "<span style=\"color:red\">[src] has no active buttons - there's nothing to remove!</span>")
+		else
+			var/to_remove = input(usr, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
+			if (!to_remove || to_remove == "*CANCEL*") return
+			src.active_buttons.Remove(to_remove)
+			boutput(usr, "Removed button labeled [to_remove]")
+		return
+
 
 
 // Updated these things for pixel bullets. Also improved user feedback and added log entries here and there (Convair880).
