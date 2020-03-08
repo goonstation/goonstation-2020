@@ -2532,7 +2532,8 @@ var/list/mechanics_telepads = new/list()
 	name = "Button Panel"
 	desc = ""
 	icon_state = "comp_buttpanel"
-	var/icon_pressed = "comp_buttpanel1"
+	var/icon_up = "comp_buttpanel"
+	var/icon_down = "comp_buttpanel1"
 	var/list/active_buttons = list()
 
 	New()
@@ -2549,7 +2550,7 @@ var/list/mechanics_telepads = new/list()
 			if (src.active_buttons.len)
 				var/selected_button = input(usr, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
 				if (!selected_button || selected_button == "*CANCEL*" || !in_range(src, usr)) return
-				flick(icon_pressed, src)
+				flick(icon_down, src)
 				mechanics.fireOutgoing(mechanics.newSignal(src.active_buttons[selected_button]))
 			else
 				boutput(usr, "<span style=\"color:red\">[src] has no active buttons - there's nothing to press!</span>")
@@ -2612,6 +2613,10 @@ var/list/mechanics_telepads = new/list()
 			if (!to_remove || to_remove == "*CANCEL*") return
 			src.active_buttons.Remove(to_remove)
 			boutput(usr, "Removed button labeled [to_remove]")
+		return
+
+	updateIcon()
+		icon_state = icon_up
 		return
 
 
