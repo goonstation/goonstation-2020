@@ -137,6 +137,7 @@ var/list/mechanics_telepads = new/list()
 					O.mechanics.connected_incoming.Add(master)
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
+					return 1
 				else
 					boutput(usr, "<span style=\"color:red\">[O] has no input slots. Can not connect [master] as Trigger.</span>")
 
@@ -159,6 +160,46 @@ var/list/mechanics_telepads = new/list()
 			if("*CANCEL*")
 				return
 		return
+
+//Used for dispatch component
+/datum/mechanics_holder/filtered
+	var/list/outgoing_filters = list()
+	var/exact_match = 0
+
+	proc/wipeOutgoing()
+		..()
+		outgoing_filters.Cut()
+		return
+
+	proc/dropConnect(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+		var/success = ..()
+		if (success)
+			var/filter = input(usr, "Add a filter for this connection? (Leave blank to pass all messages)", "Intput Filter") as text
+			if (length(filter))
+				outgoing_filters.Add(O)
+				outgoing_filters[O] = filter
+				boutput(usr, "<span style=\"color:green\">Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
+		return
+
+	proc/fireOutgoing(var/datum/mechanicsMessage/msg)
+
+		//If we're already in the node list we will not send the signal on.
+		if(!msg.hasNode(src))
+			msg.addNode(src)
+		else
+			return
+
+		for(var/atom/M in connected_outgoing)
+			if(M.mechanics)
+				if (outgoing_filters[M])
+					var/text_found = findtext(msg, outgoing_filters[M])
+					if (exact_match)
+						text_found = text_found && (length(msg) == length(outgoing_filters[M]))
+					if (!text_found)
+						continue
+				M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
+		return
+
 
 /obj/item/mechanics
 	name = "testhing"
@@ -1483,6 +1524,12 @@ var/list/mechanics_telepads = new/list()
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_check"
 		return
+
+/obj/item/mechanics/dispatchcomponent
+	name = "Dispatch Component"
+	desc = ""
+	icon_state = "comp_check"
+	var/exact = 1
 
 /obj/item/mechanics/sigbuilder
 	name = "Signal Builder Component"
