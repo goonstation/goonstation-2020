@@ -8,6 +8,7 @@ datum/pathogeneffects
 	var/name
 	var/desc
 	var/infect_type = 0
+	var/danger_score = 0      // used for health scanner rating, positive is bad symptom, negative is good symptom
 
 	// A symptom with a lower permeability score needs more protective gear to evade.
 	var/permeability_score = 20
@@ -236,7 +237,9 @@ datum/pathogeneffects/malevolent/coughing
 	infect_type = INFECT_AREA
 	rarity = RARITY_COMMON
 	permeability_score = 15
+	danger_score = 1
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR
+
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -273,6 +276,7 @@ datum/pathogeneffects/malevolent/indigestion
 	name = "Indigestion"
 	desc = "A bad case of indigestion which occasionally cramps the infected."
 	rarity = RARITY_VERY_COMMON
+	danger_score = 1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -301,6 +305,7 @@ datum/pathogeneffects/malevolent/muscleache
 	name = "Muscle Ache"
 	desc = "The infected feels a slight, constant aching of muscles."
 	rarity = RARITY_COMMON
+	danger_score = 1
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -331,6 +336,7 @@ datum/pathogeneffects/malevolent/sneezing
 	infect_type = INFECT_AREA_LARGE
 	rarity = RARITY_COMMON
 	permeability_score = 25
+	danger_score = 0
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
 	infection_coefficient = 2
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
@@ -372,6 +378,7 @@ datum/pathogeneffects/malevolent/gasping
 	desc = "The infected has trouble breathing.."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_COMMON
+	danger_score = 1
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -407,6 +414,7 @@ datum/pathogeneffects/malevolent/moaning
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_COMMON
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -439,6 +447,7 @@ datum/pathogeneffects/malevolent/hiccups
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_COMMON
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -471,6 +480,7 @@ datum/pathogeneffects/malevolent/shivering
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_COMMON
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -503,6 +513,7 @@ datum/pathogeneffects/malevolent/deathgasping
 	desc = "This is literally pointless."
 	infect_type = INFECT_NONE
 	rarity = RARITY_UNCOMMON
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -538,6 +549,7 @@ datum/pathogeneffects/malevolent/sweating
 	permeability_score = 25
 	spread = SPREAD_HANDS | SPREAD_BODY
 	infection_coefficient = 1.5
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		switch (origin.stage)
 			if (1)
@@ -582,6 +594,7 @@ datum/pathogeneffects/malevolent/disorientation
 	desc = "The infected occasionally gets disoriented."
 	infect_type = INFECT_NONE
 	rarity = RARITY_UNCOMMON
+	danger_score = 10
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -646,6 +659,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 	desc = "The infected is seriously suspicious of others, to the point where they might see others do traitorous things."
 	infect_type = INFECT_NONE
 	rarity = RARITY_RARE
+	danger_score = 4
 	var/static/list/hallucinated_images = list(/obj/item/sword, /obj/item/card/emag, /obj/item/cloaking_device)
 	var/static/list/traitor_items = list("cyalume saber", "Electromagnetic Card", "pen", "mini rad-poison crossbow", "cloaking device", "revolver", "butcher's knife", "amplified vuvuzela", "power gloves", "signal jammer")
 
@@ -810,6 +824,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 	desc = "The infected is suspicious of others, to the point where they might see others do traitorous things."
 	infect_type = INFECT_NONE
 	rarity = RARITY_UNCOMMON
+	danger_score = 3
 
 	may_react_to()
 		return "The pathogen appears to be wilder than usual, perhaps sedatives or psychoactive substances might affect its behaviour."
@@ -888,6 +903,7 @@ datum/pathogeneffects/malevolent/teleportation
 	desc = "The infected exists in a twisted spacetime."
 	infect_type = INFECT_NONE
 	rarity = RARITY_RARE
+	danger_score = 7
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -940,6 +956,7 @@ datum/pathogeneffects/malevolent/gibbing
 	permeability_score = 0
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
 	infection_coefficient = 4
+	danger_score = 15
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -989,6 +1006,7 @@ datum/pathogeneffects/malevolent/shakespeare
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_COMMON
+	danger_score = 0
 	var/static/list/shk = list("Expectation is the root of all heartache.",
 "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
 "Love all, trust a few, do wrong to none.",
@@ -1032,6 +1050,7 @@ datum/pathogeneffects/malevolent/fluent
 	spread = SPREAD_FACE
 	infect_message = "<span style=\"color:red\">A drop of saliva lands on your face.</span>"
 	rarity = RARITY_UNCOMMON
+	danger_score = 0
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		return
 
@@ -1060,6 +1079,7 @@ datum/pathogeneffects/malevolent/capacitor
 	desc = "The infected is involuntarily electrokinetic."
 	infect_type = INFECT_AREA_LARGE
 	rarity = RARITY_VERY_RARE
+	danger_score = 9
 	var/static/capacity = 1e7
 	proc/electrocute(var/mob/V as mob, var/shock_load)
 		V.shock(src, shock_load, "chest", 1, 0.5)
@@ -1359,6 +1379,7 @@ datum/pathogeneffects/malevolent/capacitor
 
 datum/pathogeneffects/malevolent/capacitor/unlimited
 	name = "Unlimited Capacitor"
+	danger_score = 6
 
 	load_check(var/mob/M as mob, var/datum/pathogen/origin)
 		return null
@@ -1372,6 +1393,7 @@ datum/pathogeneffects/malevolent/sunglass
 	desc = "The infected grew sunglass glands."
 	infect_type = INFECT_NONE
 	rarity = RARITY_UNCOMMON
+	danger_score = 0
 
 	proc/glasses(var/mob/living/carbon/human/M as mob)
 		M.show_message("<span style=\"color:blue\">[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")]</span>")
@@ -1420,6 +1442,7 @@ datum/pathogeneffects/malevolent/liverdamage
 	desc = "The infected has an inflamed liver."
 	infect_type = INFECT_NONE
 	rarity = RARITY_UNCOMMON
+	danger_score = 2
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -1474,6 +1497,7 @@ datum/pathogeneffects/malevolent/fever
 	desc = "The body temperature of the infected individual slightly increases."
 	infect_type = INFECT_NONE
 	rarity = RARITY_COMMON
+	danger_score = 2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1511,6 +1535,7 @@ datum/pathogeneffects/malevolent/acutefever
 	desc = "The body temperature of the infected individual seriously increases and may spontaneously combust."
 	infect_type = INFECT_NONE
 	rarity = RARITY_RARE
+	danger_score = 8
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1561,6 +1586,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 	desc = "The body temperature of the infected individual seriously increases and may spontaneously combust. Or worse."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_RARE
+	danger_score = 15
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1615,6 +1641,7 @@ datum/pathogeneffects/malevolent/chills
 	desc = "The infected feels the sensation of lowered body temperature."
 	infect_type = INFECT_NONE
 	rarity = RARITY_COMMON
+	danger_score = 2
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -1657,6 +1684,7 @@ datum/pathogeneffects/malevolent/seriouschills
 	desc = "The infected feels the sensation of seriously lowered body temperature."
 	infect_type = INFECT_NONE
 	rarity = RARITY_RARE
+	danger_score = 5
 
 	proc/create_icing(var/mob/M)
 		var/obj/decal/icefloor/I = unpool(/obj/decal/icefloor)
@@ -1729,6 +1757,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 	desc = "The infected feels the sensation of seriously lowered body temperature. And might spontaneously become an ice statue."
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_RARE
+	danger_score = 14
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1791,6 +1820,7 @@ datum/pathogeneffects/malevolent/farts
 	infect_type = INFECT_AREA
 	spread = SPREAD_AIR
 	rarity = RARITY_VERY_COMMON
+	danger_score = 0
 
 	proc/fart(var/mob/M, var/datum/pathogen/origin)
 		M.emote("fart")
@@ -1809,6 +1839,7 @@ datum/pathogeneffects/malevolent/farts/smoke
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
 	rarity = RARITY_RARE
+	danger_score = 0
 
 	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
@@ -1834,6 +1865,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 	name = "Plasma Farts"
 	desc = "The infected individual occasionally farts. Plasma."
 	rarity = RARITY_UNCOMMON
+	danger_score = 8
 
 	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
@@ -1863,6 +1895,7 @@ datum/pathogeneffects/malevolent/farts/co2
 	name = "CO2 Farts"
 	desc = "The infected individual occasionally farts. Carbon dioxyde."
 	rarity = RARITY_RARE
+	danger_score = 7
 
 	fart(var/mob/M, var/datum/pathogen/origin)
 		..()
@@ -1892,6 +1925,7 @@ datum/pathogeneffects/malevolent/leprosy
 	name = "Leprosy"
 	desc = "The infected individual is losing limbs."
 	rarity = RARITY_VERY_RARE
+	danger_score = 12
 
 	disease_act(var/mob/living/carbon/human/M, var/datum/pathogen/origin)
 		if (origin.stage < 3 || !origin.symptomatic)
@@ -1917,6 +1951,7 @@ datum/pathogeneffects/malevolent/senility
 	desc = "Infection damages nerve cells in the host's brain."
 	rarity = RARITY_RARE
 	infect_type = INFECT_NONE
+	danger_score = 9
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
@@ -1956,6 +1991,7 @@ datum/pathogeneffects/malevolent/beesneeze
 	permeability_score = 25
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
 	infection_coefficient = 2
+	danger_score = 0
 
 	proc/sneeze(var/mob/M, var/datum/pathogen/origin)
 		if (!M || !origin)
@@ -2010,6 +2046,7 @@ datum/pathogeneffects/malevolent/mutation
 	desc = "The infected individual occasionally mutates wildly!"
 	infect_type = INFECT_NONE
 	rarity = RARITY_VERY_RARE
+	danger_score = 12
 
 	//multiply origin.stage by this number to get the percent probability of a mutation occurring per disease_act
 	//please keep it between 1 and 20, inclusive, if possible.
@@ -2058,6 +2095,7 @@ datum/pathogeneffects/malevolent/mutation/reinforced
 	mut_prob_mult = 3
 	chrom_prob = 100 //guaranteed chromosome application
 	chrom_types = list(/datum/dna_chromosome/anti_mutadone) //reinforcer chromosome
+	danger_score = 14
 
 	react_to(var/R, var/zoom)
 		if (R == "mutadone")
@@ -2077,6 +2115,7 @@ datum/pathogeneffects/malevolent/mutation/beneficial
 	chrom_prob = 100 //guranteed chromosome application
 	chrom_types = list(/datum/dna_chromosome) //stabilizer, no instability caused
 	beneficial = 1
+	danger_score = -15
 
 	react_to(var/R, var/zoom)
 		if (R == "mutadone")
@@ -2090,6 +2129,7 @@ datum/pathogeneffects/malevolent/radiation
 	desc = "Infection irradiates the host's cells."
 	infect_type = INFECT_NONE
 	rarity = RARITY_RARE
+	danger_score = 12
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -2132,6 +2172,7 @@ datum/pathogeneffects/malevolent/snaps
 	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
 	infect_message = "<span style=\"color:red\">That's a pretty catchy groove...</span>" //you might even say it's infectious
 	rarity = RARITY_COMMON
+	danger_score = 2
 
 	proc/snap(var/mob/M, var/datum/pathogen/origin)
 		M.emote("snap")
@@ -2157,6 +2198,7 @@ datum/pathogeneffects/malevolent/snaps/jazz
 	name = "Jazz Snaps"
 	desc = "The infection forces its host's fingers to occasionally snap. Also, it transforms the host into a jazz musician."
 	rarity = RARITY_RARE
+	danger_score = 7
 
 	proc/jazz(var/mob/living/carbon/human/H as mob)
 		H.show_message("<span style=\"color:blue\">[pick("You feel cooler!", "You feel smooth and laid-back!", "You feel jazzy!", "A sudden soulfulness fills your spirit!")]</span>")
@@ -2224,7 +2266,7 @@ datum/pathogeneffects/malevolent/snaps/wild
 	name = "Wild Snaps"
 	desc = "The infection forces its host's fingers to constantly and painfully snap. Highly contagious."
 	rarity = RARITY_VERY_RARE
-
+	danger_score = 13
 
 	proc/snap_arm(var/mob/M, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -2279,6 +2321,7 @@ datum/pathogeneffects/malevolent/detonation
 	name = "Necrotic Detonation"
 	desc = "The pathogen will cause you to violently explode upon death."
 	rarity = RARITY_VERY_RARE
+	danger_score = 8
 
 	may_react_to()
 		return "Some of the pathogen's dead cells seem to remain active."

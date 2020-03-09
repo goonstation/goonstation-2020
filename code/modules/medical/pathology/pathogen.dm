@@ -1339,6 +1339,38 @@ datum/pathogen
 	proc/remission()
 		in_remission = 1
 
+	// calculates the sum of the danger score of all symptoms, used for health scanner output
+	proc/danger_score()
+		var/score = 0
+		for (var/datum/pathogeneffects/effect in src.effects)
+			score += effect.danger_score
+		var/text = "[score], "
+		if(score > 40)
+			text += "incredibly deadly"
+		else if(score > 30)
+			text += "very deadly"
+		else if(score > 20)
+			text += "deadly"
+		else if(score > 15)
+			text += "potentially deadly"
+		else if(score > 10)
+			text += "dangerous"
+		else if(score > 5)
+			text += "potentially dangerous"
+		else if(score > 0)
+			text += "mostly harmless"
+		else if(score > -5)
+			text += "slightly beneficial"
+		else if(score > -10)
+			text += "potentially beneficial"
+		else if(score > -15)
+			text += "beneficial"
+		else if(score > -20)
+			text += "very beneficial"
+		else
+			text += "incredibly beneficial"
+		return text
+
 	//=============================================================================
 	//	Events
 	//=============================================================================

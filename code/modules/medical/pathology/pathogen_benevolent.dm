@@ -7,6 +7,7 @@ datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
 	rarity = RARITY_UNCOMMON
+	danger_score = -6
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -27,6 +28,7 @@ datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
 	rarity = RARITY_UNCOMMON
+	danger_score = -6
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -50,6 +52,7 @@ datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
 	desc = "The pathogen aids the host body in metabolizing ethanol."
 	rarity = RARITY_COMMON
+	danger_score = -2
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -85,6 +88,7 @@ datum/pathogeneffects/benevolent/metabolisis
 	name = "Accelerated Metabolisis"
 	desc = "The pathogen accelerates the metabolisis of all chemicals present in the host body."
 	rarity = RARITY_RARE
+	danger_score = 0
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -119,6 +123,7 @@ datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
 	rarity = RARITY_RARE
+	danger_score = -6
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -143,6 +148,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
 	desc = "The pathogen converts organic tissue into oxygen."
 	rarity = RARITY_VERY_RARE
+	danger_score = 0
 
 	may_react_to()
 		return "The pathogen appears to radiate a bubble of oxygen."
@@ -168,6 +174,7 @@ datum/pathogeneffects/benevolent/oxygenproduction
 	name = "Oxygen Production"
 	desc = "The pathogen produces oxygen."
 	rarity = RARITY_VERY_RARE
+	danger_score = -6
 
 	may_react_to()
 		return "The pathogen appears to radiate a bubble of oxygen."
@@ -185,6 +192,7 @@ datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"
 	desc = "The pathogen will resurrect you if it procs while you are dead."
 	rarity = RARITY_VERY_RARE
+	danger_score = -15
 
 	may_react_to()
 		return "Some of the pathogen's dead cells seem to remain active."
@@ -249,6 +257,7 @@ datum/pathogeneffects/benevolent/brewery
 	desc = "The pathogen aids the host body in metabolizing chemicals into ethanol."
 	rarity = RARITY_RARE
 	beneficial = 0 // fuck this liver disease isn't beneficial
+	danger_score = 6
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -287,6 +296,8 @@ datum/pathogeneffects/benevolent/bioluminescence
 	name = "Bioluminescence"
 	desc = "The pathogen makes the afflicted emit light and sometimes flash the area when attacked."
 	rarity = RARITY_RARE
+	danger_score = -8
+
 	var/rgb = null
 	
 	proc/getColor(var/datum/pathogen/origin)
