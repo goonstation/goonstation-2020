@@ -588,7 +588,7 @@
 			playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (src.status)
 				w_class = 4
-
+				flags &= ~ONBELT //haha NO
 				setProperty("meleeprot", 9)
 				setProperty("rangedprot", 1.5)
 				setProperty("movespeed", 0.3)
@@ -601,7 +601,7 @@
 				src.setItemSpecial(/datum/item_special/barrier)
 			else
 				w_class = 2
-
+				flags |= ONBELT
 				setProperty("meleeprot", 0)
 				setProperty("rangedprot", 0)
 				setProperty("movespeed", 0)
