@@ -72,14 +72,48 @@
 			src.visible_message("<span style=\"color:blue\">[src] [v] [his_or_her(src)] [item]!</span>")
 		else
 			src.visible_message("<span style=\"color:blue\">[src] pats themselves on the back. Feel better, [src].</span>")
-
 	else
 		if (target.lying)
 			src.visible_message("<span style=\"color:blue\">[src] shakes [target], trying to wake them up!</span>")
 		else
-			src.visible_message("<span style=\"color:blue\">[src] shakes [target], trying to grab their attention!</span>")
+			if (ishuman(target) && ishuman(src))
+				var/mob/living/carbon/human/Z = src
+				var/mob/living/carbon/human/X = target
 
-	hit_twitch(target)
+				if (Z.zone_sel && Z.zone_sel.selecting == "head")
+					if(X.head&&istype(X.head, /obj/item/clothing/head/sunhat)&&X.head.uses)
+						src.visible_message("<span style=\"color:red\">[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!</span>")
+
+
+
+						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+						s.set_up(5, 1, target.loc)
+						s.start()
+
+						X.head.uses = max(0, X.head.uses - 1)
+						if (X.head.uses < 1)
+							X.head.icon_state = (X.head.icon_state=="stunhatr"?"sunhatr":X.head.icon_state=="stunhatg"?"sunhatg":"sunhatb")
+							X.head.item_state = (X.head.item_state=="stunhatr"?"sunhatr":X.head.item_state=="stunhatg"?"sunhatg":"sunhatb")
+							X.update_clothing()
+
+						if (X.head.uses <= 0)
+							X.show_text("The sunhat is no longer electrically charged.", "red")
+						else
+							X.show_text("The stunhat has [X.head.uses] charges left!", "red")
+
+
+#ifdef USE_STAMINA_DISORIENT
+						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+#else
+						src.changeStatus("weakened", 3 SECONDS)
+						src.changeStatus("stunned", 2 SECONDS)
+#endif
+						src.stuttering = max(target.stuttering,5)
+					else
+						src.visible_message("<span style=\"color:blue\">[src] gently pats [target] on the head.</span>")
+					return
+			src.visible_message("<span style=\"color:blue\">[src] shakes [target], trying to grab their attention!</span>")
+		hit_twitch(target)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
 	boutput(src, "<span style=\"color:red\">You have no idea how to perform CPR.</span>")
