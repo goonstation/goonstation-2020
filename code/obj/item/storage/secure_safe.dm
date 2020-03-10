@@ -64,7 +64,7 @@
 		if (ispulsingtool(W) && (src.open == 1) && (!src.locked) && (!src.l_hacking))
 			user.show_message(text("<span style=\"color:red\">Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
-			SPAWN_DBG(100)
+			SPAWN_DBG(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = 1
 					configure_mode = 1
@@ -267,26 +267,21 @@
 				usr << output("ERR!&0", "caselock.browser:updateReadout")
 				var/code_attempt = uppertext(ckey(href_list["enter"]))
 				if (length(code_attempt) == 4)
+					var/oldcode = code
 					var/i = 0
-					var/j = 0
 					var/incode = 0
 					var/rightplace = 0
-					var/offset = 0
 					while (++i < 5)
-						if (copytext(code_attempt, i,i+1) == copytext(code, i, i + 1))
-							offset += 2 ** (i-1)
+						if (copytext(code_attempt, i,i+1) == copytext(oldcode, 1,2))
 							rightplace++
 							incode++
+							oldcode = copytext(oldcode,2)
 							continue
-					
-					i = 0
-					while (++i < 5)
-						j = 0
-						while(++j < 5)
-							if(i != j && (((offset - offset % (2 ** (j - 1))) / (2 ** (j - 1))) % 2 == 0) && (copytext(code_attempt, i,i+1) == copytext(code, j, j+1)))
-								offset += 2 ** (j-1)
-								incode++
-								j = 5
+
+						var/foundpoint = findtext(oldcode, copytext(code_attempt,i,i+1))
+						if (foundpoint)
+							incode++
+							oldcode = copytext(oldcode, 1,foundpoint) + copytext(oldcode, foundpoint+1)
 
 					var/desctext = ""
 					switch(rightplace)
