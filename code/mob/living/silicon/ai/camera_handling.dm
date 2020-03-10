@@ -76,6 +76,37 @@
 	var/mob/target = creatures[target_name]
 
 	ai_actual_track(target)
+
+
+/mob/living/silicon/proc/ai_name_track(var/heard_name)
+	if(isdead(usr))
+		boutput(usr, "You can't track with camera because you are dead!")
+		return
+
+	var/list/creatures = get_mobs_trackable_by_AI()
+	creatures.Remove(SORT)
+	var/list/candidates = list()
+
+	for(var/C in creatures)
+		var/name = creatures[C].name
+		if (name == heard_name)
+			candidates += C
+			candidates[C] = creatures[C]
+
+	var/target_name = null
+	var/mob/target = null
+
+	if(candidates.len > 0)
+		if(candidates.len == 1)
+			target = candidates[candidates[1]]
+			ai_actual_track(target)
+		else
+			target_name = input(usr, "Which creature should you track?") as null|anything in candidates
+			target = candidates[target_name]
+			ai_actual_track(target)
+	else
+		boutput(usr, "Not able to locate a creature by the name of \"[heard_name]\" on camera.")
+
 #undef SORT
 
 /mob/living/silicon/proc/ai_actual_track(mob/target as mob)
