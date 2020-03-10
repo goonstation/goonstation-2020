@@ -673,26 +673,21 @@
 					usr << output("ERR!&0", "ship_lock.browser:updateReadout")
 					var/code_attempt = uppertext(ckey(href_list["enter"]))
 					if (length(code_attempt) == 4)
+						var/oldcode = code
 						var/i = 0
-						var/j = 0
 						var/incode = 0
 						var/rightplace = 0
-						var/offset = 0
 						while (++i < 5)
-							if (copytext(code_attempt, i,i+1) == copytext(code, i, i + 1))
-								offset += 2 ** (i-1)
+							if (copytext(code_attempt, i,i+1) == copytext(oldcode, 1,2))
 								rightplace++
 								incode++
+								oldcode = copytext(oldcode,2)
 								continue
-						
-						i = 0
-						while (++i < 5)
-							j = 0
-							while(++j < 5)
-								if(i != j && (((offset - offset % (2 ** (j - 1))) / (2 ** (j - 1))) % 2 == 0) && (copytext(code_attempt, i,i+1) == copytext(code, j, j+1)))
-									offset += 2 ** (j-1)
-									incode++
-									j = 5
+
+							var/foundpoint = findtext(oldcode, copytext(code_attempt,i,i+1))
+							if (foundpoint)
+								incode++
+								oldcode = copytext(oldcode, 1,foundpoint) + copytext(oldcode, foundpoint+1)
 
 						var/desctext = ""
 						switch(rightplace)
