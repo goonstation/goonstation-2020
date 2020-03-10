@@ -769,7 +769,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
 				if(prob(10))
 					M.make_jittery(4)
