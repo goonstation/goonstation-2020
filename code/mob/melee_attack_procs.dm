@@ -92,8 +92,8 @@
 
 						X.head.uses = max(0, X.head.uses - 1)
 						if (X.head.uses < 1)
-							X.head.icon_state = (X.head.icon_state=="stunhatr"?"sunhatr":X.head.icon_state=="stunhatg"?"sunhatg":"sunhatb")
-							X.head.item_state = (X.head.item_state=="stunhatr"?"sunhatr":X.head.item_state=="stunhatg"?"sunhatg":"sunhatb")
+							X.head.icon_state = splittext(X.head.icon_state,"-")[1]
+							X.head.item_state = splittext(X.head.item_state,"-")[1]
 							X.update_clothing()
 
 						if (X.head.uses <= 0)

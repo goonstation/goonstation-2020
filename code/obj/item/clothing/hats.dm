@@ -1039,8 +1039,8 @@
 				src.uses = 0
 			src.uses = min(src.uses + 1, src.max_uses)
 			C.use(2500)
-			src.icon_state = /*text("[]-stun",src.icon_state)*/"stunhat"
-			src.item_state = /*text("[]-stun",src.item_state)*/"stunhat"
+			src.icon_state = text("[]-stun",src.icon_state)
+			src.item_state = text("[]-stun",src.item_state)
 			C.updateicon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span style=\"color:blue\">The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
