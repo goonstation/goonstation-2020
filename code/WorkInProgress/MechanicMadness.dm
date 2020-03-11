@@ -80,18 +80,25 @@ var/list/mechanics_telepads = new/list()
 		if(!msg.hasNode(src))
 			msg.addNode(src)
 		else
-			return
+			return 0
 
+		var/fired = 0
 		for(var/atom/M in connected_outgoing)
 			if(M.mechanics)
-				if (filtered && outgoing_filters[M])
-					var/text_found = findtext(msg.signal, outgoing_filters[M])
-					if (exact_match)
-						text_found = text_found && (length(msg.signal) == length(outgoing_filters[M]))
-					if (!text_found)
-						continue
+				if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
+					continue
 				M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
-		return
+				fired = 1
+		return fired
+
+	proc/allowFiltered(var/signal, var/list/filters)
+		for (var/filter in filters)
+			var/text_found = findtext(signal, filter)
+			if (exact_match)
+				text_found = text_found && (length(signal) == length(filter))
+			if (text_found)
+				return 1
+		return 0
 
 	//Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
 	proc/cloneMessage(var/datum/mechanicsMessage/msg)
@@ -150,10 +157,11 @@ var/list/mechanics_telepads = new/list()
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (filtered)
-						var/filter = input(usr, "Add a filter for this connection? (Leave blank to pass all messages)", "Intput Filter") as text
+						var/filter = input(usr, "Add filters for this connection? (Comma-deliniated list. Leave blank to pass all messages.)", "Intput Filters") as text
 						if (length(filter))
+							if (!outgoing_filters[O]) outgoing_filters[O] = list()
 							outgoing_filters.Add(O)
-							outgoing_filters[O] = filter
+							outgoing_filters[O] = splittext(filter, ",")
 							boutput(usr, "<span style=\"color:green\">Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
 						else
 							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
@@ -174,10 +182,11 @@ var/list/mechanics_telepads = new/list()
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (O.mechanics.filtered)
-						var/filter = input(usr, "Add a filter for this connection? (Leave blank to pass all messages)", "Intput Filter") as text
+						var/filter = input(usr, "Add filters for this connection? (Comma-deliniated list. Leave blank to pass all messages.)", "Intput Filters") as text
 						if (length(filter))
+							if (!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
 							O.mechanics.outgoing_filters.Add(master)
-							O.mechanics.outgoing_filters[master] = filter
+							O.mechanics.outgoing_filters[master] = splittext(filter, ",")
 							boutput(usr, "<span style=\"color:green\">Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
 						else
 							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
@@ -1530,8 +1539,8 @@ var/list/mechanics_telepads = new/list()
 
 	proc/dispatch(var/datum/mechanicsMessage/input)
 		if (level == 2) return
-		mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
-		animate_flash_color_fill(src,"#00FF00",2, 2)
+		var/sent = mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
+		if (sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
 	verb/toggleexactmatch()
