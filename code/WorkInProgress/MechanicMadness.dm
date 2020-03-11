@@ -157,7 +157,7 @@ var/list/mechanics_telepads = new/list()
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (filtered)
-						var/filter = input(usr, "Add filters for this connection? (Comma-deliniated list. Leave blank to pass all messages.)", "Intput Filters") as text
+						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 						if (length(filter))
 							if (!outgoing_filters[O]) outgoing_filters[O] = list()
 							outgoing_filters.Add(O)
@@ -182,7 +182,7 @@ var/list/mechanics_telepads = new/list()
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
 					if (O.mechanics.filtered)
-						var/filter = input(usr, "Add filters for this connection? (Comma-deliniated list. Leave blank to pass all messages.)", "Intput Filters") as text
+						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
 						if (length(filter))
 							if (!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
 							O.mechanics.outgoing_filters.Add(master)
