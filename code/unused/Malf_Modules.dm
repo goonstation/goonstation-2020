@@ -78,7 +78,7 @@ rcd light flash thingy on matter drain
 			overload.uses --
 			for(var/mob/V in hearers(7, M))
 				V.show_message(text("<span style=\"color:blue\">You hear a loud electrical buzzing sound!</span>"))
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				explosion(M, get_turf(M), 0,1,1,0)
 		if(overload.uses <= 0)
 			usr.verbs -= /client/proc/overload_machine
@@ -184,15 +184,15 @@ rcd light flash thingy on matter drain
 	..()
 	/*
 		ATTENTION, ye who wander here.
-		
+
 		This Topic() is insecure as all hell, because there is nothing stopping the AI from getting all upgrades as soon as he knows the gamemode's ref.
 		He can very easily write byond://?src=[gamemode];turret=1, for instance in order to upgrade his stuff without regard for the processing time.
-		
+
 		Why didn't I fix it? Because this mode is defunct. So it was easier to leave a warning for you, hopeful individual remaking this.
 		Best regards,
 		SpyGuy, July 2018
 	*/
-	
+
 //	if (href_list["coreup"])
 //		usr.verbs += /client/proc/fireproof_core
 //		src.temp = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent. One use."

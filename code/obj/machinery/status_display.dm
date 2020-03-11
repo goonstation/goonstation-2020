@@ -49,7 +49,7 @@ var/list/status_display_text_images = list()
 	// register for radio system
 	New()
 		..()
-		SPAWN_DBG(5)	// must wait for map loading to finish
+		SPAWN_DBG(5 DECI SECONDS)	// must wait for map loading to finish
 			//if(radio_controller)
 			//	radio_controller.add_object(src, "[frequency]")
 			del(src) //lol
@@ -142,7 +142,7 @@ var/list/status_display_text_images = list()
 				if((index1 || index2) && repeat_update)	// if either line is scrolling
 														// and we haven't forced an update yet
 
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						repeat_update = 0
 						update()		// set to update again in 5 ticks
 						repeat_update = 1

@@ -119,7 +119,7 @@ var/global/list/ghostdrone_candidates = list()
 	New()
 		..()
 		src.icon_state = "factory[src.factory_section][src.working]"
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 
@@ -313,7 +313,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 

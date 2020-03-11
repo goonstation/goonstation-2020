@@ -103,7 +103,7 @@
 						affecting.take_damage(9, 0)
 						C.UpdateDamage()
 						C.UpdateDamageIcon()
-					C.changeStatus("weakened", 1 SECONDS)
+					C.changeStatus("weakened", 1 SECOND)
 				else
 					boutput(C, "<span style='color:blue'>Your helmet protected you from injury!</span>")
 

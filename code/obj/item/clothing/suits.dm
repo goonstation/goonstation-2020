@@ -895,7 +895,7 @@
 
 		New()
 			..()
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				src.name = initial(src.name)
 				src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1005,7 +1005,7 @@
 			T = T.loc
 		src.set_loc(T)
 		user.u_equip(src)
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			qdel(src)
 
 /obj/item/clothing/suit/space/captain

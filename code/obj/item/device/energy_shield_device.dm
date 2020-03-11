@@ -45,7 +45,7 @@
 				boutput(user, "<span style=\"color:red\">The impact temporarily weakens the shield.</span>")
 				var/pre_protect = protection
 				protection -= 5
-				SPAWN_DBG(300) protection += 5
+				SPAWN_DBG(30 SECONDS) protection += 5
 				return max(pre_protect,0)
 
 		turn_off()
@@ -77,7 +77,7 @@
 			if(!can_use())
 				turn_off()
 				return
-			SPAWN_DBG(10) work()
+			SPAWN_DBG(1 SECOND) work()
 
 		can_use()
 			if(!user || !ismob(loc) || user != loc) return 0

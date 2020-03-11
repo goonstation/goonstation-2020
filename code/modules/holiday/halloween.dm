@@ -426,7 +426,7 @@
 		src.desc = "A one use - polaroid camera. [pictures_left] photos left."
 		boutput(user, "<span style=\"color:blue\">[pictures_left] photos left.</span>")
 		can_use = 0
-		SPAWN_DBG(50) can_use = 1
+		SPAWN_DBG(5 SECONDS) can_use = 1
 */
 
 /mob/living/carbon/wall/halloween
@@ -440,7 +440,7 @@
 
 			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91)
 			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9)
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
 		else
@@ -559,7 +559,7 @@
 						user.show_text("You feel a spooky rumbling in your guts! Maybe you ate a ghoooooost?!","#8218A8")
 					if (C.bioHolder)
 						C.bioHolder.age += 125
-						SPAWN_DBG(600)
+						SPAWN_DBG(1 MINUTE)
 							C.bioHolder.age -= 125
 			if("NULL MOSS NOOK") // Anagram: SKULL MONSOON
 				particleMaster.SpawnSystem(new /datum/particleSystem/skull_rain(get_turf(user)))
@@ -572,7 +572,7 @@
 				user.blend_mode = 2
 				user.alpha = 150
 				user.show_text("You feel extra spooky!","#8218A8")
-				SPAWN_DBG(1200)
+				SPAWN_DBG(2 MINUTES)
 					user.blend_mode = 0
 					user.alpha = 255
 			else

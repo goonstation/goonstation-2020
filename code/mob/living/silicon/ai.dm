@@ -192,7 +192,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
 
-	SPAWN_DBG(6)
+	SPAWN_DBG(6 DECI SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
 		if(!src.link)
@@ -252,7 +252,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				if (user.loc != T || !can_act(user))
 					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
 					return
@@ -262,7 +262,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 			src.visible_message("<span style=\"color:red\"><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(60)
+			SPAWN_DBG(6 SECONDS)
 				if (user.loc != T || !can_act(user))
 					boutput(user, "<span style=\"color:red\">You were interrupted!</span>")
 					return
@@ -936,7 +936,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				//flick("ai-flip", src)
 				if(faceEmotion != "ai-red")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 
@@ -955,7 +955,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					if (T && isturf(T))
 						SPAWN_DBG(0)
 							M.throw_at(T, 100, 2)
-							M.changeStatus("weakened", 1 SECONDS)
+							M.changeStatus("weakened", 1 SECOND)
 							M.changeStatus("stunned", 2 SECONDS)
 					break
 
@@ -1040,7 +1040,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
 	#endif
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					src.emote_allowed = 1
 		else
 			src.show_text("Invalid Emote: [act]")
@@ -1161,7 +1161,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/success = 0
 		//src.show_text("<b>System will now attempt to restore local power. Stand by...</b>")
 		// jesus christ shut up
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			var/obj/machinery/power/apc/APC = get_local_apc(src)
 			if (APC)
 				if (istype(APC.cell,/obj/item/cell/))
@@ -1182,7 +1182,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			//	src.show_text("<b>Local APC unit not found. System will re-try shortly.</b>", "red")
 
 			if (!success)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					src.aiRestorePowerRoutine = 1
 			else
 				src.aiRestorePowerRoutine = 0
@@ -1554,7 +1554,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
 		src.eyecam.set_loc(src.loc)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (ismob(user)) // bluhh who the fuck knows, this at least checks that user isn't null as well
 				if (isshell(user))
 					var/mob/living/silicon/hivebot/H = user
@@ -1800,7 +1800,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(5) //Send a reply for those curious jerks
+			SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "MAINFRAME_AI", "netid", src.net_id)
 
 		return
@@ -1815,7 +1815,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				//something might be wrong here, disconnect them!
 				src.terminals.Remove(target)
 				boutput(src, "--- Connection closed with [target]!")
-				SPAWN_DBG(3)
+				SPAWN_DBG(3 DECI SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
@@ -1828,7 +1828,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if(target in src.terminals)
 				src.terminals.Remove(target)
 				boutput(src, "--- [target] has closed the connection!!")
-				SPAWN_DBG(3)
+				SPAWN_DBG(3 DECI SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 

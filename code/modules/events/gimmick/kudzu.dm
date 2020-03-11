@@ -112,7 +112,7 @@
 
 	CanPass(atom/A, turf/T)
 		//kudzumen can pass through dense kudzu
-		if (current_stage == 3) 
+		if (current_stage == 3)
 			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))
 				animate_door_squeeze(A)
 				return 1
@@ -338,10 +338,10 @@
 
 //For making kudzumen
 /obj/icecube/kudzu
-	name = "vine cacoon"
-	desc = "That is a cacoon of vines."
+	name = "vine cocoon"
+	desc = "That is a cocoon of vines."
 	icon = 'icons/misc/kudzu_plus.dmi'
-	icon_state = "cacoon"
+	icon_state = "cocoon"
 	health = 10
 	steam_on_death = 0
 	var/const/bulb_time = 20 SECONDS		//how long it takes a bulb to form
@@ -370,12 +370,12 @@
 						if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
 							if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
 								H.ckey = H.last_client.ckey
-							
+
 						H.set_mutantrace(/datum/mutantrace/kudzu)
 						natural_opening = 1
 						SHOW_KUDZU_TIPS(H)
 						qdel(src)
-		else 
+		else
 			qdel(src)
 
 	disposing()

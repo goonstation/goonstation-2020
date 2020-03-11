@@ -1147,7 +1147,7 @@
 		user.visible_message("<span style=\"color:red\"><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1824,7 +1824,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
@@ -1861,7 +1861,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/wonton_wrapper(src.loc)

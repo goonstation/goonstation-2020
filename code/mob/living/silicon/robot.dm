@@ -573,7 +573,7 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						src.emote_allowed = 1
 			else
 				src.show_text("Invalid Emote: [act]")
@@ -740,7 +740,7 @@
 		src.flash(30)
 
 		if (isdead(src) && src.client)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.gib(1)
 			return
 
@@ -763,7 +763,7 @@
 		var/damage = 0
 		switch(severity)
 			if(1.0)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.gib(1)
 				return
 			if(2.0) damage = 40
@@ -775,7 +775,7 @@
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 			explosion(cell, src.loc, 1, 2, 4, 6, 1)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
 
@@ -908,7 +908,7 @@
 				if (istype(cell,/obj/item/cell/erebite))
 					src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 					explosion(cell, src.loc, 1, 2, 4, 6, 1)
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						qdel (src.cell)
 						src.cell = null
 			update_bodypart()
@@ -930,7 +930,7 @@
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span style=\"color:red\"><b>[src]'s</b> erebite cell violently detonates!</span>")
 				explosion(cell, src.loc, 1, 2, 4, 6, 1)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
 
@@ -1146,7 +1146,7 @@
 					if (oldmob)
 						if(inafterlifebar(oldmob) || isVRghost(oldmob))
 							boutput(oldmob, "<span style=\"color:blue\">You feel yourself being pulled out of your current plane of existence!</span>")
-							SPAWN_DBG(10)
+							SPAWN_DBG(1 SECOND)
 								qdel(oldmob)
 						else if (isalive(oldmob)) // if they're not in the afterlife bar or a VR ghost and still alive, then maybe don't pull them into this borg
 							return

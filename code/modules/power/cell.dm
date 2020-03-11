@@ -107,7 +107,7 @@
 
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		updateicon()
 
 	if (genrate && !(src in processing_items))
@@ -225,7 +225,7 @@
 
 	explosion(src, T, 0, 1, 2, 2)
 
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		qdel(src)
 
 
@@ -315,4 +315,4 @@
 	if (istype(W, /obj/item/plantanalyzer/))
 		boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs remaining.")
 	else
-		..() 
+		..()

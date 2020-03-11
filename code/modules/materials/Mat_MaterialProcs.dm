@@ -62,7 +62,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			M.remove_item(I)
 			I.set_loc(get_turf(I))
 		return
@@ -184,7 +184,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(8))
 			M.visible_message("<span style=\"color:red\"><b>[M.name]</b> scratches at an itch.</span>")
 			random_brute_damage(M, 1)
-			M.changeStatus("stunned", 1 SECONDS)
+			M.changeStatus("stunned", 1 SECOND)
 			M.emote("grumble")
 		if(prob(8))
 			boutput(M, "<span style=\"color:red\"><b>So itchy!</b></span>")
@@ -503,7 +503,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(temp < T0C + 100)
 			return
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(location && location.material && location.material.mat_id == "miracle")
 				location.visible_message("<span style=\"color:blue\">[location] bends and twists, changing colors rapidly.</span>")
 				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")

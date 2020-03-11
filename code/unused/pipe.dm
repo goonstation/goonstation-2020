@@ -28,7 +28,7 @@
 			if(istype(T,/turf/simulated/floor/plating))
 				var/obj/machinery/atmos/pipe/P = new/obj/machinery/atmos/pipe(T)
 				P.set_dir(up,down,left,right)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					qdel(src)//This might need to be changed to have them drop it first
 			else
 				boutput(user, "<span style=\"color:red\">You are unable to place the pipe there.</span>")
@@ -80,7 +80,7 @@
 	var/right = 0
 
 	New()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			build()
 		return//Dont need to be on the gameticker so dont add us
 

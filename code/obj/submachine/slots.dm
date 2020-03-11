@@ -92,7 +92,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(25) // why was this at ten seconds, christ
+				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
@@ -251,7 +251,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(25) // why was this at ten seconds, christ
+				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [src.scan.registered] has won a MILLION CREDITS!'</span>", src), 1)
@@ -369,7 +369,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(25)
+				SPAWN_DBG(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span style='color:#888888'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)

@@ -198,7 +198,7 @@
 	ChaseAttack(mob/M)
 		..()
 		if (prob(33)) M.changeStatus("weakened", 3 SECONDS)
-		SPAWN_DBG(25)
+		SPAWN_DBG(2.5 SECONDS)
 			if (get_dist(src, M) <= 1)
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> starts strangling [M]!</span>")
 
@@ -211,12 +211,12 @@
 			if (prob(10))
 				src.visible_message("<span style=\"color:red\"><B>[src]</B> wraps its tentacles around [M]'s neck!</span>")
 			M.take_oxygen_deprivation(2)
-			M.changeStatus("weakened", 1 SECONDS)
+			M.changeStatus("weakened", 1 SECOND)
 		else
 			src.visible_message("<span style=\"color:red\"><B>[src]'s</B> grip slips!</span>")
 			M.delStatus("stunned")
 			sleeping = 1
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span style=\"color:red\"><b>[src]</b> screeches, 'KBWKB WVYPGD!!'</span>", 1)
 			src.task = "thinking"

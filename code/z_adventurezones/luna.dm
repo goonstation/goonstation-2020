@@ -144,7 +144,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
@@ -846,7 +846,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.master.speak("Uh.  That isn't supposed to happen.")
 			src.state = 0	//Yeah, let's find that route.
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (src.master)
 					src.master.speak("I guess we need to take another route.  Please follow me.")
 					src.state = 0
@@ -905,7 +905,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(150)
+			SPAWN_DBG(15 SECONDS)
 				autoclose()
 		return 1
 
@@ -1082,7 +1082,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.visible_message("<span style=\"color:red\"><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15))
 		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	process()
@@ -1136,7 +1136,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.attacking = 1
 		src.visible_message("<span style=\"color:red\">The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
 		random_brute_damage(src.target, rand(2,4))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
@@ -2084,7 +2084,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	New()
 		..()
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (!locate("MNXpanel"))
 				src.tag = "MNXpanel"
 				src.id_tag = src.tag

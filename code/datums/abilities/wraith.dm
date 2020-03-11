@@ -316,7 +316,7 @@
 					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -519,7 +519,7 @@
 					if(!(A in centerview)) continue
 					//if (A == holder.owner) continue
 					var/obj/smokeDummy/D = new(A)
-					SPAWN_DBG(150)
+					SPAWN_DBG(15 SECONDS)
 						qdel(D)
 				particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
 				return 0
@@ -556,7 +556,7 @@
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1)
+						SPAWN_DBG(1 DECI SECOND)
 							if (G.density)
 								G.open()
 							else
@@ -565,7 +565,7 @@
 				for(var/obj/storage/F in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1)
+						SPAWN_DBG(1 DECI SECOND)
 							if (F.open)
 								F.close()
 							else

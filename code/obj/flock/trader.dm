@@ -229,7 +229,7 @@
 		"\"[gradientText(grad_col_1, grad_col_2, "We will not agree to any other price. Take it or leave it.")]\"")
 
 	// set up environmental things
-	SPAWN_DBG(100)
+	SPAWN_DBG(10 SECONDS)
 		for(var/obj/flock_screen/F in orange(5, src))
 			screen = F
 		screen.trader = src

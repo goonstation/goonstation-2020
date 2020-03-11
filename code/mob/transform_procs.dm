@@ -215,7 +215,7 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		qdel(selfmob)
 	return W
 
@@ -519,7 +519,7 @@
 			ticker.minds += W.mind
 			W.mind.key = key
 			W.mind.current = W
-	SPAWN_DBG(1)
+	SPAWN_DBG(1 DECI SECOND)
 		qdel(src)
 	return W
 

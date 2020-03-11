@@ -21,7 +21,7 @@
 	var/flags
 
 	New(var/id, var/file, var/flags)
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.id = id
 			src.ogg = file(file)
 			src.flags = flags

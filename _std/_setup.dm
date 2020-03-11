@@ -995,35 +995,46 @@ var/list/RARITY_COLOR = list(
 #define MINUTES *600
 #define HOURS *36000
 
+#define SECOND *10
+#define MINUTE *600
+#define HOUR *36000
+
 #define WATTS *1
 #define METERS *1
 #define KILOGRAMS *1
-#define AMPERE *1
+#define AMPERES *1
 #define KELVIN *1
+#define MOLES *1
+#define CANDELAS *1
+
+#define WATT *1
+#define METER *1
+#define KILOGRAM *1
+#define AMPERE *1
 #define MOLE *1
 #define CANDELA *1
 
-#define YOTTA *10**24
-#define ZETTA *10**21
-#define EXA   *10**18
-#define PETA  *10**15
-#define TERA  *10**12
-#define GIGA  *10**9
-#define MEGA  *10**6
-#define KILO  *10**3
-#define HECTO *10**2
-#define DEKA  *10**1
+#define YOTTA *(10**24)
+#define ZETTA *(10**21)
+#define EXA   *(10**18)
+#define PETA  *(10**15)
+#define TERA  *(10**12)
+#define GIGA  *(10**9)
+#define MEGA  *(10**6)
+#define KILO  *(10**3)
+#define HECTO *(10**2)
+#define DEKA  *(10**1)
 
-#define DECI  *10**-1
-#define CENTI *10**-2
-#define MILLI *10**-3
-#define MICRO *10**-6
-#define NANO  *10**-9
-#define PICO  *10**-12
-#define FEMTO *10**-15
-#define ATTO  *10**-18
-#define ZEPTO *10**-21
-#define YOCTO *10**-24
+#define DECI  *(10**-1)
+#define CENTI *(10**-2)
+#define MILLI *(10**-3)
+#define MICRO *(10**-6)
+#define NANO  *(10**-9)
+#define PICO  *(10**-12)
+#define FEMTO *(10**-15)
+#define ATTO  *(10**-18)
+#define ZEPTO *(10**-21)
+#define YOCTO *(10**-24)
 
 //Auditing
 //Whether or not a potentially suspicious action gets denied by the code.

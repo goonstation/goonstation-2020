@@ -285,7 +285,7 @@ var/ZSUBTRACT = 0
 			sleep(5)
 
 			src.linked_pad.icon_state = "pad0"
-			SPAWN_DBG(35)
+			SPAWN_DBG(3.5 SECONDS)
 
 			linked_pad.recharging = 0
 
@@ -314,7 +314,7 @@ var/ZSUBTRACT = 0
 			sleep(5)
 
 			src.linked_pad.icon_state = "pad0"
-			SPAWN_DBG(35)
+			SPAWN_DBG(3.5 SECONDS)
 
 			linked_pad.recharging = 0
 
@@ -382,7 +382,7 @@ var/ZSUBTRACT = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(10) processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
+			SPAWN_DBG(1 SECOND) processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 		/*if(prob(1) && !locate(/obj/dfissure_to) in get_step(src.linked_pad, EAST))
 			new/obj/dfissure_to(get_step(src.linked_pad, EAST))*/ // why would anyone ever want to complete Hemera Station if spamming bad coords on this is so much easier
 
@@ -405,7 +405,7 @@ var/ZSUBTRACT = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(5) processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
+			SPAWN_DBG(5 DECI SECONDS) processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 
 	proc/doubleportal(var/turf/target)
 		if (!target)
@@ -431,7 +431,7 @@ var/ZSUBTRACT = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(10) processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
+			SPAWN_DBG(1 SECOND) processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
 		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src.linked_pad, EAST))
 			new/obj/dfissure_to(get_step(src.linked_pad, EAST))
 		else
@@ -453,7 +453,7 @@ var/ZSUBTRACT = 0
 			return
 		use_power(25000)
 		if(prob(1)) badreceive()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			maintainportal(P)
 
 	proc/badsend()

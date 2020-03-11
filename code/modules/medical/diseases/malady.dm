@@ -449,7 +449,7 @@
 				D.robo_restart = 1
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
@@ -459,7 +459,7 @@
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					if (D) //ZeWaka: Fix for null.robo_restart
 						D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
@@ -469,7 +469,7 @@
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					if (D)
 						D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						boutput(H, "<span style='color:red'>Your cyberheart fails to return to its normal rhythm!</span>")
 
@@ -538,12 +538,12 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						D.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
@@ -551,28 +551,28 @@
 				H.cure_disease(D)
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						if (D) //ZeWaka: Fix for null.robo_restart x4
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				D.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(200)
+					SPAWN_DBG(20 SECONDS)
 						if (D)
 							D.robo_restart = 0
 				else
-					SPAWN_DBG(300)
+					SPAWN_DBG(30 SECONDS)
 						if (D)
 							D.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					boutput(H, "<span style='color:red'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())

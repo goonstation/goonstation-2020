@@ -401,7 +401,7 @@ datum
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
 						holder.del_reagent(id)
 				return
 
@@ -805,7 +805,7 @@ datum
 						T.wet_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor")
 					T.UpdateOverlays(T.wet_overlay, "wet_overlay")
 
-					SPAWN_DBG(800)
+					SPAWN_DBG(80 SECONDS)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")

@@ -70,7 +70,7 @@
 			return_if_overlay_or_effect(O)
 
 			if (O.throwing && !isliving(O))
-				SPAWN_DBG(8)
+				SPAWN_DBG(8 DECI SECONDS)
 					if (O && O.loc == src)
 						melt_away(O)
 				return
@@ -132,7 +132,7 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span style=\"color:red\">[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 				if(M.loc == src)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -826,7 +826,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5))
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 
@@ -910,7 +910,7 @@
 		light.set_brightness(0.7)
 		light.enable()
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			animate(src, alpha=130, color="#DDDDDD", time=7, loop=-1)
 			animate(alpha=180, color="#FFFFFF", time=1)
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
@@ -1128,7 +1128,7 @@
 					playsound(H.loc, "swing_hit", 50, 1)
 					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
@@ -1154,7 +1154,7 @@
 		busy = 1
 		showswirl(user.loc)
 		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -1224,7 +1224,7 @@
 		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
 		random_brute_damage(src.target, rand(3,5))
 		random_burn_damage(src.target, rand(2,3))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()

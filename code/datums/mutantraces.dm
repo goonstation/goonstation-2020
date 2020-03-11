@@ -378,7 +378,7 @@
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> screams with \his mind! Guh, that's creepy!"
 				playsound(get_turf(mob), "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -478,7 +478,7 @@
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -486,7 +486,7 @@
 
 	onDeath()
 		mob.show_message("<span style=\"color:blue\">You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
-		SPAWN_DBG(450)
+		SPAWN_DBG(45 SECONDS)
 			if (mob)
 				if (!mob.organHolder.brain || !mob.organHolder.skull || !mob.organHolder.head)
 					mob.show_message("<span style=\"color:blue\">You fail to rise, your brain has been destroyed.</span>")
@@ -621,7 +621,7 @@
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
 				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
 		else
@@ -832,14 +832,14 @@
 					mob.emote_allowed = 0
 					message = "<span style=\"color:red\"><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
-					SPAWN_DBG(30)
+					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
 			if("burp")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> belches."
 					playsound(get_turf(mob), "sound/voice/burp_alien.ogg", 60, 1)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 		return message
 
@@ -999,7 +999,7 @@
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x-= 1
 							sleep(1)
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						var/beeMax = 15
 						for (var/obj/critter/domestic_bee/responseBee in range(7, src.mob))
 							if (!responseBee.alive)
@@ -1020,7 +1020,7 @@
 
 					if (src.mob.traitHolder && src.mob.traitHolder.hasTrait("happyfeet"))
 						if (prob(33))
-							SPAWN_DBG(5)
+							SPAWN_DBG(5 DECI SECONDS)
 								for (var/mob/living/carbon/human/responseMonkey in range(1, src.mob)) // they don't have to be monkeys, but it's signifying monkey code
 									if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src.mob))
 										continue
@@ -1051,7 +1051,7 @@
 					. = "<B>[mob]</B> screams!"
 					playsound(get_turf(mob), src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch())
 
-					SPAWN_DBG(50)
+					SPAWN_DBG(5 SECONDS)
 						if (mob)
 							mob.emote_allowed = 1
 			if ("fart")
@@ -1100,7 +1100,7 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 
 
@@ -1164,7 +1164,7 @@
 		return "gurgles"
 
 	onDeath()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if (mob)
 				mob.visible_message("<span style=\"color:red\"><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
 				mob.changeStatus("weakened", 150)
@@ -1290,7 +1290,7 @@
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> croaks."
 					playsound(get_turf(mob), "sound/voice/farts/frogfart.ogg", 60, 1)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						if (mob) mob.emote_allowed = 1
 					return message
 			else ..()

@@ -32,7 +32,7 @@
 	// start playing sound
 	play_sound()
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		radial_flock_conversion(src, 20)
 
 /obj/flock_structure/relay/get_desc()
@@ -40,7 +40,7 @@
 	if(time_remaining > 0)
 		return "<br><span class='flocksay bold'>\[[time_remaining] second[s_es(time_remaining)] remaining until broadcast.\]</span>"
 
-/obj/flock_structure/relay/building_specific_info()	
+/obj/flock_structure/relay/building_specific_info()
 	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
 	if(time_remaining > 0)
 		return "<b>Approximately <span class='italic'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
@@ -61,7 +61,7 @@
 				if(prob(50))
 					boutput(M, "<span class='flocksay italic'>... [radioGarbleText("the signal will set you free")] ...</span>")
 	if(elapsed >= charge_time_length)
-		// IT'S TIME, FINISH IT NOW		
+		// IT'S TIME, FINISH IT NOW
 		unleash_the_signal()
 
 /obj/flock_structure/relay/proc/play_sound()
@@ -72,11 +72,11 @@
 		M.playsound_local(M, "sound/ambience/spooky/Flock_Reactor.ogg", 35, 0, 2)
 		boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
-/obj/flock_structure/relay/proc/unleash_the_signal()	
-	processing_items -= src	
+/obj/flock_structure/relay/proc/unleash_the_signal()
+	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
-	desc = "Your life is flashing before your eyes. Looks like this is the end."	
+	desc = "Your life is flashing before your eyes. Looks like this is the end."
 	flock_speak(null, "!!! TRANSMITTING SIGNAL !!!", src.flock)
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
 	for(var/mob/M in mobs)
@@ -84,18 +84,17 @@
 	sleep(final_charge_time_length * 10)
 	// BOOOOOM
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)	
+		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)
 		M.flash(30)
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		emergency_shuttle.incall()
 		emergency_shuttle.can_recall = 0 // yeah centcom's coming no matter what
 		boutput(world, "<span style=\"color:blue\"><B>Alert: The emergency shuttle has been called.</B></span>")
 		boutput(world, "<span style=\"color:blue\">- - - <b>Reason:</b> Hostile transmission intercepted. Sending emergency shuttle.</span>")
-		boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")	
+		boutput(world, "<span style=\"color:blue\"><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	sleep(20)
 	for(var/x = -2 to 2)
 		for(var/y = -2 to 2)
 			flockdronegibs(locate(location.x + x, location.y + y, location.z))
-	explosion_new(src, location, 2000)	
-	gib(location)	
-	
+	explosion_new(src, location, 2000)
+	gib(location)

@@ -3,6 +3,7 @@
  * 90 101 87 97 107 97 39 115  83 116 117 102 102
  */
 
+//foo
 
 //everything here is wip, this can also be ascertained by the location of this file
 
@@ -165,7 +166,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target] viciously!</span>")
 		random_brute_damage(src.target, rand(5,15))
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 
 ////////////////////////////// Underworld Stuff

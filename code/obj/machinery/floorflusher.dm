@@ -68,7 +68,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
 				mode = 0
@@ -112,7 +112,7 @@
 			I.set_loc(src)
 			user.visible_message("[user] drops \the [I] into the [src].", "You drop \the [I] into the inky blackness of the [src].")
 
-		update() 
+		update()
 
 	// mouse drop another mob or self
 
@@ -302,7 +302,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(AM)
 					AM.throw_at(target, 5, 1)
 

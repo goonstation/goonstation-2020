@@ -11,7 +11,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			src.find_partners(src.find_in_range)
 
 	attackby(obj/item/W as obj, mob/user as mob)

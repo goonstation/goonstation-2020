@@ -131,7 +131,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN_DBG(11) // slowing this baby down a little -drsingh
+		SPAWN_DBG(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
 	else
 		var/checkpointC = 0
@@ -433,7 +433,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/field_generator/New()
 	..()
-	SPAWN_DBG(6)
+	SPAWN_DBG(6 DECI SECONDS)
 		if(!src.link && (state == 3))
 			src.get_link()
 
@@ -676,7 +676,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(5) //Send a reply for those curious jerks
+			SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_FIELD", "netid", src.net_id)
 
 		return
@@ -856,7 +856,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/emitter/New()
 	..()
-	SPAWN_DBG(6)
+	SPAWN_DBG(6 DECI SECONDS)
 		if(!src.link && (state == 3))
 			src.get_link()
 
@@ -1076,7 +1076,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	//Otherwise, ff they aren't addressing us, ignore them
 	if(signal.data["address_1"] != src.net_id)
 		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			SPAWN_DBG(5) //Send a reply for those curious jerks
+			SPAWN_DBG(5 DECI SECONDS) //Send a reply for those curious jerks
 				src.post_status(target, "command", "ping_reply", "device", "PNET_ENG_EMITR", "netid", src.net_id)
 
 		return
@@ -1123,7 +1123,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_array/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		updateicon()
 
 
@@ -1250,7 +1250,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_control/New()
 	..()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		updatecons()
 
 /obj/machinery/power/collector_control/proc/updatecons()
@@ -1297,12 +1297,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			S1 = null
 
 		updateicon()
-		SPAWN_DBG(600)
+		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
 	else
 		updateicon()
-		SPAWN_DBG(600)
+		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
 /obj/machinery/power/collector_control/proc/updateicon()
@@ -1622,7 +1622,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
-	SPAWN_DBG(30)
+	SPAWN_DBG(3 SECONDS)
 		for (var/mob/M in range(7,T))
 			boutput(M, "<span class='bold alert'>The containment field on \the [src] fails completely!</span>")
 			shake_camera(M, 5, 1)

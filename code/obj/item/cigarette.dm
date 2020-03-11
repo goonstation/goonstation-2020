@@ -1195,7 +1195,7 @@
 		user.TakeDamage("chest", 0, 100)
 		user.emote("scream")
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)

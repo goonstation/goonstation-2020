@@ -33,7 +33,7 @@
 				src.robo_restart = 1
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
@@ -42,7 +42,7 @@
 				src.robo_restart = 1
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
 						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
@@ -51,7 +51,7 @@
 				src.robo_restart = 1
 				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					if (H)
 						boutput(H, "<span style='color:red'>Your cyberheart fails to return to its normal rhythm!</span>")
 

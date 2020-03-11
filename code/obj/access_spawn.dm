@@ -11,7 +11,7 @@
 	New()
 		..()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			spawn(5)
+			spawn(5 DECI SECONDS)
 				src.setup()
 				qdel(src)
 

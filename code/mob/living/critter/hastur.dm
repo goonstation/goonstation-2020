@@ -162,7 +162,7 @@ var/HasturPresent = 0
 		M.visible_message(pick("<span style=\"color:red\"><B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B></span>","<span style=\"color:red\"><B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B></span>","<span style=\"color:red\"><B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B></span>"))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
 		flick("hastur-devour", M)
-		spawn(7)
+		spawn(7 DECI SECONDS)
 			target.gib()
 			target.icon_state = "lost"
 			target.name = "Soulless [target.real_name]"
@@ -184,7 +184,7 @@ var/HasturPresent = 0
 			M.updateOverlaysClient(M.client)
 			boutput(M, pick("<font color=purple><b>The reality around you fades out..</b></font>","<font color=purple><b>Suddenly your mind feels extremely frail and vulnerable..</b></font>","<font color=purple><b>Your sanity starts to fail you...</b></font>"))
 			playsound(M, "sound/ambience/spooky/Void_Song.ogg", 50, 1)
-			spawn(620)
+			spawn(62 SECONDS)
 				M.removeOverlayComposition(/datum/overlayComposition/insanity)
 				M.updateOverlaysClient(M.client)
 

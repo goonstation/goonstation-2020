@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (kit_styles && kit_styles.len)
 				icon_state = pick(kit_styles)
 				item_state = icon_state
@@ -37,7 +37,7 @@
 		/obj/item/reagent_containers/pill/salicylic_acid,\
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
-		
+
 
 /obj/item/storage/firstaid/brute
 	name = "brute first aid"

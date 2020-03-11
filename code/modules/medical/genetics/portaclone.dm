@@ -22,7 +22,7 @@
 
 			if(computer) computer.portable = 1
 			if(pod1) pod1.portable = 1
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			computer.scanner = scanner
 			computer.pod1 = pod1
 

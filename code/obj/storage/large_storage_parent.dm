@@ -51,7 +51,7 @@
 	var/made_stuff
 	New()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 			//I wonder what it would do for world initialization time to do this when the locker is opened instead.
 			//src.make_my_stuff()
@@ -133,7 +133,7 @@
 					sleep(1)
 				src.pixel_x = 0
 				src.pixel_y = 0
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					src.jiggled = 0
 
 			if (prob(10) && src.can_flip_bust)
@@ -359,7 +359,7 @@
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			if (istype(O, /obj/item/raw_material/))
 				user.visible_message("<span style='color:blue'>[user] begins quickly stuffing materials into [src]!</span>",\
 				"<span style='color:blue'>You begin quickly stuffing materials into [src]!</span>")
@@ -387,7 +387,7 @@
 					if (user.loc != staystill)
 						break
 				user.show_text("You finish stuffing materials into [src]!", "blue")
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if (src.open)
 						src.close()
 
@@ -418,7 +418,7 @@
 					if (user.loc != staystill)
 						break
 				user.show_text("You finish stuffing produce into [src]!", "blue")
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if (src.open)
 						src.close()
 
@@ -428,7 +428,7 @@
 					if (user != O)
 						user.visible_message("<span style='color:red'>[user] stuffs [O] into [src]!</span>",\
 						"<span style='color:red'>You stuff [O] into [src]!</span>")
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						if (src.open)
 							src.close()
 		return ..()
@@ -606,7 +606,7 @@
 		if (src.health <= 0)
 			src.visible_message("<span style='color:red'>[src] breaks apart!</span>")
 			src.dump_contents()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				var/newloc = get_turf(src)
 				make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
 				qdel(src)
@@ -635,7 +635,7 @@
 			return
 		else
 			M.show_text("Is it getting... smaller in here?", "red")
-			SPAWN_DBG(50)
+			SPAWN_DBG(5 SECONDS)
 
 				var/found = 0
 				for (var/mob/contained_mob in src.contents)
@@ -727,7 +727,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (isnum(src.radio_control) && radio_controller)
 				radio_control = max(1000, min(round(radio_control), 1500))
 				src.net_id = generate_net_id(src)
@@ -799,7 +799,7 @@
 					else
 						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
 
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 			return //todo
 
@@ -811,7 +811,7 @@
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.radio_control.post_signal(src, reply, 2)
 			return
 		return

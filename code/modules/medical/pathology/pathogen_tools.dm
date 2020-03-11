@@ -281,7 +281,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			var/datum/pathogen/P = unpool(/datum/pathogen)
 			P.create_weak()
 			var/datum/reagents/RE = src.reagents

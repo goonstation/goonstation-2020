@@ -586,7 +586,7 @@ About the new airlock wires panel:
 		if (AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			src.loseMainPower()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
 			//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
@@ -602,13 +602,13 @@ About the new airlock wires panel:
 					src.updateUsrDialog()
 				boutput(usr, "You hear a click from inside the door.")
 			update_icon()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
 			//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
 			src.loseBackupPower()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			if (src.aiControlDisabled == 0)
@@ -616,20 +616,20 @@ About the new airlock wires panel:
 			else if (src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
 			src.updateDialog()
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				if (src.aiControlDisabled == 1)
 					src.aiControlDisabled = 0
 				else if (src.aiControlDisabled == 2)
 					src.aiControlDisabled = -1
 				src.updateDialog()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
 			if (src.secondsElectrified==0)
 				src.secondsElectrified = 30
 				logTheThing("station", usr, null, "temporarily electrified an airlock at [log_loc(src)] with a pulse.")
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
 					while (src.secondsElectrified>0)
 						src.secondsElectrified-=1
@@ -651,7 +651,7 @@ About the new airlock wires panel:
 			src.safety = 0
 			src.close(1)
 			src.safety = 1
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
@@ -662,7 +662,7 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 50)
 			src.updateUsrDialog()
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
@@ -675,7 +675,7 @@ About the new airlock wires panel:
 		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 			src.loseBackupPower()
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 50)
 			src.updateUsrDialog()
 		if (AIRLOCK_WIRE_AI_CONTROL)
@@ -685,7 +685,7 @@ About the new airlock wires panel:
 				src.aiControlDisabled = 1
 			else if (src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 			src.updateUsrDialog()
 		if (AIRLOCK_WIRE_ELECTRIFY)
@@ -707,13 +707,13 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
 				src.regainMainPower()
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
 				src.updateUsrDialog()
 		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
 			if ((!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)))
 				src.regainBackupPower()
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					src.shock(usr, 50)
 				src.updateUsrDialog()
 		if (AIRLOCK_WIRE_AI_CONTROL)
@@ -1061,7 +1061,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/hack(mob/user as mob)
 	if (src.aiHacking==0)
 		src.aiHacking=1
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			//TODO: Make this take a minute
 			boutput(user, "Airlock AI control has been blocked. Beginning fault-detection.")
 			sleep(50)
@@ -1382,7 +1382,7 @@ About the new airlock wires panel:
 							src.secondsElectrified = 30
 							logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 							message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-							SPAWN_DBG(10)
+							SPAWN_DBG(1 SECOND)
 								while (src.secondsElectrified>0)
 									src.secondsElectrified-=1
 									if (src.secondsElectrified<0)
@@ -1815,7 +1815,7 @@ obj/machinery/door/airlock
 	if(prob(40))
 		if(src.secondsElectrified == 0)
 			src.secondsElectrified = -1
-			SPAWN_DBG(300)
+			SPAWN_DBG(30 SECONDS)
 				src.secondsElectrified = 0
 	return
 
@@ -1895,7 +1895,7 @@ obj/machinery/door/airlock
 				src.secondsElectrified = 30
 				logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 				message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					while (src.secondsElectrified>0)
 						src.secondsElectrified-=1
 						if (src.secondsElectrified<0)

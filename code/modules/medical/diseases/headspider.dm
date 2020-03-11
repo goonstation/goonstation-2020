@@ -52,7 +52,7 @@
 				affected_mob.show_message("<span style=\"color:red\"><b>You feel a mild stabbing pain in your chest!</b></span>")
 				affected_mob.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)
 				affected_mob.updatehealth()
-			move_spider_out(surgeon, affected_mob)				
+			move_spider_out(surgeon, affected_mob)
 			return 1
 
 /datum/ailment/parasite/headspider/proc/move_spider_out(var/mob/living/surgeon, var/mob/living/M)
@@ -138,7 +138,7 @@
 					logTheThing("combat", affected_mob, null, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
 
 					D.stealth_asymptomatic = 1 //Retain the disease but don't actually do anything with it
-					SPAWN_DBG(1200) //Disease stays for two minutes after a complete infection, then it removes itself.
+					SPAWN_DBG(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.
 						affected_mob.cure_disease_by_path(/datum/ailment/parasite/headspider)
 
 				return

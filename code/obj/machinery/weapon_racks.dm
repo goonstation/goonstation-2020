@@ -113,7 +113,7 @@
 		if(!recharges_contents)
 			UnsubscribeProcess()
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (!ispath(src.contained_weapon))
 				logTheThing("debug", src, null, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)

@@ -70,7 +70,7 @@
 					pool(sparks)
 
 	if(livesparks.len)
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			update()
 
 /datum/effects/system/spark_spread/proc/start()
@@ -101,5 +101,5 @@
 			var/distance = rand(1,3)
 			// Store direction and distance to travel as the high quad and low quad of the low byte
 			livesparks[sparks] = direction << 4 | distance
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			update()

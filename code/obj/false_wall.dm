@@ -209,7 +209,7 @@
 	//Temp false walls turn back to regular walls when closed.
 	temp/New()
 		..()
-		SPAWN_DBG(11)
+		SPAWN_DBG(1.1 SECONDS)
 			src.open()
 
 	temp/close()

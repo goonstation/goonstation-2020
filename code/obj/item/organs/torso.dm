@@ -17,7 +17,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if (src.donor)
 				src.bones = new /datum/bone(src)
 				src.bones.donor = src.donor
@@ -54,7 +54,7 @@
 				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas"), 30)
 			else if (prob(30))
 				src.holder.damage_organs(brute/10, 0, 0, list("spleen", "left_lung", "right_lung"), 50)
-	
+
 	heal_damage(brute, burn, tox)
 		if (brute_dam <= 0 && burn_dam <= 0 && tox_dam <= 0)
 			return 0

@@ -14,7 +14,7 @@
 /obj/machinery/power/generator_type2/New()
 	..()
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,WEST)
 		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,EAST)
 		if(!input1 || !input2)

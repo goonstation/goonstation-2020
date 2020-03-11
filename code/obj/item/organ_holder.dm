@@ -112,7 +112,7 @@
 		spleen = null
 		pancreas = null
 		appendix = null
-		
+
 		donor = null
 		..()
 
@@ -135,11 +135,11 @@
 	proc/handle_missing(var/organ_name as text, var/mult = 1)
 		switch (organ_name)
 			if ("liver")
-				donor.take_toxin_damage(2*mult, 1)				
+				donor.take_toxin_damage(2*mult, 1)
 			if ("spleen")
 				if (ishuman(donor))
 					var/mob/living/carbon/human/H = donor
-					H.blood_volume -= 2 * mult			
+					H.blood_volume -= 2 * mult
 			if ("left_kidney")					//I'm lazy... Not making this better right now -kyle
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
@@ -228,7 +228,7 @@
 			organ_list["skull"] = skull
 
 			// For variety and hunters (Convair880).
-			SPAWN_DBG(25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src.donor && src.donor.organHolder && src.donor.organHolder.skull)
 					src.donor.assign_gimmick_skull()
 
@@ -345,7 +345,7 @@
 				organ = "right_lung"
 			else if(organ == butt)
 				organ = "butt"
-			else if(organ == left_kidney) 
+			else if(organ == left_kidney)
 				organ = "left_kidney"
 			else if(organ == right_kidney)
 				organ = "right_kidney"
@@ -1058,7 +1058,7 @@
 					donor.remove_stam_mod_regen("double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					donor.add_stam_mod_regen("single_lung_removal", -3)
-					donor.add_stam_mod_max("single_lung_removal", -75)						
+					donor.add_stam_mod_max("single_lung_removal", -75)
 					lungs_changed = 1
 
 				if (prob(20))
@@ -1067,7 +1067,7 @@
 			if (2)
 				if (working_lungs != lungs_changed)
 					donor.remove_stam_mod_regen("single_lung_removal")
-					donor.remove_stam_mod_max("single_lung_removal")	
+					donor.remove_stam_mod_max("single_lung_removal")
 					donor.remove_stam_mod_regen("double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2

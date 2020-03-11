@@ -292,7 +292,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 				dialogChecklist |= WD_SLEEPER_WARNING
 
 				src.master.speak("Aaa! Please stay away from there! You can't wake him up, okay? It's not safe!")
-				SPAWN_DBG(15)
+				SPAWN_DBG(1.5 SECONDS)
 					src.master.speak("I mean, for him.  Sleepers slow down aging, but it turns out that DNA or whatever still ages really, really slowly.")
 					sleep(10)
 					src.master.speak("And um, it's been so long that when the cell tries to divide it...doesn't work.")
@@ -306,7 +306,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			dialogChecklist |= WD_SOLARIUM
 
 			src.master.speak( "Oh, this place is familiar!  It looks like a ship, a model...um...")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				src.master.speak("I'm sorry, I don't recognize this ship!  Maybe I can interface with its onboard computer though?")
 				sleep(20)
 				src.master.speak("Okay, it's yelling at me in a language I do not understand!  Weird!")
@@ -321,7 +321,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 				dialogChecklist |= WD_SOVBUDDY
 
 				src.master.speak("Privet, tovarishch! Novyy rassvet zhdet vas.")
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					if (src.master)
 						src.master.speak("Please, um, pay no attention to that.  Just saying hello.")
 

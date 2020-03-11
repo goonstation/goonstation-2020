@@ -70,7 +70,7 @@
 		loc = D.trunk
 		active = 1
 		dir = DOWN
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			process()		// spawn off the movement process
 
 		return
@@ -285,7 +285,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 100, 1)
 			H.vent_gas(T)
@@ -299,7 +299,7 @@
 
 				AM.set_loc(T)
 				AM.pipe_eject(0)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					if(AM)
 						AM.throw_at(target, 5, 1)
 				LAGCHECK(LAG_REALTIME)
@@ -341,7 +341,7 @@
 			// otherswise, do normal expel from turf
 			expel(H, T, 0)
 
-		SPAWN_DBG(2)	// delete pipe after 2 ticks to ensure expel proc finished
+		SPAWN_DBG(2 DECI SECONDS)	// delete pipe after 2 ticks to ensure expel proc finished
 			qdel(src)
 
 
@@ -1259,7 +1259,7 @@
 
 		bioHolder.active = 1
 		bioHolder.dir = biodir
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			bioHolder.process()
 
 		return nonBioPipe
@@ -1319,7 +1319,7 @@
 			for(var/atom/movable/AM in H)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					AM.throw_at(stuff_chucking_target, 3, 1)
 			H.vent_gas(src.loc)
 			pool(H)
@@ -1390,7 +1390,7 @@
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
 				AM.pipe_eject(dir)
-				SPAWN_DBG(1)
+				SPAWN_DBG(1 DECI SECOND)
 					AM.throw_at(stuff_chucking_target, 3, 1)
 			if (H.contents.len < 1)
 				H.vent_gas(src.loc)
@@ -1600,7 +1600,7 @@
 	New()
 		..()
 		dpdir = dir
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			getlinked()
 
 		update()
@@ -1718,9 +1718,9 @@
 	New()
 		..()
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			target = get_ranged_target_turf(src, dir, 10)
-		SPAWN_DBG(8)
+		SPAWN_DBG(8 DECI SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if(!src.net_id)
@@ -1776,7 +1776,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 3, 1)
 			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)
@@ -1857,7 +1857,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
 			LAGCHECK(LAG_REALTIME)
 		H.vent_gas(src.loc)

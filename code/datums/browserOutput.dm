@@ -92,7 +92,7 @@ var/global
 				src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
 
 				if (src.loadAttempts < 5) //To a max of 5 load attempts
-					SPAWN_DBG(200) //20 seconds
+					SPAWN_DBG(20 SECONDS) //20 seconds
 						if (src.owner && !src.loaded)
 							src.loadAttempts++
 							src.load()
@@ -126,7 +126,7 @@ var/global
 				else
 					src.sendClientData()
 					/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
-					SPAWN_DBG(600) //60 seconds
+					SPAWN_DBG(1 MINUTE) //60 seconds
 						if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
 							out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
 							del(src.owner)

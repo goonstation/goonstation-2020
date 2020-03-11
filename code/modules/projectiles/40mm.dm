@@ -55,4 +55,4 @@ toxic - poisons
 	New()
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
-		SPAWN_DBG(5)	qdel(src)
+		SPAWN_DBG(5 DECI SECONDS)	qdel(src)

@@ -85,7 +85,7 @@
 				"<span style=\"color:red\">You trip over [src]!</span>")
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)
-				user.changeStatus("weakened", 1 SECONDS)
+				user.changeStatus("weakened", 1 SECOND)
 				return
 			else
 				user.show_text("You scoot around [src].")

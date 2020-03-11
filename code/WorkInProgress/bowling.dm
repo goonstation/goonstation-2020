@@ -56,7 +56,7 @@
 
 		if(!air_contents)
 			air_contents = unpool(/datum/gas_mixture)
-		
+
 	disposing()
 		if(air_contents)
 			pool(air_contents)
@@ -97,7 +97,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1)
+			SPAWN_DBG(1 DECI SECOND)
 				if(AM)
 					AM.throw_at(target, 5, 1)
 

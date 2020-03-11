@@ -21,7 +21,7 @@ CONTENTS:
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			process()
 
 	proc/process()
@@ -139,7 +139,7 @@ CONTENTS:
 
 	New()
 		..()
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			update_chairs()
 
 		overlays_list["cables"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-cables")
@@ -405,7 +405,7 @@ CONTENTS:
 				B.changeStatus("weakened", 5 SECONDS)
 				B.show_text("<B>IT HURTS!</B>", "red")
 				B.shock(src, 75000, ignore_gloves=1)
-				SPAWN_DBG(50)
+				SPAWN_DBG(5 SECONDS)
 					playsound(src.loc, 'sound/machines/modem.ogg', 100, 1)
 					A.show_text("<B>You feel your mind slipping...</B>", "red")
 					A.drowsyness = max(A.drowsyness, 10)
@@ -467,6 +467,6 @@ CONTENTS:
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50,1)
 				src.visible_message("<span style=\"color:red\">\The [src] emits a whirring and clicking noise followed by an angry beep!</span>")
 
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			operating = 0
 			update_icons()

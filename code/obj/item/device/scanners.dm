@@ -38,7 +38,7 @@ Contains:
 				return
 			if(A.interesting && src.on)
 				user.visible_message("<span style=\"color:red\"><b>[user]</b> has scanned the [A].</span>")
-				boutput(user, "<br><i>Historical analysis:</i><br><span style='color:blue'>[A.interesting]</span>") 
+				boutput(user, "<br><i>Historical analysis:</i><br><span style='color:blue'>[A.interesting]</span>")
 				return
 		else if (istype(A, /obj) && A.interesting)
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> has scanned the [A].</span>")
@@ -67,7 +67,7 @@ Contains:
 				if(O.invisibility == 101)
 					O.invisibility = 0
 					O.alpha = 128
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						if(O && isturf(O.loc))
 							var/turf/U = O.loc
 							if(U.intact)
@@ -77,7 +77,7 @@ Contains:
 			var/mob/living/M = locate() in T
 			if(M && M.invisibility == 2)
 				M.invisibility = 0
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					if(M)
 						M.invisibility = 2
 
@@ -93,7 +93,7 @@ Contains:
 	name = "experimental scanner"
 	desc = "a bodged-together T-Ray scanner with a few coils cut, and a few extra coils tied-in."
 //	var/trange = 2 //depending how sluggish this is, could go up to 3 with a toggle perhaps?
-	
+
 	process()
 		if(!on)
 			processing_items.Remove(src)
@@ -112,14 +112,14 @@ Contains:
 			var/mob/living/M = locate() in T
 			if(M && M.invisibility == 2)
 				M.invisibility = 0
-				SPAWN_DBG(6)
+				SPAWN_DBG(6 DECI SECONDS)
 					if(M)
 						M.invisibility = 2
 
 		for(var/obj/O in range(2, loc_to_check) )
 			if(O.interesting)
-				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)	
-				
+				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)
+
 /*
 he`s got a craving
 for american haiku
@@ -209,7 +209,7 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			.(T)
 
 ///////////////////////////////////// Health analyzer ////////////////////////////////////////

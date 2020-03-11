@@ -46,7 +46,7 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		turbine = locate() in get_step(src, get_dir(inturf, src))
 		if(!turbine)
 			status |= BROKEN
@@ -99,7 +99,7 @@
 
 	outturf = get_step(src, dir)
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 
 		compressor = locate() in get_step(src, get_dir(outturf, src))
 		if(!compressor)
@@ -222,7 +222,7 @@
 
 /obj/machinery/computer/turbine_computer/New()
 	..()
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		for(var/obj/machinery/compressor/C in machines)
 			if(id == C.comp_id)
 				compressor = C

@@ -181,7 +181,7 @@
 	else if(isturf(hit_atom))
 		var/turf/T = hit_atom
 		if(T.density)
-			//SPAWN_DBG(2) step(src, turn(src.dir, 180))
+			//SPAWN_DBG(2 DECI SECONDS) step(src, turn(src.dir, 180))
 			if(ismob(src)) src:throw_impacted(hit_atom)
 			/*if(istype(hit_atom, /turf/simulated/wall) && isitem(src))
 				var/turf/simulated/wall/W = hit_atom

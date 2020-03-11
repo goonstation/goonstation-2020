@@ -142,7 +142,7 @@
 
 		window = new(src)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(5 DECI SECONDS)
 			circ1 = locate(/obj/machinery/atmospherics/binary/circulatorTemp) in get_step(src,WEST)
 			circ2 = locate(/obj/machinery/atmospherics/binary/circulatorTemp/right) in get_step(src,EAST)
 			if(!circ1 || !circ2)
@@ -242,7 +242,7 @@
 			else if (genlev && !running)
 				playsound(src.loc, sound_tractorrev, 55, 0)
 				running = 1
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				spam_limiter = 0
 
 		window.UpdateTEG()
@@ -349,7 +349,7 @@
 						W.smash()
 					for (var/mob/living/M in range(6, src.loc))
 						shake_camera(M, 3, 2)
-						M.changeStatus("weakened", 1 SECONDS)
+						M.changeStatus("weakened", 1 SECOND)
 					for (var/atom/A in range(rand(1,3), src.loc))
 						if (istype(A, /turf/simulated))
 							A.pixel_x = rand(-1,1)
@@ -407,7 +407,7 @@
 			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(6) pool(O)
+				SPAWN_DBG(6 DECI SECONDS) pool(O)
 
 			//var/turf/currTurf = get_turf(target)
 			//currTurf.hotspot_expose(2000, 400)

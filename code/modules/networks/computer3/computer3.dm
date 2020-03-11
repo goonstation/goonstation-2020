@@ -266,7 +266,7 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN_DBG(4)
+	SPAWN_DBG(4 DECI SECONDS)
 
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
@@ -880,7 +880,7 @@ function lineEnter (ev)
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, 5)
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			src.restarting = 0
 			src.post_system()
 
@@ -977,7 +977,7 @@ function lineEnter (ev)
 
 	New()
 		..()
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			if(!luggable)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src

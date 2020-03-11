@@ -391,7 +391,7 @@
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
-			SPAWN_DBG(20)
+			SPAWN_DBG(2 SECONDS)
 				qdel(B)
 				B=null
 			var/radrange = 1

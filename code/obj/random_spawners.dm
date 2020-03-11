@@ -13,9 +13,9 @@
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	New()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.spawn_items()
-			SPAWN_DBG(100)
+			SPAWN_DBG(10 SECONDS)
 				qdel(src)
 
 	proc/spawn_items()
@@ -364,7 +364,7 @@
 	var/obj/machinery/vehicle/pod2spawn = null
 
 	New()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.set_up()
 			SPAWN_DBG(10)
 				qdel(src)

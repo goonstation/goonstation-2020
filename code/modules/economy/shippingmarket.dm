@@ -112,7 +112,7 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
 			var/removed_count = 0

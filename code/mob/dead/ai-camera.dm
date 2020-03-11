@@ -358,7 +358,7 @@
 		..()
 		if(mainframe)
 			mainframe.cancel_camera()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.return_mainframe()
 
 	verb/ai_call_shuttle()

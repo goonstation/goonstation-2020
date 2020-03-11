@@ -128,7 +128,7 @@
 			src.y--
 			src.x--
 	src.canmove = 0
-	SPAWN_DBG(2) src.canmove = 1
+	SPAWN_DBG(2 DECI SECONDS) src.canmove = 1
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return

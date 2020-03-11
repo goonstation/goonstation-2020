@@ -15,9 +15,9 @@
 		if(triggerable)
 			triggerable_id = triggerable
 			triggerable = null
-		spawn(1)
+		spawn(1 DECI SECOND)
 			src.link_elements()
-			spawn(10)
+			spawn(1 SECOND)
 				qdel(src)
 
 	proc/link_elements()

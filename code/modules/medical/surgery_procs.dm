@@ -728,9 +728,9 @@
 			5.0 = snip -> 6.0 || cut -> 7.0 || saw -> 8.0
 			6.0 = snip is remove pancreas || cut is remove spleen
 			7.0 = snip is remove kidneys
-			8.0 = cut -> 9.0 
+			8.0 = cut -> 9.0
 			9.0 = saw is remove heart
-			
+
 			remove lungs = 		snip -> saw -> snip -> Right/Left hands for removing R/L lungs
 			remove appendix = 	snip -> snip -> snip
 			remove liver = 		snip -> snip -> cut
@@ -897,7 +897,7 @@
 							take_bleeding_damage(patient, surgeon, damage_low)
 						else
 							surgeon.show_text("You clamp the bleeders with the hemostat.", "blue")
-					
+
 						logTheThing("combat", surgeon, patient, "removed %target%'s spleen with [src].")
 						patient.updatehealth()
 						patient.organHolder.drop_organ("spleen")
@@ -964,7 +964,7 @@
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message("<span style='color:red'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
 		"<span style='color:red'>You mishandle [src] and cut yourself!</span>")
-		surgeon.changeStatus("weakened", 1 SECONDS)
+		surgeon.changeStatus("weakened", 1 SECOND)
 		var/damage = rand(10, 20)
 		random_brute_damage(surgeon, damage)
 		take_bleeding_damage(surgeon, damage)
@@ -1296,7 +1296,7 @@
 
 				if (3.0)
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-					
+
 					if (!patient.organHolder || !patient.organHolder.get_organ("heart"))
 						src.surgeryConfusion(patient, surgeon, damage_low)
 						return 1
@@ -1830,7 +1830,7 @@
 /* ------------ SNIP ----------- */
 /* ============================= */
 
-/obj/item/proc/snip_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)	
+/obj/item/proc/snip_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
 	if (!surgeryCheck(patient, surgeon))
 		return 0
 
@@ -1864,7 +1864,7 @@
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) damage_low is [damage_low], damage_high is [damage_high]</b>")
 
 /* ---------- SNIP - chest ---------- */
-	if (surgeon.zone_sel.selecting == "chest")		
+	if (surgeon.zone_sel.selecting == "chest")
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if (0.0)

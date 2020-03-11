@@ -42,7 +42,7 @@
 
 	range = max(world.maxx,world.maxy)
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		var/turf/origin = get_rear_turf()
 		if(!origin) return //just in case
 		dir_loop:

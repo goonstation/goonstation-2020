@@ -155,7 +155,7 @@ THROWING DARTS
 
 	New()
 		..()
-		SPAWN_DBG(100)
+		SPAWN_DBG(10 SECONDS)
 			if (radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
 			if (!src.net_id)
@@ -408,7 +408,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				if (!H.reagents.has_reagent("omnizine", 10))
 					H.reagents.add_reagent("omnizine", 10)
 				src.inactive = 1
-				SPAWN_DBG(300) src.inactive = 0
+				SPAWN_DBG(30 SECONDS) src.inactive = 0
 		..()
 
 
@@ -426,7 +426,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if (H.mind in ticker.mode:head_revolutionaries)
 				H.visible_message("<span style=\"color:red\"><b>[H] resists the loyalty implant!</b></span>")
-				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 2.4)
 				//src.on_remove(H)
@@ -434,7 +434,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				//src.set_loc(get_turf(H))
 			else if (H.mind in ticker.mode:revolutionaries)
 				H.TakeDamage("chest", 1, 1, 0)
-				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				H.emote("scream")
 				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 1.6)
@@ -695,7 +695,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 				boutput(M, "<span style=\"color:red\">Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
 
 				// 1 minute left
-				SPAWN_DBG(600)
+				SPAWN_DBG(1 MINUTE)
 					if (src && !ishuman(src.loc))
 						if (src.expire && (src.expired != 1)) src.expired = 1
 						return
@@ -817,7 +817,7 @@ var/global/list/tracking_implants = list() // things were looping through world 
 			return
 
 	src.bleed_timer = bleed_time
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 //		boutput(C, "<span style=\"color:red\">You start bleeding!</span>") // the blood system takes care of this bit now
 		src.bleed_loop()
 

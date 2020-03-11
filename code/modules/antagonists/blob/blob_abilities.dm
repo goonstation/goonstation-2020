@@ -595,7 +595,7 @@
 		var/destination_z = current_target_z - 6
 		animate(H, time = 10, alpha = 1, pixel_z = destination_z, easing = LINEAR_EASING)
 		SPAWN_DBG(0)
-			sleep(1 SECONDS)
+			sleep(1 SECOND)
 			H.lying = 1
 			H.skeletonize()
 			H.transforming = 0

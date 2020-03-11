@@ -53,7 +53,7 @@
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
-	spawn(8)
+	spawn(8 DECI SECONDS)
 		if(!src || (src.qdeled)) //The capsule was deleted as it was expanding.
 			return
 		var/obj/critter/C = new animal_to_spawn(get_turf(src))
@@ -63,7 +63,7 @@
 
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
 	user.visible_message("<span style=\"color:red\"><b>[user] is eating [src]!</b></span>")
-	spawn(20)
+	spawn(2 SECONDS)
 		if(!src || (src.qdeled))
 			return
 		var/obj/critter/C = new animal_to_spawn(user.loc)

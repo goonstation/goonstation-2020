@@ -1136,7 +1136,7 @@
 		src.pilot = M
 		src.ion_trail.start()
 
-	SPAWN_DBG(5)
+	SPAWN_DBG(5 DECI SECONDS)
 		boarding = 0*/
 
 

@@ -40,7 +40,7 @@
 			loc = location
 			effect = image('icons/effects/effects.dmi', src, "ykingvanish", 4)
 			trg << effect
-			SPAWN_DBG(3)	qdel(src)
+			SPAWN_DBG(3 DECI SECONDS)	qdel(src)
 		else	qdel(src)
 
 
@@ -60,7 +60,7 @@
 		showimg = image('icons/misc/critter.dmi', src, "kingyellow", 3)
 		target << showimg
 		src.dir = get_dir(src, target)
-		SPAWN_DBG(5) update()
+		SPAWN_DBG(5 DECI SECONDS) update()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		vanish()
@@ -73,11 +73,11 @@
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
 		if(get_dist(src,target) <= 2) vanish()
 		src.dir = get_dir(src, target)
-		SPAWN_DBG(5) update()
+		SPAWN_DBG(5 DECI SECONDS) update()
 
 	proc/vanish()
 		new/obj/kingyellow_vanish(src.loc, target)
-		SPAWN_DBG(3)	qdel(src)
+		SPAWN_DBG(3 DECI SECONDS)	qdel(src)
 
 /obj/item/book_kinginyellow
 	name = "\"The King In Yellow\""
@@ -101,7 +101,7 @@
 			if(oovTile != null && curr_phantom == null)
 				curr_phantom = new/obj/kingyellow_phantom(oovTile, L)
 
-		SPAWN_DBG(30) work()
+		SPAWN_DBG(3 SECONDS) work()
 		return
 
 	examine()

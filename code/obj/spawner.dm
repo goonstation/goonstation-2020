@@ -218,7 +218,7 @@
 		if(!isturf(src.loc))
 			dispose()
 			return
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			explode()
 
 	Bumped(atom/A)

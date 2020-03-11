@@ -79,7 +79,7 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 		random_brute_damage(src.target, 1)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
 		if(iscarbon(M))
 			if(diseased && prob(10))
@@ -121,7 +121,7 @@
 				if (food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
 					food_target.reagents.trans_to(src, 5)
 				src.food_target.amount--
-				SPAWN_DBG(25)
+				SPAWN_DBG(2.5 SECONDS)
 				if(src.food_target != null && src.food_target.amount <= 0)
 					qdel(src.food_target)
 					src.task = "thinking"
@@ -299,7 +299,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.was_harmed(src)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 		src.attacking = 0
 		return
 
@@ -330,7 +330,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		walk_to(src,0)
 		src.visible_message("<b>[src]</b> dies!")
 		if(prob(5))
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<b>[src]</b> comes back to life, good thing he has 9 lives!")
 				src.alive = 1
 				set_density(1)
@@ -420,7 +420,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 				random_brute_damage(src.target, 6)
 				sleep(2)
 
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				src.attacking = 0
 
 /obj/critter/cat/synth
@@ -504,7 +504,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 				src.icon_state = "[src.doggy]-lying"
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<span style=\"color:blue\"><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
 		else
@@ -519,7 +519,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 		walk_to(src,0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
-		SPAWN_DBG(600)
+		SPAWN_DBG(1 MINUTE)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("<span style=\"color:blue\"><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
@@ -665,7 +665,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			*/
 
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				boutput(M, "<span style=\"color:red\"><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
@@ -682,7 +682,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.drop_item()
 			W.set_loc(src)
 
-			SPAWN_DBG(600)
+			SPAWN_DBG(1 MINUTE)
 				src.visible_message("<span style=\"color:red\"><B>The [src] suddenly regurgitates something!</B></span>")
 				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
@@ -1045,7 +1045,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		for (var/obj/critter/parrot/P in view(7,src))
 			if (P.alive && !P.sleeping)
 				P.aggressive = 1
-				SPAWN_DBG(7)
+				SPAWN_DBG(7 DECI SECONDS)
 					if (P)
 						P.aggressive = 0
 
@@ -1353,7 +1353,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (!src.alive || src.sleeping)
 			return
 		src.icon_state = "[src.species]-flap"
-		SPAWN_DBG(38)
+		SPAWN_DBG(3.8 SECONDS)
 			src.icon_state = src.species
 		return
 
@@ -1777,7 +1777,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.visible_message("<b>[src]</b> [msg]!",2)
 			src.icon_state = pick("boogie-d1","boogie-d2","boogie-d3")
 			// maybe later make it ambient play a short chiptune here later or at least some new sound effect
-			SPAWN_DBG(200)
+			SPAWN_DBG(20 SECONDS)
 				if (src) src.icon_state = "boogie"
 
 	ai_think()

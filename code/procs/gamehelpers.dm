@@ -118,7 +118,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(5)
+					SPAWN_DBG(5 DECI SECONDS)
 						qdel(O)
 
 				return 1

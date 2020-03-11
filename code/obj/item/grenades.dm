@@ -46,7 +46,7 @@ PIPE BOMBS + CONSTRUCTION
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
-				SPAWN_DBG(5)
+				SPAWN_DBG(5 DECI SECONDS)
 					if (src) prime()
 					return
 			else
@@ -294,7 +294,7 @@ PIPE BOMBS + CONSTRUCTION
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
 			shoot_projectile_ST(src, PJ, newtarget)
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -337,7 +337,7 @@ PIPE BOMBS + CONSTRUCTION
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
 			O.icon_state = "explo_fiery"
-			SPAWN_DBG(5)
+			SPAWN_DBG(5 DECI SECONDS)
 				qdel(O)
 				qdel(src)
 		else
@@ -542,10 +542,10 @@ PIPE BOMBS + CONSTRUCTION
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
 						N.flash(30)
-				SPAWN_DBG(2)
+				SPAWN_DBG(2 DECI SECONDS)
 					if (old_light_grenade)
 						random_brute_damage(user, 200)
-						SPAWN_DBG(1)
+						SPAWN_DBG(1 DECI SECOND)
 							if (isdead(user) || user.nodamage || isAI(user)) return
 							logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
 							var/mob/dead/observer/newmob
@@ -580,7 +580,7 @@ PIPE BOMBS + CONSTRUCTION
 		E.fingerprintslast = src.fingerprintslast
 
 		invisibility = 100
-		SPAWN_DBG(150)
+		SPAWN_DBG(15 SECONDS)
 			qdel (src)
 
 	proc/beep(i)
@@ -1231,9 +1231,9 @@ PIPE BOMBS + CONSTRUCTION
 		logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 
 		if (sound_effect)
-			SPAWN_DBG(40) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
+			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
 				playsound(get_turf(src), sound_effect, 50, 1)
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
 	proc/do_explode()

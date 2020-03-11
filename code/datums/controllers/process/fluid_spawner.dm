@@ -39,7 +39,7 @@ datum/controller/process/fluid_turfs
 
 		src.processing_fluid_turfs = global.processing_fluid_turfs
 
-		SPAWN_DBG(200)
+		SPAWN_DBG(20 SECONDS)
 			if (clients.len >= OSHAN_LIGHT_OVERLOAD)
 				do_light_gen = 0
 

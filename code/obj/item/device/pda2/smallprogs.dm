@@ -732,7 +732,7 @@ Code:
 
 		if(!detonating)
 			src.detonating = 1
-			SPAWN_DBG(10)
+			SPAWN_DBG(1 SECOND)
 				src.master.explode()
 
 		return dat
@@ -946,7 +946,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			data_core.tickets += T
 
 			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				var/obj/item/paper/p = unpool(/obj/item/paper)
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
@@ -1002,7 +1002,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-				SPAWN_DBG(30)
+				SPAWN_DBG(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = unpool(/obj/item/paper)
 					p.set_loc(get_turf(src.master))
@@ -1023,7 +1023,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			var/datum/fine/F = locate(href_list["approve"])
 
 			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(30)
+			SPAWN_DBG(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = unpool(/obj/item/paper)

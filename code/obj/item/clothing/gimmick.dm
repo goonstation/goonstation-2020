@@ -347,12 +347,12 @@
 	if (!user || user.wear_mask == src || get_dist(user, src) > 0)
 		return 0
 	user.visible_message("<span style=\"color:red\"><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
 		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 25, 0, 0)
-		SPAWN_DBG(15)
+		SPAWN_DBG(1.5 SECONDS)
 			user.emote("scream")
-			SPAWN_DBG(15)
+			SPAWN_DBG(1.5 SECONDS)
 				user.implode()
 	return 1
 

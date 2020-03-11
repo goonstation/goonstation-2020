@@ -1,11 +1,11 @@
-slurm - Host
-gibbed - Host
+slurm - Inactive
+gibbed - Inactive
 stuntwaffle - Inactive
 wirewraith - Host
 
 pantaloons - Inactive
 keelin - Coder
-exadv1 - Coder
+exadv1 - Inactive
 nannek - Inactive
 0staf - Inactive
 emarl - Coder
@@ -21,12 +21,12 @@ drmelon - Inactive
 magicmountain - Coder
 infinitemonkeys - Coder
 ishallriseagain - Inactive
-aphtonites - Coder
+aphtonites - Inactive
 drcogwerks - Coder
 volundr - Coder
 burntcornmuffin - Coder
-hullcrushdepth - Coder
-tobba - Coder
+hullcrushdepth - Inactive
+tobba - Inactive
 biggsmclargehuge - Coder
 wonkmin - Coder
 marquesas - Inactive
@@ -54,38 +54,44 @@ gerhazo - Coder
 arthurmuggins - Shit Person
 rolandtdapperman - Inactive
 sledra - Inactive
-pacra - Shit Person
-heiraphont - Inactive
+pacra - Inactive
+heiraphont - Shit Person
 hukhukhuk - Shit Person
-gorillamydreams - Shit Person
-atomicthumbs - Shit Person
+gorillamydreams - Inactive
+atomicthumbs - Inactive
 popecrunch - Shit Person
 insanoblan - Shit Person
 mrfishstick - Inactive
-uryvichk - Shit Person
+uryvichk - Inactive
 hufflaw - Shit Person
 shotgunbill - Shit Person
 housekeep - Shit Person
+souricelle - Shit Person
+freshlemon - Shit Person
+darkchis - Shit Person
 
 synthorange - Inactive
 saorangesoda - Inactive
 spacemarine9 - Inactive
 lison - Primary Administrator
-souricelle - Primary Administrator
-readster - Primary Administrator
 enallyniv - Inactive
 hokie - Primary Administrator
-freshlemon - Primary Administrator
-jasmine87 - Primary Administrator
-darkchis - Primary Administrator
+jasmine87 - Inactive
+69andahalf - Primary Administrator
+tinyturtle - Inactive
+sydne66 - Primary Administrator
+flaborized - Primary Administrator
+reginaldhj - Primary Administrator
+questx - Primary Administrator
+simianc - Primary Administrator
+sageacrin - Primary Administrator
 
-tellaris - Administrator
+tellaris - Inactive
 dementedghost - Inactive
 blinkdog01 - Inactive
-mysha - Administrator
-
-arikie - Secondary Administrator
-spacenaba - Secondary Administrator
+mysha - Inactive
+arikie - Inactive
+spacenaba - Inactive
 lisi - Inactive
 slthepyro - Secondary Administrator
-wrongendoftherainbow - Secondary Administrator
+pali6 - Secondary Administrator

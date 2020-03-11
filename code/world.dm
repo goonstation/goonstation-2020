@@ -849,7 +849,7 @@ var/f_color_selector_handler/F_Color_Selector
 								if(SOUTHWEST)
 									twitch_mob.keys_changed(KEY_BACKWARD|KEY_LEFT, KEY_BACKWARD|KEY_LEFT)
 
-							SPAWN_DBG(1)
+							SPAWN_DBG(1 DECI SECOND)
 								twitch_mob.keys_changed(0,0xFFFF)
 
 							return 1
@@ -1467,7 +1467,7 @@ var/f_color_selector_handler/F_Color_Selector
 					message_admins("<font color='blue'>[game_end_delayer] removed the restart delay from IRC and triggered an immediate restart.</font>")
 					ircmsg["msg"] = "Removed the restart delay."
 
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						ircbot.event("roundend")
 						Reboot_server()
 

@@ -269,7 +269,7 @@
 		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder)
 		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
 		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			if (holder && !l_arm || !r_arm || !l_leg || !r_leg)
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
 				create()
@@ -754,7 +754,7 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
-		SPAWN_DBG(7) //Length of animation.
+		SPAWN_DBG(7 DECI SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
@@ -767,7 +767,7 @@
 	return
 
 /mob/living/carbon/human/movement_delay(var/atom/move_target = 0, running = 0)
-	var/baseSpeed = 1.28 // 1.2 run, 2 walk, 0.75 sprint were base
+	var/baseSpeed = 1.3 // 1.2 run, 2 walk, 0.75 sprint were base
 	var/runScaling = 0.2 //change this to affect how powerful sprinting is, ie what percent of extra tally is maintained over the minSpeed
 
 	var/tally = baseSpeed
@@ -806,36 +806,6 @@
 	if (src.hasStatus("gang_drug"))
 		health_deficiency -= 50
 	if (health_deficiency >= 30) tally += (health_deficiency / 25)
-
-	if (src.wear_suit) //mbc : what the heck? Why isn't this using the ObjectProperty system? better leave it alone!
-		switch(src.wear_suit.type)
-			if (/obj/item/clothing/suit/straight_jacket)
-				tally += 15
-			if (/obj/item/clothing/suit/fire)	//	firesuits slow you down a bit
-				tally += 1
-			if (/obj/item/clothing/suit/fire/armored)	//	firesuits slow you down a bit
-				tally += 1
-			if (/obj/item/clothing/suit/fire/heavy)	//	firesuits slow you down a bit
-				tally += 2
-			if (/obj/item/clothing/suit/space)
-				if (!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space;
-					tally += 0.8
-			if (/obj/item/clothing/suit/space/engineer)
-				if (!istype(src.loc, /turf/space)) // bulky engineering space suits slow you down quite a lot unless in space;
-					tally += 0.8
-			if (/obj/item/clothing/suit/space/captain)
-				tally += 0.4 // it's more ornamental okay??
-			if (/obj/item/clothing/suit/armor/heavy)
-				tally += 2
-			if (/obj/item/clothing/suit/armor/EOD)
-				tally += 0.6 // i'd like people to actually consider using these
-			if (/obj/item/clothing/suit/armor/ancient) // cogwerks - new evil armor thing
-				tally += 2
-			if (/obj/item/clothing/suit/space/emerg)
-				if (!istype(src.loc, /turf/space))
-					tally += 2 // cogwerks - lowered this from 10 //Noah Buttes - Lowered this from 3 because they're practically useless as is
-			if (/obj/item/clothing/suit/space/suv)
-				tally += 1.0
 
 	var/in_wheelchair = 0
 	if (src.buckled)
@@ -908,15 +878,24 @@
 			tally *= max(H.p_class, 1)
 
 	var/has_fluid_move_gear = 0
+	var/has_space_move_gear = 0
+
 	for(var/atom in src.get_equipped_items())
 		var/obj/item/I = atom
 		tally += I.getProperty("movespeed")
 		has_fluid_move_gear += I.getProperty("negate_fluid_speed_penalty")
+		has_space_move_gear += I.getProperty("space_movespeed")
+
+
+	if (has_space_move_gear)
+		var/turf/T = get_turf(src)
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE))
+			tally += has_space_move_gear
 
 	if (!(src.mutantrace && src.mutantrace.aquatic)) //aquatic race suffers no penalty on dry land OR in fluid
 		var/turf/T = get_turf(src)
 		if (T && has_fluid_move_gear)		//add tally : we are on dry land and have gear on
-			if (! (T.active_liquid || istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid)) )
+			if (!T.active_liquid && !(T.turf_flags & FLUID_MOVE))
 				tally += has_fluid_move_gear
 		else if (T && !has_fluid_move_gear) 	//add tally : we are in fluid but have no gear
 			if (T.active_liquid)
@@ -1160,7 +1139,7 @@
 			var/mob/living/carbon/C = item
 			logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
-				C.changeStatus("weakened", 1 SECONDS)
+				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
@@ -1484,7 +1463,7 @@
 
 	/*
 	if (src.ckey == "wonkmin") //If you mention this i will shank you.
-		SPAWN_DBG(150)
+		SPAWN_DBG(15 SECONDS)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter)
 	*/
 	return
@@ -1797,7 +1776,7 @@
 	//mbc FUCK why doesn't this have any parent to call
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
@@ -2339,7 +2318,7 @@
 
 		var/loc = usr.loc
 
-		SPAWN_DBG(50)
+		SPAWN_DBG(5 SECONDS)
 			if (usr.loc != loc || H.loc != loc)
 				boutput(usr, "<span style=\"color:red\">Your consumption of [H] was interrupted!</span>")
 				return
@@ -2552,7 +2531,7 @@
 					if (src.shoes)
 						src.drop_from_slot(src.shoes)
 					make_cleanable(/obj/decal/cleanable/ash,src.loc)
-					SPAWN_DBG(1)
+					SPAWN_DBG(1 DECI SECOND)
 						src.elecgib()
 				else
 					boutput(src, "<span style=\"color:red\"><b>[origin] blasts you with an arc flash!</b></span>")
@@ -2727,7 +2706,7 @@
 		flick("spidergib", animation)
 		src.visible_message("<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font></span>", "<span style=\"color:red\"><font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font></span>", "<span style=\"color:red\">You hear a vile chittering sound.</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/I = 0, I < 4, I++)
 				new /obj/critter/spider/baby(src.loc)
@@ -2738,7 +2717,7 @@
 	if (animation)
 		animation.delaydispose()
 
-	SPAWN_DBG(15)
+	SPAWN_DBG(1.5 SECONDS)
 		qdel(src)
 
 /mob/living/carbon/human/get_equipped_items()
@@ -3228,7 +3207,7 @@
 		else
 			// If it's not an "item", deal medium damage
 			src.show_text("<span style=\"color:red\"><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
-			src.changeStatus("stunned", 1 SECONDS)
+			src.changeStatus("stunned", 1 SECOND)
 			src.TakeDamage("chest", 20, 0, 0, DAMAGE_BLUNT)
 			take_bleeding_damage(src, src, 5)
 		// added log - cirr

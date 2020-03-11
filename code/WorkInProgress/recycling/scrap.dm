@@ -245,7 +245,7 @@
 // when dropped, try to make a pile if scrap is already there
 /obj/item/scrap/dropped()
 
-	SPAWN_DBG(2)	// delay to allow drop postprocessing (since src may be destroyed)
+	SPAWN_DBG(2 DECI SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
 		for(var/obj/item/scrap/S in oview(0,src))	// excludes src itself
 			S.add_scrap(src)
 

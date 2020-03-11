@@ -185,7 +185,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(60) // patch up some ugly corners in derelict mode
+		SPAWN_DBG(6 SECONDS) // patch up some ugly corners in derelict mode
 			if (derelict_mode)
 				if (src.icon_state == "[src.icon_style]_space")
 					src.icon_state = "[src.icon_style]_void"

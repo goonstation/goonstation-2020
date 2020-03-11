@@ -10,7 +10,7 @@
 
 /obj/machinery/meter/New()
 	..()
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 	return 1
@@ -53,7 +53,7 @@
 			if(prob(50))
 				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 				noiselimiter = 1
-				SPAWN_DBG(60)
+				SPAWN_DBG(6 SECONDS)
 				noiselimiter = 0
 
 

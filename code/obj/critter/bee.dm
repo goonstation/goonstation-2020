@@ -124,7 +124,7 @@
 			if (!istype(M))
 				return ..()
 
-			SPAWN_DBG(8) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+			SPAWN_DBG(8 DECI SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
 			if ((M.loc != src) && ((issilicon(M) && prob(20)) || prob(5)))
@@ -161,7 +161,7 @@
 				src.task = "thinking"
 				src.attacking = 0
 				return
-			SPAWN_DBG(35)
+			SPAWN_DBG(3.5 SECONDS)
 				src.attacking = 0
 
 		puke_honey()
@@ -353,7 +353,7 @@
 			if (!istype(M))
 				return ..(M)
 
-			SPAWN_DBG(8) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+			SPAWN_DBG(8 DECI SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
 			src.visible_message("<span style='color:red'><B>[src]</B> shanks [M] with its [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>")
@@ -365,7 +365,7 @@
 				src.task = "thinking"
 				src.attacking = 0
 				return
-			SPAWN_DBG(35)
+			SPAWN_DBG(3.5 SECONDS)
 				src.attacking = 0
 
 		attack_hand(mob/user as mob)
@@ -472,7 +472,7 @@
 			if (!istype(M))
 				return ..()
 
-			SPAWN_DBG(8) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+			SPAWN_DBG(8 DECI SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 				if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 					animate_bumble(src)
 
@@ -492,7 +492,7 @@
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.was_harmed(src)
-			SPAWN_DBG(25)
+			SPAWN_DBG(2.5 SECONDS)
 				if ((get_dist(src, M) <= 6) && src.alive)
 					M.visible_message("<span style='color:red'><b>[M.name] clutches their temples!</b></span>")
 					M.emote("scream")
@@ -519,7 +519,7 @@
 				user.u_equip(W)
 				W.set_loc(src)
 				user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src]. Fuck!")
-				SPAWN_DBG(20)
+				SPAWN_DBG(2 SECONDS)
 					W.icon_state = "key_gold"
 					W.desc += "  It appears to be covered in honey.  Gross."
 					src.visible_message("<b>[src]</b> regurgitates [W]!")
@@ -714,11 +714,11 @@
 
 		statlog_bees(src)
 
-		//SPAWN_DBG(10)
+		//SPAWN_DBG(1 SECOND)
 		src.pixel_x = rand(-max_offset,max_offset)
 		src.pixel_y = rand(-max_offset,max_offset)
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 			if (src.alive && !src.sleeping)
 				animate_bumble(src)
@@ -830,7 +830,7 @@
 		return
 
 	CritterAttack(mob/M)
-		SPAWN_DBG(8) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
+		SPAWN_DBG(8 DECI SECONDS) // hit_twitch() or attack_twitch() or something in the parent ai_think() causes the bumbling to stop so we have to restart it.
 			if (src.alive && !src.sleeping) // boy I can't wait until we don't have to do stupid shit like this anymore!!!!
 				animate_bumble(src)
 		src.attacking = 1
@@ -888,7 +888,7 @@
 				src.attacking = 0
 				return
 
-			SPAWN_DBG(35)
+			SPAWN_DBG(3.5 SECONDS)
 				src.attacking = 0
 			return
 
@@ -902,7 +902,7 @@
 			src.task = "thinking"
 			src.attacking = 0
 			return
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -935,20 +935,20 @@
 
 	on_sleep()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 			animate(src)
 
 	on_wake()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 			if (src.alive)
 				animate_bumble(src)
 
 	on_revive()
 		..()
-		SPAWN_DBG(1)
+		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 			animate_bumble(src)
 
@@ -963,7 +963,7 @@
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
 			if(fellow_bee.alive)
 				fellow_bee.aggressive = 1
-				SPAWN_DBG(7)
+				SPAWN_DBG(7 DECI SECONDS)
 					fellow_bee.aggressive = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -978,19 +978,19 @@
 		E.set_loc(src)
 		if (user)
 			user.visible_message("<b>[user]</b> feeds [E] to [src]!","You feed [E] to [src]. Fuck!")
-		SPAWN_DBG(20)
+		SPAWN_DBG(2 SECONDS)
 			if(istype(src, /obj/critter/domestic_bee/bubs)) //The fattest and hungriest bee
 				qdel(E)
 				src.visible_message("<b>[src]</b> burps.")
-				SPAWN_DBG(10)
+				SPAWN_DBG(1 SECOND)
 					src.visible_message("<b>[src]</b> bumbles happily!")
 					src.dance()
-				SPAWN_DBG(180)
+				SPAWN_DBG(18 SECONDS)
 					if(src.task != "chasing" && src.task != "attacking" && user && get_dist(src, user) <= 7)
 						src.visible_message("<b>[src]</b> buzzes in a clueless manner as to why [user] looks so dejected.[prob(5)?" You can tell because you studied bee linguistics, ok?": null]")
 
 						//Is this a bad idea? It probably is a bad idea.
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							var/obj/item/dagger/D = new /obj/item/dagger/syndicate(src.loc)
 							D.name = "tiny switchblade"
 							D.desc = "Why would a bee even have this!?"
@@ -1027,7 +1027,7 @@
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						walk(src,0)
 				return
 
@@ -1303,7 +1303,7 @@
 				src.icon_state = src.grow_anim
 				pixel_x = -16
 				pixel_y = -16
-				SPAWN_DBG(25)
+				SPAWN_DBG(2.5 SECONDS)
 					var/obj/critter/domestic_bee/queen/grownbee
 					if (ispath(custom_bee_queen, /obj/critter/domestic_bee/queen))
 						grownbee = new custom_bee_queen(get_turf(src))
@@ -1329,7 +1329,7 @@
 			else
 				src.visible_message("[src] pupates!")
 				src.icon_state = "[initial(src.icon_state)]-grow"
-				SPAWN_DBG(25)
+				SPAWN_DBG(2.5 SECONDS)
 					var/obj/critter/domestic_bee/grownbee
 					if (ispath(custom_bee_type, /obj/critter/domestic_bee))
 						grownbee = new custom_bee_type(get_turf(src))
@@ -1387,7 +1387,7 @@
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
-					SPAWN_DBG(10)
+					SPAWN_DBG(1 SECOND)
 						walk(src,0)
 				return
 
@@ -1429,7 +1429,7 @@
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src))
 			if(fellow_bee.alive)
 				fellow_bee.aggressive = 1
-				SPAWN_DBG(7)
+				SPAWN_DBG(7 DECI SECONDS)
 					fellow_bee.aggressive = 0
 
 /* -------------------- END -------------------- */
@@ -1732,7 +1732,7 @@
 			src.task = "thinking"
 			src.attacking = 0
 			return
-		SPAWN_DBG(35)
+		SPAWN_DBG(3.5 SECONDS)
 			src.attacking = 0
 
 	ChaseAttack(mob/M)

@@ -50,7 +50,7 @@
 		dummy.pixel_y = O.pixel_y
 		dummy.dir = O.dir
 		animate(dummy, alpha=0, time=3)
-		SPAWN_DBG(3)
+		SPAWN_DBG(3 DECI SECONDS)
 			qdel(dummy)
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
@@ -75,7 +75,7 @@
 				var/kbdir = angle_to_dir(angle)
 				step(H, kbdir, 2)
 				if (prob(10))
-					SPAWN_DBG(2)
+					SPAWN_DBG(2 DECI SECONDS)
 						step(H, kbdir, 2)
 		else if (ismob(hit))
 			var/mob/M = hit
