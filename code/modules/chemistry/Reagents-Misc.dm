@@ -3590,11 +3590,29 @@ datum
 						return
 					else if (T.icon_state in list("grass", "grass_eh"))
 						return
+					var/a
 					if (!T.icon_old)
 						T.icon_old = T.icon_state
+						
+					switch(rand(0,100))
+						if(0 to 70)
+							a = "grass"
+						if(70 to 78)	
+							a = "grass_a"
+						if(79 to 83)    
+							a = "grass_p"
+						if(84 to 88) 		
+							a = "grass_w"
+						if(89 to 92) 		
+							a = "grass_b"
+						if(93 to 96) 		
+							a = "grass_y"
+						if(97 to 100) 		
+							a = "grass_r"
+																														
 					SPAWN_DBG(rand(5,12) * 10)
 						T.icon = 'icons/turf/outdoors.dmi'
-						T.icon_state = "grass"
+						T.icon_state = a
 						T.dir = pick(cardinal)
 				return
 
