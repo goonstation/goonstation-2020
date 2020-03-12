@@ -957,8 +957,10 @@
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
 				target.reagents.temperature_reagents(1000,10)
-				if (istype(target,/obj/item/paper))
-					target.combust() // Hacky as shit but I can't find the source of paper not combusting ~Rain2025 (myst.leissa#0800)
+
+				if (target,istype(target,/obj/item/paper))
+					var/obj/item/I = target
+					I.combust() // Hacky as shit but I can't find the source of paper not combusting ~Rain2025 (myst.leissa#0800)
 				return
 		else if (src.on == -1)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
