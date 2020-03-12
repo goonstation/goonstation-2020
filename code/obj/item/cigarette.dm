@@ -1011,6 +1011,7 @@
 					"You strike [src] on [target]. Nothing happens.[prob(50) ? " You feel awkward, though." : null]")
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
+		..() // Please Remember to Call Parents.
 
 	attack(mob/M as mob, mob/user as mob)
 		if (ishuman(M))
