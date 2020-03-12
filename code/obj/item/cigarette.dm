@@ -958,7 +958,7 @@
 				user.show_text("You heat [target].", "blue")
 				target.reagents.temperature_reagents(1000,10)
 
-				if (target,istype(target,/obj/item/paper))
+				if (istype(target,/obj/item/paper))
 					var/obj/item/I = target
 					I.combust() // Hacky as shit but I can't find the source of paper not combusting ~Rain2025 (myst.leissa#0800)
 				return
