@@ -13,6 +13,13 @@ var/list/magnet_locations = list()
 	var/busy = 0
 	layer = 2
 
+	New()
+		..()
+		mechanics = new(src)
+		mechanics.master = src
+		mechanics.addInput("send", "mechcompsend")
+		mechanics.addInput("recieve", "mechcomprecieve")
+
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
@@ -42,6 +49,20 @@ var/list/magnet_locations = list()
 		user.Browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1;override_setting=1")
 		onclose(user, "lrporter", src)
 
+	proc/mechcompsend(var/datum/mechanicsMessage/input)
+		if(!input)
+			return
+		var/datum/computer/file/coords/C = special_places[input.signal]
+		if(C)
+			lrtsend(C)
+
+	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
+		if(!input)
+			return
+		var/datum/computer/file/coords/C = special_places[input.signal]
+		if(C)
+			lrtrecieve(C)
+
 	proc/is_good_location(var/datum/computer/file/coords/C)
 		if(special_places.len)
 			for(var/A in special_places)
@@ -52,6 +73,40 @@ var/list/magnet_locations = list()
 		else
 			return 0
 
+	proc/lrtsend(var/datum/computer/file/coords/C)
+		var/turf/target = locate(C.destx, C.desty, C.destz)
+		if(target && is_good_location(C))
+			busy = 1
+			flick("lrport1", src)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			for(var/atom/movable/M in src.loc)
+				if(M.anchored) continue
+				animate_teleport(M)
+				if(ismob(M))
+					var/mob/O = M
+					O.changeStatus("stunned", 2 SECONDS)
+				SPAWN_DBG(6 DECI SECONDS) M.set_loc(target)
+			SPAWN_DBG(10) busy = 0
+			return 1
+		return 0
+
+	proc/lrtrecieve(var/datum/computer/file/coords/C)
+		var/turf/target = locate(C.destx, C.desty, C.destz)
+		if(target && is_good_location(C))
+			busy = 1
+			flick("lrport1", src)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			for(var/atom/movable/M in target)
+				if(M.anchored) continue
+				animate_teleport(M)
+				if(ismob(M))
+					var/mob/O = M
+					O.changeStatus("stunned", 2 SECONDS)
+				SPAWN_DBG(6 DECI SECONDS) M.set_loc(src.loc)
+			SPAWN_DBG(10) busy = 0
+			return 1
+		return 0
+
 	Topic(href, href_list)
 		if(busy) return
 		if(get_dist(usr, src) > 1 || usr.z != src.z) return
@@ -60,35 +115,11 @@ var/list/magnet_locations = list()
 			var/datum/computer/file/coords/C = locate(href_list["send"])
 			if(!C)
 				boutput(usr, "DEBUG: C=[C], Name=[href_list["send"]], len=[special_places.len], inplaces=[(href_list["send"] in special_places)]")
-			var/turf/target = locate(C.destx, C.desty, C.destz)
-			if(target && is_good_location(C))
-				busy = 1
-				flick("lrport1", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
-				for(var/atom/movable/M in src.loc)
-					if(M.anchored) continue
-					animate_teleport(M)
-					if(ismob(M))
-						var/mob/O = M
-						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN_DBG(6 DECI SECONDS) M.set_loc(target)
-				SPAWN_DBG(10) busy = 0
+			lrtsend(C)
 
 		if(href_list["recieve"])
 			var/datum/computer/file/coords/C = locate(href_list["recieve"])
-			var/turf/target = locate(C.destx, C.desty, C.destz)
-			if(target && is_good_location(C))
-				busy = 1
-				flick("lrport1", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
-				for(var/atom/movable/M in target)
-					if(M.anchored) continue
-					animate_teleport(M)
-					if(ismob(M))
-						var/mob/O = M
-						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN_DBG(6 DECI SECONDS) M.set_loc(src.loc)
-				SPAWN_DBG(10) busy = 0
+			lrtrecieve(C)
 
 //////////////////////////////////////////////////
 /datum/telescope_manager
