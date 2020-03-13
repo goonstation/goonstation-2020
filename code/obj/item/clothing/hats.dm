@@ -102,6 +102,7 @@
 	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	desc = "Helps protect from vacuum for a short period of time."
+	seal_hair = 1
 
 	setupProperties()
 		..()
