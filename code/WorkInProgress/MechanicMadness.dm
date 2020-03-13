@@ -1820,6 +1820,7 @@ var/list/mechanics_telepads = new/list()
 		mechanics.addInput("remove item", "remitem")
 		mechanics.addInput("remove all items", "remallitem")
 		mechanics.addInput("select item", "selitem")
+		mechanics.addInput("select item + send", "selitemplus")
 		mechanics.addInput("next", "next")
 		mechanics.addInput("previous", "previous")
 		mechanics.addInput("next + send", "nextplus")
@@ -1837,6 +1838,22 @@ var/list/mechanics_telepads = new/list()
 
 		if(announce)
 			componentSay("Current Selection : [signals[current_index]]")
+		return
+
+	proc/selitemplus(var/datum/mechanicsMessage/input)
+		if(!input) return
+		
+		if(signals.Find(input.signal))
+			current_index = signals.Find(input.signal)
+		else
+			return // Don't send out a signal if not found
+		
+		if(announce)
+			componentSay("Current Selection : [signals[current_index]]")
+		
+		input.signal = signals[current_index]
+		SPAWN_DBG(0)
+			mechanics.fireOutgoing(input)
 		return
 
 	proc/remitem(var/datum/mechanicsMessage/input)
