@@ -316,7 +316,7 @@ var/list/cat_names = list("Gary", "Mittens", "Mr. Jingles", "Rex", "Jasmine", "L
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(10))
 				for(var/mob/O in hearers(src, null))
-					O.show_message("[src] purrs!",2)
+					O.show_message("[src] hi!",2)
 			return
 		else
 			..()
@@ -1207,7 +1207,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 300) // reinforced glass tables
 				FP = /obj/item/furniture_parts/table/glass/reinforced
-				FP_name = "Sköld"
+				FP_name = "SkÃ¶ld"
 				C.amount -= 300
 
 			else if (C.amount >= 280) // armchairs
@@ -1222,7 +1222,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 230) // roller beds
 				FP = /obj/item/furniture_parts/bed/roller
-				FP_name = "Återhämtning"
+				FP_name = "Ã…terhÃ¤mtning"
 				C.amount -= 230
 
 			else if (C.amount >= 220) // glass tables
@@ -1237,7 +1237,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 130) // round tables
 				FP = pick(/obj/item/furniture_parts/table/round, /obj/item/furniture_parts/table/wood/round)
-				FP_name = "Samkväm"
+				FP_name = "SamkvÃ¤m"
 				C.amount -= 130
 
 			else if (C.amount >= 100) // regular tables
@@ -1257,12 +1257,12 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			else if (C.amount >= 50) // wooden chairs
 				FP = /obj/item/furniture_parts/wood_chair
-				FP_name = "Bredsjö"
+				FP_name = "BredsjÃ¶"
 				C.amount -= 50
 
 			else if (C.amount >= 40) // bar stools
 				FP = /obj/item/furniture_parts/stool/bar
-				FP_name = "Kröka"
+				FP_name = "KrÃ¶ka"
 				C.amount -= 40
 
 			else if (C.amount >= 35) // stools
@@ -1519,8 +1519,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = "ikea"
 	icon_state = "ikea"
 	dead_state = "ikea-dead"
-	learned_words = list("Välkommen","Hej","Hejsan","Hallå","Hej då","Varsågod","Hur mår du","Tack så mycket","Kom igen","Ha en bra dag")
-	learned_phrases = list("Välkommen!","Hej!","Hejsan!","Hallå!","Hej då!","Varsågod!","Hur mår du?","Tack så mycket!","Kom igen!","Ha en bra dag!")
+	learned_words = list("VÃ¤lkommen","Hej","Hejsan","HallÃ¥","Hej dÃ¥","VarsÃ¥god","Hur mÃ¥r du","Tack sÃ¥ mycket","Kom igen","Ha en bra dag")
+	learned_phrases = list("VÃ¤lkommen!","Hej!","Hejsan!","HallÃ¥!","Hej dÃ¥!","VarsÃ¥god!","Hur mÃ¥r du?","Tack sÃ¥ mycket!","Kom igen!","Ha en bra dag!")
 	learn_words_chance = 0
 	learn_phrase_chance = 0
 	chatter_chance = 10
@@ -1574,20 +1574,20 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 <b>Fart</b> - 1700<small>SSEK</small><br>
 <b>Arbetsplatsolycka</b> - 330<small>SSEK</small><br>
 <b>Fyllehund</b> - 320<small>SSEK</small><br>
-<b>Sköld</b> - 300<small>SSEK</small><br>
-<b>Avkoppling</b> - 280<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
+<b>SkÃ¶ld</b> - 300<small>SSEK</small><br>
+<b>Avkoppling</b> - 280<small>SSEK</small> - <small><i>TillgÃ¤ngliga i flera fÃ¤rger</i></small><br>
 <b>Stark</b> - 250<small>SSEK</small><br>
-<b>Återhämtning</b> - 230<small>SSEK</small><br>
+<b>Ã…terhÃ¤mtning</b> - 230<small>SSEK</small><br>
 <b>Transparens</b> - 200<small>SSEK</small><br>
 <b>Vilostund</b> - 200<small>SSEK</small><br>
-<b>Samkväm</b> - 130<small>SSEK</small><br>
+<b>SamkvÃ¤m</b> - 130<small>SSEK</small><br>
 <b>Bruksvallarna</b> - 100<small>SSEK</small><br>
 <b>Stapla</b> - 80<small>SSEK</small><br>
-<b>Kontorist</b> - 70<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
-<b>Bredsjö</b> - 50<small>SSEK</small><br>
-<b>Kröka</b> - 40<small>SSEK</small><br>
+<b>Kontorist</b> - 70<small>SSEK</small> - <small><i>TillgÃ¤ngliga i flera fÃ¤rger</i></small><br>
+<b>BredsjÃ¶</b> - 50<small>SSEK</small><br>
+<b>KrÃ¶ka</b> - 40<small>SSEK</small><br>
 <b>Avlastning</b> - 35<small>SSEK</small><br>
-<b>Benke</b> - 30<small>SSEK</small> - <small><i>Tillgängliga i flera färger</i></small><br>
+<b>Benke</b> - 30<small>SSEK</small> - <small><i>TillgÃ¤ngliga i flera fÃ¤rger</i></small><br>
 <b>Sittplats</b> - 25<small>SSEK</small>"}
 
 /obj/critter/seagull
