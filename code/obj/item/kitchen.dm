@@ -49,9 +49,6 @@ TRAYS
 	dir = NORTH
 	var/rotatable = 1 //just in case future utensils are added that dont wanna be rotated
 	var/snapped
-	var/is_fork = 0 //obsolete?
-	var/is_spoon = 0 //obsolete?
-	var/is_knife = 0 //obsolete?
 
 	New()
 		if (prob(60))
@@ -1035,3 +1032,10 @@ TRAYS
 				src.reagents = null
 		else
 			..()
+
+//kitchen island
+/obj/surgery_tray/kitchen_island
+	name = "kitchen island"
+	desc = "a table! with WHEELS!"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "kitchen_island"
