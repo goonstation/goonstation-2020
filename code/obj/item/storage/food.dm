@@ -1,13 +1,13 @@
 
 /obj/item/storage/box/glassbox
 	name = "glassware box"
-	icon_state = "beaker"
+	icon_state = "glassware"
 	desc = "A box with glass cups for drinking liquids from."
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 7)
 
 /obj/item/storage/box/cutlery
 	name = "cutlery set"
-	icon_state = "donk_kit"
+	icon_state = "cutlery"
 	desc = "Knives, forks, and spoons."
 	spawn_contents = list(/obj/item/kitchen/utensil/fork = 2,\
 	/obj/item/kitchen/utensil/knife = 2,\
@@ -15,7 +15,7 @@
 
 /obj/item/storage/box/plates
 	name = "dinnerware box"
-	icon_state = "implant"
+	icon_state = "dinnerware"
 	desc = "A box with some plates and bowls."
 	spawn_contents = list(/obj/item/plate = 4,\
 	/obj/item/reagent_containers/food/drinks/bowl = 3)
@@ -32,6 +32,12 @@
 	desc = "A box of Farmer Jeff brand uncooked bacon strips."
 	icon_state = "bacon"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 7)
+
+/obj/item/storage/box/sushi_box
+	name = "sushi box"
+	desc = "A box full of supplies for crafting sushi!"
+	icon_state = "sushibox"
+	spawn_contents = list(/obj/item/kitchen/sushi_roller,/obj/item/reagent_containers/food/snacks/ingredient/seaweed=3,/obj/item/reagent_containers/food/snacks/ingredient/rice = 3)
 
 /obj/item/storage/box/cookie_tin
 	name = "cookie tin"
@@ -76,6 +82,18 @@
 	icon_state = "ic_cones"
 	desc = "Ice cream cones stored in a handy box."
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ice_cream_cone = 7)
+
+/obj/item/storage/box/butter
+	name = "butter tray"
+	icon_state = "buttertray"
+	desc = "A homely little tray for keeping butter fresh."
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ingredient/butter = 5)
+
+/obj/item/storage/box/cheese
+	name = "cheese box"
+	icon_state = "cheesebox"
+	desc = "A cheap box for storing cheese."
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ingredient/cheese = 6)
 
 /obj/item/storage/goodybag
 	name = "goodybag"
