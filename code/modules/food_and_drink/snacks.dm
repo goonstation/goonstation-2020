@@ -1146,7 +1146,7 @@
 		user.visible_message("<span style=\"color:red\"><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
 		user.updatehealth()
-		SPAWN_DBG(500)
+		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1445,7 +1445,7 @@
 			//to-do: mustard
 		return
 
-/obj/item/reagent_containers/food/snacks/hotdog
+/obj/item/reagent_containers/food/snacks/hotdog //Merger - Please ignore the hotdog stuffs :)
 	name = "hotdog"
 	desc = "A plain hotdog."
 	icon_state = "hotdog"
