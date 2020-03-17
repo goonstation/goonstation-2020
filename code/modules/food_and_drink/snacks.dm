@@ -1,4 +1,3 @@
-
 // Bad food
 
 /obj/item/reagent_containers/food/snacks/yuck
@@ -44,7 +43,7 @@
 			for (var/obj/item/I in M)
 				I.dispose()
 		..()
-		
+
 /obj/item/reagent_containers/food/snacks/grill_holder
 	name = "the charcoal singed essence of grilling itself"
 	desc = "Oh, the magic of a hot grill."
@@ -985,7 +984,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
 			boutput(user, "<span style=\"color:blue\">You create [random_spaghetti_name()] with tomato sauce...</span>")
-			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D 
+			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONER)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
 				boutput(user, "<span style=\"color:red\">... whoa, that felt good. Like really good.</span>")
@@ -1029,7 +1028,7 @@
 	heal_amt = 3
 	amount = 5
 	food_effects = list("food_energized","food_brute","food_burn")
-	
+
 	New()
 		..()
 		name = "[random_spaghetti_name()] with tomato sauce"
@@ -1147,7 +1146,7 @@
 		user.visible_message("<span style=\"color:red\"><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
 		user.take_oxygen_deprivation(123)
 		user.updatehealth()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN_DBG(500)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1180,6 +1179,7 @@
 	desc = "A mushroom cap of Space Fungus. Probably tastes pretty bad."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "mushroom"
+	food_color = "#89533C"
 	amount = 1
 	heal_amt = 0
 	food_effects = list("food_disease_resist")
@@ -1188,6 +1188,7 @@
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. This one is quite different."
 	icon_state = "mushroom-M1"
+	food_color = "#AF2B2B"
 	amount = 1
 	heal_amt = 3
 
@@ -1195,6 +1196,7 @@
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It's slightly more vibrant than usual."
 	icon_state = "mushroom-M2"
+	food_color = "#A76933"
 	amount = 1
 	heal_amt = 1
 
@@ -1491,7 +1493,7 @@
 				food_effects = list("food_energized_big","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
-			
+
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/spooky))
 				var/wowspooky = 0
 #ifdef HALLOWEEN
@@ -1573,27 +1575,127 @@
 			W.reagents.trans_to(src,W.reagents.total_volume)
 			pool(W)
 
+		else if (istype(W,/obj/item/kitchen/utensil/knife))
+			if(src.GetOverlayImage("bun"))
+				return
+			var/hotloc = get_turf(src)
+			var/obj/item/reagent_containers/food/snacks/hotdog_half/l = new /obj/item/reagent_containers/food/snacks/hotdog_half
+			var/obj/item/reagent_containers/food/snacks/hotdog_half/r = new /obj/item/reagent_containers/food/snacks/hotdog_half
+			l.icon_state = "hotdogl"
+			r.icon_state = "hotdogr"
+			if(src in user.contents)
+				user.u_equip(src)
+				src.set_loc(user)
+				l.set_loc(get_turf(user))
+				r.set_loc(get_turf(user))
+			else
+				src.set_loc(user)
+				l.set_loc(hotloc)
+				r.set_loc(hotloc)
+			qdel(src)
 		else
 			..()
 		return
 
 	proc/update_icon()
-		src.overlays.len = 0
-		switch(src.bun)
-			if(1)
-				src.overlays += image(src.icon, "hotdog-bun")
-			if(2)
-				src.overlays += image(src.icon, "hotdog-bunb")
-			if(3)
-				src.overlays += image(src.icon, "hotdog-bunbr")
-			if(4)
-				src.overlays += image(src.icon, "elvisdog")
-			if(5)
-				src.icon_state = "hauntdog"
-		if (src.reagents.has_reagent("juice_tomato"))
-			src.overlays += image(src.icon, "hotdog-k")
-			//to-do: mustard
+		if(!(src.GetOverlayImage("bun")))
+			switch(src.bun)
+				if(1)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bun"),"bun")
+				if(2)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bunb"),"bun")
+				if(3)
+					src.UpdateOverlays(new /image(src.icon,"hotdog-bunbr"),"bun")
+				if(4)
+					src.UpdateOverlays(new /image(src.icon,"elvisdog"),"bun")
+				if(5)
+					src.icon_state = "hauntdog"
+		if ((src.reagents.has_reagent("ketchup")))
+			if(!(src.GetOverlayImage("ketchup")))
+				if(!src.GetOverlayImage("mustard"))
+					src.UpdateOverlays(new /image(src.icon,"hotdog-k1"),"ketchup")
+				else
+					src.UpdateOverlays(new /image(src.icon,"hotdog-k2"),"ketchup")
+		if (src.reagents.has_reagent("mustard"))
+			if(!(src.GetOverlayImage("mustard")))
+				if(!src.GetOverlayImage("ketchup"))
+					src.UpdateOverlays(new /image(src.icon,"hotdog-m1"),"mustard")
+				else
+					src.UpdateOverlays(new /image(src.icon,"hotdog-m2"),"mustard")
 		return
+
+/obj/item/reagent_containers/food/snacks/hotdog_half
+	name = "half hotdog"
+	desc = "A hot dog chopped in half!"
+	icon_state = "hotdog"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 15
+	var/list/cuts = list("chunks","octopus")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/kitchen/utensil/knife))
+			var/inp
+			inp = input("Which cut would you like?", "Yay chopping a hotdog", null) as null|anything in cuts
+			var/inplayer
+			var/halfloc = get_turf(src)
+			if(src in user.contents)
+				inplayer = 1
+			else
+				inplayer = 0
+			if(inp && (user in range(1,src)))
+				switch(inp)
+					if("chunks")
+						if(inplayer)
+							user.u_equip(src)
+						src.set_loc(user)
+						for(var/i=1,i<=4,i++)
+							var/obj/item/reagent_containers/food/snacks/hotdog_chunk/c = new /obj/item/reagent_containers/food/snacks/hotdog_chunk
+							c.pixel_y = rand(-8,8)
+							c.pixel_x = rand(-8,8)
+							if(inplayer)
+								c.set_loc(get_turf(user))
+							else
+								c.set_loc(halfloc)
+						qdel(src)
+					if("octopus")
+						var/obj/item/reagent_containers/food/snacks/hotdog_octo/o = new /obj/item/reagent_containers/food/snacks/hotdog_octo
+						if(inplayer)
+							user.u_equip(src)
+							src.set_loc(user)
+							user.put_in_hand_or_drop(o)
+						else
+							o.set_loc(halfloc)
+						qdel(src)
+			else
+				..()
+		else
+			..()
+
+/obj/item/reagent_containers/food/snacks/hotdog_chunk
+	name = "chunk of hotdog"
+	desc = "A hot dog chopped in half!"
+	icon_state = "hotdog_chunk"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 5
+
+/obj/item/reagent_containers/food/snacks/hotdog_octo
+	name = "hotdog octopus"
+	desc = "A hot dog chopped into the shape of an octopus! How cute!"
+	icon_state = "hotdog_octo"
+	amount = 1
+	heal_amt = 1
+	initial_volume = 5
+	initial_reagents = list("love"=1)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog_octo"))
+			src.visible_message("<span style=\"color:green\">[user.name] carves a cute little face on the [src]!</span>")
+			src.icon_state = "hotdog_octo2"
+			src.reagents.add_reagent("love", 1)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/hotdog/syndicate
 	var/mob/living/carbon/cube/meat/victim = null
@@ -1824,7 +1926,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN_DBG(5)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
@@ -1861,7 +1963,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN_DBG(5)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
 					new /obj/item/reagent_containers/food/snacks/wonton_wrapper(src.loc)
@@ -2298,6 +2400,28 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
 			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
 			qdel(src)
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+			var/spawnloc = get_turf(src)
+			var/handspawn
+			if(istype(src.loc,/mob))
+				user.u_equip(src)
+				handspawn = 1
+			src.set_loc(user)
+			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
+			switch(W.icon_state)
+				if("fillet_orange")
+					nigiri.icon_state = "nigiri1"
+				if("fillet_pink")
+					nigiri.icon_state = "nigiri2"
+				if("fillet_white")
+					nigiri.icon_state = "nigiri3"
+			user.u_equip(W)
+			qdel(W)
+			if(handspawn)
+				user.put_in_hand_or_drop(nigiri)
+			else
+				nigiri.set_loc(spawnloc)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/rice_ball/onigiri
 	name = "onigiri"
@@ -2344,6 +2468,42 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 				return
 		else
 			..()
+
+/obj/item/reagent_containers/food/snacks/sushi_roll/custom
+	icon_state = "sushi_roll_custom"
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+			if (src.cut == 1)
+				boutput(user, "<span style=\"color:red\">This has already been cut.</span>")
+				return
+			if(istype(src.loc,/mob))
+				user.u_equip(src)
+				src.set_loc(user)
+			boutput(user, "<span style=\"color:blue\">You cut the sushi roll into pieces.</span>")
+			var/makepieces = src.amount
+			var/spawnloc = get_turf(src)
+			while (makepieces > 0)
+				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type//src.type(get_turf(src))
+				S.cut = 1
+				S.amount = 1
+				S.icon_state = "chopped_sushi_roll"
+				S.quality = src.quality
+				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
+				S.pixel_x = rand(-6, 6)
+				S.pixel_y = rand(-6, 6)
+				for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
+					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"chopped_[src.overlay_refs[i]]")
+					overlay.color = buffer.color
+					S.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
+				for(var/b=1,b<=src.food_effects.len,b++)
+					if(src.food_effects[b] in S.food_effects)
+						continue
+					S.food_effects += src.food_effects[b]
+				S.set_loc(spawnloc)
+				makepieces--
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"
@@ -2525,7 +2685,3 @@ var/list/valid_jellybean_reagents = childrentypesof(/datum/reagent)
 
 	get_desc(dist)
 		. = "<br><span style='color: blue'>It says: [phrase]</span>"
-
-
-
-
