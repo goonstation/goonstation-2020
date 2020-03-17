@@ -46,7 +46,12 @@ TRAYS
 	stamina_damage = 5
 	stamina_cost = 10
 	stamina_crit_chance = 15
+	dir = NORTH
 	var/rotatable = 1 //just in case future utensils are added that dont wanna be rotated
+	var/snapped
+	var/is_fork = 0 //obsolete?
+	var/is_spoon = 0 //obsolete?
+	var/is_knife = 0 //obsolete?
 
 	New()
 		if (prob(60))
@@ -59,8 +64,64 @@ TRAYS
 		if (rotatable)
 			set src in oview(1)
 
-			src.dir = turn(src.dir, 90)
+			src.dir = turn(src.dir, -90)
 		return
+
+	attack_self(mob/user as mob)
+		src.rotate()
+
+	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
+		var/location = get_turf(src)
+		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
+		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
+		user.u_equip(src)
+		var/replacethis
+		switch(src.type)
+			if(/obj/item/kitchen/utensil/spoon/plastic)
+				replacethis = "spoon_plastic_"
+			if(/obj/item/kitchen/utensil/fork/plastic)
+				replacethis = "fork_plastic_"
+			if(/obj/item/kitchen/utensil/knife/plastic)
+				if(src.snapped)
+					qdel(src)
+					return
+				replacethis = "knife_plastic_"
+		var/utensil_color = replacetext(src.icon_state,replacethis,"")
+		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+		k.icon_state = "snapped_[utensil_color]"
+		k.snapped = 1
+		k.name = "snapped [k.name]"
+		if(spawnatloc)
+			k.set_loc(location)
+		else
+			user.put_in_hand_or_drop(k)
+		qdel(src)
+		return
+
+/obj/item/kitchen/utensil/spoon
+	name = "spoon"
+	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
+	icon_state = "spoon"
+	is_spoon = 1
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
+			random_brute_damage(user, 5)
+		if (!spoon_surgery(M,user))
+			return ..()
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		var/hisher = his_or_her(user)
+		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		blood_slash(user, 25)
+		playsound(user.loc, src.hitsound, 50, 1)
+		user.TakeDamage("head", 150, 0)
+		user.updatehealth()
+		return 1
 
 /obj/item/kitchen/utensil/fork
 	name = "fork"
@@ -69,6 +130,7 @@ TRAYS
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	desc = "A multi-pronged metal object, used to pick up objects by piercing them. Helps with eating some foods."
+	is_fork = 1
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -88,39 +150,6 @@ TRAYS
 		user.updatehealth()
 		return 1
 
-/obj/item/kitchen/utensil/fork/plastic
-	name = "plastic fork"
-	icon_state = "fork_plastic"
-	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
-	force = 1.0
-	throwforce = 1.0
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
-			random_brute_damage(user, 5)
-		if (prob(20))
-			src.break_fork(user)
-			return
-		if (!saw_surgery(M,user))
-			return ..()
-
-	proc/break_fork(mob/living/carbon/user as mob)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
-
-	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
-		src.break_fork(user)
-		SPAWN_DBG(10 SECONDS)
-			if (user)
-				user.suiciding = 0
-		return 1
-
-
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
@@ -133,6 +162,7 @@ TRAYS
 	force = 7.0
 	throwforce = 5
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
+	is_knife = 1
 
 	New()
 		..()
@@ -155,38 +185,131 @@ TRAYS
 		user.updatehealth()
 		return 1
 
+/obj/item/kitchen/utensil/spoon/plastic
+	name = "plastic spoon"
+	icon_state = "spoon_plastic"
+	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
+	force = 1.0
+	throwforce = 1.0
+	is_spoon = 1
+
+	New()
+		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
+			random_brute_damage(user, 5)
+		if (prob(20))
+			src.break_utensil(user)
+			return
+		if (!spoon_surgery(M,user))
+			return ..()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
+		src.break_utensil(user)
+		spawn(100)
+			if (user)
+				user.suiciding = 0
+		return 1
+
+/obj/item/kitchen/utensil/fork/plastic
+	name = "plastic fork"
+	icon_state = "fork_plastic_pink"
+	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
+	force = 1.0
+	throwforce = 1.0
+	is_fork = 1
+
+	New()
+		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
+
+	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
+			random_brute_damage(user, 5)
+		if (prob(20))
+			src.break_utensil(user)
+			return
+		if (!saw_surgery(M,user))
+			return ..()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
+		src.break_utensil(user)
+		spawn(100)
+			if (user)
+				user.suiciding = 0
+		return 1
+
 /obj/item/kitchen/utensil/knife/plastic
-	name = "knife"
+	name = "plastic knife"
 	icon_state = "knife_plastic"
 	force = 1.0
 	throwforce = 1.0
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	is_knife = 1
+
+	New()
+		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
-			src.break_knife(user)
+			src.break_utensil(user)
 			return
 		if (!scalpel_surgery(M,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span style=\"color:red\"><b>[user] tries to slash  \his own throat with [src]!</b></span>")
-		src.break_knife(user)
-		SPAWN_DBG(10 SECONDS)
+		src.break_utensil(user)
+		spawn(100)
 			if (user)
 				user.suiciding = 0
 		return 1
 
-	proc/break_knife(mob/living/carbon/user as mob)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
+/obj/item/kitchen/plasticpackage //im just gonna...put this here...
+	name = "package of plastic silverware"
+	desc = "These don't look very clean..."
+	icon_state = "plasticpackage"
+	w_class = 1.0
+	var/list/messages = list("AAAAAAAAGH WHY WON'T IT OPEN!", "Oh no...The package...It'S tOo PoWeRfUl!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
+	attack_self(mob/user as mob)
+		if(prob(25))
+			var/obj/item/kitchen/utensil/fork/plastic/f = new /obj/item/kitchen/utensil/fork/plastic
+			var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
+			var/obj/item/kitchen/utensil/spoon/plastic/s = new /obj/item/kitchen/utensil/spoon/plastic
+			f.icon_state = "fork_plastic_white"
+			k.icon_state = "knife_plastic_white"
+			s.icon_state = "spoon_plastic_white"
+			f.set_loc(get_turf(user))
+			k.set_loc(get_turf(user))
+			s.set_loc(get_turf(user))
+			user.u_equip(src)
+			src.set_loc(user)
+			if(prob(75))
+				user.visible_message("<span style=\"color:red\">The plastic silverware go EVERYWHERE!</span>")
+				var/list/throw_targets = list()
+				for (var/i=1, i<=3, i++)
+					throw_targets += get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+
+				f.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					f.break_utensil(user, 1)
+				k.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					k.break_utensil(user, 1)
+				s.throw_at(pick(throw_targets), 5, 1)
+				if(prob(20))
+					s.break_utensil(user, 1)
+			qdel(src)
+		else
+			user.visible_message("<b>[user]</b> comically struggles to open the [src]","<b>[pick(messages)]</b>")
 
 /obj/item/kitchen/utensil/knife/cleaver
 	name = "meatcleaver"
@@ -210,7 +333,6 @@ TRAYS
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 		else
 			return ..()
-
 
 	throw_impact(atom/A)
 		if(iscarbon(A))
@@ -261,62 +383,6 @@ TRAYS
 		user.updatehealth()
 		return 1
 
-/obj/item/kitchen/utensil/spoon
-	name = "spoon"
-	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
-	icon_state = "spoon"
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
-			random_brute_damage(user, 5)
-		if (!spoon_surgery(M,user))
-			return ..()
-
-	custom_suicide = 1
-	suicide(var/mob/user as mob)
-		if (!src.user_can_suicide(user))
-			return 0
-		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
-		blood_slash(user, 25)
-		playsound(user.loc, src.hitsound, 50, 1)
-		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
-		return 1
-
-/obj/item/kitchen/utensil/spoon/plastic
-	name = "plastic spoon"
-	icon_state = "spoon_plastic"
-	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
-	force = 1.0
-	throwforce = 1.0
-
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
-			random_brute_damage(user, 5)
-		if (prob(20))
-			src.break_spoon(user)
-			return
-		if (!spoon_surgery(M,user))
-			return ..()
-
-	proc/break_spoon(mob/living/carbon/user as mob)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/effects/snap.ogg", 30, 1)
-		user.u_equip(src)
-		qdel(src)
-		return
-
-	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
-		src.break_spoon(user)
-		SPAWN_DBG(10 SECONDS)
-			if (user)
-				user.suiciding = 0
-		return 1
-
 
 /obj/item/kitchen/food_box // I came in here just to make donut/egg boxes put the things in your hand when you take one out and I end up doing this instead, kill me. -haine
 	name = "food box"
@@ -356,7 +422,7 @@ TRAYS
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(10)
 			if (!ispath(src.contained_food))
 				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
@@ -757,3 +823,215 @@ TRAYS
 			return
 	..()
 	return
+
+//sushiiiiiii
+/obj/item/kitchen/sushi_roller
+	name = "rolling mat"
+	desc = "a bamboo mat for rolling sushi"
+	icon_state = "roller-0"
+	w_class = 2
+
+	var/seaweed //0 or 1, storage variable for checking if there's a seaweed overlay without using resources pulling image files
+	var/rice //same :)
+	var/toppings = 0 //amount of toppings on the sushi roller (up to 3)
+	var/rolling = 0 //the progress of the rolling (used for the rolling interactivity)
+	var/rolled //the status of the sushi being fully rolled
+	var/fish //override for unique fish overlay handling
+	var/swedish //override for unique swedish fish oberlay handling
+
+	var/obj/item/reagent_containers/food/snacks/topping1 //storage for toppings (used later for referencing buffs and colors and such)
+	var/obj/item/reagent_containers/food/snacks/topping2
+	var/obj/item/reagent_containers/food/snacks/topping3
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/reagent_containers/food/snacks) && !src.rolling && !(src.toppings>=3))
+			var/obj/item/reagent_containers/food/snacks/FOOD = W
+			if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/seaweed)) //seaweed overlay handling
+				if(!src.seaweed)
+					var/image/seaweed = new /image('icons/obj/kitchen.dmi',"seaweed-0")
+					seaweed.layer = (src.layer+1) //i had to use explicit layering to get the dynamic rolling to render properly
+					src.UpdateOverlays(seaweed,"seaweed")
+					src.seaweed = 1
+				user.u_equip(FOOD)
+				qdel(FOOD)
+			else if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice) && src.seaweed) //rice overlay (requires seaweed)
+				if(!src.rice)
+					var/image/rice = new /image('icons/obj/kitchen.dmi',"rice-0")
+					rice.layer = (src.layer+2)
+					src.UpdateOverlays(rice,"rice")
+					src.rice = 1
+				user.u_equip(FOOD)
+				qdel(FOOD)
+			else if(src.seaweed && src.rice) //if its not a seaweed sheet or sticky rice, and theres seaweed and rice on the sheet
+				src.toppings++
+				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/swedish_fish)) //setting overrides
+					src.swedish = 1
+				var/ingredienttype
+				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
+					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+						src.fish = 1
+					ingredienttype="meat"
+				else
+					ingredienttype="nonmeat"
+				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
+				foodoverlay.color = FOOD.food_color
+				foodoverlay.layer = (src.layer+3)
+				switch(src.toppings) //storing a reference to the original item on the roller
+					if(1)
+						src.topping1 = FOOD
+					if(2)
+						src.topping2 = FOOD
+					if(3)
+						src.topping3 = FOOD
+				if(FOOD.reagents) //storing reagents in the roller itself because reagent data was lost for the reference items
+					FOOD.reagents.trans_to(src,FOOD.reagents.total_volume)
+				src.UpdateOverlays(foodoverlay,"topping-[src.toppings]")
+				user.u_equip(FOOD)
+				qdel(FOOD)
+			else if(!src.seaweed)
+				boutput(user,"<span style=\"color:red\">You need a seaweed sheet on the roller first, silly :P</span>")
+			else
+				boutput(user,"<span style=\"color:red\">You need sticky rice tooooooo!</span>")
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if(src.seaweed && src.rice)
+			if(!src.toppings) //dependent on having toppings (empty sushi caused a lot of problems)
+				..()
+				return
+			if(!src.rolled) //handling the rolling interactivity, basically switching overlays until eventually the item's overlays are wiped...
+				src.rolling++
+				if(src.toppings && (src.rolling<3))
+					var/image/seaweed = new /image('icons/obj/kitchen.dmi',"seaweed-[src.rolling]")
+					var/image/rice = new /image('icons/obj/kitchen.dmi',"rice-[src.rolling]")
+					seaweed.layer = (src.layer+1)
+					rice.layer = (src.layer+2)
+					src.UpdateOverlays(seaweed,"seaweed")
+					src.UpdateOverlays(rice,"rice")
+					src.icon_state = "roller-[src.rolling]"
+					for(var/i=1,i<=src.toppings,i++)
+						if(src.GetOverlayImage("topping-[i]"))
+							src.ClearSpecificOverlays("topping-[i]")
+							break
+					return
+				if(src.rolling == 3)
+					src.ClearAllOverlays()
+					src.icon_state = "roller-[src.rolling]"
+					return
+				if(src.rolling > 3)
+					src.rolling -= 2
+					src.rolled = 1
+					src.icon_state = "roller-[src.rolling]"
+					src.UpdateOverlays(new /image('icons/obj/kitchen.dmi',"roller_roll"),"roll")
+					for(var/i=1,i<=src.toppings,i++)
+						var/image/rolltopping = new /image('icons/obj/kitchen.dmi',"roll_topping-[i]")
+						switch(i)
+							if(1)
+								rolltopping.color = topping1.food_color
+							if(2)
+								rolltopping.color = topping2.food_color
+							if(3)
+								rolltopping.color = topping3.food_color
+						src.UpdateOverlays(rolltopping,"roll_topping-[i]")
+					src.rolling = 0
+			else if(src.rolling == 0) //and out pops a sushi roll!
+				src.icon_state = "roller-[src.rolling]"
+				src.seaweed = 0
+				src.rice = 0
+				src.rolled = 0
+				src.ClearAllOverlays()
+				var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll = new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
+				var/skip
+				if(src.swedish) //setting actual overrides for sushi roll
+					roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"fisk"),"fisk")
+					skip = "ALL"
+				else if(src.fish) //fish overlays (there's two states, one for if the fish is the only ingredient, and one if there's other ingredients)
+					var/fishflag
+					for(var/i=1,i<=3,i++) //this sets skip overrides for the next block of code so the overlays efectively skip fish and instead have a unique fish base layer
+						if((i==1) && (src.topping1))
+							if(istype(src.topping1,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+								fishflag = src.topping1.icon_state
+								skip = 1
+						if((i==2) && (src.topping2))
+							if(istype(src.topping2,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+								fishflag = src.topping2.icon_state
+								skip = 2
+						if((i==3) && (src.topping3))
+							if(istype(src.topping3,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+								fishflag = src.topping3.icon_state
+								skip = 3
+						if(fishflag)
+							switch(fishflag) //using the icon state of the fish fillet to modify the color of the fish overlay
+								if("fillet_white")
+									if(src.toppings == 1)
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-s"),"f1")
+									else
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-m"),"f1")
+								if("fillet_small")
+									if(src.toppings == 1)
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-s"),"f1")
+									else
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f1-m"),"f1")
+								if("fillet_orange")
+									if(src.toppings == 1)
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f2-s"),"f2")
+									else
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f2-m"),"f2")
+								if("fillet_pink")
+									if(src.toppings == 1)
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f3-s"),"f3")
+									else
+										roll.UpdateOverlays(new /image('icons/obj/foodNdrink/food_snacks.dmi',"f3-m"),"f3")
+							break
+				if(skip != "ALL") //in case of swedish fisk, that is the only overlay rendered, so everything else is skipped
+					var/toppingoverlay = 0
+					if(topping1 && (skip != 1)) //its not the best way to do this, but im not sure if theres a decent way of dynamically referencing variables without a bunch of weird string conversions
+						toppingoverlay++
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						if(topping1.food_color)
+							overlay.color = topping1.food_color
+						for(var/b=1,b<=topping1.food_effects.len,b++)
+							if(topping1.food_effects[b] in roll.food_effects)
+								continue
+							roll.food_effects += topping1.food_effects[b]
+						roll.quality += topping1.quality
+						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
+					if(topping2 && (skip != 2))
+						toppingoverlay++
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						if(topping2.food_color)
+							overlay.color = topping2.food_color
+						for(var/b=1,b<=topping2.food_effects.len,b++)
+							if(topping2.food_effects[b] in roll.food_effects)
+								continue
+							roll.food_effects += topping2.food_effects[b]
+						roll.quality += topping2.quality
+						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
+					if(topping3 && (skip != 3))
+						toppingoverlay++
+						var/image/overlay = new /image('icons/obj/foodNdrink/food_snacks.dmi',"topping-[toppingoverlay]")
+						if(topping3.food_color)
+							overlay.color = topping3.food_color
+						for(var/b=1,b<=topping3.food_effects.len,b++)
+							if(topping3.food_effects[b] in roll.food_effects)
+								continue
+							roll.food_effects += topping3.food_effects[b]
+						roll.quality += topping3.quality
+						roll.UpdateOverlays(overlay,"topping-[toppingoverlay]")
+				if(src.reagents) //setting up the rest of the sushi roll item data <3
+					src.reagents.trans_to(roll,src.reagents.total_volume)
+				if(src.toppings)
+					roll.quality = (roll.quality/src.toppings)+1
+				else
+					roll.quality = 1
+				qdel(src.topping1)
+				qdel(src.topping2)
+				qdel(src.topping3)
+				user.put_in_hand_or_drop(roll)
+				src.toppings = 0
+				src.swedish = 0
+				src.fish = 0
+				src.reagents = null
+		else
+			..()
