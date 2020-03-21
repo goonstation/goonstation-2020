@@ -50,6 +50,29 @@
 			boutput(crewMind.current, "<B>Objective #[obj_count]</B>: [newObjective.explanation_text]")
 			obj_count++
 
+		var/mob/crewmob = crewMind.current
+		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(15))
+			var/conspiracy_text = ""
+			// The [NOUN] are [CONSPIRACY] in order to [REASON]
+			var/noun = pick("heads of staff","engineers","medical doctors","assistants","NT executives", "security officers","robots"
+							"syndicates","administrators","clowns","monkeys")
+
+			var/conspiracy = pick("putting chemicals in the water supply","stealing all the bathroom mints", "hiding the truth about bees",
+									"killing the stars", "deleting security records", "replacing crew with robots", "stealing our butts",
+									"spiking our drugs with medicine", "making anime [pick("","il")]legal", "putting the fat and sassy spacebee on a diet",
+									"turning us radioactive","making statues of us", "running all the clocks 15 minutes [pick("slow","fast")]",
+									"gambling away the station funds","plotting to kill Heisenbee","kicking George when you aren't looking","secretly bullying Jones",
+									"eating all the medbay lollipops","pouring salt into the pepper shakers and pepper into the salt shakers","rigging the boxing matches")
+
+			var/reason = pick("keep the staff complacent","embezzle money from the company","hoard all the paperclips for themselves",
+								"discover dark secrets", "summon an elder god", "corner the [pick("jumpsuit","toilet","hat","shoe","plasma","air freshner")] market",
+								"create vending machines that can stand back up","flush out their political rivals", "[pick("hide from","enforce")] space OSHA standards",
+								"because it would be funny","elect Tanhony for HoP","get a promotion","seem more experienced and sophistocated","impress Vurdak the Shrouded",
+								"promote their latest mixtape","steal all the alcohol")
+
+			var/objective = pick("Reveal the truth!", "Uncover their plot!", "Panic!","Right these wrongs!", "Spread the word!", "Alert the crew!", "")
+			conspiracy_text = "The [noun] are [conspiracy] in order to [reason]. [objective]"
+			boutput(crewmob, "<B>Objective #[obj_count]</B>: [conspiracy_text]")
 		return
 
 /*

@@ -497,6 +497,16 @@
 	isPositive = 1
 	category = "trinkets"
 
+/obj/trait/conspiracytheorist
+	name = "Conspiracy Theorist (-1) \[Trinkets\]"
+	cleanName = "Conspiracy Theorist"
+	desc = "Start with a tin foil hat as your trinket."
+	id = "conspiracytheorist"
+	icon_state = "conspP"
+	points = -1
+	isPositive = 1
+	category = "trinkets"
+
 /obj/trait/pawnstar
 	name = "Pawn Star (-1) \[Trinkets\]"
 	cleanName = "Pawn Star"
