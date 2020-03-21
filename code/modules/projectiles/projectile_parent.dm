@@ -320,7 +320,7 @@
 				ys = -1
 				y32 = -y32
 		var/max_t
-		if (proj_data.dissipation_rate)
+		if (proj_data.dissipation_rate&&proj_data.dissipation_rate>0)
 			max_t = proj_data.dissipation_delay + round(proj_data.power / proj_data.dissipation_rate) + 1
 		else
 			max_t = 500 // why not
@@ -391,7 +391,7 @@
 		// The bullet has expired/decayed.
 		if (src.dissipation_ticker > src.proj_data.dissipation_delay)
 			src.power -= src.proj_data.dissipation_rate
-			if (src.power <= 0)
+			if (src.power <= 0||src.dissipation_ticker>src.proj_data.max_range)
 				proj_data.on_max_range_die(src)
 				die()
 				return
@@ -531,6 +531,7 @@ datum/projectile
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
 		nomsg = 0
+		max_range = 500			 // used for projectiles with non-standard dissipation, otherwise should never matter
 
 		datum/material/material = null
 
@@ -602,16 +603,16 @@ datum/projectile
 
 
 #ifdef USE_STAMINA_DISORIENT
-					L.do_disorient(min(80 + (power),max(60,power*4)), weakened = power*2, stunned = power*2, disorient = min(power, 80), remove_stamina_below_zero = 0)
-					L.emote("twitch_v")
+					L.do_disorient(clamp(O.power*4, power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
+					L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 #else
-					L.changeStatus("slowed", power)
+					L.changeStatus("slowed", O.power)
 					L.change_misstep_chance(5)
 					L.emote("twitch_v")
-					if (L.getStatusDuration("slowed") > power)
-						L.changeStatus("stunned", power)
+					if (L.getStatusDuration("slowed") > O.power)
+						L.changeStatus("stunned", O.power)
 					if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-						L.changeStatus("weakened", power)
+						L.changeStatus("weakened", O.power)
 #endif
 
 			return
