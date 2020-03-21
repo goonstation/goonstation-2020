@@ -1,3 +1,16 @@
+var/global/list/color_caching = list()
+
+proc/debug_color_of(var/thing)
+	if(isnum(thing))
+		thing = "[thing]"
+	else if(!istext(thing))
+		thing = "\ref[thing]"
+	if(!thing || thing == "0" || thing == "null" || thing == "\[0x0\]")
+		return "#ffffff"
+	if(!(thing in color_caching))
+		color_caching[thing] = "#[copytext(md5(thing), 1, 7)]"
+	return color_caching[thing]
+
 /client/proc
 	map_debug_panel()
 		set category = "Debug"
@@ -31,6 +44,7 @@
 		var/mobs = 0
 		for(var/mob/M in mobs)
 			mobs++
+
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
 <B>General Processing Data</B><BR>
@@ -172,100 +186,394 @@
 /datum/infooverlay
 	var/help = "Huh."
 	var/restricted = 0//if only coders+ can use it
-	proc/GetInfo(var/turf/theTurf, var/image/theImage)
-		//ono
-	teleblocked/help = "Red tiles are ones that are teleblocked, green ones can be teleported to."
-	teleblocked/GetInfo(var/turf/theTurf, var/image/theImage)
-		if(1)
-			theImage.desc = "This is disabled cus its SLOW."
-			return
-		if( theTurf in telesci )
-			theImage.color = "#0f0"
-			return
+	proc/GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+	proc/OnEnabled(var/client/C)
+	proc/OnDisabled(var/client/C)
 
-		if( theTurf.loc:teleport_blocked || isrestrictedz(theTurf.z) )
-			theImage.color = "#f00"
-			return
-		for (var/obj/machinery/telejam/T)
-			if (!T.active || T.z != theTurf.z)
-				continue
-			var/r = get_dist(T, theTurf)
-			if (r > T.range)
-				continue
-			theImage.color = "#f00"
-			return
-		for (var/obj/item/device/flockblocker/F)
-			if (!F.active || F.z != theTurf.z)
-				continue
-			var/r = get_dist(F, theTurf)
-			if (r > F.range)
-				continue
-			theImage.color = "#f00"
-			return
-		for (var/obj/blob/nucleus/N in range(theTurf, 3))
-			theImage.color = "#f00"
-			return
-		theImage.color = "#0f0"
-	blowout/help = "Green tiles are safe from irradiation, red tiles are ones that are not."
-	blowout/GetInfo(var/turf/theTurf, var/image/theImage)
-		if(theTurf.loc:do_not_irradiate)
-			theImage.color = "#0f0"
-		else
-			theImage.color = "#f00"
-	areas/help = "Differentiates between different areas. Also gives you area names because thats cool and stuff."
-	areas/GetInfo(var/turf/theTurf, var/image/theImage)
-		if(!theTurf.loc:gencolor)
-			theTurf.loc:gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
-		theImage.desc = "Area: [theTurf.loc:name]<br/>Type: [theTurf.loc:type]"
-		theImage.color = theTurf.loc:gencolor
-		theImage.mouse_opacity = 1
-	atmos_air/help = "Debug atmospherics and contents and stuffs"
-	atmos_air/GetInfo(var/turf/theTurf, var/image/theImage)
-		var/turf/simulated/sim = theTurf
-		theImage.mouse_opacity = 1
-		if(istype(sim, /turf/simulated))//byondood
-			var/datum/air_group/group = sim.parent
-			if(group)
-				if(!group.gencolor)
-					group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
-				theImage.color = group.gencolor
-				theImage.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
-				if (group.spaced) theImage.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
-				var/list/borders_space = list()
-				for(var/turf/spaceses in group.space_borders)
-					if(get_dist(spaceses, theTurf) == 1)
-						var/dir = get_dir(theTurf, spaceses)
-						if((dir & (dir-1)) == 0)
-							if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
-							if(dir & SOUTH) borders_space[++borders_space.len] = "SOUTH"
-							if(dir & EAST) borders_space[++borders_space.len] = "EAST"
-							if(dir & WEST) borders_space[++borders_space.len] = "WEST"
-							var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
-							airrowe.appearance_flags = RESET_COLOR
-							theImage.overlays += airrowe
-				if(borders_space.len)
-					theImage.desc += "<br/>(borders space to the [borders_space.Join(" ")])"
+	proc/makeText(text)
+		var/mutable_appearance/mt = new
+		mt.icon = 'icons/effects/effects.dmi'
+		mt.icon_state = "nothing"
+		mt.maptext = "<span class='pixel r ol'>[text]</span>"
+		mt.maptext_x = -3
+		mt.appearance_flags = RESET_COLOR
+		return mt
+
+	teleblocked
+		help = "Red tiles are ones that are teleblocked, green ones can be teleported to."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = is_teleportation_allowed(theTurf) ? "#0f0" : "#f00"
+
+	blowout
+		help = "Green tiles are safe from irradiation, red tiles are ones that are not."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf.loc:do_not_irradiate)
+				img.app.color = "#0f0"
 			else
-				theImage.color = "#ffffff"
-				theImage.desc = "No Atmos Group<br/>O2=[sim.oxygen]<br/>Nitrogen=[sim.nitrogen]<br/>CO2=[sim.carbon_dioxide]<br/>Plasma=[sim.toxins]<br/>Temperature=[sim.temperature]"
-		else
-			theImage.desc = "-unsimulated-"
-			theImage.color = "#202020"
-	artists/help = "Shows you the artists of the wonderful writing thats' been written on the station."
-	artists/GetInfo(var/turf/theTurf, var/image/theImage)
-		var/list/built = list()
-		for(var/obj/decal/cleanable/writing/arte in theTurf)
-			built += "[arte.icon_state] artpiece by [arte.artist]"
-		if(built.len)
-			theTurf.color = "#7f0000"
-		theImage.desc = built.Join("<br/>")
+				img.app.color = "#f00"
+
+
+	areas
+		help = "Differentiates between different areas. Also gives you area names because thats cool and stuff."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!theTurf.loc:gencolor)
+				theTurf.loc:gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
+			img.app.desc = "Area: [theTurf.loc:name]<br/>Type: [theTurf.loc:type]"
+			img.app.color = theTurf.loc:gencolor
+			img.mouse_opacity = 1
+
+
+	atmos_air
+		help = "Tile colors are based on what air group turf belongs to. Hover over a turf to get its atmos readout"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/turf/simulated/sim = theTurf
+			img.mouse_opacity = 1
+			if(istype(sim, /turf/simulated))//byondood
+				var/datum/air_group/group = sim.parent
+				if(group)
+					if(!group.gencolor)
+						group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
+					img.app.color = group.gencolor
+					img.app.desc = "Group \ref[group]<br>O2=[group.air.oxygen]<br/>Nitrogen=[group.air.nitrogen]<br/>CO2=[group.air.carbon_dioxide]<br/>Plasma=[group.air.toxins]<br/>Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
+					if (group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					/*
+					var/list/borders_space = list()
+					for(var/turf/spaceses in group.space_borders)
+						if(get_dist(spaceses, theTurf) == 1)
+							var/dir = get_dir(theTurf, spaceses)
+							if((dir & (dir-1)) == 0)
+								if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
+								if(dir & SOUTH) borders_space[++borders_space.len] = "SOUTH"
+								if(dir & EAST) borders_space[++borders_space.len] = "EAST"
+								if(dir & WEST) borders_space[++borders_space.len] = "WEST"
+								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								airrowe.appearance_flags = RESET_COLOR
+								img.app.overlays += airrowe
+					if(borders_space.len)
+						img.app.desc += "<br/>(borders space to the [borders_space.Join(" ")])"
+					*/
+					var/list/borders_individual = list()
+					for(var/turf/ind in group.border_individual)
+						if(get_dist(ind, theTurf) == 1)
+							var/dir = get_dir(theTurf, ind)
+							if((dir & (dir-1)) == 0)
+								if(dir & NORTH) borders_individual[++borders_individual.len] = "NORTH"
+								if(dir & SOUTH) borders_individual[++borders_individual.len] = "SOUTH"
+								if(dir & EAST) borders_individual[++borders_individual.len] = "EAST"
+								if(dir & WEST) borders_individual[++borders_individual.len] = "WEST"
+								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								airrowe.appearance_flags = RESET_COLOR
+								img.app.overlays += airrowe
+					if(borders_individual.len)
+						img.app.desc += "<br/>(borders individual to the [borders_individual.Join(" ")])"
+					var/list/borders_group = list()
+					for(var/turf/simulated/T in group.enemies)
+						if(get_dist(T, theTurf) == 1)
+							var/dir = get_dir(theTurf, T)
+							if((dir & (dir-1)) == 0)
+								if(dir & NORTH) borders_group[++borders_group.len] = "NORTH"
+								if(dir & SOUTH) borders_group[++borders_group.len] = "SOUTH"
+								if(dir & EAST) borders_group[++borders_group.len] = "EAST"
+								if(dir & WEST) borders_group[++borders_group.len] = "WEST"
+								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								airrowe.appearance_flags = RESET_COLOR
+								if(T.parent)
+									if(!T.parent.gencolor)
+										T.parent.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
+									airrowe.color = T.parent.gencolor
+								img.app.overlays += airrowe
+					if(borders_group.len)
+						img.app.desc += "<br/>(borders groups to the [borders_group.Join(" ")])"
+					if(theTurf in group.borders)
+						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "border")
+						mark.appearance_flags = RESET_COLOR
+						img.app.overlays += mark
+					if(theTurf in group.space_borders)
+						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "space_border")
+						mark.appearance_flags = RESET_COLOR
+						img.app.overlays += mark
+					if(theTurf in group.self_tile_borders)
+						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "individual_border")
+						mark.appearance_flags = RESET_COLOR
+						img.app.overlays += mark
+					if(theTurf in group.self_group_borders)
+						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "group_border")
+						mark.appearance_flags = RESET_COLOR
+						img.app.overlays += mark
+				else
+					img.app.color = "#ffffff"
+					img.app.desc = "No Atmos Group<br/>O2=[sim.oxygen]<br/>Nitrogen=[sim.nitrogen]<br/>CO2=[sim.carbon_dioxide]<br/>Plasma=[sim.toxins]<br/>Temperature=[sim.temperature]"
+			else
+				img.app.desc = "-unsimulated-"
+				img.app.color = "#202020"
+
+
+
+	atmos_status
+		help = "turf color: black (no air), gray (less than normal), white (normal pressure), red (over normal)<br>top number: o2 pp%. white = breathable, orange = breathable w/ cyberlung, otherwise no good<br>middle number: atmos pressure (kPa)<br>bottom number: air temp (&deg;C)<br>colored square in bottom left:<br>color indicates group membership<br>solid: group mode on<br>outline: group mode off<br>no square: not in a group"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/turf/simulated/sim = theTurf
+			img.mouse_opacity = 1
+			img.app.desc = ""
+			img.app.color = null
+			img.app.maptext = null
+			if (istype(sim, /turf/simulated))
+				img.app.alpha = 200
+
+				var/datum/air_group/group = sim.parent
+				var/datum/gas_mixture/air = null
+				var/is_group = 0
+				var/is_group_active = 0
+				if (sim && sim.parent)
+					if (!sim.parent.gencolor)
+						group.gencolor = rgb( rand(1,255),rand(1,255),rand(1,255) )
+					is_group = group.gencolor
+					if (sim.parent.group_processing)
+						is_group_active = 1
+						air = sim.parent.air
+					else
+						air = sim.air
+				else if (sim && sim.air)
+					air = sim.air
+
+				if (!air)
+					img.app.color = "#6666FF"
+					img.app.desc = "no air mix"
+				else
+
+					var/pressure = air.return_pressure()
+					img.app.desc = ""
+
+
+					var/breath_pressure = ((air.total_moles() * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
+					//Partial pressure of the O2 in our breath
+					var/O2_pp = (air.total_moles()) && (air.oxygen / air.total_moles()) * breath_pressure
+					var/O2_color
+					var/T_color
+					switch (O2_pp)
+						if (17 to INFINITY)
+							O2_color = "#eeeeff"
+						if (9 to 17)
+							O2_color = "#ff8800"
+						if (-INFINITY to 0.01)
+							O2_color = "#888888"
+						else
+							O2_color = "#ff0000"
+
+					switch (air.temperature - T0C)
+						if (100 to INFINITY)
+							T_color = "#ff0000"
+						if (75 to 100)
+							T_color = "#ff8800"
+						if (40 to 65)
+							T_color = "#ffff00"
+						if (15 to 40)
+							T_color = "#ffffff"
+						if (-15 to 0)
+							T_color = "#99bbff"
+						if (-40 to -15)
+							T_color = "#5599ff"
+						if (-INFINITY to -40)
+							T_color = "#0000ff"
+
+					T_color = "#ffffff"
+
+					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(air.total_moles(), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
+					img.app.overlays = null
+
+					if (is_group)
+						var/image/gt = image('icons/Testing/atmos_testing.dmi', "group[is_group_active ? "" : "-paused"]")
+						gt.appearance_flags = RESET_COLOR
+						gt.color = is_group
+						img.app.overlays += gt
+
+					if (group && group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+
+					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
+
+
+					if (pressure > ONE_ATMOSPHERE)
+						var/color1 = 255
+						var/color2 = 255 - clamp(((pressure - ONE_ATMOSPHERE) / (ONE_ATMOSPHERE * 4)) * 255, 0, 255)
+						img.app.color = rgb(color1, color2, color2)
+					else
+						var/color1 = clamp(pressure / ONE_ATMOSPHERE * 255, 0, 255)
+						img.app.color = rgb(color1, color1, color1)
+
+
+			else
+				img.app.desc = "" //"unsim"
+				img.app.color = "#0000ff"
+
+
+	artists
+		help = "Shows you the artists of the wonderful writing that's been written on the station."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/artists = list()
+			var/list/built = list()
+			for(var/obj/decal/cleanable/writing/arte in theTurf)
+				built += "[arte.icon_state] artpiece by [arte.artist]"
+				artists |= arte.artist
+			if(artists.len >= 2)
+				img.app.color = "#7f0000"
+			else if(artists.len == 1)
+				img.app.color = debug_color_of(artists[1])
+			img.app.desc = built.Join("<br/>")
+	
+	powernet
+		help = {"red - contains 0 (no powernet), that's probably bad<br>white - contains multiple powernets<br>other - coloured based on the single powernet<br>numbers - ids of all powernets on the tile"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.mouse_opacity = 0
+			var/list/netnums = list()
+			for(var/obj/machinery/power/M in theTurf)
+				if(M.netnum >= 0)
+					netnums |= M.netnum
+			for(var/obj/cable/C in theTurf)
+				if(C.netnum >= 0)
+					netnums |= C.netnum
+			img.app.overlays = list(src.makeText(jointext(netnums, " ")))
+			if(!netnums.len)
+				img.app.color = "#00000000"
+				img.app.alpha = 0
+			else if(0 in netnums)
+				img.app.color = "#ff0000"
+			else if(netnums.len >= 2)
+				img.app.color = "#ffffff"
+			else
+				img.app.color = debug_color_of(netnums[1])
+	
+	disposals
+		help = {"shows all disposal pipes as an overlay<br>if there's stuff in a pipe it's highlighted in blue if moving and in red if stuck<br>number - how many objects are in the pipe"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = "#ffffff"
+			img.app.overlays = list()
+			img.app.alpha = 0
+			for(var/obj/disposalpipe/pipe in theTurf)
+				var/image/pipe_image = image(pipe.icon, icon_state = pipe.icon_state, dir = pipe.dir)
+				img.app.alpha = 64
+				pipe_image.alpha = 160
+				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+				var/n_objects = 0
+				for(var/obj/disposalholder/DH in pipe)
+					n_objects += DH.contents.len
+					if(DH.active)
+						pipe_image.color = "#0000ff"
+					else
+						pipe_image.color = "#ff0000"
+				if(n_objects)
+					pipe_image.maptext = "<span class='pixel r ol'>[n_objects]</span>"
+					pipe_image.maptext_x = -3
+				img.app.overlays += pipe_image
+	
+	camera_coverage
+		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf.cameras && theTurf.cameras.len)
+				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+				img.app.color = "#0000ff"
+			else
+				img.app.alpha = 0
+	
+	atmos_pipes
+		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
+		var/show_numbers = 1
+		var/show_pipe_networks = 0
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = "#ffffff"
+			img.app.overlays = list()
+			img.app.alpha = 0
+			for(var/obj/machinery/atmospherics/thing in theTurf)
+				var/image/pipe_image = image(thing.icon, icon_state = thing.icon_state, dir = thing.dir)
+				if(img.app.alpha == 0)
+					img.app.alpha = 40
+				pipe_image.alpha = 200
+				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+				var/obj/machinery/atmospherics/pipe/pipe = thing
+				if(istype(pipe))
+					img.app.alpha = 80
+					if(show_pipe_networks)
+						pipe_image.color = debug_color_of(pipe.parent?.network)
+					else
+						pipe_image.color = debug_color_of(pipe.parent)
+					var/datum/gas_mixture/air = pipe.return_air()
+					if(show_numbers)
+						if(air.total_moles() > 0.01)
+							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(air.total_moles(), 0.1)]<br>[round(air.return_pressure(), 0.1)]</span>"
+							pipe_image.maptext_x = -3
+						else if(air.total_moles() > 0)
+							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
+							pipe_image.maptext_x = -3
+				img.app.overlays += pipe_image
+	
+	atmos_pipes/without_numbers
+		show_numbers = 0
+	
+	atmos_pipes/pipe_networks_instead_of_pipelines
+		show_numbers = 0
+		show_pipe_networks = 1
+	
+	interesting_stuff
+		help = {"highlights turfs with stuff that has the var "interesting" set to something<br>red - only the turf is interesting<br>blue - interesting stuff is on the turf<br>number - number of interesting things<br>hover over the overlay to see what's interesting"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.alpha = 0
+			var/list/lines = list()
+			if(theTurf.interesting)
+				img.app.alpha = 128
+				lines += "[theTurf] - [theTurf.interesting]"
+				img.app.color = "#ff0000"
+			for(var/atom/A in theTurf)
+				if(A.interesting)
+					img.app.alpha = 128
+					lines += "[A] - [A.interesting]"
+					img.app.color = "#0000ff"
+			if(lines.len)
+				img.app.overlays = list(src.makeText(lines.len))
+				img.app.desc = lines.Join("<br>")
+			else
+				img.app.desc = ""
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
-/obj/overlay/debugoverlay
+
+/image/debugoverlay
 	mouse_opacity = 0
 	icon = 'icons/effects/white.dmi'
-	plane = PLANE_HUD - 1
+	plane = PLANE_SCREEN_OVERLAYS
+	override = 0
+	desc = ""
+	color = null
+	maptext = null
+	alpha = 128
+	var/mutable_appearance/debug_overlay_appearance/app = new
+
+	proc/reset()
+		src.app.reset()
+		src.mouse_opacity = initial(src.mouse_opacity)
+	
+	proc/apply()
+		src.appearance = app
+
+/mutable_appearance/debug_overlay_appearance
+	icon = 'icons/effects/white.dmi'
+	plane = PLANE_SCREEN_OVERLAYS
+	override = 0
+	desc = ""
+	color = null
+	maptext = null
+	alpha = 128
+
+	proc/reset()
+		src.icon = initial(src.icon)
+		src.color = initial(src.color)
+		src.override = initial(src.override)
+		src.desc = initial(src.desc)
+		src.plane = initial(src.plane)
+		src.overlays = initial(src.overlays)
+		src.maptext = initial(src.maptext)
+		src.alpha = initial(src.alpha)
+
+
 /client/proc/RenderOverlay()
 	var/width
 	var/height
@@ -276,27 +584,27 @@
 	else
 		width = view*2+1
 		height = view*2+1
+	var/turf/center = get_turf(eye)
 	for(var/x = 1, x<=width , x++)
 		for(var/y = 1, y<=height, y++)
-			var/turf/t = locate( eye:x + x - width/2 - 1, eye:y + y - height/2 - 1, eye:z )
-			var/image/overlay = infoOverlayImages[ "[x]-[y]" ]
+			var/turf/t = locate( center.x + x - width/2 - 1, center.y + y - height/2 - 1, center.z )
+			var/image/debugoverlay/overlay = infoOverlayImages[ "[x]-[y]" ]
+			if(!overlay)
+				continue
 			overlay.loc = t
-			overlay.mouse_opacity = 0
-			overlay.override = 0
-			//overlay.plane = 100
-			//overlay.layer = 100
-			overlay.overlays = list()
+			overlay.reset()
 			if(!t)
-				overlay.icon_state = "notwhite"
-				overlay.alpha = 0
+				overlay.app.icon_state = "notwhite"
+				overlay.app.alpha = 0
 			else
-				overlay.icon_state = ""
+				overlay.app.icon_state = ""
 				activeOverlay.GetInfo( t, overlay )
-				overlay.alpha = 64
+			overlay.apply()
+
 /client/proc/GenerateOverlay()
 	var/width = view
 	var/height = view
-		
+
 	if(istext( view ))
 		var/split = splittext(view, "x")
 		width = text2num(split[1])/2
@@ -305,14 +613,17 @@
 	for(var/x = 1, x<=width*2+1, x++)
 		for(var/y = 1, y<=height*2+1, y++)
 			if(!infoOverlayImages[ "[x]-[y]" ])
-				var/image/overlay = new('icons/effects/white.dmi')
+				var/image/debugoverlay/overlay = new
 				infoOverlayImages[ "[x]-[y]" ] = overlay
 				src.images += overlay
+
 /client/proc/SetInfoOverlay( )
 	set name = "Debug Overlay"
 	set category = "Debug"
 	admin_only
 	var/name = input("Choose an overlay") in (childrentypesof( /datum/infooverlay ) + "Remove")
+	if(activeOverlay)
+		activeOverlay.OnDisabled(src)
 	if(!name || name == "Remove")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)
@@ -327,7 +638,14 @@
 		activeOverlay = new name()
 		boutput( src, "<span style='color:blue'>[activeOverlay.help]</span>" )
 		GenerateOverlay()
+		activeOverlay.OnEnabled(src)
 		RenderOverlay()
+		SPAWN_DBG(1 DECI SECOND)
+			var/client/X = src
+			while (X && X.activeOverlay)
+				// its a debug overlay so f u
+				X.RenderOverlay()
+				sleep(10)
 /turf
 	MouseEntered(location, control, params)
 		if(usr.client.activeOverlay)
@@ -350,9 +668,12 @@
 			usr.client.tooltipHolder.transient.hide()
 		else
 			.=..()
-/mob/OnMove()
 
+/*
+// having to wiggle around to update the overlay dumb, bad, esp when you can move real fast
+/mob/OnMove()
 	if(client && client.activeOverlay)
 		client.GenerateOverlay()
 		client.RenderOverlay()
 	.=..()
+*/
