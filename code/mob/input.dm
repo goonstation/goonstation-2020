@@ -83,8 +83,19 @@ mob
 							boutput(src, "<span style=\"color:blue\">You're restrained! You can't move!</span>")
 							return
 
-				if ((prob(src.misstep_chance) || (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet")) || (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient")) ))
-					move_dir = pick(turn(move_dir, 90),turn(move_dir, -90))
+				var/misstep_angle = 0
+				if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet"))
+					misstep_angle += 45
+				if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
+					misstep_angle += 45
+				if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+					misstep_angle += rand(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+				if(misstep_angle)
+					misstep_angle = min(misstep_angle,90)
+					var/move_angle = dir2angle(move_dir)
+					move_angle += pick(-misstep_angle,misstep_angle)
+					move_dir = angle2dir(move_angle)
 
 				if (src.buckled && !istype(src.buckled, /obj/stool/chair))
 					src.buckled.relaymove(move_dir)
