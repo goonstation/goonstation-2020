@@ -8,6 +8,7 @@
 #define PLANE_AICAMERA 22
 #define PLANE_FLOCKVISION 25
 #define PLANE_HUD 30
+#define PLANE_SCREEN_OVERLAYS 40
 
 /obj/screen/plane_parent
 	name = ""
@@ -24,6 +25,7 @@
 		src.blend_mode = blend_mode
 		src.color = color
 		src.mouse_opacity = mouse_opacity
+		src.render_target = name
 
 	proc/add_depth_shadow()
 		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=5, offset=1)
@@ -32,13 +34,20 @@ client
 	var/list/plane_parents = list()
 
 	New()
+		plane_parents += new /obj/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane")
 		plane_parents += new /obj/screen/plane_parent(PLANE_AICAMERA, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "aicamera_plane")
-		SPAWN_DBG(50) //Because everything needs to wait!
+		plane_parents += new /obj/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane")
+
+		var/obj/screen/plane_parent/P = new /obj/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
+		P.render_target = "*[P.render_target]"
+		plane_parents += P
+
+		SPAWN_DBG(5 SECONDS) //Because everything needs to wait!
 			apply_depth_filter()
 		..()
 

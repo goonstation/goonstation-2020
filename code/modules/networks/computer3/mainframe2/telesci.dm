@@ -13,6 +13,38 @@
 
 var/telesci_modifiers_set = 0
 
+proc/is_teleportation_allowed(var/turf/T)
+	for (var/atom in teleport_jammers)
+		if (istype(atom, /obj/machinery/telejam))
+			var/obj/machinery/telejam/TJ = atom
+			if (!TJ.active)
+				continue
+			if(DIST_CHECK(TJ, T, TJ.range))
+				return 0
+		if (istype(atom, /obj/item/device/flockblocker))
+			var/obj/item/device/flockblocker/F = atom
+			if (!F.active)
+				continue
+			if(DIST_CHECK(F, T, F.range))
+				return 0
+
+	for (var/X in by_type[/obj/blob/nucleus])
+		var/obj/blob/nucleus/N = X
+		if(DIST_CHECK(N, T, 3))
+			return 0
+
+	// first check the always allowed turfs from map landmarks
+	if (T in telesci)
+		return 1
+
+	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
+		return 0
+
+	if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
+		return 0//forgive me pls
+
+	return 1
+
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
@@ -45,7 +77,7 @@ var/telesci_modifiers_set = 0
 
 		disconnectedImage = image('icons/obj/stationobjs.dmi', "pad-noconnect")
 
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -110,7 +142,7 @@ var/telesci_modifiers_set = 0
 			src.host_id = null
 			//src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN_DBG(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
@@ -140,7 +172,7 @@ var/telesci_modifiers_set = 0
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5 DECI SECONDS)
+				SPAWN_DBG(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -154,7 +186,7 @@ var/telesci_modifiers_set = 0
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(3 DECI SECONDS)
+					SPAWN_DBG(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -168,7 +200,7 @@ var/telesci_modifiers_set = 0
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(2 DECI SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -212,7 +244,7 @@ var/telesci_modifiers_set = 0
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-							else if(!is_allowed(turfcheck))
+							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
@@ -242,7 +274,7 @@ var/telesci_modifiers_set = 0
 									src.message_host("command=nack&cause=badxyz")
 								sleep(10)
 								src.badreceive()
-							else if(!is_allowed(turfcheck))
+							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
@@ -280,18 +312,24 @@ var/telesci_modifiers_set = 0
 						realz = coords.destz
 
 						var/turf/endturf = doturfcheck(0)
+						recharging = 1
 						if (istype(sourceturf) && istype(endturf))
-							if (coords.can_cheat || (is_allowed(endturf) && is_allowed(sourceturf)))
+							if (coords.can_cheat || (is_teleportation_allowed(endturf) && is_teleportation_allowed(sourceturf)))
 								src.receive(sourceturf)
-								SPAWN_DBG(5 SECONDS) //nurf
+								SPAWN_DBG(0)
+									sleep(10)
+									recharging = 0
+									sleep(40)
 									src.send(endturf)
 								message_host("command=ack")
 
 							else
 								src.message_host("command=nack&cause=interference")
+								recharging = 0
 
 						else
 							src.message_host("command=nack&cause=badxyz")
+							recharging = 0
 
 						realx = original_realx
 						realy = original_realy
@@ -325,7 +363,7 @@ var/telesci_modifiers_set = 0
 									src.message_host("command=nack&cause=badxyz")
 								sleep(10)
 								src.badreceive()
-							else if(!is_allowed(turfcheck))
+							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
@@ -441,46 +479,6 @@ var/telesci_modifiers_set = 0
 
 		return realturf
 
-	proc/is_allowed(var/turf/T)
-
-		for (var/atom in teleport_jammers)
-			var/atom/A = atom
-			if (get_dist(T,A) <= 5)
-				if (istype(atom, /obj/machinery/telejam))
-					var/obj/machinery/telejam/TJ = atom
-					if (!TJ.active)
-						continue
-					var/r = get_dist(TJ, T)
-					if (r > TJ.range)
-						continue
-					return 0
-
-			if (get_dist(T,A) <= 4)
-				if (istype(atom, /obj/item/device/flockblocker))
-					var/obj/item/device/flockblocker/F = atom
-					if (!F.active)
-						continue
-					var/r = get_dist(F, T)
-					if (r > F.range)
-						continue
-					return 0
-
-		for (var/obj/blob/nucleus/N in range(T, 4))
-			return 0
-
-
-		// first check the always allowed turfs from map landmarks
-		if (T in telesci)
-			return 1
-
-		if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
-			return 0
-
-		if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
-			return 0//forgive me pls
-
-		return 1
-
 	proc/send(var/turf/target)
 		if (!target)
 			return 1
@@ -535,7 +533,7 @@ var/telesci_modifiers_set = 0
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN_DBG(0.5 SECONDS)
 				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 
 		return 0
@@ -633,7 +631,7 @@ var/telesci_modifiers_set = 0
 				for(var/turf/T in orange(5,src.loc))
 					if(T.x>world.maxx-4 || T.x<4)	continue
 					if(T.y>world.maxy-4 || T.y<4)	continue
-					if (is_allowed(T))
+					if (is_teleportation_allowed(T))
 						turfs += T
 				if(turfs && turfs.len)
 					for(var/atom/movable/O as obj|mob in src.loc)
@@ -691,7 +689,7 @@ var/telesci_modifiers_set = 0
 				for(var/turf/T in orange(30,src.loc))
 					if(T.x>world.maxx-4 || T.x<4)	continue
 					if(T.y>world.maxy-4 || T.y<4)	continue
-					if (is_allowed(T))
+					if (is_teleportation_allowed(T))
 						turfs += T
 				if(turfs && turfs.len)
 					for(var/atom/movable/O as obj|mob in src.loc)
@@ -732,7 +730,7 @@ var/telesci_modifiers_set = 0
 					LAGCHECK(LAG_LOW)
 					if(T.x>world.maxx-4 || T.x<4)	continue
 					if(T.y>world.maxy-4 || T.y<4)	continue
-					if (is_allowed(T))
+					if (is_teleportation_allowed(T))
 						turfs += T
 				if(turfs && turfs.len)
 					for(var/atom/movable/O as obj|mob in src.loc)
@@ -804,7 +802,7 @@ var/telesci_modifiers_set = 0
 				for(var/turf/T in orange(10,src.loc))
 					if(T.x>world.maxx-4 || T.x<4)	continue
 					if(T.y>world.maxy-4 || T.y<4)	continue
-					if (is_allowed(T))
+					if (is_teleportation_allowed(T))
 						turfs += T
 				if (turfs && turfs.len)
 					for(var/atom/movable/O as obj|mob in oview(src,5))
@@ -868,7 +866,7 @@ var/telesci_modifiers_set = 0
 
 	New()
 		..()
-		SPAWN_DBG(5 DECI SECONDS)
+		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -892,7 +890,7 @@ var/telesci_modifiers_set = 0
 
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(5 DECI SECONDS)
+				SPAWN_DBG(0.5 SECONDS)
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 
 			return
@@ -906,7 +904,7 @@ var/telesci_modifiers_set = 0
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(3 DECI SECONDS)
+					SPAWN_DBG(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -940,7 +938,7 @@ var/telesci_modifiers_set = 0
 					src.link.post_signal(src, newsignal)
 
 				src.updateUsrDialog(1)
-				//SPAWN_DBG(2 DECI SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				//SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -1066,7 +1064,7 @@ var/telesci_modifiers_set = 0
 				coord_update_flag = 0
 				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
 
-			message_host("command=teleman&args=scan")
+			message_host("command=teleman&args=-p [padNum] scan")
 			src.updateUsrDialog(1)
 			return
 

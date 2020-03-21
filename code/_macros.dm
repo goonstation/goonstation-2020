@@ -121,6 +121,8 @@ var/list/global_spawn_dbg = list()
 #define issimulatedturf(x) istype(x, /turf/simulated)
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 
+#define DIST_CHECK(A, B, R) (get_dist(A, B) <= (R) && get_step(A, 0).z == get_step(B, 0).z)
+
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
 
 // maps
@@ -144,3 +146,6 @@ var/list/global_spawn_dbg = list()
 
 #define GLOBAL_PROC "THIS_IS_A_GLOBAL_PROC_CALLBACK" //used instead of null because clients can be callback targets and then go null from disconnect before invoked, and we need to be able to differentiate when that happens or when it's just a global proc.
 #define CALLBACK new /datum/callback //not a macro to make it 510 compatible
+
+#define START_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); if(!by_type[_type]) { by_type[_type] = list(src) } else { by_type[_type].Add(src) } } while (FALSE)
+#define STOP_TRACKING do { var/_type = text2path(replacetext("[.disposing]", "/disposing", "")); by_type[_type].Remove(src) } while (FALSE)
