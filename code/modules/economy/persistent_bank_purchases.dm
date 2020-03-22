@@ -15,6 +15,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
 	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
+	new /datum/bank_purchaseable/human_item/sparkler_box,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -205,6 +206,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Record"
 			cost = 2000
 			path = /obj/item/record/spacebux
+
+		sparkler_box
+			name = "Sparkler Box"
+			cost = 1000
+			path = /obj/item/storage/sparkler_box
 
 		battlepass
 			name = "Battle Pass"

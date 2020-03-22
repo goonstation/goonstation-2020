@@ -18,6 +18,7 @@
 	col_b = 0.3
 	var/datum/effects/system/spark_spread/spark_system
 	var/sparks = 7
+	var/burnt = 0
 
 
 	New()
@@ -55,6 +56,11 @@
 		else
 			return ..()
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if((temperature > T0C+400))
+			src.light()
+		..()
+
 	process()
 		if (src.on)
 			var/turf/location = src.loc
@@ -74,16 +80,21 @@
 		spark_system.set_up(1, 0, src)
 		src.spark_system.start()
 		if(!sparks)
-			src.name = "burnt-out sparkler"
 			src.put_out()
+			src.burnt = 1
+			src.name = "burnt-out sparkler"
 			src.icon_state = "sparkler-burnt"
 			src.item_state = "sparkler-burnt"
-
+			var/mob/M = src.loc
+			if(istype(M))
+				M.update_inhands()
 		return
 
 	proc/light(var/mob/user as mob, var/message as text)
 		if (!src) return
+		if (burnt) return
 		if (!src.on)
+			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.damtype = "fire"
 			src.force = 3
@@ -141,3 +152,11 @@
 			src.icon_state = "sparkler_box-open"
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
 			boutput(usr, "<span style='color:blue'>You snap open the child-protective safety tape on [src].</span>")
+
+	MouseDrop(atom/over_object, src_location, over_location)
+		if(!src.open)
+			if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+				return
+			if (usr.is_in_hands(src))
+				return
+		..()
