@@ -50,6 +50,7 @@ toxic - poisons
 	window_pass = 1
 	damage_type = D_ENERGY
 	sname = "transverse wave"
+	icon_state = "wave-g"
 		
 
 
@@ -64,6 +65,7 @@ toxic - poisons
 	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
 	hit_ground_chance = 0
 	sname = "electromagnetic distruption wave"
+	icon_state = "wave-emp"
 
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
