@@ -39,10 +39,10 @@ toxic - poisons
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
 	shot_number = 1
-	power = 15 //slightly weaker than a taser at kissing distances, a bit stronger near the edge of the (short) range
-	dissipation_delay = 2 //total lifespan about half that of a taser shot
-	dissipation_rate = -5
-	max_range = 4 //1/3 taser
+	power = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
+	dissipation_delay = 4
+	dissipation_rate = -30
+	max_range = 5 //super short. about 4 tile max range
 	cost = 50
 	hit_ground_chance = 100 //no escape
 	pierces = -1 //no limits

@@ -96,6 +96,11 @@
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (A == shooter) return // never collide with the original shooter
+		if (ismob(A)) //don't doublehit
+			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
+				return
+			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
+				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 
 		// Necessary because the check in human.dm is ineffective (Convair880).
 		var/immunity = check_target_immunity(A, source = src)
@@ -122,7 +127,7 @@
 		if(proj_data && proj_data.material) //ZeWaka: Fix for null.material
 			proj_data.material.triggerOnAttack(src, src.shooter, A)
 
-		if (istype(A,/turf))
+		if (isturf(A))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
@@ -144,10 +149,38 @@
 				die()
 
 		else if (ismob(A))
-			if (ticks_until_can_hit_mob > 0 || goes_through_mobs)
-				return
+			if(pierces_left != 0) //try to hit other targets on the tile
+				var/turf/T = get_turf(A)
+				for (var/mob/X in T.contents)
+					if (X != A)
+						X.bullet_act(src)
+						pierces_left--
+						
+						//holy duplicate code batman. If someone can come up with a better solution, be my guest
+						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
+							if (proj_data.hit_mob_sound)
+								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
+						for (var/obj/item/cloaking_device/S in X.contents)
+							if (S.active)
+								S.deactivate(X)
+								src.visible_message("<span style=\"color:blue\"><b>[X]'s cloak is disrupted!</b></span>")
+						for (var/obj/item/device/disguiser/D in A.contents)
+							if (D.on)
+								D.disrupt(X)
+								src.visible_message("<span style=\"color:blue\"><b>[X]'s disguiser is disrupted!</b></span>")
+						if (ishuman(X))
+							var/mob/living/carbon/human/H = X
+							//H.add_stamina(STAMINA_FLIP_COST * 0.5) //Refunds some stamina if you successfully tatically flip.
+												//loll actually this just awards you stamina for being shot by any bullet. I'm leaving it because it's maybe a fun thing. it's "adrenaline" ok
+												//3/10/2019 i changed my mind, this SUCKS!!
+							H.stamina_stun()
+							if (istype(X, /mob/living/carbon/human/npc/monkey))
+								var/mob/living/carbon/human/npc/monkey/M = X
+								M.shot_by(shooter)
+
+					if(pierces_left == 0)
+						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
-				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 			for (var/obj/item/cloaking_device/S in A.contents)
@@ -564,7 +597,7 @@ datum/projectile
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
 	var/pierces = 0
-	var/ticks_between_mob_hits = 0
+	var/ticks_between_mob_hits = 1 //quit doublehitting
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 
