@@ -36,8 +36,6 @@ toxic - poisons
 	//Can we pass windows
 	window_pass = 0
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		stun_bullet_hit(P, M)
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
 	shot_number = 1
@@ -52,30 +50,32 @@ toxic - poisons
 	window_pass = 1
 	damage_type = D_ENERGY
 	sname = "transverse wave"
-
+		
 
 
 		
 
-/datum/projectile/wavegun/emp //emp and shit sparks
+/datum/projectile/wavegun/emp //emp and shit sparks. Maybe give this to pulse rifle?
 	shot_number = 1
 	power = 25
 	dissipation_delay = 2
-	dissipation_rate = -25 //only reliable past a few tiles
+	dissipation_rate = -37.5 //only reliable past a few tiles
 	max_range = 18 //taser-and-a-half range
-	cost = 150 //one shot, unless you upgrade to a pulserifle/etc cell
+	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
 	hit_ground_chance = 0
 	sname = "electromagnetic distruption wave"
 
-	on_hit(obj/projectile/P, atom/H)
+	on_hit(atom/H, angle, var/obj/projectile/P)
+		var/turf/T = get_turf(H)
 		if(prob(P.power))
-			H.emp_act()
+			for(var/atom/O in T.contents)
+				O.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-		s.set_up(5, 0, H)
+		s.set_up(5, 0, T)
 		s.start()
 	
 	on_pointblank(obj/projectile/P, mob/living/M)
-		if(prob(50))//make pointblanking less suck
+		if(prob(50))//make pointblanking less suck, but also only affect the target directly
 			M.emp_act()
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, M)
