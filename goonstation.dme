@@ -960,6 +960,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\screen.dm"
 #include "code\obj\sealab_objects.dm"
 #include "code\obj\shieldgen.dm"
+#include "code\obj\soup_pot.dm"
 #include "code\obj\spawner.dm"
 #include "code\obj\stool.dm"
 #include "code\obj\structure.dm"

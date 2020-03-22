@@ -672,6 +672,29 @@
 			else
 				boutput(user, "<span style='color:red'>There's nothing in the bowl to dip!</span>")
 
+		else if (istype(W, /obj/item/ladle))
+			var/obj/item/ladle/L = W
+			if(!L.my_soup)
+				boutput(user,"<span style=\"color:red\">There's nothing in the ladle to serve!</span>")
+				return
+			if(src.reagents.total_volume)
+				boutput(user,"<span style=\"color:red\">There's already something in the bowl!</span>")
+				return
+
+			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup)
+
+			S.pixel_x = src.pixel_x
+			S.pixel_y = src.pixel_y
+			L.my_soup = null
+			L.overlays = null
+
+			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
+
+			S.loc = get_turf(src)
+			qdel(src)
+
+
+
 		else
 			..()
 
