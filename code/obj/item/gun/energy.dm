@@ -432,7 +432,7 @@
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "wavegun"
+	icon_state = "wavegun100"
 	item_state = "wave"
 	uses_multiple_icon_states = 1
 	m_amt = 4000
@@ -459,9 +459,11 @@
 			else
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
-	attack_self()
+	attack_self(mob/user as mob)
 		..()
 		update_icon()
+		user.update_inhands()
+		
 
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
