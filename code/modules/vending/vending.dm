@@ -484,6 +484,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/togglecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/selectcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/dispatchcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/regfind, 30)

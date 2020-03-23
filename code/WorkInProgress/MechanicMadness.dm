@@ -48,6 +48,10 @@ var/list/mechanics_telepads = new/list()
 	var/outputSignal = "1"
 	var/triggerSignal = "1"
 
+	var/filtered = 0
+	var/list/outgoing_filters = list()
+	var/exact_match = 0
+
 	disposing()
 		wipeIncoming()
 		wipeOutgoing()
@@ -76,12 +80,25 @@ var/list/mechanics_telepads = new/list()
 		if(!msg.hasNode(src))
 			msg.addNode(src)
 		else
-			return
+			return 0
 
+		var/fired = 0
 		for(var/atom/M in connected_outgoing)
 			if(M.mechanics)
+				if (filtered && outgoing_filters[M] && !allowFiltered(msg.signal, outgoing_filters[M]))
+					continue
 				M.mechanics.fireInput(connected_outgoing[M], cloneMessage(msg))
-		return
+				fired = 1
+		return fired
+
+	proc/allowFiltered(var/signal, var/list/filters)
+		for (var/filter in filters)
+			var/text_found = findtext(signal, filter)
+			if (exact_match)
+				text_found = text_found && (length(signal) == length(filter))
+			if (text_found)
+				return 1
+		return 0
 
 	//Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
 	proc/cloneMessage(var/datum/mechanicsMessage/msg)
@@ -100,6 +117,7 @@ var/list/mechanics_telepads = new/list()
 		for(var/atom/M in connected_incoming)
 			if(M.mechanics)
 				M.mechanics.connected_outgoing.Remove(master)
+				if (M.mechanics.outgoing_filters.Find(master)) M.mechanics.outgoing_filters.Remove(master)
 			connected_incoming.Remove(M)
 		return
 
@@ -108,6 +126,7 @@ var/list/mechanics_telepads = new/list()
 		for(var/atom/M in connected_outgoing)
 			if(M.mechanics) M.mechanics.connected_incoming.Remove(master)
 			connected_outgoing.Remove(M)
+		outgoing_filters.Cut()
 		return
 
 	//Helper proc to check if a mob is allowed to change connections. Right now you only need a multitool.
@@ -137,6 +156,15 @@ var/list/mechanics_telepads = new/list()
 					O.mechanics.connected_incoming.Add(master)
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
+					if (filtered)
+						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+						if (length(filter))
+							if (!outgoing_filters[O]) outgoing_filters[O] = list()
+							outgoing_filters.Add(O)
+							outgoing_filters[O] = splittext(filter, ",")
+							boutput(usr, "<span style=\"color:green\">Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [O.name]</span>")
+						else
+							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
 				else
 					boutput(usr, "<span style=\"color:red\">[O] has no input slots. Can not connect [master] as Trigger.</span>")
 
@@ -153,12 +181,22 @@ var/list/mechanics_telepads = new/list()
 					connected_incoming.Add(O)
 					boutput(usr, "<span style=\"color:green\">You connect the [master.name] to the [O.name].</span>")
 					logTheThing("station", usr, null, "connects a <b>[master.name]</b> to a <b>[O.name]</b> at [log_loc(src_location)].")
+					if (O.mechanics.filtered)
+						var/filter = input(usr, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+						if (length(filter))
+							if (!O.mechanics.outgoing_filters[master]) O.mechanics.outgoing_filters[master] = list()
+							O.mechanics.outgoing_filters.Add(master)
+							O.mechanics.outgoing_filters[master] = splittext(filter, ",")
+							boutput(usr, "<span style=\"color:green\">Only passing messages that [O.mechanics.exact_match ? "match" : "contain"] [filter] to the [master.name]</span>")
+						else
+							boutput(usr, "<span style=\"color:green\">Passing all messages to the [O.name]</span>")
 				else
 					boutput(usr, "<span style=\"color:red\">[master] has no input slots. Can not connect [O] as Trigger.</span>")
 
 			if("*CANCEL*")
 				return
 		return
+
 
 /obj/item/mechanics
 	name = "testhing"
@@ -1482,6 +1520,49 @@ var/list/mechanics_telepads = new/list()
 
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_check"
+		return
+
+/obj/item/mechanics/dispatchcomp
+	name = "Dispatch Component"
+	desc = ""
+	icon_state = "comp_disp"
+
+	get_desc()
+		. += "<br><span style=\"color:blue\">Exact match mode: [mechanics.exact_match ? "on" : "off"]</span>"
+
+	New()
+		..()
+		mechanics.filtered = 1
+		mechanics.addInput("dispatch", "dispatch")
+		verbs -= /obj/item/mechanics/verb/setvalue
+		return
+
+	proc/dispatch(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		var/sent = mechanics.fireOutgoing(input) //Filtering is handled by mechanics_holder based on filtered flag
+		if (sent) animate_flash_color_fill(src,"#00FF00",2, 2)
+		return
+
+	verb/toggleexactmatch()
+		set src in view(1)
+		set name = "\[Toggle Exact Match\]"
+		set desc = "In exact match mode, signals must match the filter exactly in order to be passed (case insensitive)"
+		set category = "Local"
+
+		if (!isliving(usr))
+			return
+		if (usr.stat)
+			return
+		if (!mechanics.allowChange(usr))
+			boutput(usr, "<span style=\"color:red\">[MECHFAILSTRING]</span>")
+			return
+
+		mechanics.exact_match = !mechanics.exact_match
+		boutput(usr, "Exact match mode now [mechanics.exact_match ? "on" : "off"]")
+		return
+
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_disp"
 		return
 
 /obj/item/mechanics/sigbuilder
