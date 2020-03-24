@@ -477,6 +477,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/instrumentPlayer, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/pressureSensor, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/button, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/trigger/buttonPanel, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/gunholder/recharging, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/ledcomp, 30)
