@@ -2578,27 +2578,11 @@
 
 //MBC : oh god there's like 6 different code paths for the 'rip apart handcuffs' ability
 //																						pls standardize later
-/mob/living/carbon/human/proc/resist()
-	if (src.last_resist > world.time)
-		return
-	src.last_resist = world.time + 20
-
-	if (src.getStatusDuration("burning"))
-		if (!actions.hasAction(src, "fire_roll"))
-			src.last_resist = world.time + 25
-			actions.start(new/datum/action/fire_roll(), src)
-		else
-			return
-
-	var/turf/T = get_turf(src)
-	if (T.active_liquid)
-		T.active_liquid.HasEntered(src, T)
-		src.visible_message("<span style=\"color:red\">[src] splashes around in [T.active_liquid]!</b></span>", "<span style=\"color:blue\">You splash around in [T.active_liquid].</span>")
-
-
+/mob/living/carbon/human/resist()
+	..() // For resisting burning and grabs see living.dm
 	// Added this here (Convair880).
 	if (!src.stat && !src.restrained() && (src.shoes && src.shoes.chained))
-		if (ishuman(src))
+		if (ishuman(src)) // Phyvo: Is this if statement pointless? I didn't write it so I didn't want to touch it.
 			var/obj/item/clothing/shoes/SH = src.shoes
 			if (ischangeling(src))
 				src.u_equip(SH)
@@ -2631,28 +2615,6 @@
 				var/time = 450
 				src.show_text("You attempt to remove your shackles. (This will take around [round(time / 10)] seconds and you need to stand still.)", "red")
 				actions.start(new/datum/action/bar/private/icon/shackles_removal(time), src)
-
-	if (!src.stat && !src.restrained())
-		if (src.canmove)
-			for (var/obj/item/grab/G in src.grabbed_by)
-				G.do_resist()
-				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-		else
-			for (var/obj/item/grab/G in src.grabbed_by)
-				if (G.stunned_targets_can_break())
-					G.do_resist()
-					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-
-		if (!src.grabbed_by || !src.grabbed_by.len)
-			if (src.buckled)
-				src.buckled.attack_hand(src)
-				src.force_laydown_standup() //safety because buckle code is a mess
-				if (src.targeting_spell == src.chair_flip_ability) //fuCKKK
-					src.end_chair_flip_targeting()
-			else
-				if (!src.getStatusDuration("burning"))
-					for (var/mob/O in AIviewers(src, null))
-						O.show_message(text("<span style=\"color:red\"><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	if (src.handcuffed)
 		if (ishuman(src))
@@ -2718,7 +2680,6 @@
 			if (src.handcuffed:material) //This is a bit hacky.
 				src.handcuffed:material:triggerOnAttacked(src.handcuffed, src, src, src.handcuffed)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
-
 	return 0
 
 /mob/living/carbon/human/proc/spidergib()

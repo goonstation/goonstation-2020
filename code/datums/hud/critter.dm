@@ -9,6 +9,7 @@
 	var/obj/screen/hud/mintent
 	var/obj/screen/hud/throwing
 	var/obj/screen/hud/pulling
+	var/obj/screen/hud/resist
 	var/mob/living/critter/master
 	var/icon/icon_hud = 'icons/mob/hud_human.dmi'
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -46,7 +47,8 @@
 		pulling = create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0", "CENTER+[nr], SOUTH", HUD_LAYER+1)
 		mintent = create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run", "CENTER+[nr], SOUTH", HUD_LAYER+1)
 		nr++
-
+		resist = create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter", "CENTER+[nr], SOUTH", HUD_LAYER+1)
+		nr++
 		for (var/i = 1, i <= master.equipment.len, i++)
 			var/datum/equipmentHolder/EH = master.equipment[i]
 			var/SL = loc_left()
@@ -165,7 +167,8 @@
 						master.toggle_throw_mode()
 					else
 						master.drop_item()
-
+				if ("resist")
+					master.resist()
 				if ("health")
 					boutput(master, "<span style='color:blue'>Your health: [master.health]/[master.max_health]</span>")
 
