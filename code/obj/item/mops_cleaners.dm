@@ -448,6 +448,17 @@ WET FLOOR SIGN
 	SPAWN_DBG(10)
 	spam_flag = 0
 
+/obj/item/sponge/attackby(obj/item/W as obj, mob/user as mob)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span style='color:blue'>[user] cuts [src] into the shape of... cheese?</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		src.set_loc(user)
+		var/obj/item/sponge/cheese/I = new /obj/item/sponge/cheese
+		src.reagents.trans_to(I, reagents.total_volume)
+		user.put_in_hand_or_drop(I)
+		qdel(src)
+
 /obj/item/sponge/throw_impact(atom/hit)
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
@@ -578,6 +589,14 @@ WET FLOOR SIGN
 				return
 	else
 		..()
+
+/obj/item/sponge/cheese
+	name = "cheese-shaped sponge"
+	desc = "Wait a minute! This isn't cheese..."
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	icon_state = "cheese-sponge"
+	item_state = "sponge"
+
 
 /obj/item/caution
 	desc = "Caution! Wet Floor!"
