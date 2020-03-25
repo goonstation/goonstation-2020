@@ -89,23 +89,23 @@
 			body += "<br><br><u>Jobs</u>"
 			body += "<br>Civilian:"
 			for(var/job in civilianjobs)
-				body += " <a href='?src=\ref[src];assign=[job]'>[replacetext(job, " ", "&nbsp")]</a>" //make sure there isn't a line break in the middle of a job
+				body += " <a href='?src=\ref[src];assign=[job];colour=blue'>[replacetext(job, " ", "&nbsp")]</a>" //make sure there isn't a line break in the middle of a job
 
 			body += "<br>Supply and Maintainence:"
 			for(var/job in maintainencejobs)
-				body += " <a href='?src=\ref[src];assign=[job]'>[replacetext(job, " ", "&nbsp")]</a>"
+				body += " <a href='?src=\ref[src];assign=[job];colour=yellow'>[replacetext(job, " ", "&nbsp")]</a>"
 
 			body += "<br>Research and Medical:"
 			for(var/job in researchjobs)
-				body += " <a href='?src=\ref[src];assign=[job]'>[replacetext(job, " ", "&nbsp")]</a>"
+				body += " <a href='?src=\ref[src];assign=[job];colour=purple'>[replacetext(job, " ", "&nbsp")]</a>"
 
 			body += "<br>Security:"
 			for(var/job in securityjobs)
-				body += " <a href='?src=\ref[src];assign=[job]'>[replacetext(job, " ", "&nbsp")]</a>"
+				body += " <a href='?src=\ref[src];assign=[job];colour=red'>[replacetext(job, " ", "&nbsp")]</a>"
 
 			body += "<br>Command:"
 			for(var/job in commandjobs)
-				body += " <a href='?src=\ref[src];assign=[job]'>[replacetext(job, " ", "&nbsp")]</a>"
+				body += " <a href='?src=\ref[src];assign=[job];colour=green'>[replacetext(job, " ", "&nbsp")]</a>"
 
 			//Change access to individual areas
 			body += "<br><br><u>Access</u>"
