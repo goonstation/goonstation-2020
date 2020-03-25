@@ -1346,25 +1346,6 @@
 		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	if (istype(C, /obj/item/seed/grass) && intact)
-		if (broken || burnt) boutput(user, "<span style=\"color:red\">The floor is too damaged to put space grass on.</span>")
-		else if (src.icon_state in list("grass", "grass_eh"))
-			boutput(user, "<span style=\"color:red\">There's already some grass here.</span>")
-		else
-			boutput(user, "<span style=\"color:blue\">You scatter seeds on the ground.</span>")
-			if (!icon_old)
-				icon_old = icon_state
-			SPAWN_DBG(rand(5,12) * 10)
-				src.icon = 'icons/turf/outdoors.dmi'
-				src.icon_state = "grass"
-				src.dir = pick(cardinal)
-				user.u_equip(C)
-				if(C)
-					C.dropped()
-					qdel (C)
-				return
-		return
-
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C:amount >= 2)

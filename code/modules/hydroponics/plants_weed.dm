@@ -221,21 +221,3 @@
 
 				POT.HYPdestroyplant()
 				return
-
-/datum/plant/grass
-	name = "Grass"
-	growthmode = "weed"
-	category = "Miscellaneous"
-	seedcolor = "#00CC00"
-	crop = /obj/item/seed/grass
-	unique_seed = /obj/item/seed/grass
-	isgrass = 1
-	nothirst = 1
-	starthealth = 5
-	growtime = 15
-	harvtime = 50
-	harvests = 1
-	cropsize = 8
-	endurance = 10
-	vending = 2
-	genome = 4
