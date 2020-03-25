@@ -1927,7 +1927,8 @@ datum
 					if (H.sims)
 						H.sims.affectMotive("bladder", -1.25)
 				M.drowsyness = max(0,M.drowsyness-5)
-				M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
 				..()
 				return
 		fooddrink/sarsaparilla // traditionally non-caffeinated
@@ -1948,7 +1949,8 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.sims)
 						H.sims.affectMotive("bladder", (-1.25 * mult))
-				M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
 				..(M, mult)
 				return
 
@@ -2083,7 +2085,8 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = 0
-				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(3)
 
 		fooddrink/coffee/espresso //the good stuff
@@ -2310,7 +2313,8 @@ datum
 			viscosity = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.reagents.add_reagent("sugar", 0.8 * mult)
 				..()
 

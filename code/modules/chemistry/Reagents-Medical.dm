@@ -213,9 +213,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
-				if(M.bodytemperature < M.base_body_temp)
+				if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
-				else if(M.bodytemperature > 311)
+				else if(M.bodytemperature < 311)
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				..()
 				return
@@ -239,6 +239,11 @@ datum
 					M.HealDamage("All", 2 * mult, 0)
 					M.updatehealth()
 				if(M.bodytemperature > M.base_body_temp)
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(10 * mult))
+				// I only put this following bit because wiki claims it "attempts to return temperature to normal"
+				// Rather than the previous functionality of cooling down when hot
+				// No need to implement if the wiki is erronous here
+				if(M.bodytemperature < M.base_body_temp)
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(10 * mult))
 				..()
 				return
@@ -339,9 +344,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp)
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
-				else if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
+				else if(M.bodytemperature > M.base_body_temp)
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
 				M.take_oxygen_deprivation(-INFINITY)
 				if(prob(20))
 					M.take_brain_damage(1 * mult)
@@ -769,7 +774,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
 				if(prob(10))
 					M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
@@ -1076,7 +1082,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(4)
 				M.drowsyness = max(M.drowsyness-5, 0)
 				if(M.losebreath > 3)
@@ -1332,7 +1339,7 @@ datum
 				M.make_dizzy(1 * mult)
 				M.change_misstep_chance(5 * mult)
 				if(M.bodytemperature < M.base_body_temp)
-					M.bodytemperature = max(M.base_body_temp + 10, M.bodytemperature-(10 * mult))
+					M.bodytemperature = min(M.base_body_temp + 10, M.bodytemperature+(10 * mult))
 				if(prob(4)) M.emote("collapse")
 				if(M.losebreath > 5)
 					M.losebreath = max(5, M.losebreath-(5 * mult))
