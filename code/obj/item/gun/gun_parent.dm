@@ -277,24 +277,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!process_ammo(user))
 		return
-	var/obj/projectile/P = initialize_projectile_ST(user, current_projectile, M)
-	if (!P)
-		return
+	for (var/i = 0; i < current_projectile.shot_number; i++)
+		var/obj/projectile/P = initialize_projectile_ST(user, current_projectile, M)
+		if (!P)
+			return
 
-	if (user == M)
-		P.shooter = null
-		P.mob_shooter = user
+		if (user == M)
+			P.shooter = null
+			P.mob_shooter = user
 
-	alter_projectile(P)
-	P.forensic_ID = src.forensic_ID // Was missing (Convair880).
-	P.was_pointblank = 1
-	hit_with_existing_projectile(P, M) // Includes log entry.
+		alter_projectile(P)
+		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		P.was_pointblank = 1
+		hit_with_existing_projectile(P, M) // Includes log entry.
 
-	var/mob/living/L = M
-	if (M && isalive(M))
-		L.lastgasp()
-	M.set_clothing_icon_dirty()
-	src.update_icon()
+		var/mob/living/L = M
+		if (M && isalive(M))
+			L.lastgasp()
+		M.set_clothing_icon_dirty()
+		src.update_icon()
+		sleep(current_projectile.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
