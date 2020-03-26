@@ -632,21 +632,8 @@ datum/projectile
 				impact_image_effect("T", hit)
 				if (isliving(hit))
 					var/mob/living/L = hit
+					stun_bullet_hit(O,L)
 
-
-
-#ifdef USE_STAMINA_DISORIENT
-					L.do_disorient(clamp(O.power*4, power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
-					L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-#else
-					L.changeStatus("slowed", O.power)
-					L.change_misstep_chance(5)
-					L.emote("twitch_v")
-					if (L.getStatusDuration("slowed") > O.power)
-						L.changeStatus("stunned", O.power)
-					if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
-						L.changeStatus("weakened", O.power)
-#endif
 
 			return
 		tick(var/obj/projectile/O)
@@ -975,15 +962,19 @@ datum/projectile/snowball
 	P.yo = yo
 	return P
 
-/proc/stun_bullet_hit(var/obj/projectile/P, var/mob/living/M)
-	if (ishuman(M) && !isdead(M))
-		var/mob/living/carbon/human/H = M
-		H.lying = 1
-		setunconscious(H)
-		H.changeStatus("stunned", max(H.getStatusDuration("stunned"), P.power*2.5))
-	else if (isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		R.changeStatus("stunned", max(R.getStatusDuration("stunned"), 50))
+/proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
+#ifdef USE_STAMINA_DISORIENT
+	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
+	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
+#else
+	L.changeStatus("slowed", O.power)
+	L.change_misstep_chance(5)
+	L.emote("twitch_v")
+	if (L.getStatusDuration("slowed") > O.power)
+		L.changeStatus("stunned", O.power)
+	if (L.getStatusDuration("weakened") > 0) //weaken from stamina does not stack, this allows it to for stun guns
+		L.changeStatus("weakened", O.power)
+#endif
 
 /proc/shoot_reflected(var/obj/projectile/P, var/obj/reflector)
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
