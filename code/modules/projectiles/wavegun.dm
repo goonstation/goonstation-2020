@@ -7,11 +7,11 @@
 //How much ammo this costs
 	cost = 33
 //How fast the power goes away
-	dissipation_rate = -3.3 //gets strong fast
+	dissipation_rate = -2.5 //gets strong fast-ish
 //Range/time limiter on non-standard dissipation
-	max_range = 36 //3x taser range
+	max_range = 24 //long range, but not infinite
 //How many tiles till it starts to lose power (gain, in this case)
-	dissipation_delay = 3.3
+	dissipation_delay = 4
 //Kill/Stun ratio
 	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
@@ -58,9 +58,9 @@ toxic - poisons
 
 /datum/projectile/wavegun/emp //emp and shit sparks. Maybe give this to pulse rifle?
 	shot_number = 1
-	power = 25
+	power = 10
 	dissipation_delay = 2
-	dissipation_rate = -37.5 //only reliable past a few tiles
+	dissipation_rate = -10 //only reliable past a few tiles 
 	max_range = 18 //taser-and-a-half range
 	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
 	hit_ground_chance = 0
@@ -69,9 +69,11 @@ toxic - poisons
 
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
-		if(prob(P.power))
+		if(prob(P.power*2.5))
 			for(var/atom/O in T.contents)
 				O.emp_act()
+				if(P.power >= 100) //10 tile shot, wow
+					O.emp_act()//get sniped
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
 		s.start()

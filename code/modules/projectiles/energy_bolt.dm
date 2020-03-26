@@ -7,7 +7,7 @@
 //How much ammo this costs
 	cost = 15
 //How fast the power goes away
-	dissipation_rate = 2
+	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 2
 //Kill/Stun ratio
@@ -115,7 +115,7 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
-	power = 0
+	power = 0 //TODO: fix this shit
 	dissipation_delay = 6
 	icon_state = "spark"
 
@@ -245,14 +245,9 @@ toxic - poisons
 	color_red = 255
 	color_green = 165
 	color_blue = 0
-	var/distance = 6		//Distance needs to be explicitly set before usage. in shoot// currently only used for the Lawgiver
+	max_range = 6		//max_range exists for this now
 	var/hit = 0				//This hit var and the on_hit on_end nonsense was to make it so that if it hits a guy, the explosion starts on them and not one tile before, but if it hits a wall, it explodes on the floor tile in front of it
 
-	//die/detonate when you go the required distance
-	tick(var/obj/projectile/O)
-		if (distance <= 0)
-			O.die()
-		distance--
 
 	on_hit(atom/O)
 
@@ -272,8 +267,6 @@ toxic - poisons
 
 	//do AOE stuff. This is not on on_hit because this effect should trigger when the projectile reaches the end of its distance OR hits things.
 	on_end(var/obj/projectile/O)
-		distance = 6		//reset distance for next shot
-		//if we hit a mob or something, that will handle the detonation, we don't need to do it on_end
 		if (!hit)
 			detonate(O)
 		hit = 0
@@ -323,6 +316,7 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
 	power = 20
+	dissipation_rate = 2
 	cost = 35
 	sname = "pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
@@ -338,7 +332,7 @@ toxic - poisons
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
 
 		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O)
+	on_hit(atom/hit, angle, var/obj/projectile/O) //TODO: make this be affected by range maybe
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		if (ishuman(hit))
