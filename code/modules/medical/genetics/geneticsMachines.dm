@@ -637,14 +637,18 @@ var/list/genetics_computers = list()
 
 		//src.equipment_cooldown(1,400)
 
-		genResearch.researchMaterial -= price
-
 		var/booth_effect_cost = input(usr, "Please enter a price to sell this effect.", "$$$", 200) as null|num
+		if (isnull(booth_effect_cost))
+			return
 		booth_effect_cost = max(0,booth_effect_cost)
 		booth_effect_cost = min(999999, booth_effect_cost)
-
+		
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
+		if (isnull(booth_effect_desc))
+			return
 		booth_effect_desc = strip_html(booth_effect_desc,280)
+
+		genResearch.researchMaterial -= price
 
 		for (var/obj/machinery/genetics_booth/GB in genetics_computers)
 			var/already_has = 0
@@ -1216,14 +1220,14 @@ var/list/genetics_computers = list()
 						if (research_time)
 							research_time = round(research_time / 10)
 
-						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>• [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
+						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'> [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
 
 			if("resrunning")
 				backpage = "research"
 				topbotbutton_html = "<p><b>Research in Progress</b></p>"
 				html_list += "<p>"
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
-					html_list += "• [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
+					html_list += " [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
 						html_list += " <small><a href='?src=\ref[src];track_research=\ref[R]'>(Track)</a></small>"
 					html_list += "<br>"
@@ -1314,7 +1318,7 @@ var/list/genetics_computers = list()
 
 					for(var/datum/geneticsResearchEntry/C in tierList)
 						if(C.isResearched == 0 || C.isResearched == -1) continue
-						html_list += "• [C.name]<br>"
+						html_list += " [C.name]<br>"
 				html_list += "</p>"
 
 			if("dna_samples")
