@@ -277,7 +277,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!process_ammo(user))
 		return
-	for (var/i = 0; i < current_projectile.shot_number; i++)
+
+	if(slowdown)
+		SPAWN_DBG(-1)
+			user.movement_delay_modifier += slowdown
+			sleep(slowdown_time)
+			user.movement_delay_modifier -= slowdown
+
+	for (var/i = 0; i < current_projectile.shot_number && get_dist(user,M)<=1; i++)
 		var/obj/projectile/P = initialize_projectile_ST(user, current_projectile, M)
 		if (!P)
 			return
