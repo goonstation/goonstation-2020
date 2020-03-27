@@ -64,8 +64,10 @@ toxic - poisons
 	max_range = 18 //taser-and-a-half range
 	cost = 100 //two shots, unless you upgrade to a pulserifle/etc cell
 	hit_ground_chance = 0
+	damage_type = D_SPECIAL
 	sname = "electromagnetic distruption wave"
 	icon_state = "wave-emp"
+	disruption = 25
 
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
