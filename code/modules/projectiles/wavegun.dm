@@ -74,7 +74,9 @@ toxic - poisons
 		if(prob(P.power*2.5))
 			for(var/atom/O in T.contents)
 				O.emp_act()
-				if(P.power >= 100) //10 tile shot, wow
+		if(P.power >= 100) //10 tile shot, wow
+			for(var/turf/tile in range(1,T))
+				for(var/atom/O in tile.contents)
 					O.emp_act()//get sniped
 		var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
 		s.set_up(5, 0, T)
