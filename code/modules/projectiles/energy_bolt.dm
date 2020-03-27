@@ -296,7 +296,8 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
 	power = 20
-	dissipation_rate = 2
+	dissipation_rate = 1
+	max_range = 12
 	cost = 35
 	sname = "pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
@@ -312,13 +313,13 @@ toxic - poisons
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
 
 		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O) //TODO: make this be affected by range maybe
+	on_hit(atom/hit, angle, var/obj/projectile/O) 
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 80, remove_stamina_below_zero = 0)
-			H.throw_at(get_edge_target_turf(hit, dir),7,1, throw_type = THROW_GUNIMPACT)
+			H.do_disorient(stamina_damage = O.power*3, weakened = 0, stunned = 0, disorient = O.power*4, remove_stamina_below_zero = 0)
+			H.throw_at(get_edge_target_turf(hit, dir),(O.power-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 			H.changeStatus("slowed", 3 SECONDS)
 		return
