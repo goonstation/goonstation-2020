@@ -181,8 +181,8 @@
 					src.remove_stamina(min(round(stun/armor_value_bullet) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (isalive(src)) lastgasp()
-				if (!isdead(src)) setunconscious(src)
+				//if (isalive(src)) lastgasp()
+				//if (!isdead(src)) setunconscious(src)
 
 				//src.set_clothing_icon_dirty()
 

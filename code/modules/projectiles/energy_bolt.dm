@@ -42,9 +42,6 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
-	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		stun_bullet_hit(P, M)
-
 
 //Any special things when it hits shit?
 	/* this is now handled in the projectile parent on_hit for all ks_ratio 0.0 weapons.
