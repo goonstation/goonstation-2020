@@ -201,13 +201,7 @@ TRAYS
 	attack(mob/living/carbon/human/target as mob, mob/user as mob)
 		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 20)
-		if (prob(20))
-			user.changeStatus("weakened", 4 SECONDS)
-			user.visible_message("<span style='color:red'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
-			random_brute_damage(user, 20)
-			take_bleeding_damage(user, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			random_brute_damage(user, 12)
 		else
 			return ..()
 
@@ -218,10 +212,8 @@ TRAYS
 			if (ismob(usr))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			C.changeStatus("weakened", 2 SECONDS)
-			C.force_laydown_standup()
-			random_brute_damage(C, 15)
-			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
+			random_brute_damage(C, 12, 1) //respects armor
+			take_bleeding_damage(C, null, 10-C.get_melee_protection("chest"), DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
 /obj/item/kitchen/utensil/knife/bread
