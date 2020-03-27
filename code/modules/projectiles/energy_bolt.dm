@@ -168,7 +168,6 @@ toxic - poisons
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
-		stun_bullet_hit(P, M)
 		impact_image_effect("T", M)
 
 //////////// Ghost Hunting for Halloween
