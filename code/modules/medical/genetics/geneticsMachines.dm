@@ -1220,14 +1220,14 @@ var/list/genetics_computers = list()
 						if (research_time)
 							research_time = round(research_time / 10)
 
-						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'>� [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
+						html_list += "<a href='?src=\ref[src];viewopenres=\ref[C]'> [C.name] (Cost: [research_cost] * Time: [research_time] sec)</a><br>"
 
 			if("resrunning")
 				backpage = "research"
 				topbotbutton_html = "<p><b>Research in Progress</b></p>"
 				html_list += "<p>"
 				for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
-					html_list += "� [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
+					html_list += " [R.name] - [round((R.finishTime - world.time) / 10)] seconds left."
 					if (R != src.tracked_research)
 						html_list += " <small><a href='?src=\ref[src];track_research=\ref[R]'>(Track)</a></small>"
 					html_list += "<br>"
@@ -1318,7 +1318,7 @@ var/list/genetics_computers = list()
 
 					for(var/datum/geneticsResearchEntry/C in tierList)
 						if(C.isResearched == 0 || C.isResearched == -1) continue
-						html_list += "� [C.name]<br>"
+						html_list += " [C.name]<br>"
 				html_list += "</p>"
 
 			if("dna_samples")
