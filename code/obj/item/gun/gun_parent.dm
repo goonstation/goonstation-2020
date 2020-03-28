@@ -269,6 +269,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			user.show_text("*click* *click*", "red")
 		return
 
+	user.next_click = max(user.next_click, world.time + src.shoot_delay)
+
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 		var/mob/living/carbon/human/H = user
 		H.gunshot_residue = 1
