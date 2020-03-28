@@ -44,7 +44,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
-
+	var/shoot_delay = 4 //ticks between gunshots
 	buildTooltipContent()
 		var/Tcontent = ..()
 		if(current_projectile)
@@ -192,15 +192,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 	else
 		shoot(target_turf, user_turf, user, pox, poy)
-
-	//if they're holding a gun in each hand... why not shoot both!
+		//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up) && ishuman(user))
 		if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
+			if (user.r_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 			SPAWN_DBG(2 DECI SECONDS)
-				user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+				user.r_hand:shoot(target_turf, user_turf, user, pox, poy)
 		else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
+			if (user.l_hand:canshoot())
+				user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 			SPAWN_DBG(2 DECI SECONDS)
-				user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+				user.l_hand:shoot(target_turf, user_turf, user, pox, poy)
+
+	
 
 	return 1
 
@@ -295,6 +300,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		L.lastgasp()
 	M.set_clothing_icon_dirty()
 	src.update_icon()
+	
+	user.next_click = max(user.next_click, world.time + src.shoot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
@@ -349,12 +356,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		var/turf/T = target
 		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
+
 	if (ismob(user))
 		var/mob/M = user
 		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
-		M.next_click = world.time + 4
+		M.next_click = max(M.next_click, world.time + src.shoot_delay)
 
 	src.update_icon()
 
