@@ -1549,7 +1549,7 @@ obj/item/clothing/gloves/concussive
 
 	afterattack(target as mob, mob/user as mob)
 		if(src.status)
-			src.process_charges(2)
+			src.process_charges(ismob(target)?3:2)
 		..()
 
 	power_up()
@@ -1637,7 +1637,7 @@ obj/item/clothing/gloves/concussive
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status)
-			src.process_charges(3)
+			src.process_charges(ismob(target)?5:3)
 
 	borg
 		process_charges(var/use)
@@ -1685,7 +1685,7 @@ obj/item/clothing/gloves/concussive
 
 	afterattack(target as mob, mob/user as mob)
 		if(src.status)
-			src.process_charges(2)
+			src.process_charges(ismob(target)?3:2)
 		..()
 
 	power_up()
