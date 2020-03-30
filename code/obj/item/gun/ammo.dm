@@ -826,8 +826,8 @@
 
 		M.put_in_hand_or_drop(temp)
 		src.add_fingerprint(M)
-
-		E.update_icon()
+		if(istype(E))
+			E.update_icon()
 		temp.update_icon()
 		src.update_icon()
 

@@ -1447,7 +1447,7 @@
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
-
+	
 	var/obj/item/ammo/power_cell/cell = null
 	var/status = 0
 	var/weakener = 0
@@ -1469,8 +1469,7 @@
 			return 0
 		if (src.cell.charge < 1)
 			return 0
-		src.cell.charge -= use
-		src.cell.charge = clamp(src.cell.charge,0, src.cell.max_charge)
+		src.cell.use(use)
 		if (src.cell.charge == 0)
 			src.power_down()
 			var/turf/T = get_turf(src)
@@ -1497,6 +1496,18 @@
 			src.overlays = null
 			signal_event("icon_updated")
 		return
+
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (cell && istype(b, /obj/item/ammo/power_cell))
+			var/obj/item/ammo/power_cell/pcell = b
+			if (pcell.swap(src))
+				user.visible_message("<span style=\"color:red\">[user] swaps [src]'s power cell.</span>")
+
+
+		else
+			..()
+
+
 
 obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
@@ -1549,7 +1560,7 @@ obj/item/clothing/gloves/concussive
 
 	afterattack(target as mob, mob/user as mob)
 		if(src.status)
-			src.process_charges(ismob(target)?3:2)
+			src.process_charges(ismob(target)?5:2)
 		..()
 
 	power_up()
@@ -1637,7 +1648,7 @@ obj/item/clothing/gloves/concussive
 	afterattack(target as mob, mob/user as mob)
 		..()
 		if (src.status)
-			src.process_charges(ismob(target)?5:3)
+			src.process_charges(ismob(target)?10:3)
 
 	borg
 		process_charges(var/use)
