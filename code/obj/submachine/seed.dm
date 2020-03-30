@@ -1269,6 +1269,10 @@
 				src.panelopen = 0
 			boutput(user, "You [src.panelopen ? "open" : "close"] the maintenance panel.")
 			src.updateUsrDialog()
+		else if (issnippingtool(W) && src.panelopen)
+			return src.attack_hand(user)
+		else if (ispulsingtool(W))
+			return src.attack_hand(user)
 		else ..()
 
 	proc/isWireColorCut(var/wireColor)

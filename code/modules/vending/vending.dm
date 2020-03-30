@@ -1387,6 +1387,8 @@
 			else
 				boutput(user, "<span style=\"color:blue\">[bicon(W)] Regular electrical response received from access panel.</span>")
 		return
+	else if (issnippingtool(W) && src.panel_open)
+		return src.attack_hand(user)
 	else if (ispulsingtool(W))
 		return src.attack_hand(user)
 
