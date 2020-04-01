@@ -846,15 +846,20 @@
 	var/heating_in_progress = 1
 	//while(R.total_volume && heating_in_progress)
 
-	var/element_temp = R.total_temperature < temp ? 9000 : 0							//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
+	//heater settings
+	var/h_exposed_volume = 10
+	var/h_divisor = 10
+	var/h_change_cap = 25
+
+	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
 	var/max_temp_change = abs(R.total_temperature - temp)
-	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / 35), 1), 25)	// Formula used by temperature_reagents() to determine how much to change the temp
-	if(next_temp_change >= max_temp_change)													// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * 35										// Compute the exact exposure temperature to reach the target
+	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
+	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
+		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
 		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
 		heating_in_progress = 0
 
-	R.temperature_reagents(element_temp, 10, 35, 25)
+	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
 	return heating_in_progress
 
