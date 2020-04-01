@@ -191,6 +191,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(charge_up && !can_dual_wield && canshoot())
 		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 	else
+		if(canshoot())
+			user.next_click = max(user.next_click, world.time + src.shoot_delay)
 		shoot(target_turf, user_turf, user, pox, poy)
 		//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up) && ishuman(user))
@@ -364,7 +366,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
-		M.next_click = max(M.next_click, world.time + src.shoot_delay)
 
 	src.update_icon()
 
