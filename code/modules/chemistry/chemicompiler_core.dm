@@ -42,10 +42,12 @@
 	var/exec
 
 	var/running = 0
+	var/is_heating = 0
 	var/html
 	var/datum/tag/page/htmlTag
 	var/errorCallback = "err"
 	var/transferCallback = "transferReagents"
+	var/isolateCallback = "isolateReagent"
 	var/heatCallback = "heatReagents"
 	var/messageCallback = "showMessage"
 	var/reservoirClickCallback = "reservoirClick"
@@ -168,12 +170,29 @@
 	if (transferCallback)
 		return call(src.holder, transferCallback)(source, target, amount)
 
+/datum/chemicompiler_core/proc/isolate(source, target, amount, index)
+	if(!istype(src.holder))
+		del(src)
+		return
+	if (isolateCallback)
+		return call(src.holder, isolateCallback)(source, target, amount, index)
+
 /datum/chemicompiler_core/proc/heat(res, temp)
 	if(!istype(src.holder))
 		del(src)
 		return
 	if (heatCallback)
-		return call(src.holder, heatCallback)(res, temp)
+		var/datum/chemicompiler_executor/E = src.holder
+		if ( !src.is_heating )
+			showMessage("[E.holder] clicks.") // Relay kicking on
+			src.is_heating = 1
+		. = call(src.holder, heatCallback)(res, temp)
+		if ( !. )
+			src.is_heating = 0
+			showMessage("[E.holder] clicks.") // Relay kicking off
+		else
+			ip-- //repeat the heat command until it succeeds
+
 
 /datum/chemicompiler_core/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
@@ -214,7 +233,7 @@
 	windowCall("setUIState", json)
 
 /datum/chemicompiler_core/proc/parseCBF(var/string, var/button)
-	var/list/tokens = list(">", "<", "+", "-", ".", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@")
+	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
 	var/l = lentext(string)
 	var/list/inst = new
 	var/token
@@ -252,93 +271,120 @@
 	running = 1
 	statusChange(CC_STATUS_RUNNING)
 	currentProg = inst
-	SPAWN_DBG(0)
-		resumeCBF()
 
-/datum/chemicompiler_core/proc/resumeCBF()
+/datum/chemicompiler_core/proc/on_process()
+	if ( !running || !currentProg )
+		return
 	if(!istype(src.holder))
 		del(src)
 		return
-	while(running)
-		if(ip > currentProg.len)
-			running = 0
-			break
-		LAGCHECK(LAG_MED)
-		exec++
-		if(exec > 50000)
-			throwError(CC_ERROR_INSTRUCTION_LIMIT) // Instruction limit reached.
-			running = 0
-			break
-		switch(currentProg[ip++])
-			if(">")
-				dp++
-				if(dp > 1023) // RAM limit is 1024 bytes.
-					dp = 0
-			if("<")
-				dp--
-				if(dp < 0) // RAM limit is 1024 bytes.
-					dp = 1023
-			if("+")
-				data[dp + 1]++
-			if("-")
-				data[dp + 1]--
-			if(".")
-				textBuffer += ascii2text(data[dp+1])
-			//if(",") // disabled input instruction from BF
-			if("\[")
-				if(data[dp + 1] == 0)
-					count = 1
-					while(ip <= currentProg.len && count > 0)
-						if(currentProg[ip] == "\[")
-							count++
-						if(currentProg[ip] == "]")
-							count--
-						ip++
-
-			if("]")
-				if(data[dp + 1] != 0)
-					count = 1
-					ip--
-					while(ip > 1 && count > 0)
+	if(running)
+		var/loop = 100	//Max number of operations to perform this cycle. Some commands will manually set this to zero.
+		while(loop > 0)
+			loop--
+			if(ip > currentProg.len)
+				running = 0
+				break
+			//LAGCHECK(LAG_MED)
+			exec++
+			if(exec > 50000)
+				throwError(CC_ERROR_INSTRUCTION_LIMIT) // Instruction limit reached.
+				running = 0
+				break
+			switch(currentProg[ip++])
+				if(">") //inrement pointer
+					dp++
+					if(dp > 1023) // RAM limit is 1024 bytes.
+						dp = 0
+				if("<") //decrement pointer
+					dp--
+					if(dp < 0) // RAM limit is 1024 bytes.
+						dp = 1023
+				if("+") //increment value at pointer
+					data[dp + 1]++
+				if("-") //decrement value at pointer
+					data[dp + 1]--
+				if(".") //buffer text
+					textBuffer += ascii2text(data[dp+1])
+					loop -= 19
+				if(",") //load volume of sx into ax
+					loop -= 49
+					var/datum/chemicompiler_executor/E = src.holder
+					ax = E.reagent_volume(sx)
+				if("\[") //start loop
+					if(data[dp + 1] == 0)
+						count = 1
+						while(ip <= currentProg.len && count > 0)
+							if(currentProg[ip] == "\[")
+								count++
+							if(currentProg[ip] == "]")
+								count--
+							ip++
+				if("]") //end loop
+					loop -= 9
+					if(data[dp + 1] != 0)
+						count = 1
 						ip--
-						if(currentProg[ip] == "\[")
-							count--
-						if(currentProg[ip] == "]")
-							count++
-					if(ip == 1 && count > 0)
-						return //failed to find matching brace...
-			if("{")
-				data[dp + 1] = sx
-			if("}")
-				sx = data[dp + 1]
-			if("(")
-				data[dp + 1] = tx
-			if(")")
-				tx = data[dp + 1]
-			if("^")
-				data[dp + 1] = ax
-			if("'")
-				ax = data[dp + 1]
-			if("$")
-				var/heatTo = (273 - tx) + ax
-				heatReagents(sx, heatTo)
+						while(ip > 1 && count > 0)
+							ip--
+							if(currentProg[ip] == "\[")
+								count--
+							if(currentProg[ip] == "]")
+								count++
+						if(ip == 1 && count > 0)
+							return //failed to find matching brace...
+				if("{")
+					data[dp + 1] = sx
+				if("}")
+					sx = data[dp + 1]
+				if("(")
+					data[dp + 1] = tx
+				if(")")
+					tx = data[dp + 1]
+				if("^")
+					data[dp + 1] = ax
+				if("'")
+					ax = data[dp + 1]
+				if("$") //heat
+					loop = 0
+					var/heatTo = (273 - tx) + ax
+					heatReagents(sx, heatTo)
+				if("@") //transfer
+					loop = 0
+					transferReagents(sx, tx, ax)
+				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
+					switch(tx)
+						if(0) // =
+							ax = (data[dp+1] == sx)
+						if(1) // !=
+							ax = (data[dp+1] != sx)
+						if(2) // <
+							ax = (data[dp+1] < sx)
+						if(3) // <=
+							ax = (data[dp+1] <= sx)
+						if(4) // >
+							ax = (data[dp+1] > sx)
+						if(5) // >=
+							ax = (data[dp+1] >= sx)
+						else
+							ax = 0*/
+				if("#") //move individual reagent from container
+					loop = 0
+					isolateReagent(sx, tx, ax, data[dp+1])
+				else
 
-			if("@")
-				// Transfer commands delay by 1/4 second per ml.
-				transferReagents(sx, tx, ax)
-			else
+			if(data.len < dp + 1)
+				data.len = dp + 1
+			if(lentext(textBuffer) > 80)
+				output += "[textBuffer]<br>"
+				textBuffer = ""
+				updatePanel()
 
-		if(data.len < dp + 1)
-			data.len = dp + 1
-		if(lentext(textBuffer) > 80)
-			output += "[textBuffer]<br>"
-			textBuffer = ""
-			updatePanel()
-
-		if(exec % 100 == 0)
-			SPAWN_DBG(0)
-				resumeCBF()
-			break
+			/*if(exec % 100 == 0) //NO RECURSION. NO.
+				SPAWN_DBG(0)
+					resumeCBF()
+				break
+			*/
 	if(!running)
 		output += textBuffer
 		updatePanel()
@@ -360,6 +406,22 @@
 		return
 
 	transfer(source, target, amount)
+
+/datum/chemicompiler_core/proc/isolateReagent(var/source, var/target, var/amount, index)
+	if(source < minReservoir || source > maxReservoir)
+		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
+		return
+	if(target < minReservoir || target > maxReservoir + 3)
+		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
+		return
+	if(!reservoirCheck(source))
+		throwError(CC_ERROR_INVALID_CONTAINER_SX) // No reservoir loaded in source
+		return
+	if(target <= maxReservoir && !reservoirCheck(target))
+		throwError(CC_ERROR_INVALID_CONTAINER_TX) // No reservoir loaded in target
+		return
+
+	isolate(source, target, amount, index)
 
 /datum/chemicompiler_core/proc/heatReagents(var/rid, var/temp)
 	if(rid < minReservoir || rid > maxReservoir)
@@ -617,6 +679,11 @@
 			beepCode(2)
 		else
 
+/datum/chemicompiler_executor/proc/on_process()
+	if ( !src.core )
+		return
+	return src.core.on_process()
+
 /datum/chemicompiler_executor/proc/reservoirCheck(resId)
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
 		return 1
@@ -678,6 +745,47 @@
 	else
 		holder:visible_message(message)
 
+
+/datum/chemicompiler_executor/proc/isolateReagent(var/source, var/target, var/amount, index)
+	if(!istype(src.holder))
+		del(src)
+		return
+	if(source < 1 || source > 10 || target < 1 || target > 13)
+		beepCode(1, 1) // Invalid source or target id.
+		return
+	if(!istype(reservoirs[source], /obj/item/reagent_containers/glass))
+		beepCode(3, 1) // No reservoir loaded in source or target
+		return
+	if(target < 11 && !istype(reservoirs[target], /obj/item/reagent_containers/glass))
+		beepCode(3, 1) // No reservoir loaded in source or target
+		return
+
+	showMessage("[src.holder] emits a slight humming sound.")
+	sleep(round(amount * 4.5))
+
+	var/obj/item/reagent_containers/holder = reservoirs[source]
+	var/datum/reagents/RS = holder.reagents
+
+	if(target < 11)
+		var/obj/RT = reservoirs[target]
+		RS.trans_to(RT, amount, 1 , 1, index)
+	if (target == 11)
+		// Generate pill
+		showMessage("[src.holder] makes an alarming grinding noise!")
+		sleep(10)
+		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
+		RS.trans_to(P, amount, 1 , 1, index)
+		showMessage("[src.holder] ejects a pill.")
+	if (target == 12)
+		// Generate vial
+		var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
+		RS.trans_to(V, amount, 1 , 1, index)
+		showMessage("[src.holder] ejects a vial of some unknown substance.")
+	if (target == 13)
+		RS.trans_to(get_turf(src.holder), amount, 1 , 1, index)
+		showMessage("Something drips out the side of [src.holder].")
+		sleep(10)
+
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount)
 	if(!istype(src.holder))
 		del(src)
@@ -692,12 +800,11 @@
 		beepCode(3, 1) // No reservoir loaded in source or target
 		return
 
-	// Transfer commands delay by 1/2 second per ml.
 	showMessage("[src.holder] emits a slight humming sound.")
 	sleep(round(amount * 2.5))
 
-	var/holder = reservoirs[source]
-	var/datum/reagents/RS = holder:reagents
+	var/obj/item/reagent_containers/holder = reservoirs[source]
+	var/datum/reagents/RS = holder.reagents
 
 	if(target < 11)
 		var/obj/RT = reservoirs[target]
@@ -734,14 +841,27 @@
 		return
 
 	// Ok now heat this bitch
-	showMessage("[src.holder] clicks.") // Relay kicking on
-	var/holder = reservoirs[rid]
-	var/datum/reagents/R = holder:reagents
-	while(R.total_volume && abs(R.total_temperature - temp) > 3)
-		R.temperature_reagents(temp, 10)
-		sleep(10)
+	var/obj/item/reagent_containers/holder = reservoirs[rid]
+	var/datum/reagents/R = holder.reagents
+	var/heating_in_progress = 1
+	//while(R.total_volume && heating_in_progress)
 
-	showMessage("[src.holder] clicks.") // Relay kicking off
+	//heater settings
+	var/h_exposed_volume = 10
+	var/h_divisor = 10
+	var/h_change_cap = 25
+
+	var/element_temp = R.total_temperature < temp ? 9000 : 0												//Sidewinder7: Smart heating system. Allows the CC to heat at full power for more of the duration, and prevents reheating of reacted elements.
+	var/max_temp_change = abs(R.total_temperature - temp)
+	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
+	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
+		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
+		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+		heating_in_progress = 0
+
+	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
+
+	return heating_in_progress
 
 /datum/chemicompiler_executor/proc/statusChange(oldStatus, newStatus)
 	if(!istype(src.holder))
@@ -749,3 +869,16 @@
 		return
 	if (core.statusChangeCallback)
 		return call(holder, core.statusChangeCallback)(oldStatus, newStatus)
+
+/datum/chemicompiler_executor/proc/reagent_volume(rid)
+	if(!istype(src.holder))
+		del(src)
+		return
+	if(rid < 1 || rid > 10)
+		beepCode(1, 1) // Invalid reservoir id
+		return 0
+	if(!istype(reservoirs[rid], /obj/item/reagent_containers/glass))
+		beepCode(3, 1) // No reservoir loaded in specified position
+		return 0
+	var/obj/item/reagent_containers/holder = reservoirs[rid]
+	return holder.reagents.total_volume

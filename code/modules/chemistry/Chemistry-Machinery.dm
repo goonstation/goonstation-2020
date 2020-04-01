@@ -729,6 +729,11 @@ datum/chemicompiler_core/stationaryCore
 				icon_state = initial(icon_state)
 				status |= NOPOWER
 				light.disable()
+	
+	process()
+		. = ..()
+		if ( src.executor )
+			src.executor.on_process()
 
 	proc
 		topicPermissionCheck(action)
