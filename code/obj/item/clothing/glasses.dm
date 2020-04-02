@@ -237,7 +237,7 @@
 	color_r = 0.92
 	color_g = 0.92
 	color_b = 1
-	
+
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
@@ -534,3 +534,9 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+
+/obj/item/clothing/glasses/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	icon_state = "ftscanplate"
+	item_state = "ftscanplate"
+	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."

@@ -484,3 +484,8 @@
 	name = "jester's shoes"
 	desc = "The shoes of a not-so-funny-clown."
 	icon_state = "jester"
+
+/obj/item/clothing/shoes/cwboots
+	name = "Macando boots"
+	desc = "These imported boots from the Commonwealth of Free Worlds are incredibly comfy."
+	icon_state = "cwboots"

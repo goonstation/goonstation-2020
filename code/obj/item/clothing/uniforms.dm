@@ -1308,3 +1308,15 @@
     desc = "Outfit of a not-so-funny-clown."
     icon_state = "jester"
     item_state = "jester"
+
+/obj/item/clothing/under/misc/cwfashion
+    name = "Commonwealth fashionista's outfit"
+    desc = "An incredibly garish outfit that is in vogue in a far-off, independently governed sector."
+    icon_state = "cwfashion"
+    item_state = "cwfashion"
+
+/obj/item/clothing/under/misc/ftuniform
+    name = "free trader's outfit"
+    desc = "An orange-scarfed jumpsuit with a single sleeve missing, worn by independent traders operating beyond NT space."
+    icon_state = "ftuniform"
+    item_state = "ftuniform"

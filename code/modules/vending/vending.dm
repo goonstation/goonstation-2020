@@ -1170,6 +1170,14 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender/tuxedo, 1, cost=80, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost=130, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost=200, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/cwhat, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/fthat, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/cwfashion, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/ftuniform, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/glasses/ftscanplate, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/handcomp, 1, cost=100, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/cwboots, 1, cost=100, hidden=1)
+
 
 //obj/machinery/vending
 /	var/const
