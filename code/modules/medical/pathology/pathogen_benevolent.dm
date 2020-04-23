@@ -1,3 +1,8 @@
+#define SPREAD_FACE 1
+#define SPREAD_BODY 2
+#define SPREAD_HANDS 4
+#define SPREAD_AIR 8
+
 datum/pathogeneffects/benevolent
 	name = "Benevolent"
 	rarity = RARITY_ABSTRACT
@@ -5,13 +10,13 @@ datum/pathogeneffects/benevolent
 datum/pathogeneffects/benevolent/mending
 	name = "Wound Mending"
 	desc = "Slow paced brute damage healing."
-	rarity = RARITY_UNCOMMON
+	rarity = RARITY_COMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5))
-			M.HealDamage("chest", origin.stage < 3 ? 1 : 2, 0)
+		//if (prob(origin.stage * 5))
+		M.HealDamage("All", origin.stage / 2, 0)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -25,13 +30,13 @@ datum/pathogeneffects/benevolent/mending
 datum/pathogeneffects/benevolent/healing
 	name = "Burn Healing"
 	desc = "Slow paced burn damage healing."
-	rarity = RARITY_UNCOMMON
+	rarity = RARITY_COMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5))
-			M.HealDamage("chest", 0, origin.stage < 3 ? 1 : 2)
+		//if (prob(origin.stage * 5))
+		M.HealDamage("All", 0, origin.stage / 2)
 		M.updatehealth()
 
 	react_to(var/R, var/zoom)
@@ -44,6 +49,36 @@ datum/pathogeneffects/benevolent/healing
 
 	may_react_to()
 		return "The pathogen appears to have the ability to bond with organic tissue."
+
+datum/pathogeneffects/benevolent/fleshrestructuring
+	name = "Flesh Restructuring"
+	desc = "Fast paced general healing."
+	rarity = RARITY_RARE
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		if (prob(origin.stage * 5))
+			M.HealDamage("All", origin.stage, origin.stage)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.bleeding)
+					repair_bleeding_damage(M, 80, 2)
+			if (prob(50))
+				M.show_message("<span style=\"color:blue\">You feel your wounds closing by themselves.</span>")
+		M.updatehealth()
+
+	react_to(var/R, var/zoom)
+		if (R == "synthflesh")
+			if (zoom)
+				return "The pathogen appears to mimic the behavior of the synthetic flesh."
+		if (R == "acid")
+			if (zoom)
+				return "The pathogen becomes agitated and works to repair the damage caused by the sulfuric acid."
+
+	may_react_to()
+		return "The pathogen appears to have the ability to bond with organic tissue to an unprecedented degree."
+	//podrickequus's first code, yay
 
 datum/pathogeneffects/benevolent/detoxication
 	name = "Detoxication"
@@ -112,31 +147,28 @@ datum/pathogeneffects/benevolent/metabolisis
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
 
 	may_react_to()
-		return null
+		return "The pathogen appears to be rapidly breaking down certain materials around it."
 
 datum/pathogeneffects/benevolent/cleansing
 	name = "Cleansing"
 	desc = "The pathogen cleans the body of damage caused by toxins."
-	rarity = RARITY_RARE
+	rarity = RARITY_UNCOMMON
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (prob(origin.stage * 5) && M.get_toxin_damage())
-			M.take_toxin_damage(-1)
-			if (origin.stage > 3)
-				M.take_toxin_damage(-1)
-				if (origin.stage > 4)
-					M.take_toxin_damage(-1)
+		//if (prob(origin.stage * 5) && M.get_toxin_damage())
+		if (M.get_toxin_damage())
+			M.take_toxin_damage(-origin.stage / 2)
 			M.updatehealth()
-			if (prob(10))
+			if (prob(12))
 				M.show_message("<span style=\"color:blue\">You feel cleansed.</span>")
 
 	react_to(var/R, var/zoom)
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
 
 	may_react_to()
-		return null
+		return "The pathogen seems to be much cleaner than normal."
 
 datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
@@ -216,3 +248,54 @@ datum/pathogeneffects/benevolent/brewery
 
 	may_react_to()
 		return "The pathogen appears to react with anything but a pure intoxicant."
+
+datum/pathogeneffects/benevolent/oxytocinproduction
+	name = "Oxytocin Production"
+	desc = "The pathogen produces Pure Love within the infected."
+	infect_type = INFECT_TOUCH
+	rarity = RARITY_COMMON
+	permeability_score = 15
+	spread = SPREAD_BODY | SPREAD_HANDS
+	infection_coefficient = 1.5
+	infect_message = "<span style=\"color:pink\">You can't help but feel loved.</span>"
+
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		var/check_amount = M.reagents.get_reagent_amount("love")
+		if (!check_amount || check_amount < 5)
+			M.reagents.add_reagent("love", origin.stage / 3)
+		if (prob(origin.stage * 2.5))
+			infect(M, origin)
+
+	may_react_to()
+		return "The pathogen's cells appear to be... hugging each other?"
+
+datum/pathogeneffects/benevolent/neuronrestoration
+	name = "Neuron Restoration"
+	desc = "Infection slowly repairs nerve cells in the brain."
+	rarity = RARITY_UNCOMMON
+	infect_type = INFECT_NONE
+	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
+		if (!origin.symptomatic)
+			return
+		switch (origin.stage)
+			if (2)
+				if (prob(5))
+					M.take_brain_damage(-1)
+			if (3)
+				if (prob(10))
+					M.take_brain_damage(-1)
+			if (4)
+				if (prob(15))
+					M.take_brain_damage(-2)
+			if (5)
+				if (prob(20))
+					M.take_brain_damage(-2)
+
+	react_to(var/R, var/zoom)
+		if (!(R == "neurotoxin"))
+			return "The pathogen releases a chemical in an attempt to counteract the effects of the neurotoxin."
+
+	may_react_to()
+		return "The pathogen appears to have a gland that may affect neural functions."
