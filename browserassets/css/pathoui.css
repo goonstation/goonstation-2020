@@ -85,8 +85,8 @@ div {
 }
 #analyzeResults {
 	padding-top:2px;
-	width:300px;
-	height:175px;
+	width:400px;
+	height:170px;
 	display:inline-block;
 }
 /*Splicer components*/
@@ -194,6 +194,26 @@ div {
 	overflow-x:scroll;
 	overflow-y:hidden;
 	white-space:nowrap;
+}
+
+.tf-med-long {
+	width:75px;
+	height:25px;
+	text-align:center;
+	margin:1px;
+	padding:3px;
+	font-weight:bold;
+	cursor:default;
+}
+
+.tf-med-narrow {
+	width:27px;
+	height:25px;
+	text-align:center;
+	margin:1px;
+	padding:3px;
+	font-weight:bold;
+	cursor:default;
 }
 
 .tf-med {

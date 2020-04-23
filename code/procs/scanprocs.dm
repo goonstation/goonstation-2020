@@ -110,6 +110,10 @@
 
 		if (H.pathogens.len)
 			pathogen_data = "<span style='color:red'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+			// Realistically people will very, very rarely be affected by more than one pathogen, so I think it's fine to just list the stages.
+			for (var/uid in H.pathogens) 
+				var/datum/pathogen/P = H.pathogens[uid]
+				pathogen_data += "<br>&emsp;<span style='color:red'>[P.name]: Stage [P.stage], Predicted Threat Level: [P.danger_score()]</span>"
 			var/list/therapy = list()
 			var/remissive = 0
 			for (var/uid in H.pathogens)
