@@ -811,11 +811,14 @@ datum
 							return
 						else
 							if (H.wear_mask)
-								boutput(M, "<span style=\"color:red\">Your [H.wear_mask] melts away!</span>")
 								var/obj/item/clothing/mask/K = H.wear_mask
-								K.dropped(H)
-								H.u_equip(K)
-								qdel(K)
+								if ( !K.acid_proof )
+									boutput(M, "<span style=\"color:red\">Your [H.wear_mask] melts away!</span>")
+									K.dropped(H)
+									H.u_equip(K)
+									qdel(K)
+								else
+									boutput(M, "<span style=\"color:red\">Your [H.wear_mask] protects you from the acid!</span>")
 								melted = 1
 							if (H.head)
 								boutput(M, "<span style=\"color:red\">Your [H.head] melts into uselessness!</span>")
@@ -834,11 +837,14 @@ datum
 						var/melted = 0
 						if (H.wear_mask && H.head)
 							if (H.wear_mask)
-								boutput(M, "<span style=\"color:red\">Your [H.wear_mask] melts away!</span>")
 								var/obj/item/clothing/mask/K = H.wear_mask
-								K.dropped(H)
-								H.u_equip(K)
-								qdel(K)
+								if ( !K.acid_proof )
+									boutput(M, "<span style=\"color:red\">Your [H.wear_mask] melts away!</span>")
+									K.dropped(H)
+									H.u_equip(K)
+									qdel(K)
+								else
+									boutput(M, "<span style=\"color:red\">Your [H.wear_mask] protects you from the acid!</span>")
 								melted = 1
 							if (H.head)
 								boutput(M, "<span style=\"color:red\">Your [H.head] melts into uselessness!</span>")
