@@ -173,7 +173,7 @@
 	if (round(output) == 0)
 		return FALSE
 
-	var/output_mw = output * 1e6
+	var/output_mw = output / 1e6
 
 	#define BUX_PER_SEC_CAP 5000 //at inf power, generate 5000$/tick, also max amt to drain/tick
 	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
