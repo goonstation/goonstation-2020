@@ -5,6 +5,12 @@
 	desc = "A box with glass cups for drinking liquids from."
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 7)
 
+/obj/item/storage/box/glassbox/syndie
+	name = "glassware box"
+	icon_state = "beaker"
+	desc = "A box with glass cups for drinking liquids from."
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie = 7)
+
 /obj/item/storage/box/cutlery
 	name = "cutlery set"
 	icon_state = "donk_kit"
